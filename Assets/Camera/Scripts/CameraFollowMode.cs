@@ -17,7 +17,7 @@ public class CameraFollowMode : MonoBehaviour
     public Transform followTarget;
 
     [Header("Paramètres d’offset")]
-    public float offsetX = 3f;
+    public float offsetX = -3f;
     public float offsetZ = 9f;
 
     [Header("Interpolation (smoothness)")]

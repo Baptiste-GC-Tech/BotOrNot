@@ -8,7 +8,7 @@ public class SimplePlayerMovement : MonoBehaviour
     public enum RotationAxis { X, Y, Z }
     public RotationAxis rotationAxis = RotationAxis.Y;
     public float rotationSpeed = 10f;
-    public float rotationOffset = 0f;
+    public float rotationOffset = -90f;
 
     private float targetAngle = 0f;
 
