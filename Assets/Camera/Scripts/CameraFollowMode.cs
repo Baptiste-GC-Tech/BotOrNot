@@ -122,6 +122,7 @@ public class CameraFollowMode : MonoBehaviour
             composer.m_TrackedObjectOffset = Vector3.Lerp(composer.m_TrackedObjectOffset, targetTrackedOffset, Time.deltaTime * offsetLerpSpeed);
         }
 
+        // !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!!
         if (Input.GetKeyDown(KeyCode.A))
             currentDirection = Direction.Left;
         else if (Input.GetKeyDown(KeyCode.D))
