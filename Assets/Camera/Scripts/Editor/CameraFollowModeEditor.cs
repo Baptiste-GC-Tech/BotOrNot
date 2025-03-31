@@ -8,13 +8,14 @@ public class CameraFollowModeEditor : Editor
 
     private void OnEnable()
     {
-        // Charger l'image depuis le dossier Resources
         bannerTexture = Resources.Load<Texture2D>("Editor/CameraBanner");
     }
 
     public override void OnInspectorGUI()
     {
-        // Afficher l'image si elle est chargée
+        CameraFollowMode script = (CameraFollowMode)target;
+
+        // Bannière en haut
         if (bannerTexture != null)
         {
             float aspectRatio = (float)bannerTexture.width / bannerTexture.height;
@@ -24,34 +25,47 @@ public class CameraFollowModeEditor : Editor
             GUI.DrawTexture(rect, bannerTexture, ScaleMode.ScaleToFit);
             GUILayout.Space(10);
         }
-        else
-        {
-            EditorGUILayout.HelpBox("Image non trouvée dans Resources/Editor/CameraBanner.png", MessageType.Info);
-        }
 
-        DrawDefaultInspector();
+        // Champs manuels avec tooltips
+        DrawField("player", "Transform du joueur contrôlé.");
+        DrawField("otherTarget", "Objet secondaire à suivre (optionnel).");
+        DrawField("followTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
 
-        CameraFollowMode script = (CameraFollowMode)target;
+        GUILayout.Space(5);
+        DrawField("offsetX", "Décalage horizontal lors du suivi.");
+        DrawField("offsetZ", "Décalage de profondeur (Z).");
+
+        GUILayout.Space(5);
+        DrawField("followLerpSpeed", "Vitesse de transition de position du FollowTarget.");
+        DrawField("offsetLerpSpeed", "Vitesse de transition des offsets caméra.");
 
         GUILayout.Space(10);
-        GUILayout.Label("Mode de Suivi", EditorStyles.boldLabel);
+        GUILayout.Label("Mode de Suivi Actuel", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Suivre le Player"))
-        {
             script.currentMode = CameraFollowMode.FollowMode.Player;
-        }
 
         if (GUILayout.Button("Suivre l'objet"))
-        {
             script.currentMode = CameraFollowMode.FollowMode.OtherObject;
-        }
 
         if (GUILayout.Button("Suivre le Barycentre"))
-        {
             script.currentMode = CameraFollowMode.FollowMode.Barycenter;
-        }
 
-        GUILayout.Space(10);
-        EditorGUILayout.LabelField("Mode Actuel :", script.currentMode.ToString());
+        if (GUILayout.Button("Mode Automatique (Trigger Zones)"))
+            script.currentMode = CameraFollowMode.FollowMode.Auto;
+
+        GUILayout.Space(5);
+        EditorGUILayout.LabelField("Mode actif :", script.currentMode.ToString());
+    }
+
+    private void DrawField(string propertyName, string tooltip)
+    {
+        SerializedProperty property = serializedObject.FindProperty(propertyName);
+        if (property != null)
+        {
+            GUIContent label = new GUIContent(ObjectNames.NicifyVariableName(propertyName), tooltip);
+            EditorGUILayout.PropertyField(property, label);
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

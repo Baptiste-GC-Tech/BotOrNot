@@ -31,7 +31,7 @@ public class SimplePlayerMovement : MonoBehaviour
         // Mouvement
         transform.position += new Vector3(direction, 0f, 0f) * moveSpeed * Time.deltaTime;
 
-        // Rotation douce
+        // Rotation Smooth
         Quaternion currentRotation = transform.rotation;
         Quaternion desiredRotation = GetTargetRotation(targetAngle);
         transform.rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * rotationSpeed);
