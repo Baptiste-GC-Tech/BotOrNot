@@ -25,7 +25,6 @@ public class BON_Elevator : BON_Actionnable
 
     public override void On()
     {
-        Debug.Log("EnterOn");
         foreach (var button in _buttonsInHUD)
         {
             button.interactable = false;
@@ -35,7 +34,6 @@ public class BON_Elevator : BON_Actionnable
 
     public override void Off()
     {
-        Debug.Log("EnterOff");
         foreach (var button in _buttonsInHUD)
         {
             button.interactable = true;
