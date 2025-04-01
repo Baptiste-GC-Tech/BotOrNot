@@ -5,87 +5,113 @@ using UnityEngine.UIElements;
 
 public class BON_MovObj_ListBased : BON_Actionnable
 {
+
+    /*
+    FIELDS
+    */
+
     [SerializeField]
     protected List<Transform> _transformsList;
 
     [SerializeField]
     protected float _moveSpeed = 10.0f;
 
+    [SerializeField] 
+    protected bool _turnBackWhenListEnd = false;
     [SerializeField]
     protected bool _looping = false;
     [SerializeField]
-    protected bool _isCyclingPositive = false;
+    protected bool _isCyclingPositive = true;
 
-    private int _currentTargetIndex = 0;
-    protected int _previousTargetIndex;
+    private int _nextNodeIndex = 0;
+    protected int _currentNodeIndex;
     protected float _currentTotalDistance;
     protected Vector3 _currentDirection;
     protected Vector3 _currentRotation;
 
 
-    protected int CurrentTargetIndex {  
-        get { return _currentTargetIndex; }
+    protected int NextNodeIndex {  
+        get { return _nextNodeIndex; }
         set {
 
-            _previousTargetIndex = _currentTargetIndex;
+            _currentNodeIndex = _nextNodeIndex;
 
-            if (value >= _transformsList.Count) { 
-                if (_looping) { _currentTargetIndex = 0; } 
-                else { _status = false; _isCyclingPositive = false; }  }
-            else if (value < 0) { 
-                if (_looping) { _currentTargetIndex = _transformsList.Count - 1; } 
-                else { _status = false; _isCyclingPositive = true; } }
-            else { _currentTargetIndex = value; }
+            if(value >= _transformsList.Count || value < 0)
+            {
+                
 
-            _currentDirection = (_transformsList[_currentTargetIndex].position - _transformsList[_previousTargetIndex].position).normalized;
-            _currentRotation = _transformsList[_currentTargetIndex].rotation.eulerAngles - _transformsList[_previousTargetIndex].rotation.eulerAngles;
-            _currentTotalDistance = (_transformsList[_currentTargetIndex].position - _transformsList[_previousTargetIndex].position).magnitude;
+                if (_looping)
+                {
+
+                    if (_turnBackWhenListEnd)
+                    {
+                        _isCyclingPositive = !_isCyclingPositive;
+
+                        if (value >= _transformsList.Count)
+                        {
+                            _nextNodeIndex = _transformsList.Count - 1;
+                        }
+                        else if (value < 0)
+                        {
+                            _nextNodeIndex = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (value >= _transformsList.Count)
+                        {
+                            _nextNodeIndex = 0;
+                        }
+                        else if (value < 0)
+                        {
+                            _nextNodeIndex = _transformsList.Count - 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if (_turnBackWhenListEnd)
+                    {
+                        _isCyclingPositive = !_isCyclingPositive;
+                    }
+                    Status = false;
+                }
+            }
+            else { 
+                _nextNodeIndex = value; 
+            }
+
+            _currentDirection = (_transformsList[_nextNodeIndex].position - _transformsList[_currentNodeIndex].position).normalized;
+            _currentRotation = _transformsList[_nextNodeIndex].rotation.eulerAngles - _transformsList[_currentNodeIndex].rotation.eulerAngles;
+            _currentTotalDistance = (_transformsList[_nextNodeIndex].position - _transformsList[_currentNodeIndex].position).magnitude;
         }
-    }
-
-    override public void On()
-    {
-        CurrentTargetIndex++;
-        base.On();
-    }
-
-    override public void Off()
-    {
-        CurrentTargetIndex--;
-        base.Off();
-    }
-
-    override public void Toggle()
-    {
-        _status = true;
-        base.Toggle();
     }
 
     void Start()
     {
-        if (_status) 
+        if (Status) 
         {
             if (_isCyclingPositive)
             {
-                CurrentTargetIndex++;
+                NextNodeIndex++;
             }
             else
             {
-                CurrentTargetIndex--;
+                NextNodeIndex--;
             }
         }
     }
 
     void FixedUpdate()
     {
-        if (_status) 
+        if (Status) 
         {
             float oneSpeed = _moveSpeed * Time.deltaTime;
 
-            if (oneSpeed >= (_transformsList[_currentTargetIndex].position - gameObject.transform.position).magnitude)
+            if (oneSpeed >= (_transformsList[_nextNodeIndex].position - gameObject.transform.position).magnitude)
             {
-                gameObject.transform.SetPositionAndRotation(_transformsList[_currentTargetIndex].position, _transformsList[_currentTargetIndex].rotation);
-                if (_isCyclingPositive) { CurrentTargetIndex++; } else { CurrentTargetIndex--; }
+                gameObject.transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
+                if (_isCyclingPositive) { NextNodeIndex++; } else { NextNodeIndex--; }
             }
             else
             {
