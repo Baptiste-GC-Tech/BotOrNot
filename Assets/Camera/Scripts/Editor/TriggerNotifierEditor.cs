@@ -41,6 +41,8 @@ public class TriggerNotifierEditor : Editor
         DrawTooltipField("overrideOffset", "Active un offset personnalisé pour la caméra lorsque ce trigger est actif.");
         DrawTooltipField("offsetX", "Décalage horizontal (X) de la caméra lors du barycentre.");
         DrawTooltipField("offsetZ", "Décalage en profondeur (Z) de la caméra lors du barycentre.");
+        DrawTooltipField("focusOnly", "Si activé, la caméra se concentre uniquement sur l'objet au lieu du barycentre.");
+
 
         serializedObject.ApplyModifiedProperties();
     }

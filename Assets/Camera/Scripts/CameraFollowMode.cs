@@ -51,7 +51,9 @@ public class CameraFollowMode : MonoBehaviour
         public bool overrideOffset;
         public float offsetX;
         public float offsetZ;
+        public bool focusOnly;
     }
+
 
     private List<TriggerTargetData> activeTriggerTargets = new List<TriggerTargetData>();
     private TriggerTargetData currentTriggerData = null;
@@ -98,7 +100,10 @@ public class CameraFollowMode : MonoBehaviour
             case FollowMode.Auto:
                 if (currentTriggerData != null)
                 {
-                    desiredFollowPos = (player.position + currentTriggerData.target.position) / 2f;
+                    desiredFollowPos = currentTriggerData.focusOnly
+                        ? currentTriggerData.target.position
+                        : (player.position + currentTriggerData.target.position) / 2f;
+
                     desiredOffset = currentTriggerData.overrideOffset
                         ? new Vector3(currentTriggerData.offsetX, 0f, currentTriggerData.offsetZ)
                         : new Vector3(0f, 0f, offsetZ);
@@ -109,6 +114,7 @@ public class CameraFollowMode : MonoBehaviour
                     desiredOffset = GetOffsetFromDirection();
                 }
                 break;
+
         }
 
         followTarget.position = Vector3.Lerp(followTarget.position, desiredFollowPos, Time.deltaTime * followLerpSpeed);
@@ -136,7 +142,7 @@ public class CameraFollowMode : MonoBehaviour
             : new Vector3(offsetX, 0f, offsetZ);
     }
 
-    public void RegisterTriggerTarget(Transform target, bool overrideOffset, float customX, float customZ)
+    public void RegisterTriggerTarget(Transform target, bool overrideOffset, float customX, float customZ, bool focusOnly)
     {
         if (activeTriggerTargets.Exists(t => t.target == target)) return;
 
@@ -145,11 +151,13 @@ public class CameraFollowMode : MonoBehaviour
             target = target,
             overrideOffset = overrideOffset,
             offsetX = customX,
-            offsetZ = customZ
+            offsetZ = customZ,
+            focusOnly = focusOnly
         };
 
         activeTriggerTargets.Add(data);
     }
+
 
     public void UnregisterTriggerTarget(Transform target)
     {
