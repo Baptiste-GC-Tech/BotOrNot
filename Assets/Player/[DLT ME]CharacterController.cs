@@ -16,8 +16,8 @@ public class Example : MonoBehaviour    // BAD NAME : Character Controller taken
     InputAction TakeAction;
 
     // Movement action related
-    [SerializeField] private float _maxVelocity;
-    [SerializeField] private float _maxAcceleration;
+    [SerializeField] float _maxVelocity;
+    [SerializeField] float _maxAcceleration;
 
     // Object-interaction related
     GameObject collectible = null;
