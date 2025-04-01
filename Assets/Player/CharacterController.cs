@@ -4,52 +4,33 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;  
 
-public class Example : MonoBehaviour
+public class Example : MonoBehaviour    // BAD NAME : Character Controller taken tho. TODO: Find a better name for this class
 {
+    /*
+     *  FIELDS
+     */
     // 2. These variables are to hold the Action references
     InputAction MoveAction;
     InputAction CableAction;
     InputAction TakeAction;
 
-    GameObject collectible = null;
-    private bool _isCollectible = false; //devant un collectible (de la DR)
-    private bool _isDR = false; //devant la dame robot 
+    // Movement action related
+    [SerializeField] private float _maxSpeed;
 
+    // Object-interaction related
+    GameObject collectible = null;
+    private bool _isCollectibleInRange = false; //devant un collectible (de la DR)
+    private bool _isDRInRange = false; //devant la dame robot 
+
+    // First level completion condition : Should have its own class
+    // TODO: Generic Level class featuring states and a win cond, then make a child that's Level 1's class
     private List<GameObject> _DRCollectibles = new List<GameObject>();
     private int _DRCount = 0;
 
-    private void Start()
-    {
-        MoveAction = InputSystem.actions.FindAction("Player/Move");
-        CableAction = InputSystem.actions.FindAction("Player/Cable");
-        TakeAction = InputSystem.actions.FindAction("Player/Take");
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "collectibles_DR")
-        {
-            _isCollectible = true;
-            collectible = other.gameObject;
-        }
-        else if (other.gameObject.tag == "Finish")
-        {
-            _isDR = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "collectibles_DR")
-        {
-            _isCollectible = false;
-        }
-        else if (other.gameObject.tag == "Finish")
-        {
-            _isDR = false;
-        }
-    }
-
+    /*
+     *  CLASS METHODS
+     */
     private void PrintListCollectibles() //debug 
     {
         for (int i = 0; i < _DRCollectibles.Count; i++)
@@ -60,20 +41,38 @@ public class Example : MonoBehaviour
         print("quest = "+_DRCount);
     }
 
+
+    /*
+     *  UNITY METHODS
+     */
+    private void Start()
+    {
+        MoveAction = InputSystem.actions.FindAction("Player/Move");
+        CableAction = InputSystem.actions.FindAction("Player/Cable");
+        TakeAction = InputSystem.actions.FindAction("Player/Take");
+    }
+
     void Update()
     {
+        // Left-right movement action handling
         Vector2 moveValue = MoveAction.ReadValue<Vector2>();
-        GetComponent<Rigidbody>().transform.position += new Vector3(moveValue.x * Time.deltaTime, 0, 0);
-        
+        GetComponent<Rigidbody>().AddForce(new Vector3(moveValue.x, moveValue.y, 0.0f), ForceMode.Acceleration);
+        Mathf.Clamp(GetComponent<Rigidbody>().velocity.x, 0.0f, _maxSpeed);
+        Mathf.Clamp(GetComponent<Rigidbody>().velocity.y, 0.0f, _maxSpeed);
+        //transform.position += new Vector3(moveValue.x * Time.deltaTime, 0, 0);
+
+        // Cable action handling
+        // ## Currently serves as debug
         if (CableAction.WasPressedThisFrame()) //cable => ""jump""
         {
             print(_DRCollectibles.Count);
             PrintListCollectibles();
         }
 
+        // Take item action handling
         if (TakeAction.WasPressedThisFrame()) //interact
         {
-            if (_isCollectible && collectible !=null)
+            if (_isCollectibleInRange && collectible !=null)
             {
                 print(collectible.name);
                 if(!(_DRCollectibles.Contains(collectible)))
@@ -85,7 +84,7 @@ public class Example : MonoBehaviour
                 
                 collectible = null;
             }
-            else if (_isDR)
+            else if (_isDRInRange)
             {
                 print(_DRCollectibles.Count);
                 if (_DRCollectibles.Count > 0)
@@ -104,6 +103,30 @@ public class Example : MonoBehaviour
                     print("objets non déposés");
                 }
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "collectibles_DR")
+        {
+            _isCollectibleInRange = true;
+            collectible = other.gameObject;
+        }
+        else if (other.gameObject.tag == "Finish")
+        {
+            _isDRInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "collectibles_DR")
+        {
+            _isCollectibleInRange = false;
+        }
+        else if (other.gameObject.tag == "Finish")
+        {
+            _isDRInRange = false;
         }
     }
 }
