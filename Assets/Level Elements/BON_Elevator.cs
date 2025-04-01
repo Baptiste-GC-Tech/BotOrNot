@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BON_Elevator : BON_Actionnable
 {
+    [SerializeField] GameObject _elevator;
     [SerializeField] GameObject _elevatorPosition;
     [SerializeField] Canvas _levelHUD;
     [SerializeField] float _playerSpeed;
@@ -55,6 +56,9 @@ public class BON_Elevator : BON_Actionnable
         if (_isElevatorMoving)
         {
             //move the elevator
+            Debug.Log(_elevator.GetComponent<BON_MovObj_ListBased>().Status);
+            _elevator.GetComponent<BON_MovObj_ListBased>().Toggle();
+            Debug.Log(_elevator.GetComponent<BON_MovObj_ListBased>().Status);
             _isElevatorMoving = false;
             base.Toggle();
         }

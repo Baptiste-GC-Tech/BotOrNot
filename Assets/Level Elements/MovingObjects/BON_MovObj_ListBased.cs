@@ -57,7 +57,7 @@ public class BON_MovObj_ListBased : BON_Actionnable
 
     override public void Toggle()
     {
-        _status = true;
+        //_status = true;
         base.Toggle();
     }
 
