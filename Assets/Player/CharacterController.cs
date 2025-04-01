@@ -59,15 +59,23 @@ public class Example : MonoBehaviour    // BAD NAME : Character Controller taken
         // Left-right movement action handling
         Vector2 moveValue = MoveAction.ReadValue<Vector2>();
         Rigidbody rb = GetComponent<Rigidbody>();
+
+        // Velocity reset
+        rb.velocity = Vector3.zero;
+
+        // Aggregation & Clamping of the thrust force before application
+        // TODO
+
+        // Application of the force
         rb.AddForce(new Vector3(moveValue.x, moveValue.y, 0.0f) * _maxAcceleration, ForceMode.Acceleration);
 
-        rb.velocity = new Vector3 (Mathf.Clamp(rb.velocity.x, -_maxVelocity, _maxVelocity),
-                                   Mathf.Clamp(rb.velocity.y, -_maxVelocity, _maxVelocity),
-                                   0.0f);
-
-
         Debug.Log("cur Vel : " + GetComponent<Rigidbody>().velocity);
+        //rb.velocity = new Vector3 (Mathf.Clamp(rb.velocity.x, -_maxVelocity, _maxVelocity),
+        //                           Mathf.Clamp(rb.velocity.y, -_maxVelocity, _maxVelocity),
+        //                           0.0f);
         //transform.position += new Vector3(moveValue.x * Time.deltaTime, 0, 0);
+
+
 
         // Cable action handling
         // ## Currently serves as debug
