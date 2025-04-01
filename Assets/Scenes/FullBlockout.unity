@@ -29048,6 +29048,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1437695829}
+    - target: {fileID: 2600921192644025855, guid: 507714f662df5a54893180b3be9c6601,
+        type: 3}
+      propertyPath: m_Name
+      value: BON_Timer
+      objectReference: {fileID: 0}
     - target: {fileID: 3004323647536409886, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}
       propertyPath: m_Mesh
@@ -29202,6 +29207,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VersionIndex
       value: 1221
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711334790564857683, guid: 507714f662df5a54893180b3be9c6601,
+        type: 3}
+      propertyPath: _extensionMax
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8844028663860772919, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}

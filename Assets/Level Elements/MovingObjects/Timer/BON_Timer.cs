@@ -6,7 +6,7 @@ public class BON_Timer : BON_Actionnable
 {
     [SerializeField] private float _maxTimer;
     private float _currentTimer;
-    private float _extensionMax;
+    [SerializeField] private float _extensionMax;
 
     override public void Off()
     {
@@ -16,7 +16,6 @@ public class BON_Timer : BON_Actionnable
     private void Start()
     {
         _currentTimer = _maxTimer;
-        Status = true;
     }
     private void FixedUpdate()
     {
