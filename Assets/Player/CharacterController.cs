@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;  
 
-public class Example : MonoBehaviour    // BAD NAME : Character Controller taken tho. TODO: Find a better name for this class
+public class Player : MonoBehaviour    // BAD NAME : Character Controller taken tho. TODO: Find a better name for this class
 {
     /*
      *  FIELDS
