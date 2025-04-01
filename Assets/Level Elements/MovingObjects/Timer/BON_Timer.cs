@@ -7,6 +7,7 @@ public class BON_Timer : BON_Actionnable
     [SerializeField] private float _maxTimer;
     private float _currentTimer;
     [SerializeField] private float _extensionMax;
+    [SerializeField] private int _speed;
 
     override public void Off()
     {
@@ -23,14 +24,14 @@ public class BON_Timer : BON_Actionnable
         {
             if (gameObject.transform.localScale.x < _extensionMax)
             {
-                gameObject.transform.localScale += new Vector3(Time.deltaTime, 0, 0);
+                gameObject.transform.localScale += new Vector3(Time.deltaTime * _speed, 0, 0);
             }
         }
         else
         {
             if (gameObject.transform.localScale.x > 0)
             {
-                gameObject.transform.localScale -= new Vector3(Time.deltaTime, 0, 0);
+                gameObject.transform.localScale -= new Vector3(Time.deltaTime * _speed, 0, 0);
             }
         }
         if (_currentTimer < _maxTimer)
