@@ -188,7 +188,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.08, y: 0.54912615, z: -8.041428}
-  m_LocalScale: {x: 2.8773568, y: 1, z: 1.26402}
+  m_LocalScale: {x: 2.8773568, y: 0.9, z: 1.26402}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 674311092}
@@ -283,8 +283,9 @@ MonoBehaviour:
   - {fileID: 1044759315}
   - {fileID: 1302463332}
   _moveSpeed: 10
+  _turnBackWhenListEnd: 1
   _looping: 0
-  _isCyclingPositive: 0
+  _isCyclingPositive: 1
 --- !u!1 &1044759314
 GameObject:
   m_ObjectHideFlags: 0
