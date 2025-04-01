@@ -39,7 +39,7 @@ public class CameraFollowMode : MonoBehaviour
 
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
-    private CinemachineTransposer transposer;
+    private CinemachineFramingTransposer framingTransposer;
     private CinemachineComposer composer;
 
     private enum Direction { None, Left, Right }
@@ -61,8 +61,13 @@ public class CameraFollowMode : MonoBehaviour
     private void Start()
     {
         var vcam = GetComponent<CinemachineVirtualCamera>();
-        transposer = vcam.GetCinemachineComponent<CinemachineTransposer>();
+        framingTransposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
         composer = vcam.GetCinemachineComponent<CinemachineComposer>();
+
+        // -> Appliquer l'offset au Start
+        // if (framingTransposer != null)
+        //    framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
+
     }
 
     private void Update()
@@ -119,12 +124,12 @@ public class CameraFollowMode : MonoBehaviour
 
         followTarget.position = Vector3.Lerp(followTarget.position, desiredFollowPos, Time.deltaTime * followLerpSpeed);
 
-        if (transposer != null)
-            transposer.m_FollowOffset = Vector3.Lerp(transposer.m_FollowOffset, desiredOffset, Time.deltaTime * offsetLerpSpeed);
+        if (framingTransposer != null)
+            framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(framingTransposer.m_TrackedObjectOffset, new Vector3(desiredOffset.x, 0f, desiredOffset.z), Time.deltaTime * offsetLerpSpeed);
 
         if (composer != null)
         {
-            Vector3 targetTrackedOffset = new Vector3(desiredOffset.x, 0f, 0f);
+            Vector3 targetTrackedOffset = new Vector3(desiredOffset.x, 0f, desiredOffset.z);
             composer.m_TrackedObjectOffset = Vector3.Lerp(composer.m_TrackedObjectOffset, targetTrackedOffset, Time.deltaTime * offsetLerpSpeed);
         }
 
