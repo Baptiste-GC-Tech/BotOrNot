@@ -14,16 +14,17 @@ public class Cable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CableAction = InputSystem.actions.FindAction("Player/Cable");
+        CableAction = InputSystem.actions.FindAction("Cable");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ## Currently serves as debug
+        
         if (CableAction.WasPressedThisFrame()) //cable => ""jump""
         {
-            //rien
+            
         }
+        
     }
 }
