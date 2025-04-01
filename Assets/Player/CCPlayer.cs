@@ -30,23 +30,11 @@ public class CCPlayer : MonoBehaviour
         get { return _isDRInRange; }
     }
 
-    // First level completion condition : Should have its own class
+    /*// First level completion condition : Should have its own class
     // TODO: Generic Level class featuring states and a win cond, then make a child that's Level 1's class
     private List<GameObject> _DRCollectibles = new List<GameObject>();
-    private int _DRCount = 0;
+    private int _DRCount = 0;*/
 
-    /*
-     *  CLASS METHODS
-     */
-    private void PrintListCollectibles() //debug 
-    {
-        for (int i = 0; i < _DRCollectibles.Count; i++)
-        {
-            print("element "+i + " "+_DRCollectibles[i].name);
-        }
-
-        print("quest = "+_DRCount);
-    }
 
     /*
      *  UNITY METHODS

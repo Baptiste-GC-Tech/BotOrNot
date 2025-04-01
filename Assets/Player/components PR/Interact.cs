@@ -12,12 +12,15 @@ public class Interact : MonoBehaviour
 
     // player script reference
     [SerializeField] private CCPlayer player;
+    //inventory reference
+    private Inventory _inventory;
 
 
     // Start is called before the first frame update
     void Start()
     {
         TakeAction = InputSystem.actions.FindAction("Player/Take");
+        _inventory = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -30,11 +33,9 @@ public class Interact : MonoBehaviour
             {
                 //stock in inventory
 
-                print(player.Collectible.name);
-                /*if (!(_DRCollectibles.Contains(collectible)))
-                {
-                    _DRCollectibles.Add(collectible);
-                }*/
+                print(player.Collectible);
+
+                _inventory.AddItem(player.Collectible);
 
                 player.Collectible.SetActive(false);
 
@@ -44,16 +45,12 @@ public class Interact : MonoBehaviour
             {
                 //give inventory item(s) to DR
 
-                //if (_DRCollectibles.Count > 0)
-                //{
-                //    for (int i = _DRCollectibles.Count - 1; i >= 0; i--)
-                //    {
-                //        Destroy(_DRCollectibles[i]);
-                //        _DRCollectibles.Remove(_DRCollectibles[i]);
-                //        _DRCount++;
-                //    }
-                //    print("objets déposés");
-                //}
+                print(_inventory.CountItem() +" objets déposées");
+
+                for(int i = _inventory.CountItem()-1; i> 0; i--)
+                {
+                    _inventory.DeleteItem(i);
+                }
             }
         }
     }
