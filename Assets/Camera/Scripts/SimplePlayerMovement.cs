@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class SimplePlayerMovement : MonoBehaviour
 {
+    /*
+    *  FIELDS
+    */
+
     [Header("Paramètres de déplacement")]
     public float moveSpeed = 5f;
 
@@ -10,7 +14,7 @@ public class SimplePlayerMovement : MonoBehaviour
     public float rotationSpeed = 10f;
     public float rotationOffset = -90f;
 
-    private float targetAngle = 0f;
+    private float _targetAngle = 0f;
 
     void Update()
     {
@@ -19,36 +23,38 @@ public class SimplePlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             direction = 1f;
-            targetAngle = GetAxisRotationAngle(180f + rotationOffset); // gauche
+            /* GAUCHE */
+            _targetAngle = GetAxisRotationAngle(180f + rotationOffset);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             direction = -1f;
-            targetAngle = GetAxisRotationAngle(0f + rotationOffset); // droite
+            /* DROITE */
+            _targetAngle = GetAxisRotationAngle(0f + rotationOffset);
         }
 
-        // Mouvement
+        /* Mouvement */
         transform.position += new Vector3(direction, 0f, 0f) * moveSpeed * Time.deltaTime;
 
-        // Rotation Smooth
+        /* Rotation Smooth */
         Quaternion currentRotation = transform.rotation;
-        Quaternion desiredRotation = GetTargetRotation(targetAngle);
+        Quaternion desiredRotation = GetTargetRotation(_targetAngle);
         transform.rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * rotationSpeed);
     }
 
-    private float GetAxisRotationAngle(float angle)
+    private float GetAxisRotationAngle(float _angle)
     {
-        return angle;
+        return _angle;
     }
 
-    private Quaternion GetTargetRotation(float angle)
+    private Quaternion GetTargetRotation(float _angle)
     {
         switch (rotationAxis)
         {
-            case RotationAxis.X: return Quaternion.Euler(angle, 0f, 0f);
-            case RotationAxis.Y: return Quaternion.Euler(0f, angle, 0f);
-            case RotationAxis.Z: return Quaternion.Euler(0f, 0f, angle);
+            case RotationAxis.X: return Quaternion.Euler(_angle, 0f, 0f);
+            case RotationAxis.Y: return Quaternion.Euler(0f, _angle, 0f);
+            case RotationAxis.Z: return Quaternion.Euler(0f, 0f, _angle);
             default: return Quaternion.identity;
         }
     }

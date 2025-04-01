@@ -5,6 +5,10 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CinemachineVirtualCamera))]
 public class CameraFollowMode : MonoBehaviour
 {
+    /*
+     *  FIELDS
+     */
+
     public enum FollowMode
     {
         Player,
@@ -39,11 +43,11 @@ public class CameraFollowMode : MonoBehaviour
 
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
-    private CinemachineFramingTransposer framingTransposer;
-    private CinemachineComposer composer;
+    private CinemachineFramingTransposer _framingTransposer;
+    private CinemachineComposer _composer;
 
-    private enum Direction { None, Left, Right }
-    private Direction currentDirection = Direction.Right;
+    private enum Direction { _None, _Left, _Right }
+    private Direction _currentDirection = Direction._Right;
 
     private class TriggerTargetData
     {
@@ -54,20 +58,20 @@ public class CameraFollowMode : MonoBehaviour
         public bool focusOnly;
     }
 
-
     private List<TriggerTargetData> activeTriggerTargets = new List<TriggerTargetData>();
     private TriggerTargetData currentTriggerData = null;
 
     private void Start()
     {
         var vcam = GetComponent<CinemachineVirtualCamera>();
-        framingTransposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
-        composer = vcam.GetCinemachineComponent<CinemachineComposer>();
+        _framingTransposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        _composer = vcam.GetCinemachineComponent<CinemachineComposer>();
 
-        // -> Appliquer l'offset au Start
-        // if (framingTransposer != null)
-        //    framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
-
+        /* -> Appliquer l'offset au Start
+         * if (_framingTransposer != null)
+         *      _framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
+         */    
+            
     }
 
     private void Update()
@@ -81,11 +85,12 @@ public class CameraFollowMode : MonoBehaviour
 
         switch (currentMode)
         {
+            /* Follow Player */
             case FollowMode.Player:
                 desiredFollowPos = player.position;
                 desiredOffset = GetOffsetFromDirection();
                 break;
-
+            /* Follow Object Spécifique */
             case FollowMode.OtherObject:
                 if (otherTarget != null)
                 {
@@ -94,6 +99,7 @@ public class CameraFollowMode : MonoBehaviour
                 }
                 break;
 
+            /* Follow Barycentre entre Player et Objet Spécifique */
             case FollowMode.Barycenter:
                 if (otherTarget != null)
                 {
@@ -102,6 +108,9 @@ public class CameraFollowMode : MonoBehaviour
                 }
                 break;
 
+            /* Follow Automatique :
+             * Follow Player de base (si non trigger zone) + Direction avec Offsets appliqués (offsetX et offsetZ)
+             */
             case FollowMode.Auto:
                 if (currentTriggerData != null)
                 {
@@ -124,25 +133,35 @@ public class CameraFollowMode : MonoBehaviour
 
         followTarget.position = Vector3.Lerp(followTarget.position, desiredFollowPos, Time.deltaTime * followLerpSpeed);
 
-        if (framingTransposer != null)
-            framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(framingTransposer.m_TrackedObjectOffset, new Vector3(desiredOffset.x, 0f, desiredOffset.z), Time.deltaTime * offsetLerpSpeed);
-
-        if (composer != null)
+        /* Appliquation des offsets désirés sur le component CinemachineVirtualCamera > Body > Tracked Object Offset */
+        if (_framingTransposer != null)
+            _framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(_framingTransposer.m_TrackedObjectOffset, new Vector3(desiredOffset.x, 0f, desiredOffset.z), Time.deltaTime * offsetLerpSpeed);
+        
+        /*
+         * Non utilisé car on n'utilise plus l'Aim
+         * 
+        if (_composer != null)
         {
             Vector3 targetTrackedOffset = new Vector3(desiredOffset.x, 0f, desiredOffset.z);
-            composer.m_TrackedObjectOffset = Vector3.Lerp(composer.m_TrackedObjectOffset, targetTrackedOffset, Time.deltaTime * offsetLerpSpeed);
+            _composer.m_TrackedObjectOffset = Vector3.Lerp(_composer.m_TrackedObjectOffset, targetTrackedOffset, Time.deltaTime * offsetLerpSpeed);
         }
+        */
 
-        // !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!!
+        /* !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!! */
+
         if (Input.GetKeyDown(KeyCode.A))
-            currentDirection = Direction.Left;
+            _currentDirection = Direction._Left;
         else if (Input.GetKeyDown(KeyCode.D))
-            currentDirection = Direction.Right;
+            _currentDirection = Direction._Right;
     }
+
+     /*
+     *  CLASS METHODS
+     */
 
     private Vector3 GetOffsetFromDirection()
     {
-        return currentDirection == Direction.Left
+        return _currentDirection == Direction._Left
             ? new Vector3(-offsetX, 0f, offsetZ)
             : new Vector3(offsetX, 0f, offsetZ);
     }

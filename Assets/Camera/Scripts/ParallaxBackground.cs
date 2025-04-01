@@ -4,6 +4,10 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ParallaxBackground : MonoBehaviour
 {
+   /*
+    *  FIELDS
+    */
+
     public ParallaxCamera parallaxCamera;
     List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
 
@@ -17,6 +21,10 @@ public class ParallaxBackground : MonoBehaviour
 
         SetLayers();
     }
+
+    /*
+     *  CLASS METHODS
+     */
 
     void SetLayers()
     {

@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class TriggerNotifier : MonoBehaviour
 {
+    /*
+     *  FIELDS
+     */
+
+    /* ---- Tooltips ---- */
     [Tooltip("L'objet avec lequel la caméra fera un barycentre ou qu'elle suivra directement.")]
     public Transform linkedObject;
 
@@ -28,13 +33,18 @@ public class TriggerNotifier : MonoBehaviour
     [Tooltip("Si activé, la caméra se concentre uniquement sur l'objet au lieu du barycentre.")]
     public bool focusOnly = false;
 
-    private bool isActive = false;
+    private bool _isActive = false;
 
+    /*
+     *  CLASS METHODS
+     */
+
+    /* ---- Trigger Zone Enter ---- */
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag) && !isActive)
+        if (other.CompareTag(playerTag) && !_isActive)
         {
-            isActive = true;
+            _isActive = true;
 
             cameraFollow?.RegisterTriggerTarget(linkedObject, overrideOffset, offsetX, offsetZ, focusOnly);
 
@@ -43,22 +53,24 @@ public class TriggerNotifier : MonoBehaviour
         }
     }
 
+    /* ---- Trigger Zone Exit ---- */
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
             CancelInvoke();
-            isActive = false;
+            _isActive = false;
 
             cameraFollow?.UnregisterTriggerTarget(linkedObject);
         }
     }
 
+    /* ---- Trigger Zone End Effect ---- */
     private void EndEffect()
     {
-        if (isActive)
+        if (_isActive)
         {
-            isActive = false;
+            _isActive = false;
             cameraFollow?.UnregisterTriggerTarget(linkedObject);
         }
     }
