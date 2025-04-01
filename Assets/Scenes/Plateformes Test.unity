@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297b374fdf497384aad29c4b5a867d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _status: 1
   _transformsList:
   - {fileID: 1031074985}
   - {fileID: 818729938}
@@ -614,7 +615,7 @@ MonoBehaviour:
   - {fileID: 1469897702}
   _moveSpeed: 10
   _looping: 1
-  _isMoving: 1
+  _isCyclingPositive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
