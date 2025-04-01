@@ -10,20 +10,22 @@ public class BON_Elevator : BON_Actionnable
     [SerializeField] GameObject _elevatorPosition;
     [SerializeField] Canvas _levelHUD;
     [SerializeField] float _playerSpeed;
-    List<Button> _buttonsInHUD;
+    Button[] _buttonsInHUD;
     GameObject _player;
     bool _isPlayerMoving;
     bool _isElevatorMoving;
     void Start()
     {
-        _buttonsInHUD.Add(_levelHUD.GetComponentInChildren<Button>());
+        _buttonsInHUD = _levelHUD.GetComponentsInChildren<Button>();
         _player = GameObject.FindFirstObjectByType<Player>().gameObject;
         _isPlayerMoving = false;
         _isElevatorMoving = false;
+        base.Status = true;
     }
 
     public override void On()
     {
+        Debug.Log("EnterOn");
         foreach (var button in _buttonsInHUD)
         {
             button.interactable = false;
@@ -33,6 +35,7 @@ public class BON_Elevator : BON_Actionnable
 
     public override void Off()
     {
+        Debug.Log("EnterOff");
         foreach (var button in _buttonsInHUD)
         {
             button.interactable = true;
@@ -50,6 +53,12 @@ public class BON_Elevator : BON_Actionnable
                 _isPlayerMoving = false;
                 _isElevatorMoving = true;
             }
+        }
+        if (_isElevatorMoving)
+        {
+            //move the elevator
+            _isElevatorMoving = false;
+            base.Toggle();
         }
     }
 }
