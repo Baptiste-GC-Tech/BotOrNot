@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.InputSystem;  
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Example : MonoBehaviour    // BAD NAME : Character Controller taken tho. TODO: Find a better name for this class
 {
@@ -15,7 +16,8 @@ public class Example : MonoBehaviour    // BAD NAME : Character Controller taken
     InputAction TakeAction;
 
     // Movement action related
-    [SerializeField] private float _maxSpeed;
+    [SerializeField] private float _maxVelocity;
+    [SerializeField] private float _maxAcceleration;
 
     // Object-interaction related
     GameObject collectible = null;
@@ -56,9 +58,15 @@ public class Example : MonoBehaviour    // BAD NAME : Character Controller taken
     {
         // Left-right movement action handling
         Vector2 moveValue = MoveAction.ReadValue<Vector2>();
-        GetComponent<Rigidbody>().AddForce(new Vector3(moveValue.x, moveValue.y, 0.0f), ForceMode.Acceleration);
-        Mathf.Clamp(GetComponent<Rigidbody>().velocity.x, 0.0f, _maxSpeed);
-        Mathf.Clamp(GetComponent<Rigidbody>().velocity.y, 0.0f, _maxSpeed);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.AddForce(new Vector3(moveValue.x, moveValue.y, 0.0f) * _maxAcceleration, ForceMode.Acceleration);
+
+        rb.velocity = new Vector3 (Mathf.Clamp(rb.velocity.x, -_maxVelocity, _maxVelocity),
+                                   Mathf.Clamp(rb.velocity.y, -_maxVelocity, _maxVelocity),
+                                   0.0f);
+
+
+        Debug.Log("cur Vel : " + GetComponent<Rigidbody>().velocity);
         //transform.position += new Vector3(moveValue.x * Time.deltaTime, 0, 0);
 
         // Cable action handling
