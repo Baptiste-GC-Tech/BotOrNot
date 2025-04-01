@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BON_Actionnable : MonoBehaviour
 {
+    [SerializeField]
     protected bool _status ;
 
     public bool Status {  
