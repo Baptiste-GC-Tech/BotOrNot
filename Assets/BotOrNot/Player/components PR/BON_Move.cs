@@ -17,6 +17,8 @@ public class BON_Move : MonoBehaviour
     [SerializeField] float _maxSpeed;       // Should be used only with ForceMode.Acceleration, Unit is m/s/s.
     private Vector3 _accumulatedMoveForce;
 
+    Vector2 moveInputValue;
+
 
 
     /*
@@ -31,7 +33,7 @@ public class BON_Move : MonoBehaviour
     void Update()
     {
         /* Read input value */
-        Vector2 moveInputValue = MoveAction.ReadValue<Vector2>();
+        moveInputValue = MoveAction.ReadValue<Vector2>();
 
         /* Updates the accumulated force the PR is using to move around, and clamps it if needed */
         _accumulatedMoveForce = new Vector3(Mathf.Clamp(moveInputValue.x * _acceleration, -_maxSpeed, _maxSpeed),
