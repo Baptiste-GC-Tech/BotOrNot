@@ -29,7 +29,7 @@ public class BON_MovObj_ListBased : BON_Actionnable
     protected Vector3 _currentDirection;
     protected Vector3 _currentRotation;
 
-
+    public bool IsCyclingPositive { get { return _isCyclingPositive; } }
     protected int NextNodeIndex {  
         get { return _nextNodeIndex; }
         set {
