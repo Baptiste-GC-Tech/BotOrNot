@@ -4,12 +4,16 @@ using UnityEditor;
 [CustomEditor(typeof(TriggerNotifier))]
 public class TriggerNotifierEditor : Editor
 {
-    private Texture2D bannerTexture;
+    private Texture2D _bannerTexture;
+
+    /*
+     *  CLASS METHODS
+     */
 
     private void OnEnable()
     {
         // Charge l’image depuis Resources/Editor/TriggerBanner.png
-        bannerTexture = Resources.Load<Texture2D>("Editor/TriggerBanner");
+        _bannerTexture = Resources.Load<Texture2D>("Editor/TriggerBanner");
     }
 
     public override void OnInspectorGUI()
@@ -17,13 +21,13 @@ public class TriggerNotifierEditor : Editor
         TriggerNotifier script = (TriggerNotifier)target;
 
         // Afficher la bannière si elle existe
-        if (bannerTexture != null)
+        if (_bannerTexture != null)
         {
-            float aspectRatio = (float)bannerTexture.width / bannerTexture.height;
+            float aspectRatio = (float)_bannerTexture.width / _bannerTexture.height;
             float width = EditorGUIUtility.currentViewWidth - 40;
             float height = width / aspectRatio;
             Rect rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));
-            GUI.DrawTexture(rect, bannerTexture, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(rect, _bannerTexture, ScaleMode.ScaleToFit);
             GUILayout.Space(10);
         }
         else
@@ -40,6 +44,7 @@ public class TriggerNotifierEditor : Editor
         DrawTooltipField("duration", "Durée pendant laquelle la caméra reste focalisée sur le barycentre. 0 = jusqu’à sortie du trigger.");
         DrawTooltipField("overrideOffset", "Active un offset personnalisé pour la caméra lorsque ce trigger est actif.");
         DrawTooltipField("offsetX", "Décalage horizontal (X) de la caméra lors du barycentre.");
+        DrawTooltipField("offsetY", "Décalage en hauteur (Y) de la caméra lors du barycentre.");
         DrawTooltipField("offsetZ", "Décalage en profondeur (Z) de la caméra lors du barycentre.");
         DrawTooltipField("focusOnly", "Si activé, la caméra se concentre uniquement sur l'objet au lieu du barycentre.");
 

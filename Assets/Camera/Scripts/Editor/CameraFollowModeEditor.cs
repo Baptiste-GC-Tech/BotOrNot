@@ -4,36 +4,46 @@ using UnityEditor;
 [CustomEditor(typeof(CameraFollowMode))]
 public class CameraFollowModeEditor : Editor
 {
-    private Texture2D bannerTexture;
+
+    /*
+     *  FIELDS
+     */
+
+    private Texture2D _bannerTexture;
+
+    /*
+     *  CLASS METHODS
+     */
 
     private void OnEnable()
     {
-        bannerTexture = Resources.Load<Texture2D>("Editor/CameraBanner");
+        _bannerTexture = Resources.Load<Texture2D>("Editor/CameraBanner");
     }
 
     public override void OnInspectorGUI()
     {
         CameraFollowMode script = (CameraFollowMode)target;
 
-        // Bannière en haut
-        if (bannerTexture != null)
+        /* Bannière */
+        if (_bannerTexture != null)
         {
-            float aspectRatio = (float)bannerTexture.width / bannerTexture.height;
+            float aspectRatio = (float)_bannerTexture.width / _bannerTexture.height;
             float width = EditorGUIUtility.currentViewWidth - 40;
             float height = width / aspectRatio;
             Rect rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));
-            GUI.DrawTexture(rect, bannerTexture, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(rect, _bannerTexture, ScaleMode.ScaleToFit);
             GUILayout.Space(10);
         }
 
-        // Champs manuels avec tooltips
+        /* Tooltips */
         DrawField("player", "Transform du joueur contrôlé.");
         DrawField("otherTarget", "Objet secondaire à suivre (optionnel).");
         DrawField("followTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
 
         GUILayout.Space(5);
         DrawField("offsetX", "Décalage horizontal lors du suivi.");
-        DrawField("offsetZ", "Décalage de profondeur (Z).");
+        DrawField("offsetY", "Décalage vertical lors du suivi.");
+        DrawField("offsetZ", "Décalage de profondeur lors du suivi.");
 
         GUILayout.Space(5);
         DrawField("followLerpSpeed", "Vitesse de transition de position du FollowTarget.");
@@ -51,7 +61,7 @@ public class CameraFollowModeEditor : Editor
         if (GUILayout.Button("Suivre le Barycentre"))
             script.currentMode = CameraFollowMode.FollowMode.Barycenter;
 
-        if (GUILayout.Button("Mode Automatique (Trigger Zones)"))
+        if (GUILayout.Button("Mode Automatique (Sensible Trigger Zones)"))
             script.currentMode = CameraFollowMode.FollowMode.Auto;
 
         GUILayout.Space(5);

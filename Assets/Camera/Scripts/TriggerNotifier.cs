@@ -27,6 +27,9 @@ public class TriggerNotifier : MonoBehaviour
     [Tooltip("Décalage horizontal (X) de la caméra.")]
     public float offsetX = 0f;
 
+    [Tooltip("Décalage vertical (Y) de la caméra.")]
+    public float offsetY = 0f;
+
     [Tooltip("Décalage en profondeur (Z) de la caméra.")]
     public float offsetZ = 9f;
 
@@ -46,7 +49,7 @@ public class TriggerNotifier : MonoBehaviour
         {
             _isActive = true;
 
-            cameraFollow?.RegisterTriggerTarget(linkedObject, overrideOffset, offsetX, offsetZ, focusOnly);
+            cameraFollow?.RegisterTriggerTarget(linkedObject, overrideOffset, offsetX, offsetY, offsetZ, focusOnly);
 
             if (duration > 0f)
                 Invoke(nameof(EndEffect), duration);

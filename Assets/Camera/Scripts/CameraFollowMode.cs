@@ -31,6 +31,9 @@ public class CameraFollowMode : MonoBehaviour
     [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur.")]
     public float offsetX = -3f;
 
+    [Tooltip("Décalage vertical appliqué à la caméra.")]
+    public float offsetY = 0f;
+
     [Tooltip("Décalage en profondeur appliqué à la caméra.")]
     public float offsetZ = 9f;
 
@@ -45,6 +48,7 @@ public class CameraFollowMode : MonoBehaviour
 
     private CinemachineFramingTransposer _framingTransposer;
     private CinemachineComposer _composer;
+    private CinemachineVirtualCamera _vcam;
 
     private enum Direction { _None, _Left, _Right }
     private Direction _currentDirection = Direction._Right;
@@ -54,6 +58,7 @@ public class CameraFollowMode : MonoBehaviour
         public Transform target;
         public bool overrideOffset;
         public float offsetX;
+        public float offsetY;
         public float offsetZ;
         public bool focusOnly;
     }
@@ -63,9 +68,9 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Start()
     {
-        var vcam = GetComponent<CinemachineVirtualCamera>();
-        _framingTransposer = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
-        _composer = vcam.GetCinemachineComponent<CinemachineComposer>();
+        _vcam = GetComponent<CinemachineVirtualCamera>();
+        _framingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
+        _composer = _vcam.GetCinemachineComponent<CinemachineComposer>();
 
         /* -> Appliquer l'offset au Start
          * if (_framingTransposer != null)
@@ -95,7 +100,7 @@ public class CameraFollowMode : MonoBehaviour
                 if (otherTarget != null)
                 {
                     desiredFollowPos = otherTarget.position;
-                    desiredOffset = new Vector3(0f, 0f, offsetZ);
+                    desiredOffset = new Vector3(0f, offsetY, offsetZ);
                 }
                 break;
 
@@ -104,7 +109,7 @@ public class CameraFollowMode : MonoBehaviour
                 if (otherTarget != null)
                 {
                     desiredFollowPos = (player.position + otherTarget.position) / 2f;
-                    desiredOffset = new Vector3(0f, 0f, offsetZ);
+                    desiredOffset = new Vector3(0f, offsetY, offsetZ);
                 }
                 break;
 
@@ -119,8 +124,8 @@ public class CameraFollowMode : MonoBehaviour
                         : (player.position + currentTriggerData.target.position) / 2f;
 
                     desiredOffset = currentTriggerData.overrideOffset
-                        ? new Vector3(currentTriggerData.offsetX, 0f, currentTriggerData.offsetZ)
-                        : new Vector3(0f, 0f, offsetZ);
+                        ? new Vector3(currentTriggerData.offsetX, currentTriggerData.offsetY, currentTriggerData.offsetZ)
+                        : new Vector3(offsetX, offsetY, offsetZ);
                 }
                 else
                 {
@@ -135,8 +140,21 @@ public class CameraFollowMode : MonoBehaviour
 
         /* Appliquation des offsets désirés sur le component CinemachineVirtualCamera > Body > Tracked Object Offset */
         if (_framingTransposer != null)
-            _framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(_framingTransposer.m_TrackedObjectOffset, new Vector3(desiredOffset.x, 0f, desiredOffset.z), Time.deltaTime * offsetLerpSpeed);
-        
+            _framingTransposer.m_TrackedObjectOffset = Vector3.Lerp(_framingTransposer.m_TrackedObjectOffset, new Vector3(desiredOffset.x, desiredOffset.y, desiredOffset.z), Time.deltaTime * offsetLerpSpeed);
+
+        if (_vcam != null && _vcam.m_Lens.Orthographic)
+        {
+            var lens = _vcam.m_Lens;
+            lens.OrthographicSize = Mathf.Lerp(
+                lens.OrthographicSize,
+                desiredOffset.z,
+                Time.deltaTime * offsetLerpSpeed);
+            _vcam.m_Lens = lens;
+        }
+
+
+
+
         /*
          * Non utilisé car on n'utilise plus l'Aim
          * 
@@ -155,18 +173,17 @@ public class CameraFollowMode : MonoBehaviour
             _currentDirection = Direction._Right;
     }
 
-     /*
-     *  CLASS METHODS
-     */
+    /*
+    *  CLASS METHODS
+    */
 
     private Vector3 GetOffsetFromDirection()
     {
-        return _currentDirection == Direction._Left
-            ? new Vector3(-offsetX, 0f, offsetZ)
-            : new Vector3(offsetX, 0f, offsetZ);
+        float x = _currentDirection == Direction._Left ? -offsetX : offsetX;
+        return new Vector3(x, offsetY, offsetZ);
     }
 
-    public void RegisterTriggerTarget(Transform target, bool overrideOffset, float customX, float customZ, bool focusOnly)
+    public void RegisterTriggerTarget(Transform target, bool overrideOffset, float customX, float customY, float customZ, bool focusOnly)
     {
         if (activeTriggerTargets.Exists(t => t.target == target)) return;
 
@@ -175,6 +192,7 @@ public class CameraFollowMode : MonoBehaviour
             target = target,
             overrideOffset = overrideOffset,
             offsetX = customX,
+            offsetY = customY,
             offsetZ = customZ,
             focusOnly = focusOnly
         };
