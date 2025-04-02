@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Interact : MonoBehaviour
+public class BON_Interact : MonoBehaviour
 {
     /*
      *  FIELDS
@@ -11,7 +11,7 @@ public class Interact : MonoBehaviour
     InputAction TakeAction;
 
     // player script reference
-    [SerializeField] private CCPlayer player;
+    [SerializeField] private BON_CCPlayer player;
     //inventory reference
     private Inventory _inventory;
 

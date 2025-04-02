@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class CCPlayer : MonoBehaviour 
+public class BON_CCPlayer : MonoBehaviour 
 {
     /*
      *  FIELDS

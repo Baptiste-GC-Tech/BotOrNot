@@ -14,7 +14,7 @@ public class BON_CollectableObject : MonoBehaviour
     private void Start()
     {
         //change to the player controller once created /////////////!!!\\\\\\\\\\\\\\\
-        _player = GameObject.FindFirstObjectByType<CCPlayer>().gameObject;
+        _player = GameObject.FindFirstObjectByType<BON_CCPlayer>().gameObject;
         _playerAnimator = _player.GetComponent<Animator>();
         _isCollected = false;
     }

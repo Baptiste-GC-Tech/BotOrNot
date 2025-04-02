@@ -4,7 +4,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Move : MonoBehaviour
+public class BON_Move : MonoBehaviour
 {
     /*
      *  FIELDS

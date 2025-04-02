@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Cable : MonoBehaviour
+public class BON_Cable : MonoBehaviour
 {
     /*
      *  FIELDS
