@@ -8,18 +8,21 @@ public class BON_Interact : MonoBehaviour
     /*
      *  FIELDS
      */
-    InputAction TakeAction;
+    InputAction InteractAction;
 
     // player script reference
     [SerializeField] private BON_CCPlayer player;
     //inventory reference
     private Inventory _inventory;
 
+    /*
+     *  UNITY METHODS
+     */
 
     // Start is called before the first frame update
     void Start()
     {
-        TakeAction = InputSystem.actions.FindAction("Player/Take");
+        InteractAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
         _inventory = GetComponent<Inventory>();
     }
 
@@ -27,7 +30,7 @@ public class BON_Interact : MonoBehaviour
     void Update()
     {
         // Take item action handling
-        if (TakeAction.WasPressedThisFrame()) //interact
+        if (InteractAction.WasPressedThisFrame()) //interact
         {
             if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
             {
@@ -51,6 +54,12 @@ public class BON_Interact : MonoBehaviour
                 {
                     _inventory.DeleteItem(i);
                 }
+            }
+            else
+            {
+                print("non");
+                print("collectible = " + player.Collectible);
+                print("in range = " + player.IsCollectibleInRange);
             }
         }
     }

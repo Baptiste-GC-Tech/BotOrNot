@@ -1,6 +1,9 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+
+
 
 [RequireComponent(typeof(CinemachineVirtualCamera))]
 public class CameraFollowMode : MonoBehaviour
@@ -8,6 +11,8 @@ public class CameraFollowMode : MonoBehaviour
     /*
      *  FIELDS
      */
+
+    InputAction MoveAction;
 
     public enum FollowMode
     {
@@ -50,8 +55,8 @@ public class CameraFollowMode : MonoBehaviour
     private CinemachineComposer _composer;
     private CinemachineVirtualCamera _vcam;
 
-    private enum Direction { _None, _Left, _Right }
-    private Direction _currentDirection = Direction._Right;
+    private enum Direction { _None, _Left, _Right } // REF
+    private Direction _currentDirection = Direction._Right; // REF
 
     private class TriggerTargetData
     {
@@ -68,6 +73,8 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Start()
     {
+        MoveAction = InputSystem.actions.FindAction("Player/Move");
+
         _vcam = GetComponent<CinemachineVirtualCamera>();
         _framingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
         _composer = _vcam.GetCinemachineComponent<CinemachineComposer>();
@@ -81,6 +88,9 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Update()
     {
+        
+        Vector2 moveInputValue = MoveAction.ReadValue<Vector2>();
+
         if (followTarget == null || player == null) return;
 
         currentTriggerData = activeTriggerTargets.Count > 0 ? activeTriggerTargets[^1] : null;
@@ -167,9 +177,9 @@ public class CameraFollowMode : MonoBehaviour
 
         /* !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!! */
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (moveInputValue.x < 0)
             _currentDirection = Direction._Left;
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (moveInputValue.x >= 0)
             _currentDirection = Direction._Right;
     }
 
