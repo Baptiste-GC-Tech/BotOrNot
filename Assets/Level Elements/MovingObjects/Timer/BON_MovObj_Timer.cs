@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_Timer : BON_Actionnable
+public class BON_MovObj_Timer : BON_Actionnable
 {
-    [SerializeField] private float _maxTimer;
+    //FIELD//
+    [SerializeField] float _maxTimer;
     private float _currentTimer;
     [SerializeField] private float _extensionMax;
     [SerializeField] private int _speed;
 
+
+
+    //CLASS METHODS
     override public void Off()
     {
         _currentTimer = 0;
     }
 
+
+
+    //UNITY METHODS
     private void Start()
     {
         _currentTimer = _maxTimer;
