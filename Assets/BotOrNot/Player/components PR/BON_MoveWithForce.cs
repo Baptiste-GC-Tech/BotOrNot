@@ -24,7 +24,7 @@ public class BON_MoveWithForce : MonoBehaviour
      */
     void Start()
     {
-        MoveAction = InputSystem.actions.FindAction("Player/Move");
+        MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _parentRigidBody = GetComponent<Rigidbody>();
     }
 

@@ -178,9 +178,9 @@ public class CameraFollowMode : MonoBehaviour
 
         print(MoveAction.ReadValue<Vector2>().x);
 
-        if (MoveAction.ReadValue<Vector2>().x == -1)
+        if (MoveAction.ReadValue<Vector2>().x == 1)
             _currentDirection = Direction._Left;
-        else if (MoveAction.ReadValue<Vector2>().x == 1)
+        else if (MoveAction.ReadValue<Vector2>().x == -1)
             _currentDirection = Direction._Right;
         
 
