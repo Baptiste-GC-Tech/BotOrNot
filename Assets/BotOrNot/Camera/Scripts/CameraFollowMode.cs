@@ -73,7 +73,8 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Start()
     {
-        MoveAction = InputSystem.actions.FindAction("Player/Move");
+        /* New Inputs */
+        // MoveAction = InputSystem.actions.FindAction("Player/Move");
 
         _vcam = GetComponent<CinemachineVirtualCamera>();
         _framingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
@@ -88,8 +89,9 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Update()
     {
-        
-        Vector2 moveInputValue = MoveAction.ReadValue<Vector2>();
+        /* New Inputs */
+        // print(MoveAction.ReadValue<Vector2>());
+        MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
 
         if (followTarget == null || player == null) return;
 
@@ -162,9 +164,6 @@ public class CameraFollowMode : MonoBehaviour
             _vcam.m_Lens = lens;
         }
 
-
-
-
         /*
          * Non utilisé car on n'utilise plus l'Aim
          * 
@@ -177,10 +176,20 @@ public class CameraFollowMode : MonoBehaviour
 
         /* !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!! */
 
-        if (moveInputValue.x < 0)
+        print(MoveAction.ReadValue<Vector2>().x);
+
+        if (MoveAction.ReadValue<Vector2>().x == -1)
             _currentDirection = Direction._Left;
-        else if (moveInputValue.x >= 0)
+        else if (MoveAction.ReadValue<Vector2>().x == 1)
             _currentDirection = Direction._Right;
+        
+
+        /*
+        if (Input.GetKey(KeyCode.A))
+            _currentDirection = Direction._Left;
+        else if (Input.GetKey(KeyCode.A))
+            _currentDirection = Direction._Right;
+        */
     }
 
     /*
