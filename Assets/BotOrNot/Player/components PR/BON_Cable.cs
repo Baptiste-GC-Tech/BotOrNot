@@ -11,6 +11,10 @@ public class BON_Cable : MonoBehaviour
     InputAction CableAction;
 
 
+    /*
+     *  UNITY METHODS
+     */
+
     // Start is called before the first frame update
     void Start()
     {

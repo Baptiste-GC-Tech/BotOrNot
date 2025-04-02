@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    /*
+     *  FIELDS
+     */
     private List<GameObject> _items = new();
+
+
+    /*
+     *  CLASS METHODS
+     */
+
 
     public void AddItem(GameObject obj) //add item to the list
     {
@@ -32,6 +41,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
+    /*
+     *  UNITY METHODS
+     */
 
     // Start is called before the first frame update
     void Start()
