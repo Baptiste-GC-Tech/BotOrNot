@@ -5,18 +5,42 @@ using UnityEngine;
 
 public class BON_HookAction : MonoBehaviour
 {
+    //FIELD
+    private bool _isHooked;
+    private BON_Interactive _hook;
+
+
+
+    //CLASS METHODS
     public void OnClick()
     {
-        foreach (GameObject hook in GameObject.FindGameObjectsWithTag("Hook"))
+        if (_isHooked)
         {
-            if ((gameObject.transform.forward.x <= 0 && hook.transform.position.x - gameObject.transform.position.x <= 0) || (gameObject.transform.forward.x >= 0 && hook.transform.position.x - gameObject.transform.position.x >= 0))
+            _hook.Activate();
+            _isHooked = false;
+        }
+        else
+        {
+            foreach (GameObject hook in GameObject.FindGameObjectsWithTag("Hook"))
             {
-                if ((hook.transform.position - gameObject.transform.position).magnitude <= 10)
+                if ((gameObject.transform.forward.x <= 0 && hook.transform.position.x - gameObject.transform.position.x <= 0) || (gameObject.transform.forward.x >= 0 && hook.transform.position.x - gameObject.transform.position.x >= 0))
                 {
-                    hook.SetActive(true);
-                    break;
+                    if ((hook.transform.position - gameObject.transform.position).magnitude <= 10)
+                    {
+                        _hook = hook.GetComponent<BON_Interactive>();
+                        _hook.Activate();
+                        _isHooked = true;
+                        break;
+                    }
                 }
             }
         }
+    }
+
+
+    //UNITY METHODS
+    private void Start()
+    {
+       _isHooked = false;
     }
 }
