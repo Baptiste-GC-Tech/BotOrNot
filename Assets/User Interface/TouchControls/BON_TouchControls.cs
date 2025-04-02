@@ -17,11 +17,16 @@ public class BON_TouchControls : MonoBehaviour
     private bool _hasPassedThreshold;
 
     [SerializeField] GameObject joystick;
-    private Vector2 _joystickOrigin;
+    private RawImage _joystickImage;
 
     [Range(20f, 50f)]
-    public float slideThreshold = 10f;
+    private float _slideThreshold = 10f;
 
+    public float SlideThreshold
+    {
+        get { return _slideThreshold; }
+        set { _slideThreshold = value; } 
+    }
 
 
 
@@ -32,7 +37,7 @@ public class BON_TouchControls : MonoBehaviour
 
     private void PRIVUnhideJoystick()
     {
-        joystick.GetComponent<RawImage>().enabled = true;
+        _joystickImage.enabled = true;
     }
     private void PRIVMoveJoystick()
     {
@@ -46,15 +51,15 @@ public class BON_TouchControls : MonoBehaviour
 
     private void PRIVHideJoystick()
     {
-        joystick.GetComponent<RawImage>().enabled = false;
+        _joystickImage.enabled = false;
     }
 
     private bool PRIVIsInThreshold(Vector2 position)
     {
-        if (position.x - _initialTouchPos.x > slideThreshold
-                    || position.x - _initialTouchPos.x < -slideThreshold
-                    || position.y - _initialTouchPos.y > slideThreshold
-                    || position.y - _initialTouchPos.y < -slideThreshold)
+        if (position.x - _initialTouchPos.x > _slideThreshold
+                    || position.x - _initialTouchPos.x < -_slideThreshold
+                    || position.y - _initialTouchPos.y > _slideThreshold
+                    || position.y - _initialTouchPos.y < -_slideThreshold)
         {
             return false;
         }
@@ -71,7 +76,7 @@ public class BON_TouchControls : MonoBehaviour
 
     void Start()
     {
-
+        _joystickImage = joystick.GetComponent<RawImage>();
     }
     
     void Update()
