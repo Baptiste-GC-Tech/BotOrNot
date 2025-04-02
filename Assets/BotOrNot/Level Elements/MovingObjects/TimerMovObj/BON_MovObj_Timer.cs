@@ -13,13 +13,12 @@ public class BON_MovObj_Timer : BON_Actionnable
     [SerializeField] private float _extensionMin;
     [SerializeField] private float _speed;
 
-
     [SerializeField] float _dumbassTimer;
     private float _currentDumbassTimer = 0.0f;
-
     //CLASS METHODS
     override public void On()
     {
+        _currentTimer = _maxTimer;
         _isMoving = true;
     }
 
@@ -32,7 +31,7 @@ public class BON_MovObj_Timer : BON_Actionnable
     //UNITY METHODS
     private void Start()
     {
-        _currentTimer = 0.0f;
+        _currentTimer = _maxTimer;
         _isMoving = true;
     }
 
@@ -40,39 +39,42 @@ public class BON_MovObj_Timer : BON_Actionnable
     {
         if (_isMoving) 
         {
-            if (Status)
+            float oneSpeed = Time.deltaTime * _speed;
+
+            if (Status || _currentTimer < _maxTimer)
             {
-                if (gameObject.transform.localScale.x < _extensionMax)
+                if (gameObject.transform.localScale.x + oneSpeed < _extensionMax)
                 {
-                    gameObject.transform.localScale += new Vector3(Time.deltaTime * _speed, 0, 0);
+                    gameObject.transform.localScale += new Vector3(oneSpeed, 0, 0);
+                }
+                else
+                {
+                    gameObject.transform.localScale = new Vector3(_extensionMax, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
                 }
             }
             else
             {
-                if (_currentTimer < _maxTimer)
+                if (gameObject.transform.localScale.x - oneSpeed > _extensionMin)
                 {
-                    _currentTimer += Time.deltaTime;
-                }
-                else if (gameObject.transform.localScale.x > _extensionMin)
-                {
-                    gameObject.transform.localScale -= new Vector3(Time.deltaTime * _speed, 0, 0);
+                    gameObject.transform.localScale -= new Vector3(oneSpeed, 0, 0);
                 }
                 else
                 {
-                    gameObject.transform.localScale = new Vector3(_extensionMin, 0, 0);
+                    gameObject.transform.localScale = new Vector3(_extensionMin, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
                     _isMoving = false;
                 }
             }
-        }
 
+            _currentTimer += Time.deltaTime;
+        }
+        
 
         _currentDumbassTimer += Time.deltaTime;
 
-        if(_currentDumbassTimer > _dumbassTimer)
+        if (_currentDumbassTimer > _dumbassTimer)
         {
             _currentDumbassTimer = 0.0f;
             Toggle();
         }
-
     }
 }
