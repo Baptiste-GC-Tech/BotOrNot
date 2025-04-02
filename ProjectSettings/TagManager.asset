@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hook
   - collectibles_DR
+  - Machine
   layers:
   - Default
   - TransparentFX

@@ -639,11 +639,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c230950a0bbcad44580361cac4026f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxTimer: 10
-  _extensionMax: 3
+  _maxTimer: 1
+  _extensionMax: 6
   _extensionMin: 0.1
   _speed: 2
-  _dumbassTimer: 6
+  _dumbassTimer: 3
 --- !u!1 &2136492863
 GameObject:
   m_ObjectHideFlags: 0

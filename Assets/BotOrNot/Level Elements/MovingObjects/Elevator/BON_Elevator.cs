@@ -10,6 +10,10 @@ public class BON_Elevator : BON_Actionnable
     /*
      *  FIELDS
     */
+    [SerializeField] bool _elevatorStatus;
+
+    [SerializeField] bool _triggerTheElevator;
+
     [SerializeField] GameObject _elevator;
     [SerializeField] GameObject _elevatorPosition;
     [SerializeField] List<GameObject> _outTargetPosition;
@@ -24,6 +28,7 @@ public class BON_Elevator : BON_Actionnable
     bool _elevatorHasAlredyMoved;
     bool _elevatorNeedsToChangePosition;
     bool _elevatorHasFinishedChangingPosition;
+
 
 
 
@@ -44,11 +49,16 @@ public class BON_Elevator : BON_Actionnable
     }
     private void Update()
     {
-        if (_previousStatus != base.Status)
+        if (_previousStatus != _elevatorStatus)
         {
             
-            Status = base.Status;
-            _previousStatus = base.Status;
+            Status = _elevatorStatus;
+            _previousStatus = _elevatorStatus;
+        }
+        if (_triggerTheElevator)
+        {
+            _elevator.GetComponent<BON_MovObj_ListBased>().Toggle();
+            _triggerTheElevator = false;
         }
         if (_elevatorNeedsToChangePosition)
         {
@@ -108,7 +118,6 @@ public class BON_Elevator : BON_Actionnable
 
     public override void On()
     {
-        Debug.Log("Enter On");
         foreach (var button in _buttonsInHUD)
         {
             button.interactable = false;

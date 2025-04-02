@@ -9,8 +9,9 @@ public class BON_MachineInteract : MonoBehaviour
      *  FIELDS
      */
 
-    InputAction InteractMachineAction;
-    InputAction MoveMachineAction;
+    InputAction InteractMachineAction; //interact pour prendre le controle
+    InputAction QuitMachineAction; //rappuyer pour quitter le controle
+    InputAction MoveMachineAction; //bouger quand la machine est controlable
 
     // player script reference
     [SerializeField] private BON_CCPlayer player;
@@ -40,6 +41,17 @@ public class BON_MachineInteract : MonoBehaviour
         {
             /* machine.GoDown()*/
         }
+        if(QuitMachineAction.WasPressedThisFrame())
+        {
+            print("stop");
+            player.RecoverControl();
+        }
+        if (InteractMachineAction.WasPressedThisFrame())
+        {
+            print("stopoui");
+            player.RecoverControl();
+        }
+        print(player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     /*
@@ -50,6 +62,7 @@ public class BON_MachineInteract : MonoBehaviour
     void Start()
     {
         InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
+        QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact");
         MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move");
     }
 
