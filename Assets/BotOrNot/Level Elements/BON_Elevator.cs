@@ -18,7 +18,7 @@ public class BON_Elevator : BON_Actionnable
     void Start()
     {
         _buttonsInHUD = _levelHUD.GetComponentsInChildren<Button>();
-        _player = GameObject.FindFirstObjectByType<Player>().gameObject;
+        _player = GameObject.FindFirstObjectByType<CCPlayer>().gameObject;
         _isPlayerMoving = false;
         _isElevatorMoving = false;
         base.Status = true;
