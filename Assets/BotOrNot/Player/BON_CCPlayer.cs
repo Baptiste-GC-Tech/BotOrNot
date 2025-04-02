@@ -37,7 +37,7 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     private int _currenCharacterPlayed; //0 = PR, 1= DR, autre = machine
-    private int _lestCharacterPlayed; //var tampon pour recup le controle
+    private int _lastCharacterPlayed; //var tampon pour recup le controle
 
     /*// First level completion condition : Should have its own class
     // TODO: Generic Level class featuring states and a win cond, then make a child that's Level 1's class
@@ -51,27 +51,36 @@ public class BON_CCPlayer : MonoBehaviour
 
     public void SwitchControl() //donner le controle a une machine
     {
-        _lestCharacterPlayed = _currenCharacterPlayed; //save l'id du perso
+        _lastCharacterPlayed = _currenCharacterPlayed; //save l'id du perso
         _currenCharacterPlayed = -1;
         GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
     }
     public void RecoverControl() //reprendre le controle
     {
-        _currenCharacterPlayed = _lestCharacterPlayed;
+        _currenCharacterPlayed = _lastCharacterPlayed;
         if (_currenCharacterPlayed == 0)
         {
-           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
         }
         else
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
         }
     }
 
     public void SwitchPlayer()
     {
-        _currenCharacterPlayed = -1;
-        GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
+        //switch PR to DR
+        if (_currenCharacterPlayed ==0) 
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+            _currenCharacterPlayed = 1;
+        }
+        else //switch DR to PR
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            _currenCharacterPlayed = 0;
+        }
     }
 
 
@@ -80,7 +89,8 @@ public class BON_CCPlayer : MonoBehaviour
      */
     private void Start()
     {
-        
+        _currenCharacterPlayed = 0;
+        _lastCharacterPlayed = _currenCharacterPlayed;
     }
 
     void Update()
@@ -98,7 +108,7 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _isDRInRange = true;
         }
-        else if (other.gameObject.tag == "Hook") //trigger with machine
+        else if (other.gameObject.tag == "Machine") //trigger with machine
         {
             _isMachineInRange = true;
         }
@@ -114,7 +124,7 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _isDRInRange = false;
         }
-        else if (other.gameObject.tag == "Hook") //trigger with machine
+        else if (other.gameObject.tag == "Machine") //trigger with machine
         {
             _isMachineInRange = false;
         }

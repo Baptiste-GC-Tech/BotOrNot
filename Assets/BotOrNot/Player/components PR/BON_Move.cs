@@ -31,7 +31,6 @@ public class BON_Move : MonoBehaviour
     private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
     
 
-
     /*
      *  UNITY METHODS
      */
