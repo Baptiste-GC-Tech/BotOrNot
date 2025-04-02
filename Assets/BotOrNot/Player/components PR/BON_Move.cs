@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,14 +11,23 @@ public class BON_Move : MonoBehaviour
     /*
      *  FIELDS
      */
-    InputAction MoveAction;
+    private InputAction MoveAction;
 
-    Rigidbody _parentRigidBody;
+    /* Curve related */
+    [SerializeField] private float _timeSinceAccelStart, _timeSinceDeccelStart;
+    private float _maxAccelTime, _maxDeccelTime;
 
-    [SerializeField] float _acceleration;   // Unit is m/s/s;
-    [SerializeField] float _maxSpeed;       // Should be used only with ForceMode.Acceleration, Unit is m/s/s.
-    private Vector3 _accumulatedMoveForce;
+    /* Speed related */
+    [SerializeField] float _maxSpeed;
+    [SerializeField] private float _curSpeed;
 
+    /* Accelartion related */
+    [SerializeField] AnimationCurve _AccelCurve;
+    [SerializeField] AnimationCurve _DeccelCurve;
+
+    /* Direction related */
+    private int _moveXAxisDir;
+    private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
 
 
     /*
@@ -25,7 +36,12 @@ public class BON_Move : MonoBehaviour
     void Start()
     {
         MoveAction = InputSystem.actions.FindAction("Player/Move");
-        _parentRigidBody = GetComponent<Rigidbody>();
+
+        /* Curve fields setup */
+        _maxAccelTime = _AccelCurve.keys[_AccelCurve.keys.Length - 1].time;
+        _maxDeccelTime = _DeccelCurve.keys[_DeccelCurve.keys.Length - 1].time;
+        _timeSinceAccelStart = 0.0f;
+        _timeSinceDeccelStart = _maxDeccelTime;
     }
 
     void Update()
@@ -33,20 +49,34 @@ public class BON_Move : MonoBehaviour
         /* Read input value */
         Vector2 moveInputValue = MoveAction.ReadValue<Vector2>();
 
-        /* Updates the accumulated force the PR is using to move around, and clamps it if needed */
-        _accumulatedMoveForce = new Vector3(Mathf.Clamp(moveInputValue.x * _acceleration, -_maxSpeed, _maxSpeed),
-                                            0.0f/*Mathf.Clamp(moveInputValue.y * _acceleration, -_maxAccel, _maxAccel)*/,
-                                            0.0f);
+        /* Calculates the speed */
+        switch (Mathf.Approximately(moveInputValue.x, 0.0f))
+        {
+            // Case in which we accelerate
+            case false:
+                /* Updates the timers (both in case the input starts and stops very quickly) */
+                _timeSinceAccelStart = Mathf.Clamp(_timeSinceAccelStart + Time.deltaTime, 0.0f, _maxAccelTime);
+                _timeSinceDeccelStart = Mathf.Clamp(_timeSinceDeccelStart - Time.deltaTime, 0.0f, _maxDeccelTime);
 
-        /* Resets velocity, and then apply the accumulated force */
-        //_parentRigidBody.velocity = Vector3.zero;
-        _parentRigidBody.AddForce(_accumulatedMoveForce, ForceMode.Force);
+                // Use the acceleration timer to set the speed
+                _curSpeed = _maxSpeed * _AccelCurve.Evaluate(_timeSinceAccelStart);
+                break;
 
+            // Case in which we deccelerate
+            case true:
+                /* Updates the timers (both in case the input starts and stops very quickly) */
+                _timeSinceAccelStart = Mathf.Clamp(_timeSinceAccelStart - Time.deltaTime, 0.0f, _maxAccelTime);
+                _timeSinceDeccelStart = Mathf.Clamp(_timeSinceDeccelStart + Time.deltaTime, 0.0f, _maxDeccelTime);
 
+                // Use the decceleration timer to set the speed
+                _curSpeed = _maxSpeed * _DeccelCurve.Evaluate(_timeSinceDeccelStart);
+                break;
+        }
 
-        //GetComponent<Rigidbody>().AddForce(new Vector3(moveValue.x, moveValue.y, 0.0f), ForceMode.Acceleration);
-        //Mathf.Clamp(GetComponent<Rigidbody>().velocity.x, 0.0f, _maxSpeed);
-        //Mathf.Clamp(GetComponent<Rigidbody>().velocity.y, 0.0f, _maxSpeed);
-        //transform.position += new Vector3(moveValue.x * Time.deltaTime, 0, 0);
+        /* Updates the movement's direction as long as there is a input to read */
+        if (moveInputValue.x != 0.0f) _moveXAxisDir = moveInputValue.x > 0.0f ? 1 : -1;
+
+        /* Applies the movement */
+        transform.Translate(new Vector3(_moveXAxisDir * _curSpeed, 0.0f, 0.0f) * Time.deltaTime);
     }
 }
