@@ -435,8 +435,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd5e113889b574b86f28bd52a08d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2084cc47-56d4-4968-a820-cbd14124b640
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _parentRigidBody: {fileID: 0}
   _acceleration: 2
   _maxSpeed: 5
+  _accumulatedMoveForce: {x: 0, y: 0, z: 0}
 --- !u!114 &921468698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 5
+  _maxSpeed: 15
   _AccelCurve:
     serializedVersion: 2
     m_Curve:

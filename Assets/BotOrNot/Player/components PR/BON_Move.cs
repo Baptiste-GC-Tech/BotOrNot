@@ -15,12 +15,12 @@ public class BON_Move : MonoBehaviour
     Vector2 moveInputValue;
 
     /* Curve related */
-    [SerializeField] private float _timeSinceAccelStart, _timeSinceDeccelStart;
+    private float _timeSinceAccelStart, _timeSinceDeccelStart;
     private float _maxAccelTime, _maxDeccelTime;
 
     /* Speed related */
     [SerializeField] float _maxSpeed;
-    [SerializeField] private float _curSpeed;
+    private float _curSpeed;
 
     /* Accelartion related */
     [SerializeField] AnimationCurve _AccelCurve;
@@ -80,5 +80,14 @@ public class BON_Move : MonoBehaviour
 
         /* Applies the movement */
         transform.Translate(new Vector3(_moveXAxisDir * _curSpeed, 0.0f, 0.0f) * Time.deltaTime);
+
+
+
+        //
+        // WIP
+        //
+        
+        /* Snaps the player to the ground if he goes under it */
+        Physics.Raycast(transform.position, Vector3.up, 10.0f, /*???*/0, QueryTriggerInteraction.Ignore);
     }
 }
