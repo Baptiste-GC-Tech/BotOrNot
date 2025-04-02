@@ -19,7 +19,7 @@ public class BON_Interact : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TakeAction = InputSystem.actions.FindAction("Player/Take");
+        TakeAction = InputSystem.actions.FindAction("ActionsMapPR/Take");
         _inventory = GetComponent<Inventory>();
     }
 

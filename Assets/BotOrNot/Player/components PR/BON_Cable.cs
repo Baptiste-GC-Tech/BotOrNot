@@ -14,7 +14,7 @@ public class BON_Cable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CableAction = InputSystem.actions.FindAction("Cable");
+        CableAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
     }
 
     // Update is called once per frame
