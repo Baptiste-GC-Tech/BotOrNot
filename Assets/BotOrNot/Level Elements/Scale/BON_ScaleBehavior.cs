@@ -33,7 +33,9 @@ public class BON_ScaleBehavior : MonoBehaviour
         Debug.Log(gameObject.transform.rotation.eulerAngles.z);
         if (_isBoxCorretlyPlaced && ((gameObject.transform.rotation.eulerAngles.z >= 359 && gameObject.transform.rotation.eulerAngles.z <= 360) || (gameObject.transform.rotation.eulerAngles.z >= 0 && gameObject.transform.rotation.eulerAngles.z <= 1)))
         {
-            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            gameObject.transform.Rotate(0,0, -gameObject.transform.rotation.eulerAngles.z);
+
             _isBoxCorretlyPlaced = false;
         }
     }
