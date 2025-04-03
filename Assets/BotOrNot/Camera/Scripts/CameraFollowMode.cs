@@ -21,7 +21,8 @@ public class CameraFollowMode : MonoBehaviour
         Player,
         OtherObject,
         Barycenter,
-        Auto
+        Auto,
+        Shake
     }
 
     [Header("Cibles de suivi")]
@@ -50,13 +51,14 @@ public class CameraFollowMode : MonoBehaviour
 
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
     [Range(0.1f, 20f)] public float offsetLerpSpeed = 5f;
-    
+
+    /*
     [Header("Shake")]
     [Tooltip("Intensité de shake de la caméra.")]
-    public float intensity = 0;
+    public float intensity = 0.0f;
     [Tooltip("Temps de shake de la caméra.")]
-    public float shaketime = 2;
-    
+    public float shaketime = 2.0f;
+    */
 
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
@@ -64,6 +66,7 @@ public class CameraFollowMode : MonoBehaviour
     private CinemachineComposer _composer;
     private CinemachineVirtualCamera _vcam;
     private CinemachineBasicMultiChannelPerlin perlinNoise;
+
 
     private enum Direction { _None, _Left, _Right } // REF
     private Direction _currentDirection = Direction._Right; // REF
@@ -93,8 +96,11 @@ public class CameraFollowMode : MonoBehaviour
         /* -> Appliquer l'offset au Start
          * if (_framingTransposer != null)
          *      _framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
-         */    
-            
+         */
+
+        perlinNoise = _vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+
     }
 
     private void Update()
@@ -155,6 +161,11 @@ public class CameraFollowMode : MonoBehaviour
                     desiredOffset = GetOffsetFromDirection();
                 }
                 break;
+
+            /*case FollowMode.Shake:
+                ShakeCamera(intensity, shaketime);
+                currentMode = FollowMode.Auto;
+                break;*/
 
         }
 
