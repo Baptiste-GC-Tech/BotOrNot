@@ -22,7 +22,6 @@ public class BON_ScaleBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(gameObject.transform.rotation.eulerAngles.z);
         if (_isBoxCorretlyPlaced && ((gameObject.transform.rotation.eulerAngles.z >= 359 && gameObject.transform.rotation.eulerAngles.z <= 360) || (gameObject.transform.rotation.eulerAngles.z >= 0 && gameObject.transform.rotation.eulerAngles.z <= 1)))
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
