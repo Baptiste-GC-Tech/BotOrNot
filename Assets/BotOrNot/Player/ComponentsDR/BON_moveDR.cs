@@ -51,12 +51,5 @@ public class BON_MoveDR : MonoBehaviour
             print("jump");
             GetComponent<Rigidbody>().AddForce(new Vector3(0,1000,0));
         }
-
-        if (InteractAction.WasPressedThisFrame() && !player.IsSwitching)
-        {
-            print("switch to nut");
-            StartCoroutine(player.CooldownSwitchControl());
-            player.SwitchPlayer();
-        }
     }
 }
