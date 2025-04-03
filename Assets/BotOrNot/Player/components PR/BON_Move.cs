@@ -11,6 +11,8 @@ public class BON_Move : MonoBehaviour
     /*
      *  FIELDS
      */
+    public LayerMask deez;
+
     private InputAction MoveAction;
     Vector2 moveInputValue;
 
@@ -85,8 +87,17 @@ public class BON_Move : MonoBehaviour
         //
         // WIP
         //
-        
+
         /* Snaps the player to the ground if he goes under it */
-        Physics.Raycast(transform.position, Vector3.up, 10.0f, /*???*/0, QueryTriggerInteraction.Ignore);
+        RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
+        LineRenderer ligma = new LineRenderer();
+            //lineRenderer.loop = false;
+            //lineRenderer.positionCount = 2;
+        Vector3[] lineRendPos = { transform.position, transform.position + 10.0f * Vector3.up };
+        ligma.SetPositions(lineRendPos);
+        Debug.DrawRay(transform.position, Vector3.up);
+
+        if (hit.collider != null) Debug.Log("hit : " + hit);
     }
 }

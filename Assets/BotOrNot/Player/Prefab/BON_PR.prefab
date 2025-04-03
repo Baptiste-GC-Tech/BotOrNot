@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 2875605102471048701}
   - component: {fileID: 6345398786403476882}
   - component: {fileID: 612629595465447616}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Petit_Robot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -199,6 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deez:
+    serializedVersion: 2
+    m_Bits: 0
   _maxSpeed: 12
   _AccelCurve:
     serializedVersion: 2
