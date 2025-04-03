@@ -57,11 +57,5 @@ public class BON_Interact : MonoBehaviour
 
             player.Collectible = null;
         }
-        /*else //debug
-        {
-            print("non");
-            print("collectible = " + player.Collectible);
-            print("in range = " + player.IsCollectibleInRange);
-        }*/
     }
 }
