@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 514006518838484760, guid: b509763fb2912b642bfb11ccc825d4db,
         type: 3}
       propertyPath: m_Name
-      value: Level
+      value: Background - Layers
       objectReference: {fileID: 0}
     - target: {fileID: 1694464497901637526, guid: b509763fb2912b642bfb11ccc825d4db,
         type: 3}
@@ -212,6 +212,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1171651794}
+    - target: {fileID: 4817713170685145120, guid: b509763fb2912b642bfb11ccc825d4db,
+        type: 3}
+      propertyPath: m_Name
+      value: Layer-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6255338803127165723, guid: b509763fb2912b642bfb11ccc825d4db,
+        type: 3}
+      propertyPath: m_Name
+      value: Layer-2
+      objectReference: {fileID: 0}
     - target: {fileID: 6436458369305814312, guid: b509763fb2912b642bfb11ccc825d4db,
         type: 3}
       propertyPath: m_Mesh
@@ -222,6 +232,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2086209965}
+    - target: {fileID: 7134751095275820312, guid: b509763fb2912b642bfb11ccc825d4db,
+        type: 3}
+      propertyPath: m_Name
+      value: Layer-0
+      objectReference: {fileID: 0}
     - target: {fileID: 7389504120317446724, guid: b509763fb2912b642bfb11ccc825d4db,
         type: 3}
       propertyPath: m_Mesh
@@ -20365,6 +20380,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1425177408 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8493909556175327394, guid: 5fd15690ddd5b9946b67427e7d133050,
+    type: 3}
+  m_PrefabInstance: {fileID: 528305046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1427091224
 Mesh:
   m_ObjectHideFlags: 0
@@ -22559,6 +22580,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 737203758}
     m_Modifications:
+    - target: {fileID: 128752319988103562, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: offsetY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 128752319988103562, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: offsetZ
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 128752319988103562, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: cameraFollow
+      value: 
+      objectReference: {fileID: 1684321243}
+    - target: {fileID: 128752319988103562, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: linkedObject
+      value: 
+      objectReference: {fileID: 1425177408}
     - target: {fileID: 2424989546731962013, guid: 6694afe7f7175b54fbac46a9dca1f43d,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -22567,12 +22608,12 @@ PrefabInstance:
     - target: {fileID: 2424989546731962013, guid: 6694afe7f7175b54fbac46a9dca1f43d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.92
+      value: 24.7
       objectReference: {fileID: 0}
     - target: {fileID: 2424989546731962013, guid: 6694afe7f7175b54fbac46a9dca1f43d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.202557
+      value: -2.24
       objectReference: {fileID: 0}
     - target: {fileID: 2424989546731962013, guid: 6694afe7f7175b54fbac46a9dca1f43d,
         type: 3}
@@ -23991,6 +24032,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1684321243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1144360101}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfca2ae9c1af5e47931c939e3f1ab28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1695258137
 Mesh:
   m_ObjectHideFlags: 0
