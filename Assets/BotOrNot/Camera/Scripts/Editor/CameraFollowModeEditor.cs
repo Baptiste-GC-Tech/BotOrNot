@@ -67,7 +67,18 @@ public class CameraFollowModeEditor : Editor
 
         GUILayout.Space(5);
         EditorGUILayout.LabelField("Mode actif :", script.currentMode.ToString());
+
+        GUILayout.Space(5);
+        DrawField("intensity", "intensity of the shake");
+        DrawField("shaketime", "duration of the shake");
+        if (GUILayout.Button("Shake"))
+        {
+            script.ShakeCamera(script.intensity, script.shaketime);
+        }
+
     }
+
+
 
     private void DrawField(string propertyName, string tooltip)
     {

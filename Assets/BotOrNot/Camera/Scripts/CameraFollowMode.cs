@@ -2,6 +2,8 @@ using UnityEngine;
 using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Threading;
+using System.Collections;
 
 
 
@@ -48,12 +50,20 @@ public class CameraFollowMode : MonoBehaviour
 
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
     [Range(0.1f, 20f)] public float offsetLerpSpeed = 5f;
+    
+    [Header("Shake")]
+    [Tooltip("Intensité de shake de la caméra.")]
+    public float intensity = 0;
+    [Tooltip("Temps de shake de la caméra.")]
+    public float shaketime = 2;
+    
 
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
     private CinemachineFramingTransposer _framingTransposer;
     private CinemachineComposer _composer;
     private CinemachineVirtualCamera _vcam;
+    private CinemachineBasicMultiChannelPerlin perlinNoise;
 
     private enum Direction { _None, _Left, _Right } // REF
     private Direction _currentDirection = Direction._Right; // REF
@@ -223,5 +233,22 @@ public class CameraFollowMode : MonoBehaviour
     public void UnregisterTriggerTarget(Transform target)
     {
         activeTriggerTargets.RemoveAll(t => t.target == target);
+    }
+
+    public void ShakeCamera(float intensity, float shaketime)
+    {
+        perlinNoise.m_AmplitudeGain = intensity;
+        StartCoroutine(WaitTime(shaketime));
+    }
+
+    IEnumerator WaitTime(float shaketime)
+    {
+        yield return new WaitForSeconds(shaketime);
+        ResetIntensity();
+    }
+
+    void ResetIntensity()
+    {
+        perlinNoise.m_AmplitudeGain = 0;
     }
 }
