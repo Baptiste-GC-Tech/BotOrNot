@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_COMPPlayerButton : BON_TouchComps
+public class BON_COMPPlayerButtons : BON_TouchComps
 {
     /*
     * FIELDS
