@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 41987878}
   m_Layer: 0
-  m_Name: Pos OutTarget 1
+  m_Name: PosPlayerOutTarget 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -420,7 +420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297b374fdf497384aad29c4b5a867d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: 0
   _transformsList:
   - {fileID: 1044759315}
   - {fileID: 1302463332}
@@ -1041,7 +1040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a07194304f68249befaa70961380d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: 0
+  _elevatorStatus: 0
+  _triggerTheElevator: 0
   _elevator: {fileID: 906100679}
   _elevatorPosition: {fileID: 1724486207}
   _outTargetPosition:
@@ -1127,7 +1127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696828656}
   m_Layer: 0
-  m_Name: Pos OutTarget 2
+  m_Name: PosPlayerOutTarget 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,7 +1330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a07194304f68249befaa70961380d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: 0
+  _elevatorStatus: 0
+  _triggerTheElevator: 0
   _elevator: {fileID: 906100679}
   _elevatorPosition: {fileID: 1724486207}
   _outTargetPosition:
