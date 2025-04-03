@@ -87,6 +87,7 @@ public class BON_Elevator : BON_Actionnable
             {
                 _isPlayerMoving = false;
                 _isElevatorMoving = true;
+                _player.transform.parent = _elevator.transform;
             }
         }
         if (_isElevatorMoving)
@@ -101,6 +102,7 @@ public class BON_Elevator : BON_Actionnable
         {
             _isMovingOut = true;
             _elevatorHasAlredyMoved = false;
+            _player.transform.parent = null;
         }
         //moves the player out of the elevator
         if (_isMovingOut)
@@ -117,7 +119,9 @@ public class BON_Elevator : BON_Actionnable
             //if the player is close to the final postion, stops their motion and changes the status of the Bon_Elevator)
             if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
             {
+                Debug.Log("finish");
                 _isMovingOut = false;
+                _elevatorStatus = false;
                 base.Toggle();
             }
 
