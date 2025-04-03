@@ -33,8 +33,8 @@ public class CameraFollowMode : MonoBehaviour
     public Transform followTarget;
 
     [Header("Offset par défaut")]
-    [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur.")]
-    public float offsetX = -3f;
+    [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.")]
+    public float offsetX = -6f;
 
     [Tooltip("Décalage vertical appliqué à la caméra.")]
     public float offsetY = 0f;
