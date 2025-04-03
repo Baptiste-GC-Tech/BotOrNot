@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  FIELDS
      */
+
+    [SerializeField] protected List<MonoBehaviour> _componentsPR;
+    [SerializeField] protected List<MonoBehaviour> _componentsDR;
+
+    private List<List<MonoBehaviour>> _CompoentsAvatar;
 
     // Object-interaction related
     private GameObject _collectible = null;
@@ -44,6 +50,14 @@ public class BON_CCPlayer : MonoBehaviour
         set { _machine = value; }
     }
 
+    private bool _isSwitching = false;  //bool for switch player/machines
+    public bool IsSwitching
+    {
+        get { return _isSwitching; }
+        set { _isSwitching = value; }
+    }
+
+
     private int _currentCharacterPlayed; //0 = PR, 1= DR, autre = machine
     private int _lastCharacterPlayed; //var tampon pour recup le controle
 
@@ -57,11 +71,12 @@ public class BON_CCPlayer : MonoBehaviour
      */
 
 
-    public void SwitchControl() //donner le controle a une machine
+    public void GiveControl() //donner le controle a une machine
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
         GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
+        DisableCompPlayer(_lastCharacterPlayed);
         print("control switch to " + "Machine");
     }
 
@@ -70,13 +85,17 @@ public class BON_CCPlayer : MonoBehaviour
         //switch PR to DR
         if (_currentCharacterPlayed == 0)
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
             _currentCharacterPlayed = 1;
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            EnableCompPlayer();
+            DisableCompPlayer(0);
         }
         else //switch DR to PR
         {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
             _currentCharacterPlayed = 0;
+            EnableCompPlayer();
+            DisableCompPlayer(1);
         }
     }
 
@@ -92,6 +111,30 @@ public class BON_CCPlayer : MonoBehaviour
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
         }
         print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+        EnableCompPlayer();
+    }
+
+    private void DisableCompPlayer(int CharacterStopPlaying)
+    {
+        for (int i = 0; i < _CompoentsAvatar[CharacterStopPlaying].Count;i++) //disable all comps in list
+        {
+            _CompoentsAvatar[CharacterStopPlaying][i].enabled = false;
+        }
+    }
+
+    private void EnableCompPlayer()
+    {
+        for (int i = 0; i < _CompoentsAvatar[_currentCharacterPlayed].Count; i++) //enable all comps in list
+        {
+            _CompoentsAvatar[_currentCharacterPlayed][i].enabled = true;
+        }
+    }
+
+    public IEnumerator CooldownSwitchControl()
+    {
+        _isSwitching = true;
+        yield return new WaitForSeconds(0.5f); //durée anim
+        _isSwitching = false;
     }
 
     /*
@@ -99,8 +142,15 @@ public class BON_CCPlayer : MonoBehaviour
      */
     private void Start()
     {
+        //init values
         _currentCharacterPlayed = 0;
         _lastCharacterPlayed = _currentCharacterPlayed;
+         _CompoentsAvatar = new();
+         _CompoentsAvatar.Add(_componentsPR);
+         _CompoentsAvatar.Add(_componentsDR);
+
+        //start with PR => disable DR
+        DisableCompPlayer(1);
     }
 
     void Update()
