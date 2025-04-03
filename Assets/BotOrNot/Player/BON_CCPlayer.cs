@@ -36,7 +36,15 @@ public class BON_CCPlayer : MonoBehaviour
         get { return _isMachineInRange; }
     }
 
-    private int _currenCharacterPlayed; //0 = PR, 1= DR, autre = machine
+    //for stock machine ref ( for control it)
+    private GameObject _machine = null; //ou classe de la machine directement
+    public GameObject Machine
+    {
+        get { return Machine; }
+        set { _machine = value; }
+    }
+
+    private int _currentCharacterPlayed; //0 = PR, 1= DR, autre = machine
     private int _lastCharacterPlayed; //var tampon pour recup le controle
 
     /*// First level completion condition : Should have its own class
@@ -51,46 +59,48 @@ public class BON_CCPlayer : MonoBehaviour
 
     public void SwitchControl() //donner le controle a une machine
     {
-        _lastCharacterPlayed = _currenCharacterPlayed; //save l'id du perso
-        _currenCharacterPlayed = -1;
+        _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
+        _currentCharacterPlayed = -1;
         GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
-    }
-    public void RecoverControl() //reprendre le controle
-    {
-        _currenCharacterPlayed = _lastCharacterPlayed;
-        if (_currenCharacterPlayed == 0)
-        {
-           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-        }
-        else
-        {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-        }
+        print("control switch to " + "Machine");
     }
 
     public void SwitchPlayer()
     {
         //switch PR to DR
-        if (_currenCharacterPlayed ==0) 
+        if (_currentCharacterPlayed == 0)
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-            _currenCharacterPlayed = 1;
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            _currentCharacterPlayed = 1;
         }
         else //switch DR to PR
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-            _currenCharacterPlayed = 0;
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+            _currentCharacterPlayed = 0;
         }
     }
 
+    public void RecoverControl() //reprendre le controle
+    {
+        _currentCharacterPlayed = _lastCharacterPlayed;
+        if (_currentCharacterPlayed == 0)
+        {
+           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+        }
+        else
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+        }
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+    }
 
     /*
      *  UNITY METHODS
      */
     private void Start()
     {
-        _currenCharacterPlayed = 0;
-        _lastCharacterPlayed = _currenCharacterPlayed;
+        _currentCharacterPlayed = 0;
+        _lastCharacterPlayed = _currentCharacterPlayed;
     }
 
     void Update()

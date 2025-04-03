@@ -18,6 +18,9 @@ public class BON_MachineInteract : MonoBehaviour
 
     Vector2 moveMachineValue;
 
+    private bool _isSwitching = false;
+    private bool _playingMachine = false;
+
     /*
      *  CLASS METHODS
      */
@@ -41,17 +44,11 @@ public class BON_MachineInteract : MonoBehaviour
         {
             /* machine.GoDown()*/
         }
-        if(QuitMachineAction.WasPressedThisFrame())
+        if(QuitMachineAction.WasPressedThisFrame() && !_isSwitching)
         {
-            print("stop");
+            _playingMachine = false;
             player.RecoverControl();
         }
-        if (InteractMachineAction.WasPressedThisFrame())
-        {
-            print("stopoui");
-            player.RecoverControl();
-        }
-        print(player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     /*
@@ -61,9 +58,9 @@ public class BON_MachineInteract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
-        QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact");
-        MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move");
+        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
+        QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
+        MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
 
     // Update is called once per frame
@@ -72,11 +69,23 @@ public class BON_MachineInteract : MonoBehaviour
         // Take item action handling
         if (InteractMachineAction.WasPressedThisFrame()) //interact
         {
-            if (player.IsMachineInRange) //machine pas loin
+            if (player.IsMachineInRange && !_isSwitching) //machine pas loin et pas en cours d'activation
             {
+                _playingMachine = true;
+                StartCoroutine(CooldownSwitchControl());
                 player.SwitchControl();
-                MoveMachine();
             }
         }
+        if(_playingMachine)
+        {
+            MoveMachine();
+        }
+    }
+
+    IEnumerator CooldownSwitchControl()
+    {
+        _isSwitching = true;
+        yield return new WaitForSeconds(0.5f); //durée anim
+        _isSwitching = false;
     }
 }
