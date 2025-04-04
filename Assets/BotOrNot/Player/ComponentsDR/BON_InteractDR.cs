@@ -36,18 +36,5 @@ public class BON_InteractDR : MonoBehaviour
             StartCoroutine(player.CooldownSwitchControl());
             player.SwitchPlayer();
         }
-
-        if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
-        {
-            //stock in inventory
-
-            print(player.Collectible);
-
-            _inventory.AddItem(player.Collectible);
-
-            player.Collectible.SetActive(false);
-
-            player.Collectible = null;
-        }
     }
 }
