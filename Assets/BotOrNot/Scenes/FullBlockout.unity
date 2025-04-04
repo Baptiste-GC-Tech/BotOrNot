@@ -26290,14 +26290,14 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 205.84
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0.05, y: 0.05, z: 0}
+  m_DefaultVelocity: {x: 0, y: 0.05, z: 0}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IgnoreTag: TriggerZone
-  m_UseImpactDirection: 1
-  m_ScaleImpactWithMass: 1
-  m_ScaleImpactWithSpeed: 1
+  m_UseImpactDirection: 0
+  m_ScaleImpactWithMass: 0
+  m_ScaleImpactWithSpeed: 0
 --- !u!1001 &1821188951
 PrefabInstance:
   m_ObjectHideFlags: 0
