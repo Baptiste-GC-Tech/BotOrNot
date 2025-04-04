@@ -83,25 +83,26 @@ public class BON_CCPlayer : MonoBehaviour
     public void SwitchPlayer()
     {
         //switch PR to DR
-        if (_currentCharacterPlayed == 0)
+        if (_currentCharacterPlayed == 0) //switch PR to DR
         {
-            _currentCharacterPlayed = 1;
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-            EnableCompPlayer();
+            EnableCompPlayer(1);
             DisableCompPlayer(0);
-        }
-        else //switch DR to PR
-        {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-            _currentCharacterPlayed = 0;
-            EnableCompPlayer();
+            _currentCharacterPlayed = 1;
+        }
+        else if (_currentCharacterPlayed == 1)//switch DR to PR
+        {
+            EnableCompPlayer(0);
             DisableCompPlayer(1);
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            _currentCharacterPlayed = 0;
         }
     }
 
     public void RecoverControl() //reprendre le controle
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
+        EnableCompPlayer(_lastCharacterPlayed);
         if (_currentCharacterPlayed == 0)
         {
            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
@@ -111,22 +112,27 @@ public class BON_CCPlayer : MonoBehaviour
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
         }
         print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
-        EnableCompPlayer();
     }
 
     private void DisableCompPlayer(int CharacterStopPlaying)
     {
         for (int i = 0; i < _CompoentsAvatar[CharacterStopPlaying].Count;i++) //disable all comps in list
         {
-            _CompoentsAvatar[CharacterStopPlaying][i].enabled = false;
+            if (_CompoentsAvatar[CharacterStopPlaying][i].enabled)
+            {
+                _CompoentsAvatar[CharacterStopPlaying][i].enabled = false;
+            }
         }
     }
 
-    private void EnableCompPlayer()
+    private void EnableCompPlayer(int CharacterWillPlay)
     {
-        for (int i = 0; i < _CompoentsAvatar[_currentCharacterPlayed].Count; i++) //enable all comps in list
+        for (int i = 0; i < _CompoentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
-            _CompoentsAvatar[_currentCharacterPlayed][i].enabled = true;
+            if (!_CompoentsAvatar[CharacterWillPlay][i].enabled)
+            {
+                _CompoentsAvatar[CharacterWillPlay][i].enabled = true;
+            }
         }
     }
 
@@ -143,19 +149,20 @@ public class BON_CCPlayer : MonoBehaviour
     private void Start()
     {
         //init values
-        _currentCharacterPlayed = 0;
+        //_currentCharacterPlayed = 0;
         _lastCharacterPlayed = _currentCharacterPlayed;
          _CompoentsAvatar = new();
          _CompoentsAvatar.Add(_componentsPR);
          _CompoentsAvatar.Add(_componentsDR);
 
         //start with PR => disable DR
-        DisableCompPlayer(1);
+        DisableCompPlayer(0);
+        EnableCompPlayer(1);
     }
 
     void Update()
     {
-        
+        //print(_currentCharacterPlayed);
     }
     private void OnTriggerEnter(Collider other)
     {

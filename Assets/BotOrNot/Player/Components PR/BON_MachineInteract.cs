@@ -46,6 +46,7 @@ public class BON_MachineInteract : MonoBehaviour
         if(QuitMachineAction.WasPressedThisFrame() && !player.IsSwitching)
         {
             _playingMachine = false;
+            StartCoroutine(player.CooldownSwitchControl());
             player.RecoverControl();
         }
     }

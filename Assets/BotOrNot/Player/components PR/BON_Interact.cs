@@ -33,6 +33,7 @@ public class BON_Interact : MonoBehaviour
         // Take item action handling
         if (InteractAction.WasPressedThisFrame()) //interact
         {
+            print("ah tu veux switch ?");
             if (player.IsDRInRange) //dame robot pas loin
             {
                 //give inventory item(s) to DR
@@ -47,6 +48,7 @@ public class BON_Interact : MonoBehaviour
             else if (!player.IsSwitching)
             {
                 print("switch to dame robot");
+                StartCoroutine(player.CooldownSwitchControl());
                 player.SwitchPlayer();
             }
         }

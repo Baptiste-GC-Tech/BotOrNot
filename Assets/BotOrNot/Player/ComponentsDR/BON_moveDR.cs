@@ -14,7 +14,6 @@ public class BON_MoveDR : MonoBehaviour
     /* actions  related */
     private InputAction MoveAction;
     private InputAction JumpAction;
-    InputAction InteractAction;
     Vector2 moveInputValue;
 
     // player script reference
@@ -37,7 +36,6 @@ public class BON_MoveDR : MonoBehaviour
     {
         MoveAction = InputSystem.actions.FindAction("ActionsMapDR/Move");
         JumpAction = InputSystem.actions.FindAction("ActionsMapDR/Jump");
-        InteractAction = InputSystem.actions.FindAction("ActionsMapDR/Interact");
     }
 
     void Update()
@@ -49,7 +47,7 @@ public class BON_MoveDR : MonoBehaviour
         if (JumpAction.WasPressedThisFrame())
         {
             print("jump");
-            GetComponent<Rigidbody>().AddForce(new Vector3(0,1000,0));
+            GetComponent<Rigidbody>().AddForce(new Vector3(0,350,0));
         }
     }
 }

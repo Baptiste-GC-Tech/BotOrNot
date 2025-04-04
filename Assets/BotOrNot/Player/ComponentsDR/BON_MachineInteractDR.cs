@@ -57,7 +57,7 @@ public class BON_MachineInteractDR : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
+        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapDR/Interact"); //take control machine
         QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
