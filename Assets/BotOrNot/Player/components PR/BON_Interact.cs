@@ -44,24 +44,11 @@ public class BON_Interact : MonoBehaviour
                     _inventory.DeleteItem(i);
                 }
             }
-            else if (!player.IsSwitching)
+            else if (!player.IsSwitching && !player.IsMachineInRange) //Pas de machine a porté et pas deja en train de switch
             {
-                print("switch to dame robot");
+                StartCoroutine(player.CooldownSwitchControl());
                 player.SwitchPlayer();
             }
-        }
-
-        if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
-        {
-            //stock in inventory
-
-            print(player.Collectible);
-
-            _inventory.AddItem(player.Collectible);
-
-            player.Collectible.SetActive(false);
-
-            player.Collectible = null;
         }
     }
 }

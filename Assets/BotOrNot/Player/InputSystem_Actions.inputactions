@@ -678,7 +678,7 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "bf547894-7d40-4c38-ac97-1319f131002e",
+                    "id": "20bd34bb-7ce2-43a9-ba31-60049d5f299e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
@@ -697,7 +697,7 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "98c4eda8-b710-4d0c-9008-222c2abf3b92",
+                    "id": "de58e6ea-34ae-4d6e-b605-12be4cb026af",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -708,7 +708,7 @@
                 },
                 {
                     "name": "",
-                    "id": "92a506e4-0f25-4dca-96de-b1563b60bbdf",
+                    "id": "334e40e2-b6c0-4d4d-b760-163dc37deb64",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",

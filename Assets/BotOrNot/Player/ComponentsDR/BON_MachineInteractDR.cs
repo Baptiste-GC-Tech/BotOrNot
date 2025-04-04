@@ -43,10 +43,15 @@ public class BON_MachineInteractDR : MonoBehaviour
         {
             /* machine.GoDown()*/
         }
-        if(QuitMachineAction.WasPressedThisFrame() && !player.IsSwitching)
+        if (QuitMachineAction.WasPressedThisFrame())
         {
-            _playingMachine = false;
-            player.RecoverControl();
+            if (!player.IsSwitching)
+            {
+                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+                _playingMachine = false;
+                StartCoroutine(player.CooldownSwitchControl());
+                player.RecoverControl();
+            }
         }
     }
 
@@ -57,7 +62,7 @@ public class BON_MachineInteractDR : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
+        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapDR/Interact"); //take control machine
         QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
@@ -66,7 +71,7 @@ public class BON_MachineInteractDR : MonoBehaviour
     void Update()
     {
         // Take item action handling
-        if (InteractMachineAction.WasPressedThisFrame()) //interact
+        if (InteractMachineAction.WasReleasedThisFrame()) //interact
         {
             if (player.IsMachineInRange && !player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
@@ -75,7 +80,7 @@ public class BON_MachineInteractDR : MonoBehaviour
                 player.GiveControl();
             }
         }
-        if(_playingMachine)
+        if (_playingMachine)
         {
             MoveMachine();
         }

@@ -23,31 +23,20 @@ public class BON_InteractDR : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
+        InteractAction = InputSystem.actions.FindAction("ActionsMapDR/Interact");
         _inventory = GetComponent<BON_Inventory>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (InteractAction.WasPressedThisFrame() && !player.IsSwitching) //interact => switch player button
+        if (InteractAction.WasPressedThisFrame() ) //interact => switch player button
         {
-            print("switch to nut");
-            StartCoroutine(player.CooldownSwitchControl());
-            player.SwitchPlayer();
-        }
-
-        if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
-        {
-            //stock in inventory
-
-            print(player.Collectible);
-
-            _inventory.AddItem(player.Collectible);
-
-            player.Collectible.SetActive(false);
-
-            player.Collectible = null;
+            if (!player.IsSwitching && !player.IsMachineInRange) //Pas de machine a porté et pas deja en train de switch
+            {
+                StartCoroutine(player.CooldownSwitchControl());
+                player.SwitchPlayer();
+            }
         }
     }
 }

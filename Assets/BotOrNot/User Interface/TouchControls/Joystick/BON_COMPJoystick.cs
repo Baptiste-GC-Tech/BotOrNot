@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,20 @@ public class BON_COMPJoystick : BON_TouchComps
     private Vector2 _previousTouchPos;
     private Vector2 _currentTouchPos;
 
-    private bool _hasPassedThreshold;
+    private Vector2 _inputValues = Vector2.zero;
+    public Vector2 InputValues
+    {
+        get { return _inputValues; }
+    }
 
-    [SerializeField] GameObject joystick;
+    private int _touchID;
+    public int TouchID 
+    {  
+        get { return _touchID; }
+        set { _touchID = value; }
+    }
+
+
     private RawImage _joystickImage;
 
 
@@ -29,42 +41,65 @@ public class BON_COMPJoystick : BON_TouchComps
     override public void TouchStart(Touch touch, Vector2 initialTouchPos)
     {
         base.TouchStart(touch, initialTouchPos);
+
+        _isCompActive = true;
+        _inputValues = Vector2.zero;
+        _initialTouchPos = initialTouchPos;
+
+        gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
+        gameObject.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
+
+        PRIVUnhideJoystick();
+    }
+
+    override public void TouchResume(Touch touch, Vector2 initialTouchPos)
+    {
+        base.TouchResume(touch, initialTouchPos);
+
+        _previousTouchPos = _currentTouchPos;
+        _currentTouchPos = touch.position;
     }
 
     override public void TouchEnd()
     {
         base.TouchEnd();
+
+        _isCompActive = false;
+
+        PRIVHideJoystick();
     }
 
     private void PRIVUnhideJoystick()
     {
-        _joystickImage.enabled = true;
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 50);
     }
     private void PRIVMoveJoystick()
     {
-        joystick.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
-        joystick.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
+        gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
+        gameObject.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
 
         //Magnetude entre le pos initial et le currentPos
-        //Quand la diff entre _previousPos et _currentPos < 0-threshold, alors changer le initial au nouveau x/y du changement
-        //Le threshold etant la meme distance que pour atteindre la vitesse dep pointe du robot
+        _inputValues.x += (_currentTouchPos.x - _previousTouchPos.x)/200;
+        _inputValues.y += (_currentTouchPos.y - _previousTouchPos.y)/200;
+        PRIVClampInput();
     }
 
     private void PRIVHideJoystick()
     {
-        _joystickImage.enabled = false;
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 0);
     }
 
-    private bool PRIVIsInThreshold(Vector2 position)
+    private void PRIVClampInput()
     {
-        if (position.x - _initialTouchPos.x > _controls.SlideThreshold
-                    || position.x - _initialTouchPos.x < -_controls.SlideThreshold
-                    || position.y - _initialTouchPos.y > _controls.SlideThreshold
-                    || position.y - _initialTouchPos.y < -_controls.SlideThreshold)
-        {
-            return false;
-        }
-        return true;
+        if (_inputValues.x > 1)
+            _inputValues.x = 1;
+        else if (_inputValues.x < -1)
+            _inputValues.x = -1;
+
+        if (_inputValues.y > 1)
+            _inputValues.y = 1;
+        else if (_inputValues.y < -1)
+            _inputValues.y = -1;
     }
 
 
@@ -78,10 +113,17 @@ public class BON_COMPJoystick : BON_TouchComps
     override protected void Start()
     {
         base.Start();
+        _joystickImage = gameObject.GetComponent<RawImage>();
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 0);
     }
 
     override protected void Update()
     {
         base.Update();
+
+        if (_isCompActive)
+        {
+            PRIVMoveJoystick();
+        }
     }
 }

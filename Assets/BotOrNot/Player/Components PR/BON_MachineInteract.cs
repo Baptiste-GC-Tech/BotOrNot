@@ -43,10 +43,15 @@ public class BON_MachineInteract : MonoBehaviour
         {
             /* machine.GoDown()*/
         }
-        if(QuitMachineAction.WasPressedThisFrame() && !player.IsSwitching)
+        if(QuitMachineAction.WasPressedThisFrame())
         {
-            _playingMachine = false;
-            player.RecoverControl();
+            if (!player.IsSwitching)
+            {
+                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+                _playingMachine = false;
+                StartCoroutine(player.CooldownSwitchControl());
+                player.RecoverControl();
+            }
         }
     }
 
@@ -66,7 +71,7 @@ public class BON_MachineInteract : MonoBehaviour
     void Update()
     {
         // Take item action handling
-        if (InteractMachineAction.WasPressedThisFrame()) //interact
+        if (InteractMachineAction.WasReleasedThisFrame()) //interact
         {
             if (player.IsMachineInRange && !player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
@@ -75,7 +80,7 @@ public class BON_MachineInteract : MonoBehaviour
                 player.GiveControl();
             }
         }
-        if(_playingMachine)
+        if (_playingMachine)
         {
             MoveMachine();
         }

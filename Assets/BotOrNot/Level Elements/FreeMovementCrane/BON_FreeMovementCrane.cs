@@ -27,37 +27,53 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
     public void Up()
     {
-        if (_direction.x == 0)
+        if (_direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(0, 1);
+        }
+        else
+        {
+            Stop();
         }
     }
 
     public void Down() 
     {
-        if (_direction.x == 0)
+        if (_direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(0, -1);
+        }
+        else
+        {
+            Stop();
         }
     }
 
     public void Left()
     {
-        if (_direction.y == 0)
+        if (_direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(-1, 0);
+        }
+        else
+        {
+            Stop();
         }
     }
 
     public void Right()
     {
-        if (_direction.y == 0)
+        if (_direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(1, 0);
+        }
+        else
+        {
+            Stop();
         }
     }
 
