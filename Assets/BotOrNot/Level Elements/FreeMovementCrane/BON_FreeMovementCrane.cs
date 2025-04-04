@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 public class BON_FreeMovementCrane : BON_Actionnable
@@ -11,18 +12,17 @@ public class BON_FreeMovementCrane : BON_Actionnable
     private float _speed;
     private float _acceleration;
     Vector3 _direction;
-    private float _dumbassTimer;
 
     //CLASS METHODS
     public override void On()
     {
-        //change CC state to control crane
+        GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
     }
 
     public override void Off()
     {
         _isMoving = false;
-        //change CC state to control robot again
+        GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
     }
 
     public void Up()
@@ -76,7 +76,6 @@ public class BON_FreeMovementCrane : BON_Actionnable
         _direction = Vector2.zero;
         _speed = 0;
         _acceleration = _speedMax / 5;
-        _dumbassTimer = 0;
     }
     private void FixedUpdate()
     {
@@ -92,14 +91,5 @@ public class BON_FreeMovementCrane : BON_Actionnable
         {
             _speed -= _acceleration * Time.deltaTime;
         }
-        if (_dumbassTimer % 10  == 0)
-        {
-            Up();
-        }
-        if (_dumbassTimer % 100 == 0)
-        {
-            Stop();
-        }
-        _dumbassTimer++;
     }
 }
