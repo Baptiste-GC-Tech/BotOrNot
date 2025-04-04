@@ -39,8 +39,6 @@ public class BON_ControlsManager : MonoBehaviour
     {
         if (Math.Abs(position.x - _initialTouchPos[i].x) > _slideThreshold || (Math.Abs(position.y - _initialTouchPos[i].y) > _slideThreshold))
         {
-            Debug.Log(position + " ; " + _initialTouchPos[i]);
-            Debug.Log(_initialTouchPos.Count);
             return false;
         }
         return true;
@@ -56,10 +54,20 @@ public class BON_ControlsManager : MonoBehaviour
 
     private void PRIVTouchFinish(BON_TouchComps comp, int i)
     {
-        comp.TouchEnd();
         if (_touchDictionary.TryGetValue(i, out BON_TouchComps result))
         {
+            comp.TouchEnd();
             _touchDictionary.Remove(i);
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))
+            {
+                Debug.Log("J'ai touche un interactible!!!");
+            }
         }
     }
 
@@ -114,11 +122,18 @@ public class BON_ControlsManager : MonoBehaviour
 
                 else if (touch.phase == TouchPhase.Ended)
                 {
+                    if (_touchDictionary.TryGetValue(i, out BON_TouchComps result))
+                    {
+                        PRIVTouchFinish(_touchDictionary[i], i);
+                    }
+                    else
+                    {
+                        PRIVTouchFinish(null, i);
+                    }
+
                     _initialTouchPos.Remove(_initialTouchPos[i]);
                     _currentTouchPos.Remove(_currentTouchPos[i]);
                     _hasPassedThresholdList.Remove(_hasPassedThresholdList[i]);
-
-                    PRIVTouchFinish(_touchDictionary[i], i);
                 }
             }
         }
