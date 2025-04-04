@@ -31,7 +31,9 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;
     private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
-    
+
+    [SerializeField] Canvas canvas;
+    private BON_COMPJoystick _joystick;
 
     /*
      *  UNITY METHODS
@@ -39,6 +41,7 @@ public class BON_Move : MonoBehaviour
     void Start()
     {
         MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _joystick = canvas.GetComponentInChildren<BON_COMPJoystick>();
 
         /* Curve fields setup */
         _maxAccelTime = _AccelCurve.keys[_AccelCurve.keys.Length - 1].time;
@@ -50,7 +53,8 @@ public class BON_Move : MonoBehaviour
     void Update()
     {
         /* Read input value */
-        moveInputValue = MoveAction.ReadValue<Vector2>();
+        //moveInputValue = MoveAction.ReadValue<Vector2>();
+        moveInputValue = _joystick.InputValues;
 
         /* Calculates the speed */
         switch (Mathf.Approximately(moveInputValue.x, 0.0f))
