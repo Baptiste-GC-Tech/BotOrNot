@@ -16971,6 +16971,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3255584025113261743, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1702900044}
     - targetCorrespondingSourceObject: {fileID: 4461550612475446522, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
       insertIndex: -1
@@ -16982,7 +16986,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1144360101}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1157404262}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c12d2c92abdded4d918b7bf33c9c310, type: 3}
@@ -17104,11 +17108,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: TriggerZone B
       objectReference: {fileID: 0}
+    - target: {fileID: 6524562647421644697, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: m_TagString
+      value: TriggerZone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6694afe7f7175b54fbac46a9dca1f43d, type: 3}
+--- !u!1 &1157404262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3255584025113261743, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1144360101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1162206003
 Mesh:
   m_ObjectHideFlags: 0
@@ -21904,7 +21919,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8219375028377625264, guid: 100882b8f0ef48248af32c3ecbded70d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1797139473}
   m_SourcePrefab: {fileID: 100100000, guid: 100882b8f0ef48248af32c3ecbded70d, type: 3}
 --- !u!4 &1499913530 stripped
 Transform:
@@ -23195,6 +23214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TriggerZone A
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524562647421644697, guid: 6694afe7f7175b54fbac46a9dca1f43d,
+        type: 3}
+      propertyPath: m_TagString
+      value: TriggerZone
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24574,7 +24598,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1144360101}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1157404262}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cfca2ae9c1af5e47931c939e3f1ab28, type: 3}
@@ -24751,6 +24775,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1144360101}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1702900044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157404262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1702992377
 GameObject:
   m_ObjectHideFlags: 0
@@ -26185,6 +26232,72 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1797139472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8219375028377625264, guid: 100882b8f0ef48248af32c3ecbded70d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499913529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1797139473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797139472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.1
+    m_ImpulseType: 0
+    m_DissipationRate: 0.531
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 205.84
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: 0.05, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IgnoreTag: TriggerZone
+  m_UseImpactDirection: 0
+  m_ScaleImpactWithMass: 0
+  m_ScaleImpactWithSpeed: 0
 --- !u!1001 &1821188951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32748,7 +32861,8 @@ PrefabInstance:
       value: 1757
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5337968533824105965, guid: 89594e3fde835c34991e01c78d8c917f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89594e3fde835c34991e01c78d8c917f, type: 3}
