@@ -9,6 +9,7 @@ public class BON_ScaleBehavior : MonoBehaviour
      */
     [SerializeField] Transform _position1;
     [SerializeField] Transform _position2;
+    [SerializeField] float _scaleAngularVelocity;
     bool _isBoxCorretlyPlaced;
 
     /*
@@ -20,8 +21,9 @@ public class BON_ScaleBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        GetComponent<Rigidbody>().angularVelocity = Vector3.ClampMagnitude(GetComponent<Rigidbody>().angularVelocity, _scaleAngularVelocity);
         if (_isBoxCorretlyPlaced && ((gameObject.transform.rotation.eulerAngles.z >= 359 && gameObject.transform.rotation.eulerAngles.z <= 360) || (gameObject.transform.rotation.eulerAngles.z >= 0 && gameObject.transform.rotation.eulerAngles.z <= 1)))
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
