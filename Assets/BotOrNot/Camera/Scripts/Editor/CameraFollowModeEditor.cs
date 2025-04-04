@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEditor;
 using System.Drawing.Printing;
+using System;
+
+
 
 [CustomEditor(typeof(CameraFollowMode))]
 public class CameraFollowModeEditor : Editor
@@ -11,12 +14,6 @@ public class CameraFollowModeEditor : Editor
      */
 
     private Texture2D _bannerTexture;
-
-    /*
-    [SerializeField] private CameraFollowMode camerashake;
-    [SerializeField] private float shakeIntensity = 0.0f;
-    [SerializeField] private float shakeTime = 0.0f;
-    */
 
     /*
      *  CLASS METHODS
@@ -73,18 +70,6 @@ public class CameraFollowModeEditor : Editor
 
         GUILayout.Space(5);
         EditorGUILayout.LabelField("Mode actif :", script.currentMode.ToString());
-        
-        GUILayout.Space(5);
-        DrawField("intensity", "intensity of the shake");
-        DrawField("shaketime", "duration of the shake");
-
-
-        /*
-        if (GUILayout.Button("Shake"))
-        {
-            camerashake.ShakeCamera(shakeIntensity, shakeTime);
-        }
-        */
 
     }
 

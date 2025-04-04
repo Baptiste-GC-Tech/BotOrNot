@@ -95,7 +95,7 @@ public class BON_Move : MonoBehaviour
             //lineRenderer.loop = false;
             //lineRenderer.positionCount = 2;
         Vector3[] lineRendPos = { transform.position, transform.position + 10.0f * Vector3.up };
-        ligma.SetPositions(lineRendPos);
+        //ligma.SetPositions(lineRendPos);
         Debug.DrawRay(transform.position, Vector3.up);
 
         if (hit.collider != null) Debug.Log("hit : " + hit);

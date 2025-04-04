@@ -7,6 +7,7 @@ TagManager:
   - Hook
   - collectibles_DR
   - Machine
+  - TriggerZone
   layers:
   - Default
   - TransparentFX
