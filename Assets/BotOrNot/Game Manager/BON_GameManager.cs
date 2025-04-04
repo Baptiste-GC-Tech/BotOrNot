@@ -11,19 +11,16 @@ public class BON_GameManager : MonoBehaviour
     */
   
     private static BON_GameManager _gameManager;
-    public static BON_GameManager GameManager
-    {
-        get { return _gameManager; }
-    }
 
     // inventory script reference
     [SerializeField] private BON_Inventory inventory;
 
 
     /*  Level1 requirement */
-
     private int _collectiblesToWin;
 
+
+    private Scenes _currentScene;
 
     public enum Scenes
     {
@@ -36,10 +33,22 @@ public class BON_GameManager : MonoBehaviour
      *  CLASS METHODS
      */
 
-    
-    public void ChangeScene(Scenes currentScene, Scenes nextScene)
+    public static BON_GameManager Instance()
     {
-        switch (currentScene)
+        if (_gameManager == null)
+        {
+            GameObject newObject = new GameObject("BON_GameManager");
+            _gameManager = newObject.AddComponent<BON_GameManager>();
+        }
+        return _gameManager;
+    }
+
+    
+    public void ChangeScene(Scenes nextScene)
+    {
+        print("call funct scene");
+        print("from "+_currentScene +" to "+ nextScene.ToString());
+        switch (_currentScene)
         {
             case Scenes.Menu: // n'importe quel niveau possible?
                 break;
@@ -51,7 +60,8 @@ public class BON_GameManager : MonoBehaviour
                 }
                 else
                 {
-                    SceneManager.LoadScene((int)nextScene);
+                    _currentScene = nextScene;
+                    SceneManager.LoadScene(nextScene.ToString());
                 }
                 break;
             case Scenes.Level2: //uniquement menu possible (+ futurs levels)
@@ -63,7 +73,8 @@ public class BON_GameManager : MonoBehaviour
                 {
                     if ( inventory.CountItem() == _collectiblesToWin) //si on stock bien tous les items necessaires
                     {
-                        SceneManager.LoadScene((int)nextScene);
+                        _currentScene = nextScene;
+                        SceneManager.LoadScene(nextScene.ToString());
                     }
                 }
                 break;
@@ -77,15 +88,14 @@ public class BON_GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = new BON_GameManager();
-        DontDestroyOnLoad(_gameManager);
+        DontDestroyOnLoad(this.gameObject);
 
         //init la scene au Menu
-        Scenes currentScene = Scenes.Menu;
+        _currentScene = Scenes.Level1;
 
         //Lancer la scene du level1
-        ChangeScene(currentScene, Scenes.Level1);
-
+        ChangeScene(Scenes.Level2);
+        print(_currentScene);
 
         _collectiblesToWin = 4;
     }
