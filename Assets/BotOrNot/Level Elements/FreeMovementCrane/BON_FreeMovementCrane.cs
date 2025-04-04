@@ -11,7 +11,7 @@ public class BON_FreeMovementCrane : BON_Actionnable
     [SerializeField] float _speedMax;
     private float _speed;
     private float _acceleration;
-    Vector3 _direction;
+    private Vector3 _direction;
 
     //CLASS METHODS
     public override void On()
@@ -27,7 +27,7 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
     public void Up()
     {
-        if (_direction == Vector3.zero)
+        if (_direction == new Vector3(0, 1, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(0, 1);
@@ -40,7 +40,7 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
     public void Down() 
     {
-        if (_direction == Vector3.zero)
+        if (_direction != new Vector3(0, -1, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(0, -1);
@@ -53,7 +53,7 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
     public void Left()
     {
-        if (_direction == Vector3.zero)
+        if (_direction != new Vector3(-1, 0, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(-1, 0);
@@ -66,7 +66,7 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
     public void Right()
     {
-        if (_direction == Vector3.zero)
+        if (_direction != new Vector3(1, 0, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(1, 0);
