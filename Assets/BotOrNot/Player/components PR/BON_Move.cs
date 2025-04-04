@@ -5,7 +5,9 @@ using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder;
 
+// TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
 {
     /*
@@ -22,6 +24,7 @@ public class BON_Move : MonoBehaviour
 
     /* Speed related */
     [SerializeField] float _maxSpeed;
+    [SerializeField] AnimationCurve _slopedSpeedCurve;
     private float _curSpeed;
 
     /* Accelartion related */
@@ -30,7 +33,7 @@ public class BON_Move : MonoBehaviour
 
     /* Direction related */
     private int _moveXAxisDir;
-    private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
+    private Vector3 _groundNormalVect;
     
 
     /*
@@ -52,7 +55,19 @@ public class BON_Move : MonoBehaviour
         /* Read input value */
         moveInputValue = MoveAction.ReadValue<Vector2>();
 
-        /* Calculates the speed */
+
+        /* Determines the direction using the ground's normal. If not ground is found, can't accelerate ( cuz wheel no touchy :( ) */
+        if (moveInputValue.x != 0.0f) _moveXAxisDir = moveInputValue.x > 0.0f ? 1 : -1; // Doesn't update if their is no input.
+
+        RaycastHit groundRaycastHit;
+        Debug.DrawRay(transform.position, Vector3.down * 2.0f, Color.red, Time.deltaTime);
+        //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 2.0f);
+        if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
+        //Debug.Log("_groundNormalVect : " + _groundNormalVect);
+
+
+        /* Calculates the speed, then multiplies it to the slopeCurve (to simulate ease or hinder of travel on slopes) */
         switch (Mathf.Approximately(moveInputValue.x, 0.0f))
         {
             // Case in which we accelerate
@@ -76,28 +91,21 @@ public class BON_Move : MonoBehaviour
                 break;
         }
 
-        /* Updates the movement's direction as long as there is a input to read */
-        if (moveInputValue.x != 0.0f) _moveXAxisDir = moveInputValue.x > 0.0f ? 1 : -1;
 
-        /* Applies the movement */
-        transform.Translate(new Vector3(_moveXAxisDir * _curSpeed, 0.0f, 0.0f) * Time.deltaTime);
+        /* Applies the movement */  
+        Vector3 moveDirThisFrame;
 
+        // Case of a flat ground : uses either forward directions instead of doing math
+        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) moveDirThisFrame = Vector3.right * _moveXAxisDir;
+        // Case of a sloped ground : finds the tangent to the normal depending on which direction we are going towards, and applies a speed debuff
+        else
+        {
+            moveDirThisFrame = _moveXAxisDir == 1 ? Vector3.Cross(_groundNormalVect, Vector3.forward) : Vector3.Cross(Vector3.forward, _groundNormalVect);
+            moveDirThisFrame *= _slopedSpeedCurve.Evaluate(_groundNormalVect.y);
+        }
 
+        //Debug.Log("moveDirThisFrame : " + moveDirThisFrame);
 
-        //
-        // WIP
-        //
-
-        /* Snaps the player to the ground if he goes under it */
-        RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        LineRenderer ligma = new LineRenderer();
-            //lineRenderer.loop = false;
-            //lineRenderer.positionCount = 2;
-        Vector3[] lineRendPos = { transform.position, transform.position + 10.0f * Vector3.up };
-        ligma.SetPositions(lineRendPos);
-        Debug.DrawRay(transform.position, Vector3.up);
-
-        if (hit.collider != null) Debug.Log("hit : " + hit);
+        transform.Translate(new Vector3(moveDirThisFrame.x * _curSpeed, moveDirThisFrame.y * _curSpeed, 0.0f) * Time.deltaTime);
     }
 }
