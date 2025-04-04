@@ -7,8 +7,11 @@ public class BON_FreeMovementCrane : BON_Actionnable
 {
     //FIELD
     private bool _isMoving;
-    [SerializeField] float _speed;
+    [SerializeField] float _speedMax;
+    private float _speed;
+    private float _acceleration;
     Vector3 _direction;
+    private float _dumbassTimer;
 
     //CLASS METHODS
     public override void On()
@@ -71,12 +74,32 @@ public class BON_FreeMovementCrane : BON_Actionnable
     private void Start()
     {
         _direction = Vector2.zero;
+        _speed = 0;
+        _acceleration = _speedMax / 5;
+        _dumbassTimer = 0;
     }
     private void FixedUpdate()
     {
-        if (_isMoving)
+        if (_isMoving || _speed > 0)
         {
             gameObject.transform.position += _direction * _speed * Time.deltaTime;
         }
+        if (_speed < _speedMax)
+        {
+            _speed += _acceleration * Time.deltaTime;
+        }
+        else if(_speed > 0)
+        {
+            _speed -= _acceleration * Time.deltaTime;
+        }
+        if (_dumbassTimer % 10  == 0)
+        {
+            Up();
+        }
+        if (_dumbassTimer % 100 == 0)
+        {
+            Stop();
+        }
+        _dumbassTimer++;
     }
 }
