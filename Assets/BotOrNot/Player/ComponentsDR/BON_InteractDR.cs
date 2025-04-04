@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BON_Interact : MonoBehaviour
+public class BON_InteractDR : MonoBehaviour
 {
     /*
      *  FIELDS
@@ -30,25 +30,11 @@ public class BON_Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Take item action handling
-        if (InteractAction.WasPressedThisFrame()) //interact
+        if (InteractAction.WasPressedThisFrame() && !player.IsSwitching) //interact => switch player button
         {
-            if (player.IsDRInRange) //dame robot pas loin
-            {
-                //give inventory item(s) to DR
-
-                print(_inventory.CountItem() +" objets déposées");
-
-                for(int i = _inventory.CountItem()-1; i> 0; i--)
-                {
-                    _inventory.DeleteItem(i);
-                }
-            }
-            else if (!player.IsSwitching)
-            {
-                print("switch to dame robot");
-                player.SwitchPlayer();
-            }
+            print("switch to nut");
+            StartCoroutine(player.CooldownSwitchControl());
+            player.SwitchPlayer();
         }
 
         if (player.IsCollectibleInRange && player.Collectible != null) //item a porté

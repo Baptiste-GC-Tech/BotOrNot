@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BON_MachineInteract : MonoBehaviour
+public class BON_MachineInteractDR : MonoBehaviour
 {
     /*
      *  FIELDS

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  FIELDS
      */
+
+    [SerializeField] protected List<MonoBehaviour> _componentsPR;
+    [SerializeField] protected List<MonoBehaviour> _componentsDR;
+
+    private List<List<MonoBehaviour>> _CompoentsAvatar;
 
     // Object-interaction related
     private GameObject _collectible = null;
@@ -36,7 +42,23 @@ public class BON_CCPlayer : MonoBehaviour
         get { return _isMachineInRange; }
     }
 
-    private int _currenCharacterPlayed; //0 = PR, 1= DR, autre = machine
+    //for stock machine ref ( for control it)
+    private GameObject _machine = null; //ou classe de la machine directement
+    public GameObject Machine
+    {
+        get { return Machine; }
+        set { _machine = value; }
+    }
+
+    private bool _isSwitching = false;  //bool for switch player/machines
+    public bool IsSwitching
+    {
+        get { return _isSwitching; }
+        set { _isSwitching = value; }
+    }
+
+
+    private int _currentCharacterPlayed; //0 = PR, 1= DR, autre = machine
     private int _lastCharacterPlayed; //var tampon pour recup le controle
 
     /*// First level completion condition : Should have its own class
@@ -49,48 +71,86 @@ public class BON_CCPlayer : MonoBehaviour
      */
 
 
-    public void SwitchControl() //donner le controle a une machine
+    public void GiveControl() //donner le controle a une machine
     {
-        _lastCharacterPlayed = _currenCharacterPlayed; //save l'id du perso
-        _currenCharacterPlayed = -1;
+        _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
+        _currentCharacterPlayed = -1;
         GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
-    }
-    public void RecoverControl() //reprendre le controle
-    {
-        _currenCharacterPlayed = _lastCharacterPlayed;
-        if (_currenCharacterPlayed == 0)
-        {
-           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-        }
-        else
-        {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-        }
+        DisableCompPlayer(_lastCharacterPlayed);
+        print("control switch to " + "Machine");
     }
 
     public void SwitchPlayer()
     {
         //switch PR to DR
-        if (_currenCharacterPlayed ==0) 
+        if (_currentCharacterPlayed == 0)
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-            _currenCharacterPlayed = 1;
+            _currentCharacterPlayed = 1;
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            EnableCompPlayer();
+            DisableCompPlayer(0);
         }
         else //switch DR to PR
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-            _currenCharacterPlayed = 0;
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+            _currentCharacterPlayed = 0;
+            EnableCompPlayer();
+            DisableCompPlayer(1);
         }
     }
 
+    public void RecoverControl() //reprendre le controle
+    {
+        _currentCharacterPlayed = _lastCharacterPlayed;
+        if (_currentCharacterPlayed == 0)
+        {
+           GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+        }
+        else
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+        }
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+        EnableCompPlayer();
+    }
+
+    private void DisableCompPlayer(int CharacterStopPlaying)
+    {
+        for (int i = 0; i < _CompoentsAvatar[CharacterStopPlaying].Count;i++) //disable all comps in list
+        {
+            _CompoentsAvatar[CharacterStopPlaying][i].enabled = false;
+        }
+    }
+
+    private void EnableCompPlayer()
+    {
+        for (int i = 0; i < _CompoentsAvatar[_currentCharacterPlayed].Count; i++) //enable all comps in list
+        {
+            _CompoentsAvatar[_currentCharacterPlayed][i].enabled = true;
+        }
+    }
+
+    public IEnumerator CooldownSwitchControl()
+    {
+        _isSwitching = true;
+        yield return new WaitForSeconds(0.5f); //durée anim
+        _isSwitching = false;
+    }
 
     /*
      *  UNITY METHODS
      */
     private void Start()
     {
-        _currenCharacterPlayed = 0;
-        _lastCharacterPlayed = _currenCharacterPlayed;
+        //init values
+        _currentCharacterPlayed = 0;
+        _lastCharacterPlayed = _currentCharacterPlayed;
+         _CompoentsAvatar = new();
+         _CompoentsAvatar.Add(_componentsPR);
+         _CompoentsAvatar.Add(_componentsDR);
+
+        //start with PR => disable DR
+        DisableCompPlayer(1);
     }
 
     void Update()
