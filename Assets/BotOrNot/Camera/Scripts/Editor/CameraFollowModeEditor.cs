@@ -44,7 +44,6 @@ public class CameraFollowModeEditor : Editor
 
         /* Tooltips */
         DrawField("player", "Transform du joueur contrôlé.");
-        DrawField("player", "Transform du joueur contrôlé.");
         DrawField("otherTarget", "Objet secondaire à suivre (optionnel).");
         DrawField("followTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
 
