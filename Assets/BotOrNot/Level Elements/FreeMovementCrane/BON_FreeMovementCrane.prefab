@@ -369,3 +369,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedMax: 10
+  _limitZone:
+  - {x: 0, y: 0}

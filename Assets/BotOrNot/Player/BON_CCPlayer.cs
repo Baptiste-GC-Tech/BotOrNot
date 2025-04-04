@@ -72,7 +72,6 @@ public class BON_CCPlayer : MonoBehaviour
      *  CLASS METHODS
      */
 
-
     public void GiveControl() //donner le controle a une machine
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
@@ -162,11 +161,16 @@ public class BON_CCPlayer : MonoBehaviour
         //start with PR => disable DR
         DisableCompPlayer(1);
         EnableCompPlayer(0);
+
+        BON_GameManager instance = BON_GameManager.Instance();
+        print("instance");
+        print("GM = "+instance);
+        instance.ChangeScene(BON_GameManager.Scenes.Level2);
     }
 
     void Update()
     {
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {
