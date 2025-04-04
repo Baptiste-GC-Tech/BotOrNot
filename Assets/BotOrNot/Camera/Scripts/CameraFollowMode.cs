@@ -2,6 +2,8 @@ using UnityEngine;
 using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System.Threading;
+using System.Collections;
 
 
 
@@ -19,7 +21,8 @@ public class CameraFollowMode : MonoBehaviour
         Player,
         OtherObject,
         Barycenter,
-        Auto
+        Auto,
+        Shake
     }
 
     [Header("Cibles de suivi")]
@@ -33,8 +36,8 @@ public class CameraFollowMode : MonoBehaviour
     public Transform followTarget;
 
     [Header("Offset par défaut")]
-    [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur.")]
-    public float offsetX = -3f;
+    [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.")]
+    public float offsetX = -6f;
 
     [Tooltip("Décalage vertical appliqué à la caméra.")]
     public float offsetY = 0f;
@@ -49,11 +52,21 @@ public class CameraFollowMode : MonoBehaviour
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
     [Range(0.1f, 20f)] public float offsetLerpSpeed = 5f;
 
+    /*
+    [Header("Shake")]
+    [Tooltip("Intensité de shake de la caméra.")]
+    public float intensity = 0.0f;
+    [Tooltip("Temps de shake de la caméra.")]
+    public float shaketime = 2.0f;
+    */
+
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
     private CinemachineFramingTransposer _framingTransposer;
     private CinemachineComposer _composer;
     private CinemachineVirtualCamera _vcam;
+    private CinemachineBasicMultiChannelPerlin perlinNoise;
+
 
     private enum Direction { _None, _Left, _Right } // REF
     private Direction _currentDirection = Direction._Right; // REF
@@ -73,7 +86,8 @@ public class CameraFollowMode : MonoBehaviour
 
     private void Start()
     {
-        MoveAction = InputSystem.actions.FindAction("Player/Move");
+        /* New Inputs */
+        // MoveAction = InputSystem.actions.FindAction("Player/Move");
 
         _vcam = GetComponent<CinemachineVirtualCamera>();
         _framingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
@@ -82,14 +96,18 @@ public class CameraFollowMode : MonoBehaviour
         /* -> Appliquer l'offset au Start
          * if (_framingTransposer != null)
          *      _framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
-         */    
-            
+         */
+
+        perlinNoise = _vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+
     }
 
     private void Update()
     {
-        
-        Vector2 moveInputValue = MoveAction.ReadValue<Vector2>();
+        /* New Inputs */
+        // print(MoveAction.ReadValue<Vector2>());
+        MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
 
         if (followTarget == null || player == null) return;
 
@@ -144,6 +162,11 @@ public class CameraFollowMode : MonoBehaviour
                 }
                 break;
 
+            /*case FollowMode.Shake:
+                ShakeCamera(intensity, shaketime);
+                currentMode = FollowMode.Auto;
+                break;*/
+
         }
 
         followTarget.position = Vector3.Lerp(followTarget.position, desiredFollowPos, Time.deltaTime * followLerpSpeed);
@@ -162,9 +185,6 @@ public class CameraFollowMode : MonoBehaviour
             _vcam.m_Lens = lens;
         }
 
-
-
-
         /*
          * Non utilisé car on n'utilise plus l'Aim
          * 
@@ -177,10 +197,20 @@ public class CameraFollowMode : MonoBehaviour
 
         /* !!! ATTENTION A MODIFIER ABSOLUMENT POUR LES NOUVEAUX INPUTS !!! */
 
-        if (moveInputValue.x < 0)
+        print(MoveAction.ReadValue<Vector2>().x);
+
+        if (MoveAction.ReadValue<Vector2>().x == 1)
             _currentDirection = Direction._Left;
-        else if (moveInputValue.x >= 0)
+        else if (MoveAction.ReadValue<Vector2>().x == -1)
             _currentDirection = Direction._Right;
+        
+
+        /*
+        if (Input.GetKey(KeyCode.A))
+            _currentDirection = Direction._Left;
+        else if (Input.GetKey(KeyCode.A))
+            _currentDirection = Direction._Right;
+        */
     }
 
     /*
@@ -214,5 +244,22 @@ public class CameraFollowMode : MonoBehaviour
     public void UnregisterTriggerTarget(Transform target)
     {
         activeTriggerTargets.RemoveAll(t => t.target == target);
+    }
+
+    public void ShakeCamera(float intensity, float shaketime)
+    {
+        perlinNoise.m_AmplitudeGain = intensity;
+        StartCoroutine(WaitTime(shaketime));
+    }
+
+    IEnumerator WaitTime(float shaketime)
+    {
+        yield return new WaitForSeconds(shaketime);
+        ResetIntensity();
+    }
+
+    void ResetIntensity()
+    {
+        perlinNoise.m_AmplitudeGain = 0;
     }
 }

@@ -13,7 +13,8 @@ public class BON_Interact : MonoBehaviour
     // player script reference
     [SerializeField] private BON_CCPlayer player;
     //inventory reference
-    private Inventory _inventory;
+    private BON_Inventory _inventory;
+
 
     /*
      *  UNITY METHODS
@@ -23,7 +24,7 @@ public class BON_Interact : MonoBehaviour
     void Start()
     {
         InteractAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
-        _inventory = GetComponent<Inventory>();
+        _inventory = GetComponent<BON_Inventory>();
     }
 
     // Update is called once per frame
@@ -32,19 +33,7 @@ public class BON_Interact : MonoBehaviour
         // Take item action handling
         if (InteractAction.WasPressedThisFrame()) //interact
         {
-            if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
-            {
-                //stock in inventory
-
-                print(player.Collectible);
-
-                _inventory.AddItem(player.Collectible);
-
-                player.Collectible.SetActive(false);
-
-                player.Collectible = null;
-            }
-            else if (player.IsDRInRange) //dame robot pas loin
+            if (player.IsDRInRange) //dame robot pas loin
             {
                 //give inventory item(s) to DR
 
@@ -55,12 +44,24 @@ public class BON_Interact : MonoBehaviour
                     _inventory.DeleteItem(i);
                 }
             }
-            else
+            else if (!player.IsSwitching)
             {
-                print("non");
-                print("collectible = " + player.Collectible);
-                print("in range = " + player.IsCollectibleInRange);
+                print("switch to dame robot");
+                player.SwitchPlayer();
             }
+        }
+
+        if (player.IsCollectibleInRange && player.Collectible != null) //item a porté
+        {
+            //stock in inventory
+
+            print(player.Collectible);
+
+            _inventory.AddItem(player.Collectible);
+
+            player.Collectible.SetActive(false);
+
+            player.Collectible = null;
         }
     }
 }

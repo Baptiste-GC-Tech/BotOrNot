@@ -9,13 +9,16 @@ public class BON_MachineInteract : MonoBehaviour
      *  FIELDS
      */
 
-    InputAction InteractMachineAction;
-    InputAction MoveMachineAction;
+    InputAction InteractMachineAction; //interact pour prendre le controle
+    InputAction QuitMachineAction; //rappuyer pour quitter le controle
+    InputAction MoveMachineAction; //bouger quand la machine est controlable
 
     // player script reference
     [SerializeField] private BON_CCPlayer player;
 
     Vector2 moveMachineValue;
+
+    private bool _playingMachine = false;
 
     /*
      *  CLASS METHODS
@@ -40,6 +43,11 @@ public class BON_MachineInteract : MonoBehaviour
         {
             /* machine.GoDown()*/
         }
+        if(QuitMachineAction.WasPressedThisFrame() && !player.IsSwitching)
+        {
+            _playingMachine = false;
+            player.RecoverControl();
+        }
     }
 
     /*
@@ -49,8 +57,9 @@ public class BON_MachineInteract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
-        MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move");
+        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
+        QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
+        MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
 
     // Update is called once per frame
@@ -59,11 +68,16 @@ public class BON_MachineInteract : MonoBehaviour
         // Take item action handling
         if (InteractMachineAction.WasPressedThisFrame()) //interact
         {
-            if (player.IsMachineInRange) //machine pas loin
+            if (player.IsMachineInRange && !player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
-                player.SwitchControl();
-                MoveMachine();
+                _playingMachine = true;
+                StartCoroutine(player.CooldownSwitchControl()); 
+                player.GiveControl();
             }
+        }
+        if(_playingMachine)
+        {
+            MoveMachine();
         }
     }
 }

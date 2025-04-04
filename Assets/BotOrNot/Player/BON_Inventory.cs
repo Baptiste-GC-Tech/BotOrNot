@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class BON_Inventory : MonoBehaviour
 {
     /*
      *  FIELDS
      */
-    private List<GameObject> _items = new();
 
+    private List<GameObject> _items = new();
 
     /*
      *  CLASS METHODS
      */
-
 
     public void AddItem(GameObject obj) //add item to the list
     {
@@ -40,7 +39,6 @@ public class Inventory : MonoBehaviour
             print(_items[i]);
         }
     }
-
 
     /*
      *  UNITY METHODS

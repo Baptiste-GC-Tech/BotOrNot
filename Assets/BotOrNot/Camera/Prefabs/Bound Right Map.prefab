@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4839216732360482558
+--- !u!1 &5875233599092658647
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,58 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5462975380577722644}
-  - component: {fileID: 2444411601264652107}
-  - component: {fileID: 3654910882477727703}
+  - component: {fileID: 5470350196622021649}
+  - component: {fileID: 5988344073024252329}
   m_Layer: 0
-  m_Name: TriggerZone B
+  m_Name: Bound Right Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5462975380577722644
+--- !u!4 &5470350196622021649
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4839216732360482558}
+  m_GameObject: {fileID: 5875233599092658647}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.23, y: 1.202557, z: -0}
-  m_LocalScale: {x: 4.932365, y: 1.6806, z: 1.6806}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -50.2, y: -3.4355278, z: -1.2001344}
+  m_LocalScale: {x: 1.59, y: 1.6806, z: 1.6806}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2444411601264652107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4839216732360482558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baa105fd0f74f2246a8493e81bc7e486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linkedObject: {fileID: 0}
-  cameraFollow: {fileID: 0}
-  playerTag: Player
-  duration: 3
-  overrideOffset: 1
-  offsetX: 0
-  offsetZ: 12
-  focusOnly: 0
---- !u!65 &3654910882477727703
+--- !u!65 &5988344073024252329
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4839216732360482558}
+  m_GameObject: {fileID: 5875233599092658647}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -68,7 +47,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

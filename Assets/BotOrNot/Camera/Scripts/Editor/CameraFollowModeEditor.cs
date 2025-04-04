@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.Drawing.Printing;
 
 [CustomEditor(typeof(CameraFollowMode))]
 public class CameraFollowModeEditor : Editor
@@ -10,6 +11,12 @@ public class CameraFollowModeEditor : Editor
      */
 
     private Texture2D _bannerTexture;
+
+    /*
+    [SerializeField] private CameraFollowMode camerashake;
+    [SerializeField] private float shakeIntensity = 0.0f;
+    [SerializeField] private float shakeTime = 0.0f;
+    */
 
     /*
      *  CLASS METHODS
@@ -37,11 +44,12 @@ public class CameraFollowModeEditor : Editor
 
         /* Tooltips */
         DrawField("player", "Transform du joueur contrôlé.");
+        DrawField("player", "Transform du joueur contrôlé.");
         DrawField("otherTarget", "Objet secondaire à suivre (optionnel).");
         DrawField("followTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
 
         GUILayout.Space(5);
-        DrawField("offsetX", "Décalage horizontal lors du suivi.");
+        DrawField("offsetX", "Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.");
         DrawField("offsetY", "Décalage vertical lors du suivi.");
         DrawField("offsetZ", "Décalage de profondeur lors du suivi.");
 
@@ -66,6 +74,19 @@ public class CameraFollowModeEditor : Editor
 
         GUILayout.Space(5);
         EditorGUILayout.LabelField("Mode actif :", script.currentMode.ToString());
+        
+        GUILayout.Space(5);
+        DrawField("intensity", "intensity of the shake");
+        DrawField("shaketime", "duration of the shake");
+
+
+        /*
+        if (GUILayout.Button("Shake"))
+        {
+            camerashake.ShakeCamera(shakeIntensity, shakeTime);
+        }
+        */
+
     }
 
     private void DrawField(string propertyName, string tooltip)
