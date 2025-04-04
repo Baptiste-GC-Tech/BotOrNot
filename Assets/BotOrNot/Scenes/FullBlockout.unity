@@ -16831,7 +16831,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1662136517}
+      objectReference: {fileID: 1499913530}
     - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
       propertyPath: offsetX
@@ -21891,6 +21891,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 100882b8f0ef48248af32c3ecbded70d, type: 3}
+--- !u!4 &1499913530 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1277679833362078607, guid: 100882b8f0ef48248af32c3ecbded70d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499913529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1509695641
 GameObject:
   m_ObjectHideFlags: 0
@@ -24176,12 +24182,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &1662136517 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4604678922246928576, guid: 100882b8f0ef48248af32c3ecbded70d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1499913529}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1664155250
 GameObject:
   m_ObjectHideFlags: 0
