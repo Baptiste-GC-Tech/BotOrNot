@@ -8,22 +8,21 @@ public class BON_Inventory : MonoBehaviour
      *  FIELDS
      */
 
-    private List<GameObject> _items = new();
+    private List<int> _items = new();
 
     /*
      *  CLASS METHODS
      */
 
-    public void AddItem(GameObject obj) //add item to the list
+    public void AddItem(int objId) //add item to the list
     {
-        if (!(_items.Contains(obj)))    
+        if (!(_items.Contains(objId)))    
         {
-            _items.Add(obj);
+            _items.Add(objId);
         }
     }
     public void DeleteItem(int i) //remove the item i from the list and destroy it
     {
-        Destroy(_items[i]);
         _items.RemoveAt(i);
     }
 
