@@ -14,9 +14,9 @@ public class BON_CCPlayer : MonoBehaviour
     [SerializeField] protected List<MonoBehaviour> _componentsPR;
     [SerializeField] protected List<MonoBehaviour> _componentsDR;
 
-    private List<List<MonoBehaviour>> _CompoentsAvatar;
+    private List<List<MonoBehaviour>> _ComponentsAvatar;
 
-    // Object-interaction related
+    // for stock collectible ref 
     private GameObject _collectible = null;
     public GameObject Collectible
     {
@@ -24,6 +24,7 @@ public class BON_CCPlayer : MonoBehaviour
         set { _collectible = value; }
     }
 
+    /*  triggers bool */
     private bool _isCollectibleInRange = false;
     public bool IsCollectibleInRange
     {
@@ -41,6 +42,8 @@ public class BON_CCPlayer : MonoBehaviour
     {
         get { return _isMachineInRange; }
     }
+    //
+
 
     //for stock machine ref ( for control it)
     private GameObject _machine = null; //ou classe de la machine directement
@@ -56,7 +59,6 @@ public class BON_CCPlayer : MonoBehaviour
         get { return _isSwitching; }
         set { _isSwitching = value; }
     }
-
 
     private int _currentCharacterPlayed; //0 = PR, 1= DR, autre = machine
     private int _lastCharacterPlayed; //var tampon pour recup le controle
@@ -77,7 +79,8 @@ public class BON_CCPlayer : MonoBehaviour
         _currentCharacterPlayed = -1;
         GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
         DisableCompPlayer(_lastCharacterPlayed);
-        print("control switch to " + "Machine");
+        _ComponentsAvatar[_lastCharacterPlayed][2].enabled = true;
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void SwitchPlayer()
@@ -97,6 +100,7 @@ public class BON_CCPlayer : MonoBehaviour
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
             _currentCharacterPlayed = 0;
         }
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void RecoverControl() //reprendre le controle
@@ -116,22 +120,22 @@ public class BON_CCPlayer : MonoBehaviour
 
     private void DisableCompPlayer(int CharacterStopPlaying)
     {
-        for (int i = 0; i < _CompoentsAvatar[CharacterStopPlaying].Count;i++) //disable all comps in list
+        for (int i = 0; i < _ComponentsAvatar[CharacterStopPlaying].Count;i++) //disable all comps in list
         {
-            if (_CompoentsAvatar[CharacterStopPlaying][i].enabled)
+            if (_ComponentsAvatar[CharacterStopPlaying][i].enabled)
             {
-                _CompoentsAvatar[CharacterStopPlaying][i].enabled = false;
+                _ComponentsAvatar[CharacterStopPlaying][i].enabled = false;
             }
         }
     }
 
     private void EnableCompPlayer(int CharacterWillPlay)
     {
-        for (int i = 0; i < _CompoentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
+        for (int i = 0; i < _ComponentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
-            if (!_CompoentsAvatar[CharacterWillPlay][i].enabled)
+            if (!_ComponentsAvatar[CharacterWillPlay][i].enabled)
             {
-                _CompoentsAvatar[CharacterWillPlay][i].enabled = true;
+                _ComponentsAvatar[CharacterWillPlay][i].enabled = true;
             }
         }
     }
@@ -139,7 +143,7 @@ public class BON_CCPlayer : MonoBehaviour
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
-        yield return new WaitForSeconds(0.5f); //durée anim
+        yield return new WaitForSeconds(0.5f); //durée anim?
         _isSwitching = false;
     }
 
@@ -149,20 +153,20 @@ public class BON_CCPlayer : MonoBehaviour
     private void Start()
     {
         //init values
-        //_currentCharacterPlayed = 0;
+        _currentCharacterPlayed = 0; //PR joue en premier
         _lastCharacterPlayed = _currentCharacterPlayed;
-         _CompoentsAvatar = new();
-         _CompoentsAvatar.Add(_componentsPR);
-         _CompoentsAvatar.Add(_componentsDR);
+         _ComponentsAvatar = new();
+         _ComponentsAvatar.Add(_componentsPR);
+         _ComponentsAvatar.Add(_componentsDR);
 
         //start with PR => disable DR
-        DisableCompPlayer(0);
-        EnableCompPlayer(1);
+        DisableCompPlayer(1);
+        EnableCompPlayer(0);
     }
 
     void Update()
     {
-        //print(_currentCharacterPlayed);
+
     }
     private void OnTriggerEnter(Collider other)
     {

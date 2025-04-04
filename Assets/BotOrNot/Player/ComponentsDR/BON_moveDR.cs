@@ -46,7 +46,6 @@ public class BON_MoveDR : MonoBehaviour
 
         if (JumpAction.WasPressedThisFrame())
         {
-            print("jump");
             GetComponent<Rigidbody>().AddForce(new Vector3(0,350,0));
         }
     }

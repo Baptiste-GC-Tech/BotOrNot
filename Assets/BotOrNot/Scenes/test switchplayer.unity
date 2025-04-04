@@ -944,7 +944,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1340564574}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1a2366ee6760064590fee17d4550bba, type: 3}
   m_Name: 
@@ -971,6 +971,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &724101622 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2875605102471048701, guid: 100882b8f0ef48248af32c3ecbded70d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1340564574}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ede574ed3fdcec4ea99360c2e3adeea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &729281545
@@ -2246,7 +2258,7 @@ PrefabInstance:
     - target: {fileID: 3199049239005617504, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4276999004426707639, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
@@ -2306,12 +2318,12 @@ PrefabInstance:
     - target: {fileID: 6141790546640589645, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6783726256012765185, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7796761246007140755, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
@@ -2335,9 +2347,14 @@ PrefabInstance:
       objectReference: {fileID: 724101611}
     - target: {fileID: 9083189251522984315, guid: 100882b8f0ef48248af32c3ecbded70d,
         type: 3}
-      propertyPath: '_componentsPR.Array.data[3]'
+      propertyPath: '_componentsPR.Array.data[2]'
       value: 
       objectReference: {fileID: 724101612}
+    - target: {fileID: 9083189251522984315, guid: 100882b8f0ef48248af32c3ecbded70d,
+        type: 3}
+      propertyPath: '_componentsPR.Array.data[3]'
+      value: 
+      objectReference: {fileID: 724101622}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
