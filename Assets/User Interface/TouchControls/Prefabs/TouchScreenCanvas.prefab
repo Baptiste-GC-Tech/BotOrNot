@@ -296,7 +296,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3404796002535706494}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3404796002535706494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +437,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -490,5 +502,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compJoystick: {fileID: 2109853693721585987}
-  compPlayerButtons: {fileID: 0}
-  compHUDButtons: {fileID: 0}
+  compPlayerButtons: {fileID: 7128978295611759387}
+  compHUDButtons: {fileID: 3619842043130874154}

@@ -35,7 +35,7 @@ public class BON_ControlsManager : MonoBehaviour
      * METHODS 
      */
 
-    private bool PRIVIsInThreshold(Vector2 position, int i)
+    private bool PRIVTryIsInThreshold(Vector2 position, int i)
     {
         if (Math.Abs(position.x - _initialTouchPos[i].x) > _slideThreshold || (Math.Abs(position.y - _initialTouchPos[i].y) > _slideThreshold))
         {
@@ -61,12 +61,15 @@ public class BON_ControlsManager : MonoBehaviour
         }
         else
         {
-            Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))
+            if (compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
             {
-                Debug.Log("J'ai touche un interactible!!!");
+                Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))
+                {
+                    Debug.Log("J'ai touche un interactible!!!");
+                }
             }
         }
     }
@@ -106,7 +109,7 @@ public class BON_ControlsManager : MonoBehaviour
 
                     if (_hasPassedThresholdList[i] == false && compJoystick.IsCompActive == false)
                     {
-                        if (PRIVIsInThreshold(_currentTouchPos[i], i) == false)
+                        if (PRIVTryIsInThreshold(_currentTouchPos[i], i) == false)
                         {
                             _hasPassedThresholdList[i] = true;
                             PRIVTouchDispatch(compJoystick, touch, i);
