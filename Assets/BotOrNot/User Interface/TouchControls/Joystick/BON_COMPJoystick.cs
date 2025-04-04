@@ -71,7 +71,7 @@ public class BON_COMPJoystick : BON_TouchComps
 
     private void PRIVUnhideJoystick()
     {
-        _joystickImage.enabled = true;
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 50);
     }
     private void PRIVMoveJoystick()
     {
@@ -86,7 +86,7 @@ public class BON_COMPJoystick : BON_TouchComps
 
     private void PRIVHideJoystick()
     {
-        _joystickImage.enabled = false;
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 0);
     }
 
     private void PRIVClampInput()
@@ -114,6 +114,7 @@ public class BON_COMPJoystick : BON_TouchComps
     {
         base.Start();
         _joystickImage = gameObject.GetComponent<RawImage>();
+        _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 0);
     }
 
     override protected void Update()
