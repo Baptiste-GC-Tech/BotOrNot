@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
@@ -34,6 +35,7 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;
     private Vector3 _groundNormalVect;
+    private Vector3 _curMoveDir;
     
 
     /*
@@ -52,22 +54,25 @@ public class BON_Move : MonoBehaviour
 
     void Update()
     {
-        /* Read input value */
+        // We do this first since it's always good data to have
+        UpdateGroundNormal();
+
+        /* Handles the input */
         moveInputValue = MoveAction.ReadValue<Vector2>();
+        UpdateMoveDirFromInput(moveInputValue);
+        UpdateCurSpeed(moveInputValue);
 
 
-        /* Determines the direction using the ground's normal. If not ground is found, can't accelerate ( cuz wheel no touchy :( ) */
-        if (moveInputValue.x != 0.0f) _moveXAxisDir = moveInputValue.x > 0.0f ? 1 : -1; // Doesn't update if their is no input.
+        /* Applies the movement */
+        transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+    }
 
-        RaycastHit groundRaycastHit;
-        Debug.DrawRay(transform.position, Vector3.down * 2.0f, Color.red, Time.deltaTime);
-        //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 2.0f);
-        if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
-        //Debug.Log("_groundNormalVect : " + _groundNormalVect);
-
-
-        /* Calculates the speed, then multiplies it to the slopeCurve (to simulate ease or hinder of travel on slopes) */
+    /*
+     *  CLASS METHODS
+     */
+    // Calculates the current speed
+    private void UpdateCurSpeed(Vector2 ARGinputValue)
+    {
         switch (Mathf.Approximately(moveInputValue.x, 0.0f))
         {
             // Case in which we accelerate
@@ -90,22 +95,37 @@ public class BON_Move : MonoBehaviour
                 _curSpeed = _maxSpeed * _DeccelCurve.Evaluate(_timeSinceDeccelStart);
                 break;
         }
+    }
 
+    // Calculates the current movement direction induced by a player input 
+    private void UpdateMoveDirFromInput(Vector2 ARGinputValue)
+    {
+        // Case in which there is no input : don't touch anything
+        if (Mathf.Approximately(ARGinputValue.x, 0.0f) && Mathf.Approximately(ARGinputValue.y, 0.0f)) return;
 
-        /* Applies the movement */  
-        Vector3 moveDirThisFrame;
+        _moveXAxisDir = moveInputValue.x > 0.0f ? 1 : -1;
 
         // Case of a flat ground : uses either forward directions instead of doing math
-        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) moveDirThisFrame = Vector3.right * _moveXAxisDir;
+        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.right * _moveXAxisDir;
         // Case of a sloped ground : finds the tangent to the normal depending on which direction we are going towards, and applies a speed debuff
         else
         {
-            moveDirThisFrame = _moveXAxisDir == 1 ? Vector3.Cross(_groundNormalVect, Vector3.forward) : Vector3.Cross(Vector3.forward, _groundNormalVect);
-            moveDirThisFrame *= _slopedSpeedCurve.Evaluate(_groundNormalVect.y);
+            _curMoveDir = _moveXAxisDir == 1 ? Vector3.Cross(_groundNormalVect, Vector3.forward) : Vector3.Cross(Vector3.forward, _groundNormalVect);
+            _curMoveDir *= _slopedSpeedCurve.Evaluate(_groundNormalVect.y);
         }
 
         //Debug.Log("moveDirThisFrame : " + moveDirThisFrame);
+    }
 
-        transform.Translate(new Vector3(moveDirThisFrame.x * _curSpeed, moveDirThisFrame.y * _curSpeed, 0.0f) * Time.deltaTime);
+    // Updates the ground's normal that PR is standing on
+    private void UpdateGroundNormal()
+    {
+        RaycastHit groundRaycastHit;
+        Debug.DrawRay(transform.position, Vector3.down * 1.5f, Color.red, Time.deltaTime);
+        //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 1.5f);
+        if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
+
+        //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
 }
