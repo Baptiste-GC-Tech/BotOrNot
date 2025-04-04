@@ -52,13 +52,13 @@ public class CameraFollowMode : MonoBehaviour
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
     [Range(0.1f, 20f)] public float offsetLerpSpeed = 5f;
 
-    /*
+    
     [Header("Shake")]
     [Tooltip("Intensité de shake de la caméra.")]
-    public float intensity = 0.0f;
+    public float intensity = 0f;
     [Tooltip("Temps de shake de la caméra.")]
-    public float shaketime = 2.0f;
-    */
+    public float shaketime = 0f;
+    
 
     [HideInInspector] public FollowMode currentMode = FollowMode.Auto;
 
@@ -92,14 +92,12 @@ public class CameraFollowMode : MonoBehaviour
         _vcam = GetComponent<CinemachineVirtualCamera>();
         _framingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
         _composer = _vcam.GetCinemachineComponent<CinemachineComposer>();
+        perlinNoise = _vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         /* -> Appliquer l'offset au Start
          * if (_framingTransposer != null)
          *      _framingTransposer.m_TrackedObjectOffset = new Vector3(offsetX, 0f, 0f);
          */
-
-        perlinNoise = _vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
 
     }
 
@@ -161,12 +159,6 @@ public class CameraFollowMode : MonoBehaviour
                     desiredOffset = GetOffsetFromDirection();
                 }
                 break;
-
-            /*case FollowMode.Shake:
-                ShakeCamera(intensity, shaketime);
-                currentMode = FollowMode.Auto;
-                break;*/
-
         }
 
         followTarget.position = Vector3.Lerp(followTarget.position, desiredFollowPos, Time.deltaTime * followLerpSpeed);
@@ -239,15 +231,17 @@ public class CameraFollowMode : MonoBehaviour
 
         activeTriggerTargets.Add(data);
     }
-
-
+    
     public void UnregisterTriggerTarget(Transform target)
     {
         activeTriggerTargets.RemoveAll(t => t.target == target);
     }
 
+    /* Utilisation du script Cinemachine Collision Impulse Source sur le gameobject BON_PR > Petit_Robot */
+    /*
     public void ShakeCamera(float intensity, float shaketime)
     {
+        print("Shake Triggered");
         perlinNoise.m_AmplitudeGain = intensity;
         StartCoroutine(WaitTime(shaketime));
     }
@@ -262,4 +256,5 @@ public class CameraFollowMode : MonoBehaviour
     {
         perlinNoise.m_AmplitudeGain = 0;
     }
+    */
 }
