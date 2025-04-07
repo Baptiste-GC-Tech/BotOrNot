@@ -10,6 +10,8 @@ public class BON_Cable : MonoBehaviour
      */
     InputAction _cableAction;
 
+    // player reference
+    [SerializeField] private BON_CCPlayer _player;
 
     /*
      *  UNITY METHODS
@@ -27,7 +29,7 @@ public class BON_Cable : MonoBehaviour
         
         if (_cableAction.WasPressedThisFrame()) //cable => ""jump""
         {
-            
+            _player.AvatarState.ChangeState(BON_AvatarState.States.ThrowingCable);
         }
     }
 }

@@ -11,6 +11,14 @@ public class BON_CCPlayer : MonoBehaviour
      *  FIELDS
      */
 
+    // state machine reference
+    private BON_AvatarState _avatarState;
+    public BON_AvatarState AvatarState
+    {
+        get { return _avatarState; }
+        set { _avatarState = value; }
+    }
+
     [SerializeField] protected List<MonoBehaviour> _componentsPR;
     [SerializeField] protected List<MonoBehaviour> _componentsDR;
 
@@ -141,7 +149,7 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  UNITY METHODS
      */
-    private void Start()
+    void Start()
     {
         //init values
         _currentCharacterPlayed = 0; //PR joue en premier
@@ -159,10 +167,6 @@ public class BON_CCPlayer : MonoBehaviour
         print("GM = "+instance);
         instance.ChangeScene(BON_GameManager.Scenes.Level2);
     }
-
-    /*
-     Unity methods
-     */
 
     void Update()
     {

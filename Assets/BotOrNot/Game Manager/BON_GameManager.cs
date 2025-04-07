@@ -15,10 +15,26 @@ public class BON_GameManager : MonoBehaviour
     // inventory script reference
     [SerializeField] private BON_Inventory _inventory;
 
+    // stateMachine script reference
+    [SerializeField] private BON_AvatarState _AvatarState;
+
+    private BON_AvatarState _currentState;
+    public BON_AvatarState CurrentState
+    {
+        get { return _currentState; }
+        set { _currentState = value; }
+    }
+
 
     /*  Level1 requirement */
     private int _collectiblesToWin;
 
+    private bool _isPlayingNut; ////true if nut, false if Dame robot
+    public bool IsPlayingNut
+    {
+        get { return _isPlayingNut; }
+        set { _isPlayingNut = value; }
+    }
 
     private Scenes _currentScene;
 
@@ -44,7 +60,6 @@ public class BON_GameManager : MonoBehaviour
         return _gameManager;
     }
 
-    
     public void ChangeScene(Scenes nextScene)
     {
         print("Chnage scene from "+_currentScene +" to "+ nextScene.ToString());
@@ -99,9 +114,14 @@ public class BON_GameManager : MonoBehaviour
         //init la scene au Menu
         _currentScene = Scenes.Menu;
 
+        //init la current state
+        _AvatarState.InitState(BON_AvatarState.States.Idle);
+
         //Lancer la scene du level1
         //(Scenes.Level1);
 
+        //init bool
+        _isPlayingNut = true;
         _collectiblesToWin = 4;
     }
 
