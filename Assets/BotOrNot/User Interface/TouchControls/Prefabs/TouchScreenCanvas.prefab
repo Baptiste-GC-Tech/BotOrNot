@@ -125,7 +125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266475988248804655}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
@@ -501,6 +501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bbf4d216be1024fb928b04e12884ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compJoystick: {fileID: 2109853693721585987}
-  compPlayerButtons: {fileID: 7128978295611759387}
-  compHUDButtons: {fileID: 3619842043130874154}
+  _compJoystick: {fileID: 2109853693721585987}
+  _compPlayerButtons: {fileID: 7128978295611759387}
+  _compHUDButtons: {fileID: 3619842043130874154}
+  _touchFeedback: {fileID: 720486045141032420, guid: 6e42239e9d952a54d8e12925025674de,
+    type: 3}

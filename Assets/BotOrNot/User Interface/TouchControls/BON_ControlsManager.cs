@@ -67,6 +67,7 @@ public class BON_ControlsManager : MonoBehaviour
                 feedback.transform.parent = transform;
                 feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
                 feedback.transform.localScale = Vector3.one;
+                Destroy(feedback, 0.2f);
 
                 Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
                 RaycastHit hit;
