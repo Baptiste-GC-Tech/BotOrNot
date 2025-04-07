@@ -14,7 +14,7 @@ public class BON_Move : MonoBehaviour
     /*
      *  FIELDS
      */
-    public LayerMask deez;
+    public LayerMask Deez;
 
     private InputAction _MoveAction;
     Vector2 _moveInputValue;
@@ -37,40 +37,8 @@ public class BON_Move : MonoBehaviour
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
 
-    [SerializeField] Canvas canvas;
+    [SerializeField] Canvas _canvas;
     private BON_COMPJoystick _joystick;
-
-    /*
-     *  UNITY METHODS
-     */
-    void Start()
-    {
-        _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
-        _joystick = canvas.GetComponentInChildren<BON_COMPJoystick>();
-
-        ///* Curve fields setup */
-        //_maxAccelTime = _AcceleratingSpeedCurve.keys[_AcceleratingSpeedCurve.keys.Length - 1].time;
-        //_maxDeccelTime = _DecceleratingSpeedCurve.keys[_DecceleratingSpeedCurve.keys.Length - 1].time;
-        //_timeSinceAccelStart = 0.0f;
-        //_timeSinceDeccelStart = _maxDeccelTime;
-    }
-
-    void Update()
-    {
-        // We do this first since it's always good data to have
-        UpdateGroundNormal();
-
-        //_moveInputValue = _joystick.InputValues;
-
-        /* Handles the input */
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
-        UpdateMoveDirFromInput();
-        UpdateCurSpeed();
-
-
-        /* Applies the movement */
-        transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
-    }
 
     /*
      *  CLASS METHODS
@@ -78,7 +46,7 @@ public class BON_Move : MonoBehaviour
     // Calculates the current speed
     private void UpdateCurSpeed()
     {
-        
+
         float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
         float speedDelta = deFactoMaxSpeed - _curSpeed;
 
@@ -129,4 +97,37 @@ public class BON_Move : MonoBehaviour
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
+
+    /*
+     *  UNITY METHODS
+     */
+    void Start()
+    {
+        _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
+
+        ///* Curve fields setup */
+        //_maxAccelTime = _AcceleratingSpeedCurve.keys[_AcceleratingSpeedCurve.keys.Length - 1].time;
+        //_maxDeccelTime = _DecceleratingSpeedCurve.keys[_DecceleratingSpeedCurve.keys.Length - 1].time;
+        //_timeSinceAccelStart = 0.0f;
+        //_timeSinceDeccelStart = _maxDeccelTime;
+    }
+
+    void Update()
+    {
+        // We do this first since it's always good data to have
+        UpdateGroundNormal();
+
+        //_moveInputValue = _joystick.InputValues;
+
+        /* Handles the input */
+        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+        UpdateMoveDirFromInput();
+        UpdateCurSpeed();
+
+
+        /* Applies the movement */
+        transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+    }
+
 }

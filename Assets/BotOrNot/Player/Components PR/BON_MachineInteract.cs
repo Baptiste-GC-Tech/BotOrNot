@@ -9,14 +9,14 @@ public class BON_MachineInteract : MonoBehaviour
      *  FIELDS
      */
 
-    InputAction InteractMachineAction; //interact pour prendre le controle
-    InputAction QuitMachineAction; //rappuyer pour quitter le controle
-    InputAction MoveMachineAction; //bouger quand la machine est controlable
+    InputAction _interactMachineAction; //interact pour prendre le controle
+    InputAction _quitMachineAction; //rappuyer pour quitter le controle
+    InputAction _moveMachineAction; //bouger quand la machine est controlable
 
     // player script reference
-    [SerializeField] private BON_CCPlayer player;
+    [SerializeField] private BON_CCPlayer _player;
 
-    Vector2 moveMachineValue;
+    Vector2 _moveMachineValue;
 
     private bool _playingMachine = false;
 
@@ -26,31 +26,31 @@ public class BON_MachineInteract : MonoBehaviour
 
     public void MoveMachine(/*class machine*/)
     {
-        moveMachineValue = MoveMachineAction.ReadValue<Vector2>();
-        if (moveMachineValue.x > 0)
+        _moveMachineValue = _moveMachineAction.ReadValue<Vector2>();
+        if (_moveMachineValue.x > 0)
         {
             /* machine.GoRight()*/
         }
-        else if (moveMachineValue.x < 0)
+        else if (_moveMachineValue.x < 0)
         {
             /* machine.GoLeft()*/
         }
-        if (moveMachineValue.y > 0)
+        if (_moveMachineValue.y > 0)
         {
             /* machine.GoUp()*/
         }
-        else if (moveMachineValue.y < 0)
+        else if (_moveMachineValue.y < 0)
         {
             /* machine.GoDown()*/
         }
-        if(QuitMachineAction.WasPressedThisFrame())
+        if(_quitMachineAction.WasPressedThisFrame())
         {
-            if (!player.IsSwitching)
+            if (!_player.IsSwitching)
             {
                 print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
                 _playingMachine = false;
-                StartCoroutine(player.CooldownSwitchControl());
-                player.RecoverControl();
+                StartCoroutine(_player.CooldownSwitchControl());
+                _player.RecoverControl();
             }
         }
     }
@@ -62,22 +62,22 @@ public class BON_MachineInteract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
-        QuitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
-        MoveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
+        _interactMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
+        _quitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
+        _moveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
 
     // Update is called once per frame
     void Update()
     {
         // Take item action handling
-        if (InteractMachineAction.WasReleasedThisFrame()) //interact
+        if (_interactMachineAction.WasReleasedThisFrame()) //interact
         {
-            if (player.IsMachineInRange && !player.IsSwitching) //machine pas loin et pas en cours d'activation
+            if (_player.IsMachineInRange && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
                 _playingMachine = true;
-                StartCoroutine(player.CooldownSwitchControl()); 
-                player.GiveControl();
+                StartCoroutine(_player.CooldownSwitchControl()); 
+                _player.GiveControl();
             }
         }
         if (_playingMachine)

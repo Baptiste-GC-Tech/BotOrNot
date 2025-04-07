@@ -8,10 +8,10 @@ public class BON_Interact : MonoBehaviour
     /*
      *  FIELDS
      */
-    InputAction InteractAction;
+    InputAction _interactAction;
 
     // player script reference
-    [SerializeField] private BON_CCPlayer player;
+    [SerializeField] private BON_CCPlayer _player;
     //inventory reference
     private BON_Inventory _inventory;
 
@@ -23,7 +23,7 @@ public class BON_Interact : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InteractAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
+        _interactAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
         _inventory = GetComponent<BON_Inventory>();
     }
 
@@ -31,9 +31,9 @@ public class BON_Interact : MonoBehaviour
     void Update()
     {
         // Take item action handling
-        if (InteractAction.WasPressedThisFrame()) //interact
+        if (_interactAction.WasPressedThisFrame()) //interact
         {
-            if (player.IsDRInRange) //dame robot pas loin
+            if (_player.IsDRInRange) //dame robot pas loin
             {
                 //give inventory item(s) to DR
 
@@ -44,10 +44,10 @@ public class BON_Interact : MonoBehaviour
                     _inventory.DeleteItem(i);
                 }
             }
-            else if (!player.IsSwitching && !player.IsMachineInRange) //Pas de machine a porté et pas deja en train de switch
+            else if (!_player.IsSwitching && !_player.IsMachineInRange) //Pas de machine a porté et pas deja en train de switch
             {
-                StartCoroutine(player.CooldownSwitchControl());
-                player.SwitchPlayer();
+                StartCoroutine(_player.CooldownSwitchControl());
+                _player.SwitchPlayer();
             }
         }
     }

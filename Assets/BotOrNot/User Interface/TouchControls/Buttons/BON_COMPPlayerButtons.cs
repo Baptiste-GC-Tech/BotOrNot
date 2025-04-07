@@ -13,10 +13,6 @@ public class BON_COMPPlayerButtons : BON_TouchComps
 
     private List<Transform> _children = new List<Transform>();
 
-
-
-
-
     /*
     * METHODS 
     */

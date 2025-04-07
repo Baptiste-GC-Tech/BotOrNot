@@ -8,7 +8,7 @@ public class ParallaxCamera : MonoBehaviour
      */
 
     public delegate void ParallaxCameraDelegate(float deltaMovement);
-    public ParallaxCameraDelegate onCameraTranslate;
+    public ParallaxCameraDelegate OnCameraTranslate;
 
     private float _oldPosition;
 
@@ -21,10 +21,10 @@ public class ParallaxCamera : MonoBehaviour
     {
         if (transform.position.x != _oldPosition)
         {
-            if (onCameraTranslate != null)
+            if (OnCameraTranslate != null)
             {
                 float delta = _oldPosition - transform.position.x;
-                onCameraTranslate(delta);
+                OnCameraTranslate(delta);
             }
 
             _oldPosition = transform.position.x;

@@ -24,11 +24,11 @@ public class BON_ControlsManager : MonoBehaviour
         set { _slideThreshold = value; }
     }
 
-    [SerializeField] BON_COMPJoystick compJoystick;
-    [SerializeField] BON_COMPPlayerButtons compPlayerButtons;
-    [SerializeField] BON_COMPHUDButtons compHUDButtons;
+    [SerializeField] BON_COMPJoystick _compJoystick;
+    [SerializeField] BON_COMPPlayerButtons _compPlayerButtons;
+    [SerializeField] BON_COMPHUDButtons _compHUDButtons;
 
-    [SerializeField] GameObject touchFeedback;
+    [SerializeField] GameObject _touchFeedback;
 
 
     /*
@@ -61,9 +61,9 @@ public class BON_ControlsManager : MonoBehaviour
         }
         else
         {
-            if (compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
+            if (_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
             {
-                var feedback = Instantiate(touchFeedback);
+                var feedback = Instantiate(_touchFeedback);
                 feedback.transform.parent = transform;
                 feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
                 feedback.transform.localScale = Vector3.one;
@@ -112,19 +112,19 @@ public class BON_ControlsManager : MonoBehaviour
                 {
                     _currentTouchPos[i] = touch.position;
 
-                    if (_hasPassedThresholdList[i] == false && compJoystick.IsCompActive == false)
+                    if (_hasPassedThresholdList[i] == false && _compJoystick.IsCompActive == false)
                     {
                         if (PRIVTryIsInThreshold(_currentTouchPos[i], i) == false)
                         {
                             _hasPassedThresholdList[i] = true;
-                            PRIVTouchDispatch(compJoystick, touch, i);
-                            _touchDictionary.Add(i, compJoystick);
-                            compJoystick.TouchID = i;
+                            PRIVTouchDispatch(_compJoystick, touch, i);
+                            _touchDictionary.Add(i, _compJoystick);
+                            _compJoystick.TouchID = i;
                         }
                     }
-                    else if (compJoystick.TouchID == i)
+                    else if (_compJoystick.TouchID == i)
                     {
-                        PRIVTouchDispatch(compJoystick, touch, i);
+                        PRIVTouchDispatch(_compJoystick, touch, i);
                     }
                 }
 

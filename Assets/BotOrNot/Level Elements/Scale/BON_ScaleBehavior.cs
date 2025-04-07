@@ -13,7 +13,7 @@ public class BON_ScaleBehavior : MonoBehaviour
     bool _isBoxCorretlyPlaced;
 
     /*
-     * UNITY FUNCTION
+     * UNITY METHODS
      */
     void Start()
     {

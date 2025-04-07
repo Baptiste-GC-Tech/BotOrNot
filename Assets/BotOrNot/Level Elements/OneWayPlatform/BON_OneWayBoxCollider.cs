@@ -16,7 +16,7 @@ public class BON_OneWayBoxCollider : MonoBehaviour
     BoxCollider _collisionCheckTrigger;
 
     /*
-     * UNITY FUNCTION
+     * UNITY METHODS
      */
     private void Awake()
     {

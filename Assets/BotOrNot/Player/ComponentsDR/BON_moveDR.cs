@@ -11,12 +11,12 @@ public class BON_MoveDR : MonoBehaviour
      *  FIELDS
      */
     /* actions  related */
-    private InputAction MoveAction;
-    private InputAction JumpAction;
-    Vector2 moveInputValue;
+    private InputAction _moveAction;
+    private InputAction _jumpAction;
+    Vector2 _moveInputValue;
 
     // player script reference
-    [SerializeField] private BON_CCPlayer player;
+    [SerializeField] private BON_CCPlayer _player;
 
     /* Curve related */
     private float _timeSinceAccelStart, _timeSinceDeccelStart;
@@ -33,17 +33,17 @@ public class BON_MoveDR : MonoBehaviour
      */
     void Start()
     {
-        MoveAction = InputSystem.actions.FindAction("ActionsMapDR/Move");
-        JumpAction = InputSystem.actions.FindAction("ActionsMapDR/Jump");
+        _moveAction = InputSystem.actions.FindAction("ActionsMapDR/Move");
+        _jumpAction = InputSystem.actions.FindAction("ActionsMapDR/Jump");
     }
 
     void Update()
     {
         /* Read input value */
-        moveInputValue = MoveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(moveInputValue.x * Time.deltaTime, 0, 0);
+        _moveInputValue = _moveAction.ReadValue<Vector2>();
+        transform.position += new Vector3(_moveInputValue.x * Time.deltaTime, 0, 0);
 
-        if (JumpAction.WasPressedThisFrame())
+        if (_jumpAction.WasPressedThisFrame())
         {
             GetComponent<Rigidbody>().AddForce(new Vector3(0,350,0));
         }

@@ -6,7 +6,7 @@ public class ParallaxLayer : MonoBehaviour
     /*
      *  FIELDS
      */
-    public float parallaxFactor;
+    public float ParallaxFactor;
 
     /*
      *  CLASS METHODS
@@ -14,7 +14,7 @@ public class ParallaxLayer : MonoBehaviour
     public void Move(float delta)
     {
         Vector3 newPos = transform.localPosition;
-        newPos.x -= delta * parallaxFactor;
+        newPos.x -= delta * ParallaxFactor;
 
         transform.localPosition = newPos;
     }

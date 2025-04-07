@@ -30,6 +30,37 @@ public class BON_Elevator : BON_Actionnable
     bool _elevatorHasFinishedChangingPosition;              //check if the elevator has reach the destination of the actionnable
 
 
+    /*
+    *  METHODS
+    */
+
+    public override void On()
+    {
+        //disable the controls
+        foreach (var button in _buttonsInHUD)
+        {
+            button.interactable = false;
+        }
+        //if the elevator is not on the same floor as the actionable changes it's position
+        if (_elevator.transform.position.y - 1 > gameObject.transform.position.y || _elevator.transform.position.y + 1 < gameObject.transform.position.y)
+        {
+            _elevatorNeedsToChangePosition = true;
+        }
+        //otherwise starts to move the player to the elevator
+        else
+        {
+            _isPlayerMoving = true;
+        }
+    }
+
+    public override void Off()
+    {
+        //enable the controls
+        foreach (var button in _buttonsInHUD)
+        {
+            button.interactable = true;
+        }
+    }
 
 
     /*
@@ -128,36 +159,5 @@ public class BON_Elevator : BON_Actionnable
         }
     }
 
-    /*
-    *  METHODS
-    */
-
-    public override void On()
-    {
-        //disable the controls
-        foreach (var button in _buttonsInHUD)
-        {
-            button.interactable = false;
-        }
-        //if the elevator is not on the same floor as the actionable changes it's position
-        if (_elevator.transform.position.y - 1 > gameObject.transform.position.y || _elevator.transform.position.y + 1 < gameObject.transform.position.y)
-        {
-            _elevatorNeedsToChangePosition = true;
-        }
-        //otherwise starts to move the player to the elevator
-        else
-        {        
-            _isPlayerMoving = true;
-        }
-    }
-
-    public override void Off()
-    {
-        //enable the controls
-        foreach (var button in _buttonsInHUD)
-        {
-            button.interactable = true;
-        }
-    }
 
 }
