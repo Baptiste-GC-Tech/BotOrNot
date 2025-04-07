@@ -37,20 +37,20 @@ public class CameraFollowMode : MonoBehaviour
 
     [Header("Offset par défaut")]
     [Tooltip("Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.")]
-    public float OffsetX = -6f;
+    public float OffsetX = 6f;
 
     [Tooltip("Décalage vertical appliqué à la caméra.")]
     public float OffsetY = 0f;
 
     [Tooltip("Décalage en profondeur appliqué à la caméra.")]
-    public float OffsetZ = 9f;
+    public float OffsetZ = 6f;
 
     [Header("Interpolation")]
     [Tooltip("Vitesse de transition de position du FollowTarget.")]
     [Range(0.1f, 20f)] public float FollowLerpSpeed = 5f;
 
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
-    [Range(0.1f, 20f)] public float OffsetLerpSpeed = 5f;
+    [Range(0.1f, 20f)] public float OffsetLerpSpeed = 4f;
 
     
     [Header("Shake")]
