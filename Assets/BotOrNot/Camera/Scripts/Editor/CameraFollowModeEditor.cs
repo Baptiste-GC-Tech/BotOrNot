@@ -40,18 +40,18 @@ public class CameraFollowModeEditor : Editor
         }
 
         /* Tooltips */
-        DrawField("player", "Transform du joueur contrôlé.");
-        DrawField("otherTarget", "Objet secondaire à suivre (optionnel).");
-        DrawField("followTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
+        DrawField("Player", "Transform du joueur contrôlé.");
+        DrawField("OtherTarget", "Objet secondaire à suivre (optionnel).");
+        DrawField("FollowTarget", "Transform intermédiaire suivi par la caméra (ex: Follow_Target).");
 
         GUILayout.Space(5);
-        DrawField("offsetX", "Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.");
-        DrawField("offsetY", "Décalage vertical lors du suivi.");
-        DrawField("offsetZ", "Décalage de profondeur lors du suivi.");
+        DrawField("OffsetX", "Décalage horizontal appliqué à la caméra quand elle suit le joueur. Est opposé en fonction du sens du joueur.");
+        DrawField("OffsetY", "Décalage vertical lors du suivi.");
+        DrawField("OffsetZ", "Décalage de profondeur lors du suivi.");
 
         GUILayout.Space(5);
-        DrawField("followLerpSpeed", "Vitesse de transition de position du FollowTarget.");
-        DrawField("offsetLerpSpeed", "Vitesse de transition des offsets caméra.");
+        DrawField("FollowLerpSpeed", "Vitesse de transition de position du FollowTarget.");
+        DrawField("OffsetLerpSpeed", "Vitesse de transition des offsets caméra.");
 
         GUILayout.Space(10);
         GUILayout.Label("Mode de Suivi Actuel", EditorStyles.boldLabel);
