@@ -28,7 +28,7 @@ public class BON_ControlsManager : MonoBehaviour
     [SerializeField] BON_COMPPlayerButtons compPlayerButtons;
     [SerializeField] BON_COMPHUDButtons compHUDButtons;
 
-
+    [SerializeField] GameObject touchFeedback;
 
 
     /*
@@ -63,6 +63,11 @@ public class BON_ControlsManager : MonoBehaviour
         {
             if (compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
             {
+                var feedback = Instantiate(touchFeedback);
+                feedback.transform.parent = transform;
+                feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
+                feedback.transform.localScale = Vector3.one;
+
                 Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
                 RaycastHit hit;
 

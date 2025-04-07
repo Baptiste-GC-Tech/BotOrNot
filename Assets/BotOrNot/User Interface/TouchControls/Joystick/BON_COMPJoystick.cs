@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class BON_COMPJoystick : BON_TouchComps
@@ -9,6 +10,8 @@ public class BON_COMPJoystick : BON_TouchComps
     /*
     * FIELDS
     */
+
+    private InputAction _moveAction;
 
     private Vector2 _initialTouchPos;
     private Vector2 _previousTouchPos;
@@ -43,7 +46,6 @@ public class BON_COMPJoystick : BON_TouchComps
         base.TouchStart(touch, initialTouchPos);
 
         _isCompActive = true;
-        _inputValues = Vector2.zero;
         _initialTouchPos = initialTouchPos;
 
         gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
@@ -65,6 +67,7 @@ public class BON_COMPJoystick : BON_TouchComps
         base.TouchEnd();
 
         _isCompActive = false;
+        _inputValues = Vector2.zero;
 
         PRIVHideJoystick();
     }
@@ -82,6 +85,8 @@ public class BON_COMPJoystick : BON_TouchComps
         _inputValues.x += (_currentTouchPos.x - _previousTouchPos.x)/200;
         _inputValues.y += (_currentTouchPos.y - _previousTouchPos.y)/200;
         PRIVClampInput();
+
+
     }
 
     private void PRIVHideJoystick()
@@ -113,6 +118,7 @@ public class BON_COMPJoystick : BON_TouchComps
     override protected void Start()
     {
         base.Start();
+
         _joystickImage = gameObject.GetComponent<RawImage>();
         _joystickImage.color = new Color(_joystickImage.color.r, _joystickImage.color.g, _joystickImage.color.b, 0);
     }

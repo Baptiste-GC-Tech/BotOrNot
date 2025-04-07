@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
@@ -35,9 +34,11 @@ public class BON_Move : MonoBehaviour
 
     /* Direction related */
     private int _moveXAxisDir;
-    private Vector3 _groundNormalVect;
     private Vector3 _curMoveDir;
-    
+    private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
+
+    [SerializeField] Canvas canvas;
+    private BON_COMPJoystick _joystick;
 
     /*
      *  UNITY METHODS
@@ -45,6 +46,7 @@ public class BON_Move : MonoBehaviour
     void Start()
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _joystick = canvas.GetComponentInChildren<BON_COMPJoystick>();
 
         ///* Curve fields setup */
         //_maxAccelTime = _AcceleratingSpeedCurve.keys[_AcceleratingSpeedCurve.keys.Length - 1].time;
@@ -57,6 +59,8 @@ public class BON_Move : MonoBehaviour
     {
         // We do this first since it's always good data to have
         UpdateGroundNormal();
+
+        //_moveInputValue = _joystick.InputValues;
 
         /* Handles the input */
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
