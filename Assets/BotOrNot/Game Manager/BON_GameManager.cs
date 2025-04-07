@@ -13,7 +13,7 @@ public class BON_GameManager : MonoBehaviour
     private static BON_GameManager _gameManager;
 
     // inventory script reference
-    [SerializeField] private BON_Inventory inventory;
+    [SerializeField] private BON_Inventory _inventory;
 
 
     /*  Level1 requirement */
@@ -24,6 +24,7 @@ public class BON_GameManager : MonoBehaviour
 
     public enum Scenes
     {
+        //modify for futur with trues scenes names
         Menu,
         Level1,
         Level2
@@ -46,8 +47,7 @@ public class BON_GameManager : MonoBehaviour
     
     public void ChangeScene(Scenes nextScene)
     {
-        print("call funct scene");
-        print("from "+_currentScene +" to "+ nextScene.ToString());
+        print("Chnage scene from "+_currentScene +" to "+ nextScene.ToString());
         switch (_currentScene)
         {
             case Scenes.Menu: // n'importe quel niveau possible?
@@ -57,7 +57,7 @@ public class BON_GameManager : MonoBehaviour
                 if (nextScene != Scenes.Level2 && nextScene != Scenes.Menu)
                 {
                     //impossible
-                    print("tu ne peux pas faire ca");
+                    print("tu ne peux pas");
                 }
                 else
                 {
@@ -73,14 +73,14 @@ public class BON_GameManager : MonoBehaviour
                 }
                 else
                 {
-                    if ( inventory.CountItem() == _collectiblesToWin) //si on stock bien tous les items necessaires
+                    if ( _inventory.CountItem() == _collectiblesToWin) //si on stock bien tous les items necessaires
                     {
                         _currentScene = nextScene;
                         SceneManager.LoadScene(nextScene.ToString());
                     }
                     else
                     {
-                        print("condition on respecté");
+                        print("condition non respecté");
                     }
                 }
                 break;
@@ -97,11 +97,10 @@ public class BON_GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         //init la scene au Menu
-        _currentScene = Scenes.Level1;
+        _currentScene = Scenes.Menu;
 
         //Lancer la scene du level1
-        ChangeScene(Scenes.Level2);
-        print(_currentScene);
+        //(Scenes.Level1);
 
         _collectiblesToWin = 4;
     }
