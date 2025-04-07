@@ -44,9 +44,16 @@ public class BON_MoveDR : MonoBehaviour
         _moveInputValue = _moveAction.ReadValue<Vector2>();
         transform.position += new Vector3(_moveInputValue.x * Time.deltaTime, 0, 0);
 
+        //for changing state in BON_Avatarstate
+        if (_moveInputValue != null)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+        }
+
         if (_jumpAction.WasPressedThisFrame())
         {
-            GetComponent<Rigidbody>().AddForce(new Vector3(0,350,0));
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Jump);
+            GetComponent<Rigidbody>().AddForce(new Vector3(0,300,0));
         }
     }
 }

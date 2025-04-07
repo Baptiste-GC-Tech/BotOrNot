@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
@@ -14,6 +15,10 @@ public class BON_Move : MonoBehaviour
     /*
      *  FIELDS
      */
+
+    // player reference
+    [SerializeField] private BON_CCPlayer _player;
+
     public LayerMask Deez;
 
     private InputAction _MoveAction;
@@ -122,6 +127,13 @@ public class BON_Move : MonoBehaviour
 
         /* Handles the input */
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
+
+        //changing state in BON_Avatarstate
+        if (_moveInputValue != null ) 
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+        }
+
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
