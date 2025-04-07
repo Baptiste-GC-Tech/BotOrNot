@@ -6,14 +6,19 @@ using UnityEngine.Rendering;
 
 public class BON_FreeMovementCrane : BON_Actionnable
 {
-    //FIELD
+    /*
+     *  FIELDS
+     */
     private bool _isMoving;
     [SerializeField] float _speedMax;
     private float _speed;
     private float _acceleration;
     private Vector3 _direction;
 
-    //CLASS METHODS
+
+    /*
+     *  CLASS METHODS
+     */
     public override void On()
     {
         GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
@@ -85,7 +90,9 @@ public class BON_FreeMovementCrane : BON_Actionnable
 
 
 
-    //UNITY METHODS
+    /*
+     *  UNITY METHODS
+     */
 
     private void Start()
     {

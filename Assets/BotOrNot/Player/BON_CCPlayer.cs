@@ -53,14 +53,6 @@ public class BON_CCPlayer : MonoBehaviour
     //
 
 
-    //for stock machine ref ( for control it)
-    private GameObject _machine = null; //ou classe de la machine directement
-    public GameObject Machine
-    {
-        get { return Machine; }
-        set { _machine = value; }
-    }
-
     private bool _isSwitching = false;  //bool for switch player/machines
     public bool IsSwitching
     {

@@ -21,12 +21,11 @@ public class BON_Move : MonoBehaviour
 
     public LayerMask Deez;
 
+    /* Input related */
     private InputAction _MoveAction;
+    [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
+    private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
-
-    ///* Curve related */
-    //private float _timeSinceAccelStart, _timeSinceDeccelStart;
-    //private float _maxAccelTime, _maxDeccelTime;
 
     /* Speed related */
     [SerializeField] float _maxSpeed;
@@ -40,10 +39,8 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;
     private Vector3 _curMoveDir;
-    private Vector3 _groundNormalVect;  // TODO: Use it to apply the movement using the normal. NOTE: Could be bad since we'd have the same speed everywhere. Either use a force, damp it down, or leave it as it is actually.
+    private Vector3 _groundNormalVect;  
 
-    [SerializeField] Canvas _canvas;
-    private BON_COMPJoystick _joystick;
 
     /*
      *  CLASS METHODS
@@ -103,6 +100,7 @@ public class BON_Move : MonoBehaviour
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
 
+
     /*
      *  UNITY METHODS
      */
@@ -110,20 +108,12 @@ public class BON_Move : MonoBehaviour
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
-
-        ///* Curve fields setup */
-        //_maxAccelTime = _AcceleratingSpeedCurve.keys[_AcceleratingSpeedCurve.keys.Length - 1].time;
-        //_maxDeccelTime = _DecceleratingSpeedCurve.keys[_DecceleratingSpeedCurve.keys.Length - 1].time;
-        //_timeSinceAccelStart = 0.0f;
-        //_timeSinceDeccelStart = _maxDeccelTime;
     }
 
     void Update()
     {
         // We do this first since it's always good data to have
         UpdateGroundNormal();
-
-        //_moveInputValue = _joystick.InputValues;
 
         /* Handles the input */
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
@@ -134,6 +124,7 @@ public class BON_Move : MonoBehaviour
             _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
         }
 
+        //_moveInputValue = _joystick.InputValues;
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
