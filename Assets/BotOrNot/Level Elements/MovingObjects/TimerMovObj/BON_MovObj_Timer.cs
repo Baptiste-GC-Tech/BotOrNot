@@ -12,9 +12,6 @@ public class BON_MovObj_Timer : BON_Actionnable
     [SerializeField] private float _extensionMax;
     [SerializeField] private float _extensionMin;
     [SerializeField] private float _speed;
-
-    [SerializeField] float _dumbassTimer;
-    private float _currentDumbassTimer = 0.0f;
     //CLASS METHODS
     override public void On()
     {
@@ -66,15 +63,6 @@ public class BON_MovObj_Timer : BON_Actionnable
             }
 
             _currentTimer += Time.deltaTime;
-        }
-        
-
-        _currentDumbassTimer += Time.deltaTime;
-
-        if (_currentDumbassTimer > _dumbassTimer)
-        {
-            _currentDumbassTimer = 0.0f;
-            Toggle();
         }
     }
 }
