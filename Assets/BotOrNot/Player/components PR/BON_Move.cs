@@ -50,7 +50,7 @@ public class BON_Move : MonoBehaviour
         float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
         float speedDelta = deFactoMaxSpeed - _curSpeed;
 
-        Debug.Log("defactoMax - cur = delta : " + deFactoMaxSpeed + " - " + _curSpeed + " = " + speedDelta);
+        //Debug.Log("defactoMax - cur = delta : " + deFactoMaxSpeed + " - " + _curSpeed + " = " + speedDelta);
 
         // Case in which we are below our de facto max speed : we want to go faster
         if (speedDelta > 0.0f)
@@ -67,7 +67,7 @@ public class BON_Move : MonoBehaviour
 
         //// Applies the slope multiplier
         //_curSpeed *= _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);
-        Debug.Log(_SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y));
+        //Debug.Log(_SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y));
     }
 
     // Calculates the current movement direction induced by a player input 

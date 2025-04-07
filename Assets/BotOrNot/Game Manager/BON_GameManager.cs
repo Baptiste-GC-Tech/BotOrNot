@@ -54,9 +54,10 @@ public class BON_GameManager : MonoBehaviour
                 break;
 
             case Scenes.Level1: //uniquement level2 ou menu possible
-                if (nextScene != Scenes.Level2 || nextScene != Scenes.Menu)
+                if (nextScene != Scenes.Level2 && nextScene != Scenes.Menu)
                 {
                     //impossible
+                    print("tu ne peux pas faire ca");
                 }
                 else
                 {
@@ -68,6 +69,7 @@ public class BON_GameManager : MonoBehaviour
                 if (nextScene != Scenes.Menu)
                 {
                     //impossible
+                    print("tu ne peux pas");
                 }
                 else
                 {
@@ -75,6 +77,10 @@ public class BON_GameManager : MonoBehaviour
                     {
                         _currentScene = nextScene;
                         SceneManager.LoadScene(nextScene.ToString());
+                    }
+                    else
+                    {
+                        print("condition on respecté");
                     }
                 }
                 break;
