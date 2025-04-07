@@ -26,7 +26,7 @@ public class BON_DRState : BON_AvatarState
     }
 
     // Update is called once per frame
-    public override void Update()
+    void Update()
     {
         if (BON_GameManager.Instance().IsPlayingNut == false) //test current state
         {
