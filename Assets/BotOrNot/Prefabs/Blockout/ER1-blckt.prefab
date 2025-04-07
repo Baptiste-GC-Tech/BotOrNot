@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5275914341785526061}
   - component: {fileID: 7450331922583513829}
   - component: {fileID: 1123282225727369043}
+  - component: {fileID: 6997015789092978613}
   m_Layer: 0
   m_Name: Point d'action
   m_TagString: Untagged
@@ -282,7 +283,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -389,6 +390,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &6997015789092978613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181789332112163529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee36b441b0aec604ca4427df1e53f189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionnablesList:
+  - {fileID: 6169600943313137416}
 --- !u!1 &1196423776398449719
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +615,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 477
+  m_VersionIndex: 489
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -798,7 +813,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1174
+  m_VersionIndex: 1186
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1153,7 +1168,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1508,7 +1523,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1863,7 +1878,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2069,7 +2084,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1161
+  m_VersionIndex: 1173
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2190,6 +2205,7 @@ GameObject:
   - component: {fileID: 1142145020019261965}
   - component: {fileID: 6999697123647771479}
   - component: {fileID: 7851004721218245131}
+  - component: {fileID: 3651200720890190730}
   m_Layer: 0
   m_Name: Piece
   m_TagString: Untagged
@@ -4364,7 +4380,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1682
+  m_VersionIndex: 1694
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4473,6 +4489,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &3651200720890190730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786212375953928421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee4dfbd9a927fc418d3a9c993be0fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ObjectId: 2
 --- !u!1 &5115652416581388607
 GameObject:
   m_ObjectHideFlags: 0
@@ -4721,7 +4750,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4967,7 +4996,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1187
+  m_VersionIndex: 1199
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5206,7 +5235,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1161
+  m_VersionIndex: 1173
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5594,7 +5623,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2502
+  m_VersionIndex: 2514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5717,7 +5746,7 @@ PrefabInstance:
     - target: {fileID: 2776813719868695893, guid: e8884e2309473424a9e380af7acea760,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2505
+      value: 2514
       objectReference: {fileID: 0}
     - target: {fileID: 9181287185522490081, guid: e8884e2309473424a9e380af7acea760,
         type: 3}
@@ -5780,3 +5809,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8358733471584946233}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6169600943313137416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2422651348901504817, guid: e8884e2309473424a9e380af7acea760,
+    type: 3}
+  m_PrefabInstance: {fileID: 8358733471584946233}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471442437f35f7543b4c61931520348d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
