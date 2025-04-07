@@ -17117,6 +17117,11 @@ PrefabInstance:
       objectReference: {fileID: 1905240937}
     - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
+      propertyPath: OffsetLerpSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+        type: 3}
       propertyPath: followLerpSpeed
       value: 4
       objectReference: {fileID: 0}
