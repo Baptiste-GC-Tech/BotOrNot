@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BON_Actionnable : MonoBehaviour
 {
+    /*
+     *  FIELDS
+     */
     protected bool _status ;
-
     public bool Status {  
         get { return _status; } 
         set { _status = value;
@@ -13,6 +15,10 @@ public class BON_Actionnable : MonoBehaviour
             else { Off(); }
         } }
 
+
+    /*
+     *  CLASS METHODS
+     */
     public virtual void On()
     {
     }
