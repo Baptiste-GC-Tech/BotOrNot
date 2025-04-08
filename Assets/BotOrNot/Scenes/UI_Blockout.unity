@@ -22997,18 +22997,6 @@ PrefabInstance:
       insertIndex: 8
       addedObject: {fileID: 1499913546}
   m_SourcePrefab: {fileID: 100100000, guid: ceaf05db6bc9d9d46b86489aaa238304, type: 3}
---- !u!114 &1499913530 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3684329467896290573, guid: ceaf05db6bc9d9d46b86489aaa238304,
-    type: 3}
-  m_PrefabInstance: {fileID: 1499913529}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350228195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721e0e9dd05a15441b5eb99017784a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1499913539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4550041491405986981, guid: ceaf05db6bc9d9d46b86489aaa238304,
@@ -23033,9 +23021,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
   Deez:
     serializedVersion: 2
     m_Bits: 0
+  _canvas: {fileID: 1964500080}
   _maxSpeed: 15
   _SpeedMultiplierOverSlope:
     serializedVersion: 2
@@ -23118,7 +23108,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _canvas: {fileID: 1964500080}
 --- !u!1 &1509695641
 GameObject:
   m_ObjectHideFlags: 0
@@ -23519,7 +23508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4074d58420ae267428da7e2b3a9d2860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 1499913530}
+  _inventory: {fileID: 0}
 --- !u!4 &1524273682
 Transform:
   m_ObjectHideFlags: 0
