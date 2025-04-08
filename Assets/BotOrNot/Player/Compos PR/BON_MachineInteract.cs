@@ -16,7 +16,6 @@ public class BON_MachineInteract : MonoBehaviour
 
     // Player & State related
     [SerializeField] private BON_CCPlayer _player;
-    private bool _playingMachine = false;
 
     // TODO: Wait for BON_Controllable to be implemented and then use it here so we can pass the input to whatever is being controlled.
     //private GameObject _machine = null; //ou classe de la machine directement <-- Y E S
@@ -61,7 +60,7 @@ public class BON_MachineInteract : MonoBehaviour
             if (!_player.IsSwitching)
             {
                 print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
-                _playingMachine = false;
+                _player.AvatarState.IsConstrollingMachine = false;
                 StartCoroutine(_player.CooldownSwitchControl());
                 _player.RecoverControl();
             }
@@ -84,14 +83,14 @@ public class BON_MachineInteract : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasReleasedThisFrame()) //interact
         {
-            if (_player.IsMachineInRange && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
+            if (_player.AvatarState.IsNearIOMInteractible && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
-                _playingMachine = true;
+                _player.AvatarState.IsConstrollingMachine = true;
                 StartCoroutine(_player.CooldownSwitchControl()); 
                 _player.GiveControl();
             }
         }
-        if (_playingMachine)
+        if (_player.AvatarState.IsConstrollingMachine)
         {
             MoveMachine();
         }

@@ -33,25 +33,12 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     /*  triggers bool */
-    private bool _isCollectibleInRange = false;
-    public bool IsCollectibleInRange
-    {
-        get { return _isCollectibleInRange; }
-    }
 
     private bool _isDRInRange = false;
     public bool IsDRInRange
     {
         get { return _isDRInRange; }
     }
-
-    private bool _isMachineInRange = false;
-    public bool IsMachineInRange
-    {
-        get { return _isMachineInRange; }
-    }
-    //
-
 
     private bool _isSwitching = false;  //bool for switch player/machines
     public bool IsSwitching
@@ -62,11 +49,6 @@ public class BON_CCPlayer : MonoBehaviour
 
     private int _currentCharacterPlayed; //0 = PR, 1= DR, autre = machine
     private int _lastCharacterPlayed; //var tampon pour recup le controle
-
-    /*// First level completion condition : Should have its own class
-    // TODO: Generic Level class featuring states and a win cond, then make a child that's Level 1's class
-    private List<GameObject> _DRCollectibles = new List<GameObject>();
-    private int _DRCount = 0;*/
 
     /*
      *  CLASS METHODS
@@ -101,7 +83,6 @@ public class BON_CCPlayer : MonoBehaviour
         }
         print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
     }
-
     public void RecoverControl() //reprendre le controle
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
@@ -138,7 +119,6 @@ public class BON_CCPlayer : MonoBehaviour
             }
         }
     }
-
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
@@ -157,6 +137,7 @@ public class BON_CCPlayer : MonoBehaviour
          _componentsAvatar = new();
          _componentsAvatar.Add(_componentsPR);
          _componentsAvatar.Add(_componentsDR);
+        _avatarState = BON_AvatarState.Instance();
 
         //start with PR => disable DR
         DisableCompPlayer(1);
@@ -174,18 +155,18 @@ public class BON_CCPlayer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "collectibles_DR") //trigger with DR's items
+        if (other.gameObject.tag == "collectibles_DR") //trigger with items <- change tag name
         {
-            _isCollectibleInRange = true;
             _collectible = other.gameObject;
+            _avatarState.IsNearItem = true;
         }
-        else if (other.gameObject.tag == "Finish") //trigger with DR
+        else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
             _isDRInRange = true;
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            _isMachineInRange = true;
+            _avatarState.IsNearIOMInteractible = true;
         }
     }
 
@@ -193,15 +174,15 @@ public class BON_CCPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "collectibles_DR")
         {
-            _isCollectibleInRange = false;
+            _avatarState.IsNearItem = false;
         }
-        else if (other.gameObject.tag == "Finish") //trigger with DR
+        else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
             _isDRInRange = false;
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            _isMachineInRange = false;
+            _avatarState.IsNearIOMInteractible = false;
         }
     }
 }
