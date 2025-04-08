@@ -204,6 +204,11 @@ PrefabInstance:
       objectReference: {fileID: 2086209965}
     - target: {fileID: 2752952965552381283, guid: b509763fb2912b642bfb11ccc825d4db,
         type: 3}
+      propertyPath: ParallaxCamera
+      value: 
+      objectReference: {fileID: 1144360102}
+    - target: {fileID: 2752952965552381283, guid: b509763fb2912b642bfb11ccc825d4db,
+        type: 3}
       propertyPath: parallaxCamera
       value: 
       objectReference: {fileID: 1144360102}
@@ -17209,6 +17214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 5385193730205362561}
+    - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+        type: 3}
       propertyPath: offsetX
       value: 10
       objectReference: {fileID: 0}
@@ -17230,6 +17240,11 @@ PrefabInstance:
     - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
       propertyPath: followTarget
+      value: 
+      objectReference: {fileID: 1905240937}
+    - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
+        type: 3}
+      propertyPath: _followTarget
       value: 
       objectReference: {fileID: 1905240937}
     - target: {fileID: 1509373353394055598, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
@@ -17389,7 +17404,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -847.3523, y: -216.48398, z: -478.48642}
 --- !u!1001 &1155348915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25305,7 +25320,7 @@ MonoBehaviour:
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: 438.26434, y: -28.789886, z: -45.289185}
 --- !u!1 &1702992377
 GameObject:
   m_ObjectHideFlags: 0
@@ -33703,7 +33718,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5385193730205362571}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2866232086581932936, guid: abf6bd9db0073d04abf55b2f4649b595, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abf6bd9db0073d04abf55b2f4649b595, type: 3}

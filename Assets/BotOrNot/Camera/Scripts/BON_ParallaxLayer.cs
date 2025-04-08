@@ -1,22 +1,22 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ParallaxLayer : MonoBehaviour
+public class BON_ParallaxLayer : MonoBehaviour
 {
     /*
      *  FIELDS
      */
-    public float ParallaxFactor;
+
+    [SerializeField] private float _parallaxFactor = 0.5f;
 
     /*
      *  CLASS METHODS
      */
-    public void Move(float delta)
+
+    public void MéthodeDéplacer(float delta)
     {
         Vector3 newPos = transform.localPosition;
-        newPos.x -= delta * ParallaxFactor;
-
+        newPos.x -= delta * _parallaxFactor;
         transform.localPosition = newPos;
     }
-
 }
