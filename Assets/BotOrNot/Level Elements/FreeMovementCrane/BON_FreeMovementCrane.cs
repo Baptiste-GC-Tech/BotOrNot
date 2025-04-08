@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.Rendering;
 
-public class BON_FreeMovementCrane : BON_Actionnable
+public class BON_FreeMovementCrane : BON_Controllable
 {
     /*
      *  FIELDS
@@ -19,17 +20,45 @@ public class BON_FreeMovementCrane : BON_Actionnable
     /*
      *  CLASS METHODS
      */
-    public override void On()
-    {
-        GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
-    }
 
     public override void Off()
     {
-        _isMoving = false;
-        GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+        base.Off();
+        Stop();
     }
 
+    public override void ReadInput(Vector2 Input)
+    {
+        if (System.Math.Abs(Input.x) > 0.1f || System.Math.Abs(Input.y) > 0.1f)
+        {
+            if (System.Math.Abs(Input.x) > System.Math.Abs(Input.y))
+            {
+                if (Input.x > 0)
+                {
+                    Up();
+                }
+                else
+                {
+                    Down();
+                }
+            }
+            else
+            {
+                if (Input.y > 0)
+                {
+                    Right();
+                }
+                else
+                {
+                    Left();
+                }
+            }
+        }
+        else
+        {
+            Stop();
+        }
+    }
     public void Up()
     {
         if (_direction == new Vector3(0, 1, 0) || _direction == Vector3.zero)
