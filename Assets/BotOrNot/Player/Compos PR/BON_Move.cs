@@ -117,6 +117,7 @@ public class BON_Move : MonoBehaviour
 
         /* Handles the input */
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
+        //_moveInputValue = _joystick.InputValues;
 
         //changing state in BON_Avatarstate
         if (_moveInputValue != null ) 
@@ -124,7 +125,6 @@ public class BON_Move : MonoBehaviour
             _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
         }
 
-        //_moveInputValue = _joystick.InputValues;
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 

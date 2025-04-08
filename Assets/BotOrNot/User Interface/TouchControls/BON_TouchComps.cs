@@ -25,9 +25,6 @@ public class BON_TouchComps : MonoBehaviour
     }
 
 
-
-
-
     /*
     * METHODS 
     */

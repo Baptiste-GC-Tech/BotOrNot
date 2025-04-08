@@ -72,7 +72,7 @@ public class BON_ControlsManager : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))    // The layermask will fail if the TouchInteractible layer ever become not the 3rd layer !
                 {
                     Debug.Log("J'ai touche un interactible!!!");
                 }
@@ -81,17 +81,9 @@ public class BON_ControlsManager : MonoBehaviour
     }
 
 
-
-
-
     /*
      *  UNITY METHODS
      */
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {
