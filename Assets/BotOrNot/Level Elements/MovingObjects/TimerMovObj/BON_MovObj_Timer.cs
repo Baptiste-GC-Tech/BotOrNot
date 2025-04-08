@@ -1,44 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class BON_MovObj_ListBased : BON_Actionnable
+public class BON_MovObj_Timer : BON_MovObj_ListBased
 {
 
     /*
-    FIELDS
-    */
+     * FIELDS 
+     */
 
     [SerializeField]
-    protected List<Transform> _transformsList;
+    protected float _timerMax;
+    private float _currentTimer = 0f;
 
-    [SerializeField]
-    protected float _moveSpeed = 10.0f;
+    private bool _returning = false;
 
-    [SerializeField] 
-    protected bool _turnBackWhenListEnd = false;
-    [SerializeField]
-    protected bool _looping = false;
-    [SerializeField]
-    protected bool _isCyclingPositive = true;
-
-    protected int _nextNodeIndex = 0;
-    protected int _currentNodeIndex;
-    protected float _currentTotalDistance;
-    protected Vector3 _currentDirection;
-    protected Vector3 _currentRotation;
-
-    public bool IsCyclingPositive { get { return _isCyclingPositive; } }
-    public int NextNodeIndex {  
+    new public int NextNodeIndex
+    {
         get { return _nextNodeIndex; }
-        set {
-
+        set
+        {
             _currentNodeIndex = _nextNodeIndex;
 
-            if(value >= _transformsList.Count || value < 0)
+            if (value >= _transformsList.Count || value < 0)
             {
-                
+                _returning = !_returning;
+                _currentTimer = 0f;
 
                 if (_looping)
                 {
@@ -77,8 +64,9 @@ public class BON_MovObj_ListBased : BON_Actionnable
                     Status = false;
                 }
             }
-            else { 
-                _nextNodeIndex = value; 
+            else
+            {
+                _nextNodeIndex = value;
             }
 
             _currentDirection = (_transformsList[_nextNodeIndex].position - _transformsList[_currentNodeIndex].position).normalized;
@@ -87,37 +75,42 @@ public class BON_MovObj_ListBased : BON_Actionnable
         }
     }
 
-    public void Start()
+    /*
+     * UNITY METHODS
+     */
+
+    new void Start()
     {
-        if (Status) 
-        {
-            if (_isCyclingPositive)
-            {
-                NextNodeIndex++;
-            }
-            else
-            {
-                NextNodeIndex--;
-            }
-        }
+        base.Start();
+        _turnBackWhenListEnd = true;
+        _looping = false;
+        _isCyclingPositive = true;
+
     }
 
-    public void FixedUpdate()
+    new void FixedUpdate()
     {
-        if (Status) 
+        if (Status)
         {
             float oneSpeed = _moveSpeed * Time.deltaTime;
-
             if (oneSpeed >= (_transformsList[_nextNodeIndex].position - gameObject.transform.position).magnitude)
             {
                 gameObject.transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
                 if (_isCyclingPositive) { NextNodeIndex++; } else { NextNodeIndex--; }
+                
             }
             else
             {
                 float movementFraction = oneSpeed / _currentTotalDistance;
                 gameObject.transform.position += _currentDirection * oneSpeed;
                 gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + _currentRotation * movementFraction);
+            }
+        }else if (_returning)
+        {
+            _currentTimer += Time.deltaTime;
+            if (_currentTimer >= _timerMax) 
+            {
+                Status = true;
             }
         }
     }
