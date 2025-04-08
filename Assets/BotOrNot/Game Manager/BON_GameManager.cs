@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class BON_GameManager : MonoBehaviour
 {
-
     /*
     *  FIELDS
     */
@@ -24,7 +23,6 @@ public class BON_GameManager : MonoBehaviour
         get { return _currentState; }
         set { _currentState = value; }
     }
-
 
     /*  Level1 requirement */
     private int _collectiblesToWin;

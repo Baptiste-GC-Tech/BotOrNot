@@ -2,8 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "State/DRState")]
 public class BON_DRState : BON_AvatarState
 {
+    /*
+    *  FIELDS
+    */
+
+    bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) *
+    bool _isJumping = false; //1 if in air *
+
 
     /*
     *  CLASS METHODS

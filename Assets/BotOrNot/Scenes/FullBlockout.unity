@@ -22643,7 +22643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4074d58420ae267428da7e2b3a9d2860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 0}
+  _inventory: {fileID: 5385193730205362575}
   _AvatarState: {fileID: 0}
 --- !u!4 &1524273682
 Transform:
@@ -33176,6 +33176,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5385193730205362575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4038749844960875241, guid: abf6bd9db0073d04abf55b2f4649b595,
+    type: 3}
+  m_PrefabInstance: {fileID: 7445420084061708076}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721e0e9dd05a15441b5eb99017784a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5674061902823560575
