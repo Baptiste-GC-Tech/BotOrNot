@@ -10,6 +10,7 @@ public class BON_Inventory : MonoBehaviour
 
     private List<int> _items = new();
 
+
     /*
      *  CLASS METHODS
      */
@@ -31,27 +32,14 @@ public class BON_Inventory : MonoBehaviour
         return _items.Count;
     }
 
-    public void PrintInventory() //for debug
+    // DEBUGGING METHODS
+#if UNITY_EDITOR
+    public void PrintInventory()
     {
         for (int i = 0; i < _items.Count; i++)
         {
             print(_items[i]);
         }
     }
-
-    /*
-     *  UNITY METHODS
-     */
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+#endif
 }
