@@ -71,10 +71,7 @@ public class BON_OrthoRaycastLine : MonoBehaviour
         }
         else
         {
-            if (Physics.Raycast(rayon, out hit, _rayDistance))
-            {
-                PRIVCacherLigne();
-            }
+            PRIVCacherLigne();
         }
     }
 
