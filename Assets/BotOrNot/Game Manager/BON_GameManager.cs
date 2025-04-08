@@ -128,6 +128,6 @@ public class BON_GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        print("state = "+_currentState);
     }
 }

@@ -32,7 +32,7 @@ public class BON_InteractDR : MonoBehaviour
     {
         if (_interactAction.WasPressedThisFrame() ) //interact => switch player button
         {
-            if (!_player.IsSwitching && !_player.IsMachineInRange) //Pas de machine a porté et pas deja en train de switch
+            if (!_player.IsSwitching && !_player.AvatarState.IsNearIOMInteractible) //Pas de machine a porté et pas deja en train de switch
             {
                 StartCoroutine(_player.CooldownSwitchControl());
                 _player.SwitchPlayer();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_MovObj_Timer : BON_Actionnable
+public class BON_MovObj_Timer_Old : BON_Actionnable
 {
     //FIELD//
     private bool _isMoving = false;
@@ -12,6 +12,7 @@ public class BON_MovObj_Timer : BON_Actionnable
     [SerializeField] private float _extensionMax;
     [SerializeField] private float _extensionMin;
     [SerializeField] private float _speed;
+
     //CLASS METHODS
     override public void On()
     {

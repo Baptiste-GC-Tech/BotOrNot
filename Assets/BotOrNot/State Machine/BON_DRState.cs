@@ -30,7 +30,10 @@ public class BON_DRState : BON_AvatarState
     {
         if (BON_GameManager.Instance().IsPlayingNut == false) //test current state
         {
-            CheckStatePossible(_currentState);
+            if (!CheckStatePossible(_currentState))
+            {
+                InitState(States.Idle);
+            }
         }
     }
 }

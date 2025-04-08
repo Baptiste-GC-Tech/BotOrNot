@@ -35,7 +35,7 @@ public class BON_Interact : MonoBehaviour
             {
                 //give inventory item(s) to DR
 
-                print(_inventory.CountItem() +" objets déposées");
+                print(_inventory.CountItem() +" objets dï¿½posï¿½es");
 
                 for(int i = _inventory.CountItem()-1; i> 0; i--)
                 {

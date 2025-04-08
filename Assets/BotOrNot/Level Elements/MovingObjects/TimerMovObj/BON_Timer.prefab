@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7636925674911371037}
   - component: {fileID: 772842023493384936}
   - component: {fileID: 8243537223164382171}
-  - component: {fileID: 1378468987295313477}
+  - component: {fileID: 3315653166787756693}
   m_Layer: 0
   m_Name: BON_Timer
   m_TagString: Untagged
@@ -108,7 +108,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1378468987295313477
+--- !u!114 &3315653166787756693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,6 +117,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1523919345974649132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aa349e62101f9c4b9a40f3015c1656e, type: 3}
+  m_Script: {fileID: 11500000, guid: db95e0cf264cd834f84704881011fe4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _status: 0
+  _transformsList: []
+  _moveSpeed: 10
+  _turnBackWhenListEnd: 0
+  _looping: 0
+  _isCyclingPositive: 1
+  _timerMax: 0

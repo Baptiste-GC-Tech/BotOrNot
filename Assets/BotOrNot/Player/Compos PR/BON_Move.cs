@@ -120,7 +120,7 @@ public class BON_Move : MonoBehaviour
         //_moveInputValue = _joystick.InputValues;
 
         //changing state in BON_Avatarstate
-        if (_moveInputValue != null ) 
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) 
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
         }

@@ -18,8 +18,6 @@ public class BON_MachineInteractDR : MonoBehaviour
 
     Vector2 _moveMachineValue;
 
-    private bool _playingMachine = false;
-
     /*
      *  CLASS METHODS
      */
@@ -48,7 +46,7 @@ public class BON_MachineInteractDR : MonoBehaviour
             if (!_player.IsSwitching)
             {
                 print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
-                _playingMachine = false;
+                _player.AvatarState.IsConstrollingMachine = false;
                 StartCoroutine(_player.CooldownSwitchControl());
                 _player.RecoverControl();
             }
@@ -73,14 +71,14 @@ public class BON_MachineInteractDR : MonoBehaviour
         // Take item action handling
         if (_interactMachineAction.WasReleasedThisFrame()) //interact
         {
-            if (_player.IsMachineInRange && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
+            if (_player.AvatarState.IsNearIOMInteractible && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
             {
-                _playingMachine = true;
+                _player.AvatarState.IsConstrollingMachine = true;
                 StartCoroutine(_player.CooldownSwitchControl()); 
                 _player.GiveControl();
             }
         }
-        if (_playingMachine)
+        if (_player.AvatarState.IsConstrollingMachine)
         {
             MoveMachine();
         }
