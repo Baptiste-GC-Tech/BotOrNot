@@ -15,11 +15,13 @@ public class BON_HookAction : MonoBehaviour
         {
             _hook.Activate();
             _isHooked = false;
+            print("_isHooked :" + _isHooked);
         }
         else
         {
             foreach (GameObject hook in GameObject.FindGameObjectsWithTag("Hook"))
             {
+                print(hook);
                 if ((gameObject.transform.forward.x <= 0 && hook.transform.position.x - gameObject.transform.position.x <= 0) || (gameObject.transform.forward.x >= 0 && hook.transform.position.x - gameObject.transform.position.x >= 0))
                 {
                     if ((hook.transform.position - gameObject.transform.position).magnitude <= 10)

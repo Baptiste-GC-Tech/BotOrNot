@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AvatarState")]
@@ -6,6 +7,9 @@ public abstract class BON_AvatarState : ScriptableObject
     /*
     *  FIELDS
     */
+
+    //link States class and enum
+    protected Dictionary<States, BON_State> _stateDict;
 
     /* bool for states */
 
