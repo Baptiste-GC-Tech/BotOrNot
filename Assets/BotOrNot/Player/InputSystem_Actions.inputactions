@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveUp",
+                    "type": "Button",
+                    "id": "39bea074-c5ac-4dc3-af41-ea6c73533636",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveDown",
+                    "type": "Button",
+                    "id": "82473c8d-747c-4827-a451-bd5829843a4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -92,6 +110,17 @@
                 {
                     "name": "Up",
                     "id": "fcfe95b8-67b9-4526-84b5-5d0bc98d6400",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Up",
+                    "id": "ec2aa4db-c019-45e6-bbd1-f593bbd49971",
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
@@ -185,6 +214,50 @@
                     "processors": "",
                     "groups": ";touchScreen",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fec325f1-dd82-4804-9ab0-060030e64f8d",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9165953d-67d7-4ba1-8e25-5cc95236aa4a",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73e25bb2-03d4-456c-ba12-20833380a80a",
+                    "path": "<Joystick>/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "034abc92-9c4a-40c2-8c26-71704c8f6a76",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

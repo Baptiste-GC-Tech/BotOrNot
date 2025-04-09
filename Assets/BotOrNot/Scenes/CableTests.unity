@@ -1153,6 +1153,21 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1758707621}
+    - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _mainCam
+      value: 
+      objectReference: {fileID: 641628114}
+    - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _gunOrigin
+      value: 
+      objectReference: {fileID: 369268345}
+    - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _lineRenderer
+      value: 
+      objectReference: {fileID: 2117895448}
     - target: {fileID: 1401021442857944404, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1360,10 +1375,6 @@ PrefabInstance:
     - {fileID: 2866232086581932936, guid: abf6bd9db0073d04abf55b2f4649b595, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4624429080782401295, guid: abf6bd9db0073d04abf55b2f4649b595,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2117895449}
     - targetCorrespondingSourceObject: {fileID: 4624429080782401295, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       insertIndex: -1
@@ -4084,33 +4095,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &2117895449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117895435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a335b72f252d1a4c8cc8dacea89b574, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCam: {fileID: 641628114}
-  _lineRenderer: {fileID: 2117895448}
-  _gunOrigin: {fileID: 369268345}
-  _raycastLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _rayDistance: 100
-  _springForce: 100
-  _damping: 1
-  _lineSegments: 30
-  _deployTime: 0.3
-  _waveAmplitude: 0.5
-  _waveFrequency: 2
-  _swingAmplitude: 0.1
-  _swingFrequency: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
