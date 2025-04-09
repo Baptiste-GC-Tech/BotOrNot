@@ -93,5 +93,13 @@ public class BON_MachineInteract : MonoBehaviour
         {
             MoveMachine();
         }
+
+        if (_TakeControlOfMachineAction == null)
+            Debug.LogError("_TakeControlOfMachineAction introuvable");
+        if (_QuitControlOfMachineAction == null)
+            Debug.LogError("_QuitControlOfMachineAction introuvable");
+        if (_JoystickMachineAction == null)
+            Debug.LogError("_JoystickMachineAction introuvable");
+
     }
 }
