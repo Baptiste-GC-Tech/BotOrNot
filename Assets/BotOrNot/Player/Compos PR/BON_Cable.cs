@@ -15,6 +15,7 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _rayDistance = 100f;
     [SerializeField] private float _springForce = 30f; 
     [SerializeField] private float _damping = 5f;
+    [SerializeField] private float _cableLengthSpeed = 5f;
 
     [Header("Visual Settings")]
     [SerializeField] private int _lineSegments = 20;
@@ -27,6 +28,8 @@ public class BON_Cable : MonoBehaviour
     private bool _lineVisible = false;
     private bool _animating = false;
     private InputAction _clickAction;
+    private InputAction _CablemoveDown;
+    private InputAction _CablemoveUp;
     private SpringJoint _joint;
     private Rigidbody _rb;
     private float _swingTimer;
@@ -35,6 +38,8 @@ public class BON_Cable : MonoBehaviour
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
+        _CablemoveDown = InputSystem.actions.FindAction("ActionsMapPR/CablemoveDown");
+        _CablemoveUp = InputSystem.actions.FindAction("ActionsMapPR/CablemoveUp");
         _rb = GetComponent<Rigidbody>();
 
         if (_clickAction == null)
@@ -53,6 +58,27 @@ public class BON_Cable : MonoBehaviour
             PRIVAfficherLigne(_gunOrigin.position, _joint.connectedAnchor);
             _swingTimer += Time.deltaTime;
         }
+
+        if (_joint != null)
+        {
+            float lengthChange = 0f;
+
+            if (_CablemoveUp != null && _CablemoveUp.ReadValue<float>() > 0.5f)
+            {
+                lengthChange -= _cableLengthSpeed * Time.deltaTime;
+            }
+
+            if (_CablemoveDown != null && _CablemoveDown.ReadValue<float>() > 0.5f)
+            {
+                lengthChange += _cableLengthSpeed * Time.deltaTime;
+            }
+
+            if (Mathf.Abs(lengthChange) > 0.001f)
+            {
+                _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
+            }
+        }
+
     }
 
     public void GererClic()
