@@ -50,13 +50,6 @@ public class BON_CameraFollowMode : MonoBehaviour
     [Tooltip("Vitesse de transition pour les offsets caméra.")]
     [Range(0.1f, 20f)][SerializeField] private float _offsetLerpSpeed = 4f;
 
-    [Header("Shake")]
-    [Tooltip("Intensité de shake de la caméra.")]
-    [SerializeField] private float _intensity = 0f;
-
-    [Tooltip("Temps de shake de la caméra.")]
-    [SerializeField] private float _shakeTime = 0f;
-
     public FollowMode CurrentMode { get; private set; } = FollowMode.Auto;
 
     private CinemachineFramingTransposer _framingTransposer;

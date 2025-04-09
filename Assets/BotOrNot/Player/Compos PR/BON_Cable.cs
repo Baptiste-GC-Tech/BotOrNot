@@ -25,7 +25,6 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _swingFrequency = 2f;
 
     private bool _lineVisible = false;
-    private bool _swinging = false;
     private bool _animating = false;
     private InputAction _clickAction;
     private SpringJoint _joint;
@@ -67,7 +66,6 @@ public class BON_Cable : MonoBehaviour
                 _lineVisible = true;
                 _lineRenderer.enabled = true;
                 _lineRenderer.positionCount = _lineSegments;
-                _swinging = false;
                 _targetPoint = closest.position;
                 StartCoroutine(PRIVAnimerLigneAvecVague());
             }
@@ -130,13 +128,11 @@ public class BON_Cable : MonoBehaviour
 
         PRIVActiverRappel(_targetPoint);
         _swingTimer = 0f;
-        _swinging = true;
         _animating = false;
     }
 
     private IEnumerator PRIVRetirerLigne()
     {
-        _swinging = false;
         Vector3 start = _gunOrigin.position;
         Vector3 end = _joint != null ? _joint.connectedAnchor : _targetPoint;
         PRIVSupprimerRappel();
