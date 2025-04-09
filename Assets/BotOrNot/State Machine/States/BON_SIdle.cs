@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_SIdle : MonoBehaviour
+public class BON_SIdle : BON_State
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+        Debug.Log("Entrée en idle");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+        Debug.Log("Sortie de idle");
+    }
+
+    public override void Update()
+    {
+        //nothing
     }
 }
