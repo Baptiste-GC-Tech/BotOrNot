@@ -8,15 +8,28 @@ public class BON_DRState : BON_AvatarState
     /*
     *  CLASS METHODS
     */
-
     protected override bool CheckStatePossible(States currentState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
     {
+        MonoBehaviour.print("check state DR");
         if (currentState == States.ControllingMachine || currentState == States.ThrowingCable)
         {
-            MonoBehaviour.print("état pas possible pour la dame robot");
+            MonoBehaviour.print("état pas possible pour la dame robot ( from "+_currentState + " to"+ currentState +")");
             return false;
         }
         return true;
+    }
+    public override void ChangeState(States state)
+    {
+        if (_currentState != state && CheckStatePossible(state))
+        {
+            MonoBehaviour.print("changement effectué");
+            _currentState = state;
+        }
+        else
+        {
+            MonoBehaviour.print("changement non validé");
+            MonoBehaviour.print("current state =" + _currentState + "renied state =" + state);
+        }
     }
 
     // Start is called before the first frame update

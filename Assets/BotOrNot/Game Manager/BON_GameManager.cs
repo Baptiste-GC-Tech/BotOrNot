@@ -14,8 +14,8 @@ public class BON_GameManager : MonoBehaviour
     // inventory script reference
     [SerializeField] private BON_Inventory _inventory;
 
-    // stateMachine script reference
-    [SerializeField] private BON_AvatarState _AvatarState;
+    // player reference
+    private BON_CCPlayer _player;
 
     private BON_AvatarState _currentState;
     public BON_AvatarState CurrentState
@@ -50,12 +50,27 @@ public class BON_GameManager : MonoBehaviour
 
     public static BON_GameManager Instance()
     {
+        print(_gameManager);
         if (_gameManager == null)
         {
+            print("gm is null");
             GameObject newObject = new GameObject("BON_GameManager");
-            _gameManager = newObject.AddComponent<BON_GameManager>();
+            newObject.AddComponent<BON_GameManager>();
+            _gameManager = newObject.GetComponent<BON_GameManager>();
+            _gameManager.InitFields();
         }
         return _gameManager;
+    }
+
+    public void InitFields()
+    {
+        _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
+        _inventory = _player.GetComponent<BON_Inventory>();
+        _isPlayingNut = true;
+        _collectiblesToWin = 4;
+
+        //init la scene actuelle
+        _currentScene = Scenes.Menu;
     }
 
     public void ChangeScene(Scenes nextScene)
@@ -64,6 +79,9 @@ public class BON_GameManager : MonoBehaviour
         switch (_currentScene)
         {
             case Scenes.Menu: // n'importe quel niveau possible?
+                _currentScene = nextScene;
+                SceneManager.LoadScene(nextScene.ToString());
+                print("good");
                 break;
 
             case Scenes.Level1: //uniquement level2 ou menu possible
@@ -76,6 +94,7 @@ public class BON_GameManager : MonoBehaviour
                 {
                     _currentScene = nextScene;
                     SceneManager.LoadScene(nextScene.ToString());
+                    print("good");
                 }
                 break;
             case Scenes.Level2: //uniquement menu possible (+ futurs levels)
@@ -90,6 +109,7 @@ public class BON_GameManager : MonoBehaviour
                     {
                         _currentScene = nextScene;
                         SceneManager.LoadScene(nextScene.ToString());
+                        print("good");
                     }
                     else
                     {
@@ -106,21 +126,18 @@ public class BON_GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
-
+    {     
         //init la scene au Menu
         _currentScene = Scenes.Menu;
 
+        //init player
+        _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
+
         //init la current state
-        _AvatarState.InitState(BON_AvatarState.States.Idle);
+        //_player.AvatarState.InitState(BON_AvatarState.States.Idle); bug  nullref<- parce que le start de l'avatar se fait apres je pense ?
 
         //Lancer la scene du level1
-        //(Scenes.Level1);
-
-        //init bool
-        _isPlayingNut = true;
-        _collectiblesToWin = 4;
+        //ChangeScene(Scenes.Level1);
     }
 
     // Update is called once per frame

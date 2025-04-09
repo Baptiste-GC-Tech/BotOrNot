@@ -147,10 +147,9 @@ public class BON_CCPlayer : MonoBehaviour
         EnableCompPlayer(0);
 
         BON_GameManager instance = BON_GameManager.Instance();
-        instance.ChangeScene(BON_GameManager.Scenes.Level2);
+        DontDestroyOnLoad(instance);
 
-        print("instance state");
-        //set state machine PR ou DR
+        //set state machine PR or DR
         if (instance.IsPlayingNut)
         {
             _avatarState = _listAvatarsStates[0];
@@ -159,12 +158,13 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState = _listAvatarsStates[1];
         }
-        print("state = "+ _avatarState);
+
+        _avatarState.InitState(BON_AvatarState.States.Idle);
     }
 
     void Update()
     {
-        
+        //print(_avatarState.CurrentState);
     }
     private void OnTriggerEnter(Collider other)
     {

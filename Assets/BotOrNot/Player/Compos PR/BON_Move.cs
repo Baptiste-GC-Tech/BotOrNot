@@ -18,6 +18,7 @@ public class BON_Move : MonoBehaviour
 
     // player reference
     [SerializeField] private BON_CCPlayer _player;
+    private Rigidbody _rb;
 
     public LayerMask Deez;
 
@@ -100,7 +101,6 @@ public class BON_Move : MonoBehaviour
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
 
-
     /*
      *  UNITY METHODS
      */
@@ -120,7 +120,7 @@ public class BON_Move : MonoBehaviour
         //_moveInputValue = _joystick.InputValues;
 
         //changing state in BON_Avatarstate
-        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) 
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0 && _player.AvatarState.CurrentState != BON_AvatarState.States.Moving) //if player move once, change state
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
         }

@@ -15,7 +15,7 @@ public abstract class BON_AvatarState : ScriptableObject
     /* bool for states */
 
     bool _isGrounded = false;  //1 if touch the ground
-    public bool IssGrounded
+    public bool IsGrounded
     {
         get { return _isGrounded; }
         set { _isGrounded = value; }
@@ -76,7 +76,6 @@ public abstract class BON_AvatarState : ScriptableObject
         set { _isNearItem = value; }
     }
 
-
     //bool DR
     bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) 
     public bool IsNearHumanoidObject
@@ -93,6 +92,10 @@ public abstract class BON_AvatarState : ScriptableObject
 
 
     protected States _currentState;
+    public States CurrentState
+    {
+        get { return _currentState; }
+    }
 
     public enum States
     {
@@ -114,18 +117,6 @@ public abstract class BON_AvatarState : ScriptableObject
     }
 
     protected abstract bool CheckStatePossible(States currentState); // <-- (eg robot cannot Jump, Dame robot cannot use cable)
-                                                                    // see children
-
-    public void ChangeState(States state)
-    {
-        if (_currentState != state && CheckStatePossible(state))
-        {
-            MonoBehaviour.print("changement effectué");
-            _currentState = state;
-        }
-        else
-        {
-            MonoBehaviour.print("changement non validé");
-        }
-    }
+                                                                     // see childre
+    public abstract void ChangeState(States state);
 }
