@@ -32,9 +32,9 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (System.Math.Abs(Input.x) > 0.1f || System.Math.Abs(Input.y) > 0.1f)
         {
-            if (System.Math.Abs(Input.x) > System.Math.Abs(Input.y))
+            if (System.Math.Abs(Input.x) < System.Math.Abs(Input.y))
             {
-                if (Input.x > 0)
+                if (Input.y > 0)
                 {
                     Up();
                 }
@@ -45,7 +45,7 @@ public class BON_FreeMovementCrane : BON_Controllable
             }
             else
             {
-                if (Input.y > 0)
+                if (Input.x > 0)
                 {
                     Right();
                 }
