@@ -6,14 +6,13 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AvatarState")]
-public class BON_AvatarState : ScriptableObject
+public abstract class BON_AvatarState : ScriptableObject
 {
     /*
     *  FIELDS
     */
 
     /* bool for states */
-    //bool isNut = false; //1 if nut, 0 if Dame robot => maybe in game manager ?
 
     bool _isGrounded = false;  //1 if touch the ground
     public bool IssGrounded
@@ -112,10 +111,7 @@ public class BON_AvatarState : ScriptableObject
         _currentState = currentState;
     }
 
-    protected virtual bool CheckStatePossible(States currentState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
-    {
-        throw new NotImplementedException();
-    }
+    protected abstract bool CheckStatePossible(States currentState); // <-- (eg robot cannot Jump, Dame robot cannot use cable)
                                                                     // see children
 
     public void ChangeState(States state)
