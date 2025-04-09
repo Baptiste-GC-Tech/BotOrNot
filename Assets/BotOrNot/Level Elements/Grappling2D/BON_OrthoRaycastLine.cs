@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BON_OrthoRaycastLine : MonoBehaviour
@@ -24,6 +25,10 @@ public class BON_OrthoRaycastLine : MonoBehaviour
     [SerializeField] private float _swingAmplitude = 0.1f;
     [SerializeField] private float _swingFrequency = 2f;
 
+    [SerializeField] Canvas _canvas;
+
+    private BON_COMPJoystick _joystick;
+    private BON_COMPPlayerButtons _hookButton;
     private bool _lineVisible = false;
     private bool _animating = false;
     private InputAction _clickAction;
@@ -35,10 +40,18 @@ public class BON_OrthoRaycastLine : MonoBehaviour
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
+        _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
+        _hookButton = _canvas.GetComponentInChildren<BON_COMPPlayerButtons>(); 
         _rb = GetComponent<Rigidbody>();
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
+
+        if (_joystick == null)
+            Debug.LogError("'Joystick' est introuvable.");
+
+        if (_hookButton == null)
+            Debug.LogError("'Player Buttons' est introuvable.");
     }
 
     private void Update()
@@ -48,11 +61,26 @@ public class BON_OrthoRaycastLine : MonoBehaviour
             PRIVGererClic();
         }
 
+
         if (_lineVisible && _joint != null && !_animating)
         {
             PRIVAfficherLigne(_gunOrigin.position, _joint.connectedAnchor);
             _swingTimer += Time.deltaTime;
         }
+
+        // if (_joystick != null && _joystick.triggered)
+        if (_hookButton != null)
+        {
+            PRIVGererClic();
+        }
+
+        if (_joystick && _joint != null && !_animating)
+        {
+            PRIVAfficherLigne(_gunOrigin.position, _joint.connectedAnchor);
+            _swingTimer += Time.deltaTime;
+        }
+
+
     }
 
     private void PRIVGererClic()

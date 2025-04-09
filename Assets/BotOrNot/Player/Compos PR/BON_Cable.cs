@@ -45,7 +45,7 @@ public class BON_Cable : MonoBehaviour
     {
         if (_clickAction != null && _clickAction.triggered)
         {
-            PRIVGererClic();
+            GererClic();
         }
 
         if (_lineVisible && _joint != null && !_animating)
@@ -55,7 +55,7 @@ public class BON_Cable : MonoBehaviour
         }
     }
 
-    private void PRIVGererClic()
+    public void GererClic()
     {
         if (!_lineVisible)
         {

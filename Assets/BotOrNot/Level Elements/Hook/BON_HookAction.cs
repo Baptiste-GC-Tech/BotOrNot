@@ -8,8 +8,6 @@ public class BON_HookAction : MonoBehaviour
     private bool _isHooked;
     private BON_Interactive _hook;
 
-
-
     //CLASS METHODS
     public void OnClick()
     {

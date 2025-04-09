@@ -30,10 +30,6 @@ public class BON_COMPJoystick : BON_TouchComps
 
     private RawImage _joystickImage;
 
-
-
-
-
     /*
     * METHODS 
     */

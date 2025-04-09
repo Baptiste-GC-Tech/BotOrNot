@@ -11,6 +11,8 @@ public class BON_COMPPlayerButtons : BON_TouchComps
     * FIELDS
     */
 
+    // private BON_OrthoRaycastLine _hookButton;
+    // [SerializeField] Button _button;
     private List<Transform> _children = new List<Transform>();
 
     /*
@@ -21,11 +23,15 @@ public class BON_COMPPlayerButtons : BON_TouchComps
     {
         base.TouchStart(touch, initialTouchPos);
     }
-
+    
     override public void TouchEnd()
     {
         base.TouchEnd();
     }
+
+
+
+    // Bouton 1 ; Fonction sub au bouton saut (players)
 
     public bool TryIsButtonThere(Vector2 touchPos)
     {
@@ -71,6 +77,7 @@ public class BON_COMPPlayerButtons : BON_TouchComps
 
     override protected void Start()
     {
+
         base.Start();
 
         foreach(Transform child in transform)
@@ -82,5 +89,10 @@ public class BON_COMPPlayerButtons : BON_TouchComps
     override protected void Update()
     {
         base.Update();
+
+/*        if (_button.onClick == true)
+        {
+            
+        }*/
     }
 }
