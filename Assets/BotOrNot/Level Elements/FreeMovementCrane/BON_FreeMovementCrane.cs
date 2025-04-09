@@ -17,7 +17,14 @@ public class BON_FreeMovementCrane : BON_Controllable
     private Vector3 _direction;
     [SerializeField] List<Vector4> _boundaries;
 
-
+    [SerializeField]
+    bool GoinUp;
+    [SerializeField]
+    bool GoinDown;
+    [SerializeField]
+    bool GoinLeft;
+    [SerializeField]
+    bool GoinRight;
     /*
      *  CLASS METHODS
      */
@@ -32,9 +39,9 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (System.Math.Abs(Input.x) > 0.1f || System.Math.Abs(Input.y) > 0.1f)
         {
-            if (System.Math.Abs(Input.x) < System.Math.Abs(Input.y))
+            if (System.Math.Abs(Input.x) > System.Math.Abs(Input.y))
             {
-                if (Input.y > 0)
+                if (Input.x > 0)
                 {
                     Up();
                 }
@@ -45,7 +52,7 @@ public class BON_FreeMovementCrane : BON_Controllable
             }
             else
             {
-                if (Input.x > 0)
+                if (Input.y > 0)
                 {
                     Right();
                 }
@@ -143,13 +150,24 @@ public class BON_FreeMovementCrane : BON_Controllable
                 }
             }
         }
+
+        float oneAcceleration = _acceleration * Time.deltaTime;
+
         if (_isMoving && _speed < _speedMax)
         {
-            _speed += _acceleration * Time.deltaTime;
+            _speed += oneAcceleration;
         }
-        else if(!_isMoving && _speed > 0)
+        else if(!_isMoving && _speed - oneAcceleration > 0)
         {
-            _speed -= _acceleration * Time.deltaTime;
+            _speed -= oneAcceleration;
         }
+
+        if (GoinUp) { Up(); }
+        else if (GoinDown) { Down(); }
+        else if (GoinLeft) { Left(); }
+        else if (GoinRight) { Right(); }
+        else { Stop(); }
+
+
     }
 }
