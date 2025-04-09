@@ -16,15 +16,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     private float _acceleration;
     private Vector3 _direction;
     [SerializeField] List<Vector4> _boundaries;
-
-    [SerializeField]
-    bool GoinUp;
-    [SerializeField]
-    bool GoinDown;
-    [SerializeField]
-    bool GoinLeft;
-    [SerializeField]
-    bool GoinRight;
+    private bool _isBlocked;
     /*
      *  CLASS METHODS
      */
@@ -82,7 +74,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Down() 
     {
-        if (_direction != new Vector3(0, -1, 0) || _direction == Vector3.zero)
+        if (_direction == new Vector3(0, -1, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(0, -1);
@@ -95,7 +87,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Left()
     {
-        if (_direction != new Vector3(-1, 0, 0) || _direction == Vector3.zero)
+        if (_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(-1, 0);
@@ -108,7 +100,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Right()
     {
-        if (_direction != new Vector3(1, 0, 0) || _direction == Vector3.zero)
+        if (_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero)
         {
             _isMoving = true;
             _direction = new Vector2(1, 0);
@@ -122,7 +114,6 @@ public class BON_FreeMovementCrane : BON_Controllable
     public void Stop()
     {
         _isMoving = false;
-        _direction = Vector2.zero;
     }
 
 
@@ -135,7 +126,8 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         _direction = Vector2.zero;
         _speed = 0;
-        _acceleration = _speedMax / 5;
+        _acceleration = _speedMax / 3;
+        _isBlocked = false;
     }
     private void FixedUpdate()
     {
@@ -147,13 +139,19 @@ public class BON_FreeMovementCrane : BON_Controllable
                 if (Box[0] <= nextPos.x && nextPos.x <= Box[1] && Box[2] <= nextPos.y && nextPos.y <= Box[3])
                 {
                     gameObject.transform.position += _direction * _speed * Time.deltaTime;
+                    _isBlocked = false;
+                    break;
+                }
+                else
+                {
+                    _isBlocked = true;
                 }
             }
         }
 
         float oneAcceleration = _acceleration * Time.deltaTime;
 
-        if (_isMoving && _speed < _speedMax)
+        if (_isMoving && _speed + oneAcceleration < _speedMax)
         {
             _speed += oneAcceleration;
         }
@@ -161,13 +159,10 @@ public class BON_FreeMovementCrane : BON_Controllable
         {
             _speed -= oneAcceleration;
         }
-
-        if (GoinUp) { Up(); }
-        else if (GoinDown) { Down(); }
-        else if (GoinLeft) { Left(); }
-        else if (GoinRight) { Right(); }
-        else { Stop(); }
-
-
+        else if (!_isMoving || _isBlocked)
+        {
+            _speed = 0;
+            _direction = Vector2.zero;
+        }
     }
 }
