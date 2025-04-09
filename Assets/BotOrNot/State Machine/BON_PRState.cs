@@ -6,20 +6,6 @@ using UnityEngine;
 public class BON_PRState : BON_AvatarState
 {
     /*
-    *  FIELDS
-    */
-
-    bool _isNearIOMInteractible = false; //<-- Terminaux, grue, ... 
-
-    bool _isConstrollingMachine = false; //1 if using machine, 0 if not 
-
-    bool _isNearCableInteractible = false; 
-
-    bool _isthrowingCable = false; //1 if using cable, 0 if not 
-
-    bool _isNearItem = false; //<-- Truc pour l’inventaire 
-
-    /*
     *  CLASS METHODS
     */
 

@@ -67,7 +67,6 @@ public class BON_MachineInteract : MonoBehaviour
         }
     }
 
-
     /*
      *  UNITY METHODS
      */

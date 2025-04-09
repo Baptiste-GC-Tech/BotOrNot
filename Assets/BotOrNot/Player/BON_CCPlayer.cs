@@ -137,7 +137,8 @@ public class BON_CCPlayer : MonoBehaviour
          _componentsAvatar = new();
          _componentsAvatar.Add(_componentsPR);
          _componentsAvatar.Add(_componentsDR);
-        _avatarState = BON_AvatarState.Instance();
+
+        _avatarState = ScriptableObject.CreateInstance<BON_AvatarState>();
 
         //start with PR => disable DR
         DisableCompPlayer(1);
@@ -158,7 +159,7 @@ public class BON_CCPlayer : MonoBehaviour
         if (other.gameObject.tag == "collectibles_DR") //trigger with items <- change tag name
         {
             _collectible = other.gameObject;
-            _avatarState.IsNearItem = true;
+            //_avatarState.IsNearItem = true;
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
@@ -166,7 +167,7 @@ public class BON_CCPlayer : MonoBehaviour
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            _avatarState.IsNearIOMInteractible = true;
+            //_avatarState.IsNearIOMInteractible = true;
         }
     }
 
@@ -174,7 +175,7 @@ public class BON_CCPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "collectibles_DR")
         {
-            _avatarState.IsNearItem = false;
+            //_avatarState.IsNearItem = false;
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
@@ -182,7 +183,7 @@ public class BON_CCPlayer : MonoBehaviour
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            _avatarState.IsNearIOMInteractible = false;
+            //_avatarState.IsNearIOMInteractible = false;
         }
     }
 }
