@@ -15,6 +15,10 @@ public class BON_FreeMovementCrane : BON_Controllable
     private float _speed;
     private float _acceleration;
     private Vector3 _direction;
+    [SerializeField] float _maxX;
+    [SerializeField] float _maxY;
+    [SerializeField] float _minX;
+    [SerializeField] float _minY;
 
 
     /*
@@ -133,7 +137,10 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (_isMoving || _speed > 0)
         {
-            gameObject.transform.position += _direction * _speed * Time.deltaTime;
+            if (_minX <= gameObject.transform.position.x && gameObject.transform.position.x <= _maxX && _minY <= gameObject.transform.position.y && gameObject.transform.position.y <= _maxY)
+            {
+                gameObject.transform.position += _direction * _speed * Time.deltaTime;
+            }
         }
         if (_speed < _speedMax)
         {
