@@ -31,7 +31,10 @@ public class BON_COMPPlayerButtons : BON_TouchComps
 
 
 
-    // Bouton 1 ; Fonction sub au bouton saut (players)
+    public void Action1()
+    {
+        Debug.Log("bleb");
+    }
 
     public bool TryIsButtonThere(Vector2 touchPos)
     {
