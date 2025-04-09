@@ -77,6 +77,7 @@ public class BON_COMPJoystick : BON_TouchComps
         //Magnetude entre le pos initial et le currentPos
         _inputValues.x += (_currentTouchPos.x - _previousTouchPos.x)/200;
         _inputValues.y += (_currentTouchPos.y - _previousTouchPos.y)/200;
+
         PRIVClampInput();
     }
 

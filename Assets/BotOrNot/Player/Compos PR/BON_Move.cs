@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
@@ -116,8 +115,12 @@ public class BON_Move : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
+#if UNITY_EDITOR
+        _moveInputValue = _joystick.InputValues;
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
-        //_moveInputValue = _joystick.InputValues;
+#elif UNITY_ANDROID
+        _moveInputValue = _joystick.InputValues;
+#endif
 
         //changing state in BON_Avatarstate
         if (_moveInputValue.y != 0 || _moveInputValue.x != 0 && _player.AvatarState.CurrentState != BON_AvatarState.States.Moving) //if player move once, change state

@@ -11,9 +11,9 @@ public class BON_ControlsManager : MonoBehaviour
      * FIELDS
      */
 
-    private List<Vector2> _initialTouchPos = new List<Vector2>(10);
-    private List<Vector2> _currentTouchPos = new List<Vector2>(10);
-    private List<bool> _hasPassedThresholdList = new List<bool>(10);
+    private List<Vector2> _initialTouchPos = new List<Vector2>(3);
+    private List<Vector2> _currentTouchPos = new List<Vector2>(3);
+    private List<bool> _hasPassedThresholdList = new List<bool>(3);
     private Dictionary<int, BON_TouchComps> _touchDictionary = new Dictionary<int, BON_TouchComps>();
 
     [Range(20f, 50f)]
@@ -30,6 +30,8 @@ public class BON_ControlsManager : MonoBehaviour
 
     [SerializeField] GameObject _touchFeedback;
 
+    private GameObject _lastInteractedObj;
+    private Vector3 _lastInteractedPos;
 
     /*
      * METHODS 
@@ -64,7 +66,7 @@ public class BON_ControlsManager : MonoBehaviour
             if (_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
             {
                 var feedback = Instantiate(_touchFeedback);
-                feedback.transform.parent = transform;
+                feedback.transform.SetParent(transform);
                 feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
                 feedback.transform.localScale = Vector3.one;
                 Destroy(feedback, 0.2f);
@@ -74,7 +76,10 @@ public class BON_ControlsManager : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, (1 << 3)))    // The layermask will fail if the TouchInteractible layer ever become not the 3rd layer !
                 {
-                    Debug.Log("J'ai touche un interactible!!!");
+                    _lastInteractedObj = hit.transform.gameObject;
+                    _lastInteractedPos = _lastInteractedObj.transform.position;
+
+                    Debug.Log(_lastInteractedObj.name);
                 }
             }
         }
@@ -135,6 +140,13 @@ public class BON_ControlsManager : MonoBehaviour
                     _initialTouchPos.Remove(_initialTouchPos[i]);
                     _currentTouchPos.Remove(_currentTouchPos[i]);
                     _hasPassedThresholdList.Remove(_hasPassedThresholdList[i]);
+
+                    if (Input.touchCount <= 1)
+                    {
+                        _initialTouchPos.Clear();
+                        _currentTouchPos.Clear();
+                        _hasPassedThresholdList.Clear();
+                    }
                 }
             }
         }
