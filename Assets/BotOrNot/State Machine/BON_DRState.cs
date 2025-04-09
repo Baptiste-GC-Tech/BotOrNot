@@ -6,14 +6,6 @@ using UnityEngine;
 public class BON_DRState : BON_AvatarState
 {
     /*
-    *  FIELDS
-    */
-
-    bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) *
-    bool _isJumping = false; //1 if in air *
-
-
-    /*
     *  CLASS METHODS
     */
 
