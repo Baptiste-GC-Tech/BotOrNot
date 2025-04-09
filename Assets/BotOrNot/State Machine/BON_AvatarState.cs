@@ -115,6 +115,14 @@ public abstract class BON_AvatarState : ScriptableObject
     {
         _currentState = currentState;
     }
+    //protected void SetState(States newState)
+    //{
+    //    newState ExitState(_currentState);
+
+    //    _currentState = newState;
+
+    //    EnterState(_currentState);
+    //}
 
     protected abstract bool CheckStatePossible(States currentState); // <-- (eg robot cannot Jump, Dame robot cannot use cable)
                                                                      // see childre

@@ -13,7 +13,7 @@ public class BON_DRState : BON_AvatarState
         MonoBehaviour.print("check state DR");
         if (currentState == States.ControllingMachine || currentState == States.ThrowingCable)
         {
-            MonoBehaviour.print("état pas possible pour la dame robot ( from "+_currentState + " to"+ currentState +")");
+            MonoBehaviour.print("état pas possible pour la dame robot");
             return false;
         }
         return true;
@@ -28,7 +28,6 @@ public class BON_DRState : BON_AvatarState
         else
         {
             MonoBehaviour.print("changement non validé");
-            MonoBehaviour.print("current state =" + _currentState + "renied state =" + state);
         }
     }
 

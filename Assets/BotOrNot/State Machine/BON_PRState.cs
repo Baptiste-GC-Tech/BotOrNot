@@ -22,9 +22,10 @@ public class BON_PRState : BON_AvatarState
 
     public override void ChangeState(States state)
     {
-        MonoBehaviour.print("current state =" + _currentState);
+        //MonoBehaviour.print("current state =" + _currentState);
         if (_currentState != state && CheckStatePossible(state))
         {
+            //SetState(state);
             MonoBehaviour.print("changement effectué");
             _currentState = state;
         }
