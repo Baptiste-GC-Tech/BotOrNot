@@ -192,6 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _listAvatarsStates:
+  - {fileID: 11400000, guid: 66247a5d906685d4e9fc30264579865f, type: 2}
+  - {fileID: 11400000, guid: cadd4aeefc446cf4faac57e6a7a2532c, type: 2}
   _componentsPR:
   - {fileID: 4201512721507981953}
   - {fileID: 6810279269352235306}
@@ -211,9 +214,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
   Deez:
     serializedVersion: 2
     m_Bits: 0
+  _canvas: {fileID: 0}
   _maxSpeed: 15
   _SpeedMultiplierOverSlope:
     serializedVersion: 2
@@ -314,7 +319,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _canvas: {fileID: 0}
 --- !u!114 &6669185972278408590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ede574ed3fdcec4ea99360c2e3adeea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!114 &3684329467896290573
 MonoBehaviour:
   m_ObjectHideFlags: 0

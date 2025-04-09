@@ -11,7 +11,9 @@ public class BON_CCPlayer : MonoBehaviour
      *  FIELDS
      */
 
+    [SerializeField] protected List<BON_AvatarState> _listAvatarsStates = new List<BON_AvatarState>(2); //stock les 2 state machines robots
     // state machine reference
+
     private BON_AvatarState _avatarState;
     public BON_AvatarState AvatarState
     {
@@ -19,12 +21,13 @@ public class BON_CCPlayer : MonoBehaviour
         set { _avatarState = value; }
     }
 
+    private List<List<MonoBehaviour>> _componentsAvatar;
+
     [SerializeField] protected List<MonoBehaviour> _componentsPR;
     [SerializeField] protected List<MonoBehaviour> _componentsDR;
 
-    private List<List<MonoBehaviour>> _componentsAvatar;
 
-    // for stock collectible ref 
+    // for stock collectible ref ?
     private GameObject _collectible = null;
     public GameObject Collectible
     {
@@ -81,6 +84,7 @@ public class BON_CCPlayer : MonoBehaviour
             GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
             _currentCharacterPlayed = 0;
         }
+        _avatarState = _listAvatarsStates[_currentCharacterPlayed];
         print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
     }
     public void RecoverControl() //reprendre le controle
@@ -138,16 +142,24 @@ public class BON_CCPlayer : MonoBehaviour
          _componentsAvatar.Add(_componentsPR);
          _componentsAvatar.Add(_componentsDR);
 
-        _avatarState = ScriptableObject.CreateInstance<BON_AvatarState>();
-
         //start with PR => disable DR
         DisableCompPlayer(1);
         EnableCompPlayer(0);
 
         BON_GameManager instance = BON_GameManager.Instance();
-        print("instance");
-        print("GM = "+instance);
         instance.ChangeScene(BON_GameManager.Scenes.Level2);
+
+        print("instance state");
+        //set state machine PR ou DR
+        if (instance.IsPlayingNut)
+        {
+            _avatarState = _listAvatarsStates[0];
+        }
+        else
+        {
+            _avatarState = _listAvatarsStates[1];
+        }
+        print("state = "+ _avatarState);
     }
 
     void Update()
@@ -159,7 +171,7 @@ public class BON_CCPlayer : MonoBehaviour
         if (other.gameObject.tag == "collectibles_DR") //trigger with items <- change tag name
         {
             _collectible = other.gameObject;
-            //_avatarState.IsNearItem = true;
+            _avatarState.IsNearItem = true;
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
@@ -167,7 +179,7 @@ public class BON_CCPlayer : MonoBehaviour
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            //_avatarState.IsNearIOMInteractible = true;
+            _avatarState.IsNearIOMInteractible = true;
         }
     }
 
@@ -175,7 +187,7 @@ public class BON_CCPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "collectibles_DR")
         {
-            //_avatarState.IsNearItem = false;
+            _avatarState.IsNearItem = false;
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
@@ -183,7 +195,7 @@ public class BON_CCPlayer : MonoBehaviour
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
-            //_avatarState.IsNearIOMInteractible = false;
+            _avatarState.IsNearIOMInteractible = false;
         }
     }
 }

@@ -19,7 +19,6 @@ public class BON_PRState : BON_AvatarState
         return true;
     }
 
-
     // Start is called before the first frame update
     void Start()
     {

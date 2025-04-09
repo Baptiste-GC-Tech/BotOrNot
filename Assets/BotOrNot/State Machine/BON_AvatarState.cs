@@ -38,6 +38,7 @@ public abstract class BON_AvatarState : ScriptableObject
         get { return _isInElevator; }
         set { _isInElevator = value; }
     }
+    
 
     //bool PR
     bool _isNearIOMInteractible = false; //<-- Terminaux, grue, ...
@@ -46,7 +47,6 @@ public abstract class BON_AvatarState : ScriptableObject
         get { return _isNearIOMInteractible; }
         set { _isNearIOMInteractible = value; }
     }
-
 
     bool _isConstrollingMachine = false; //1 if using machine, 0 if not 
     public bool IsConstrollingMachine
@@ -76,6 +76,7 @@ public abstract class BON_AvatarState : ScriptableObject
         set { _isNearItem = value; }
     }
 
+
     //bool DR
     bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) 
     public bool IsNearHumanoidObject
@@ -89,6 +90,7 @@ public abstract class BON_AvatarState : ScriptableObject
         get { return _isJumping; }
         set { _isJumping = value; }
     }
+
 
     protected States _currentState;
 
