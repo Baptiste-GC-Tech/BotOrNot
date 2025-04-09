@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static BON_GameManager;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [CreateAssetMenu(menuName = "State/PRState")]
 public class BON_PRState : BON_AvatarState
@@ -33,15 +37,7 @@ public class BON_PRState : BON_AvatarState
         }
     }
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    /*// Update is called once per frame
     void Update()
     {
         if (BON_GameManager.Instance().IsPlayingNut == true) //test current state
@@ -51,5 +47,20 @@ public class BON_PRState : BON_AvatarState
                 InitState(States.Idle);
             }
         }
-    }
+    }*/
+/*
+    void Start()
+    {
+        // Lier chaque état à sa classe spécifique
+        _stateDict = new Dictionary<States, BON_State>
+        {
+            { States.Idle, new BON_SIdle() },
+            { States.Moving, new BON_SMoving() },
+            { States.Jump, new BON_SJump() },
+            { States.ThrowingCable, new BON_SThrowingCable() },
+            { States.ControllingMachine, new BON_SControllingMachine() },
+            { States.Elevator, new BON_SElevator() },
+        };
+
+    }*/
 }
