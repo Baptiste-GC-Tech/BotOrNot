@@ -8,10 +8,6 @@ public class BON_MovObj_Snap : BON_Actionnable
     [SerializeField]
     Transform[] _positions = new Transform[2];
 
-    [SerializeField]
-    float _maxTimer;
-    float _currentTimer;
-
 
     public override void On()
     {
@@ -23,13 +19,5 @@ public class BON_MovObj_Snap : BON_Actionnable
     {
         base.Off();
         gameObject.transform.SetLocalPositionAndRotation(_positions[0].position, _positions[0].rotation);
-    }
-
-
-    private void Update()
-    {
-        _currentTimer += Time.deltaTime;
-
-        if (_currentTimer > _maxTimer) { Toggle(); _currentTimer = 0; }
     }
 }
