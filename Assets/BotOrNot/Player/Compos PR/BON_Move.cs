@@ -116,7 +116,7 @@ public class BON_Move : MonoBehaviour
 
         /* Handles the input */
 #if UNITY_EDITOR
-        // _moveInputValue = _joystick.InputValues;
+        //_moveInputValue = _joystick.InputValues;
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
         _moveInputValue = _joystick.InputValues;

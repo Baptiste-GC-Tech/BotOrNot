@@ -12,7 +12,7 @@ public class BON_TouchComps : MonoBehaviour
 
     protected BON_ControlsManager _controls;
 
-    protected bool _isEnabled;
+    [SerializeField] protected bool _isEnabled;
     public bool IsEnabled
     {
         get { return _isEnabled; }
@@ -44,7 +44,7 @@ public class BON_TouchComps : MonoBehaviour
 
     }
 
-    public void ComponentToggle()
+    public virtual void ComponentToggle()
     {
         switch(_isEnabled)
         {
