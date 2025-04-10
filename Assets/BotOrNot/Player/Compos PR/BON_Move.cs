@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
+using UnityEngine.Windows;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
@@ -39,8 +40,14 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;
     private Vector3 _curMoveDir;
-    private Vector3 _groundNormalVect;  
+    private Vector3 _groundNormalVect;
 
+    /*Drift related*/
+    [SerializeField] private float _driftDuration = 0.3f;
+    [SerializeField] private float _driftAcceleration = 10f;
+    private Vector3 _desiredDirection;
+    private float _driftTimer;
+    private Vector3 _currentVelocity;
 
     /*
      *  CLASS METHODS
@@ -131,9 +138,30 @@ public class BON_Move : MonoBehaviour
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
+        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+
+        //Drift
+        if (_desiredDirection != Vector3.zero)
+        {
+            if (Vector3.Dot(_currentVelocity.normalized, _desiredDirection.normalized) < -0.5f)
+            {
+                _driftTimer = _driftDuration; 
+            }
+            if (_driftTimer > 0)
+            {
+                _driftTimer -= Time.deltaTime;
+                _currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
+            }
+            else
+            {
+                Vector3 targetVelocity = _desiredDirection * _curSpeed;
+                _currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
+            }
+        }
 
         /* Applies the movement */
-        transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+        transform.Translate(_currentVelocity * Time.deltaTime, Space.World);
+        //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
     }
 
 }
