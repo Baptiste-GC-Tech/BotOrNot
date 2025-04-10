@@ -15,9 +15,11 @@ public class BON_Move : MonoBehaviour
      *  FIELDS
      */
 
-    // player reference
+    /* Objects & GO related */
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
+    private BON_PRState _PRstate;
+    private 
 
     public LayerMask Deez;
 
@@ -107,6 +109,7 @@ public class BON_Move : MonoBehaviour
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
+        _PRstate = GetComponent<BON_PRState>();
     }
 
     void Update()
@@ -116,23 +119,23 @@ public class BON_Move : MonoBehaviour
 
         /* Handles the input */
 #if UNITY_EDITOR
-        // _moveInputValue = _joystick.InputValues;
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
         _moveInputValue = _joystick.InputValues;
 #endif
 
-        //changing state in BON_Avatarstate
-        if (_moveInputValue.y != 0 || _moveInputValue.x != 0 && _player.AvatarState.CurrentState != BON_AvatarState.States.Moving) //if player move once, change state
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
-        }
-
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
 
-        /* Applies the movement */
+        /* Changes the state */
+        if (_PRstate != null)
+            if (_moveInputValue.y != 0 || _moveInputValue.x != 0 && _player.AvatarState.CurrentState != BON_AvatarState.States.Moving) //if player move once, change state
+            {
+                _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+            }
+
+        /* Applies the movement and changes the state */
         transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
     }
 
