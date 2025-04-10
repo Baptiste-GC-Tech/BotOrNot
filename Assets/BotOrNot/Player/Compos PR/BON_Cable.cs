@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BON_Cable : MonoBehaviour
@@ -24,6 +25,9 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _waveFrequency = 2f;
     [SerializeField] private float _swingAmplitude = 0.1f;
     [SerializeField] private float _swingFrequency = 2f;
+
+    // player reference
+    [SerializeField] private BON_CCPlayer _player;
 
     private bool _lineVisible = false;
     private bool _animating = false;
@@ -50,6 +54,9 @@ public class BON_Cable : MonoBehaviour
     {
         if (_clickAction != null && _clickAction.triggered)
         {
+            //_player.AvatarState.IsthrowingCable = !_player.AvatarState.IsthrowingCable; //true if false, etc
+            //TO DO :  ca marche pas bien, mais ca vient peut etre pas de la mais de la state en elle meme 
+
             GererClic();
         }
 
@@ -85,6 +92,8 @@ public class BON_Cable : MonoBehaviour
     {
         if (!_lineVisible)
         {
+            _player.AvatarState.IsthrowingCable = true;
+
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
 
             if (closest != null)
@@ -98,6 +107,7 @@ public class BON_Cable : MonoBehaviour
         }
         else
         {
+            _player.AvatarState.IsthrowingCable =false;
             StartCoroutine(PRIVRetirerLigne());
         }
     }

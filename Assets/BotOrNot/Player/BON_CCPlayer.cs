@@ -157,12 +157,13 @@ public class BON_CCPlayer : MonoBehaviour
             _avatarState = _listAvatarsStates[1];
         }
 
-        _avatarState.InitState(BON_AvatarState.States.Idle);
+        _avatarState.Init(); //init state machine (current state, player ref, dictionnary)
     }
 
     void Update()
     {
         //print(_avatarState.CurrentState);
+        _avatarState.UpdateState();
     }
     private void OnTriggerEnter(Collider other)
     {

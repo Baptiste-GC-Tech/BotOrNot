@@ -9,7 +9,7 @@ public abstract class BON_AvatarState : ScriptableObject
     */
 
     //link States class and enum
-    protected Dictionary<States, BON_State> _stateDict;
+    protected Dictionary<States, BON_State> _stateDict = new();
 
     /* bool for states */
 
@@ -96,11 +96,16 @@ public abstract class BON_AvatarState : ScriptableObject
         get { return _currentState; }
     }
 
+    protected BON_State _currentStateAsset;
+
+    // player reference
+    private BON_CCPlayer _player;
+
     public enum States
     {
         Idle,
-        Moving, //moving in ground
-        Jump, // in air 
+        Moving,
+        Jump, 
         Elevator, 
         ControllingMachine,
         ThrowingCable,
@@ -110,20 +115,40 @@ public abstract class BON_AvatarState : ScriptableObject
     *  CLASS METHODS
     */
 
-    public void InitState(States currentState)
+
+    protected void SetState(States state)
     {
-        _currentState = currentState;
+        _currentStateAsset?.Exit();      // Quitter l’ancien état
+        _currentState = state;
+        _currentStateAsset = _stateDict[state];
+        _currentStateAsset?.InitPlayer(_player); //set le player
+        _currentStateAsset?.Enter();    // Entrer dans le nouveau
     }
-    //protected void SetState(States newState)
-    //{
-    //    newState ExitState(_currentState);
-
-    //    _currentState = newState;
-
-    //    EnterState(_currentState);
-    //}
 
     protected abstract bool CheckStatePossible(States currentState); // <-- (eg robot cannot Jump, Dame robot cannot use cable)
                                                                      // see childre
     public abstract void ChangeState(States state);
+
+    public void Init()
+    {
+        _stateDict.Add(States.Idle,new BON_SIdle());
+        _stateDict.Add(States.Moving,new BON_SMoving());
+        _stateDict.Add(States.Jump,new BON_SJump());
+        _stateDict.Add(States.ControllingMachine,new BON_SControllingMachine());
+        _stateDict.Add(States.ThrowingCable,new BON_SThrowingCable());
+        _stateDict.Add(States.Elevator,new BON_SElevator());
+
+        _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
+
+        _currentState =  BON_AvatarState.States.Idle;
+        _currentStateAsset = _stateDict[BON_AvatarState.States.Idle];
+        _currentStateAsset?.InitPlayer(_player); //set le player
+        _currentStateAsset?.Enter();
+    }
+
+    public void UpdateState()
+    {
+        //MonoBehaviour.print("update state");
+        _currentStateAsset?.UpState();
+    }
 }

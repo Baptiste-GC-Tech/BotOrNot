@@ -48,10 +48,8 @@ public class BON_GameManager : MonoBehaviour
 
     public static BON_GameManager Instance()
     {
-        print(_gameManager);
         if (_gameManager == null)
         {
-            print("gm is null");
             GameObject newObject = new GameObject("BON_GameManager");
             newObject.AddComponent<BON_GameManager>();
             _gameManager = newObject.GetComponent<BON_GameManager>();

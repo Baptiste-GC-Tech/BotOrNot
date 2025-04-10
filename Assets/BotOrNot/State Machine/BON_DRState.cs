@@ -6,7 +6,6 @@ public class BON_DRState : BON_AvatarState
     /*
     *  CLASS METHODS
     */
-
     protected override bool CheckStatePossible(States currentState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
     {
         MonoBehaviour.print("check state DR");
@@ -29,16 +28,4 @@ public class BON_DRState : BON_AvatarState
             MonoBehaviour.print("changement non validé");
         }
     }
-
-    /*// Update is called once per frame
-    void Update()
-    {
-        if (BON_GameManager.Instance().IsPlayingNut == false) //test current state
-        {
-            if (!CheckStatePossible(_currentState))
-            {
-                InitState(States.Idle);
-            }
-        }
-    }*/
 }

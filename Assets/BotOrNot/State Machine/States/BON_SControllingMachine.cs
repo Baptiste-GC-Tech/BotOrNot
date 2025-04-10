@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_SControllingMachine : MonoBehaviour
+public class BON_SControllingMachine : BON_State
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+        //cam unzoom for see machine ?
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+        //normal cam ?
+    }
+
+    public override void UpState()
+    {
+        if (_player.AvatarState.IsConstrollingMachine)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+        }
     }
 }

@@ -46,13 +46,13 @@ public class BON_MoveDR : MonoBehaviour
         //for changing state in BON_Avatarstate
         if (_moveInputValue != null)
         {
-            _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+            _player.AvatarState.IsMoving = true;
         }
 
-        if (_jumpAction.WasPressedThisFrame())
+        if (_jumpAction.WasPressedThisFrame() && _player.AvatarState.IsGrounded) //si on saute au sol
         {
-            _player.AvatarState.ChangeState(BON_AvatarState.States.Jump);
-            GetComponent<Rigidbody>().AddForce(new Vector3(0,300,0));
+            _player.AvatarState.IsJumping = true;
+            //GetComponent<Rigidbody>().AddForce(new Vector3(0,300,0)); -> in BON_SJump Enter
         }
     }
 }

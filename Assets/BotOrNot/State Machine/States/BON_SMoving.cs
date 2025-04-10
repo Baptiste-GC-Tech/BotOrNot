@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_SMoving : MonoBehaviour
+public class BON_SMoving : BON_State
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+
+    }
+
+    public override void UpState()
+    {
+        if (_player.AvatarState.IsthrowingCable)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.ThrowingCable);
+        }
+        else if (_player.AvatarState.IsJumping && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Jump);
+        }
+        else if (!_player.AvatarState.IsMoving)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+        }
     }
 }

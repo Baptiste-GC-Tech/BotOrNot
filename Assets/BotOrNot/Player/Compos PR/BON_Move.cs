@@ -90,7 +90,7 @@ public class BON_Move : MonoBehaviour
         // Turns the PR around
         transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);
 
-        Debug.Log("moveDirThisFrame : " + _moveXAxisDir);
+        //Debug.Log("moveDirThisFrame : " + _moveXAxisDir);
     }
 
     // Updates the ground's normal that PR is standing on
@@ -112,7 +112,7 @@ public class BON_Move : MonoBehaviour
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
-        _PRstate = GetComponent<BON_PRState>();
+        //_PRstate = _player.GetComponent<BON_PRState>();
     }
 
     void Update()
@@ -132,13 +132,18 @@ public class BON_Move : MonoBehaviour
 
 
         /* Changes the state */
-        if (_PRstate != null)
-            if (_moveInputValue.y != 0 || _moveInputValue.x != 0 && _player.AvatarState.CurrentState != BON_AvatarState.States.Moving) //if player move once, change state
+        //if (_PRstate != null)
+            if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
             {
-                _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+                _player.AvatarState.IsMoving = true;
+            }
+            else
+            {
+                _player.AvatarState.IsMoving = false;
             }
 
-        /* Applies the movement and changes the state */
+
+        /* Applies the movement */
         //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
         transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
     }

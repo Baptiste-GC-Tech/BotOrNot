@@ -15348,6 +15348,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!223 &1059421328 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1040674946667799463, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 608995474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1065777175
 Mesh:
   m_ObjectHideFlags: 0
@@ -32497,6 +32503,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 7445420084061708101}
+    - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
       propertyPath: _mainCam
       value: 
       objectReference: {fileID: 931079813}
@@ -32555,6 +32566,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BON_PR
       objectReference: {fileID: 0}
+    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _canvas
+      value: 
+      objectReference: {fileID: 1059421328}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32570,6 +32586,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20c13e87825b9384ca09cb90f98f6bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7445420084061708101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3684941739036355764, guid: abf6bd9db0073d04abf55b2f4649b595,
+    type: 3}
+  m_PrefabInstance: {fileID: 7445420084061708076}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &7552149714314779190
