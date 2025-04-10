@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class BON_COMPPlayerButtons : BON_TouchComps
 {
@@ -29,11 +31,14 @@ public class BON_COMPPlayerButtons : BON_TouchComps
         base.TouchEnd();
     }
 
-
-
-    public void Action1()
+    override public void ComponentToggle()
     {
-        Debug.Log("bleb");
+        base.ComponentToggle();
+
+        foreach (Transform child in _children)
+        {
+            child.gameObject.SetActive(_isEnabled);
+        }
     }
 
     public bool TryIsButtonThere(Vector2 touchPos)
@@ -86,16 +91,12 @@ public class BON_COMPPlayerButtons : BON_TouchComps
         foreach(Transform child in transform)
         {
             _children.Add(child);
+            child.gameObject.SetActive(IsEnabled);
         }
     }
 
     override protected void Update()
     {
         base.Update();
-
-/*        if (_button.onClick == true)
-        {
-            
-        }*/
     }
 }

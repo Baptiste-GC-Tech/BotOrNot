@@ -4239,7 +4239,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: BON_Hook
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 941951401239864878, guid: b55b1d3f40e8dc244a3aa79eedc71e19, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

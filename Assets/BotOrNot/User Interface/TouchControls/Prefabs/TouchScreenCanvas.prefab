@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091892dbc3d7940448591274dbb388b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 1
 --- !u!1 &1733759811015590983
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc1fffcfe6e09348bc7cfd10f35243c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 1
 --- !u!1 &2012922163367961665
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,17 +300,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: BON_Cable, Assembly-CSharp
+        m_MethodName: GererClic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &3404796002535706494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6886bf5d28fa59d4db024e656973b328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 1
 --- !u!1 &7078602358084792295
 GameObject:
   m_ObjectHideFlags: 0

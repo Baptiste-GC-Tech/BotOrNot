@@ -14,12 +14,10 @@ public class BON_Move : MonoBehaviour
     /*
      *  FIELDS
      */
-
     /* Objects & GO related */
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
     private BON_PRState _PRstate;
-    private 
 
     public LayerMask Deez;
 
@@ -69,8 +67,8 @@ public class BON_Move : MonoBehaviour
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, _maxSpeed);
         }
 
-        //// Applies the slope multiplier
-        //_curSpeed *= _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);
+        // Applies the slope multiplier
+        _curSpeed *= _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);
         //Debug.Log(_SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y));
     }
 
@@ -83,11 +81,16 @@ public class BON_Move : MonoBehaviour
         _moveXAxisDir = _moveInputValue.x > 0.0f ? 1 : -1;
 
         // Case of a flat ground : uses either forward directions instead of doing math
-        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.right * _moveXAxisDir;
+        //if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.right * _moveXAxisDir;
+        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.forward;
         // Case of a sloped ground : finds the tangent to the normal depending on which direction we are going towards, and applies a speed debuff
-        else _curMoveDir = _moveXAxisDir == 1 ? Vector3.Cross(_groundNormalVect, Vector3.forward) : Vector3.Cross(Vector3.forward, _groundNormalVect);
+        //else _curMoveDir = _moveXAxisDir == 1 ? Vector3.Cross(_groundNormalVect, Vector3.forward) : Vector3.Cross(Vector3.forward, _groundNormalVect);
+        else _curMoveDir = Vector3.Cross(_groundNormalVect, Vector3.forward);
 
-        //Debug.Log("moveDirThisFrame : " + moveDirThisFrame);
+        // Turns the PR around
+        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);
+
+        Debug.Log("moveDirThisFrame : " + _moveXAxisDir);
     }
 
     // Updates the ground's normal that PR is standing on
@@ -136,6 +139,7 @@ public class BON_Move : MonoBehaviour
             }
 
         /* Applies the movement and changes the state */
+        //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
         transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
     }
 
