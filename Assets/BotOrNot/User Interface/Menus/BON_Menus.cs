@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BON_Menus : MonoBehaviour
@@ -8,6 +11,8 @@ public class BON_Menus : MonoBehaviour
     /*
     * FIELDS 
     */
+
+    [SerializeField] AudioMixer AudioMixer;
 
     [SerializeField] GameObject InitialCanva;
     [SerializeField] GameObject InitialPanel;
@@ -17,7 +22,7 @@ public class BON_Menus : MonoBehaviour
     private GameObject _activePanel;
     private GameObject _activeButton;
 
-
+    private bool _isCBActive = false;
 
     /*
     * METHODS 
@@ -25,35 +30,64 @@ public class BON_Menus : MonoBehaviour
 
 
 
-    public void MMSwitchCanva(GameObject Canva)
+    public void MMSwitchCanva(GameObject canva)
     {
         _activeCanva.SetActive(false);
-        _activeCanva = Canva;
+        _activeCanva = canva;
         _activeCanva.SetActive(true);
     }
 
-    public void SMSwitchPanel(GameObject Panel)
+    public void MMNewGame()
     {
-        _activePanel.SetActive(false);
-        _activePanel = Panel;
-        _activePanel.SetActive(true);
-
-        PRIVSMSwitchButton(Panel.transform.parent.gameObject);
+        SceneManager.LoadScene("UI_Blockout", LoadSceneMode.Single);
     }
 
-    private void PRIVSMSwitchButton(GameObject Button)
+    public void MMContinue()
+    {
+        SceneManager.LoadScene("FullBlockout", LoadSceneMode.Single);
+    }
+
+    public void MMOpenCredits()
+    {
+        SceneManager.LoadScene("Credits", LoadSceneMode.Single);
+    }
+
+    public void SMSwitchPanel(GameObject panel)
+    {
+        _activePanel.SetActive(false);
+        _activePanel = panel;
+        _activePanel.SetActive(true);
+
+        PRIVSMSwitchButton(panel.transform.parent.gameObject);
+    }
+
+    private void PRIVSMSwitchButton(GameObject button)
     {
         var newcolor = _activeButton.GetComponent<Image>().color;
-        Debug.Log(newcolor);
         newcolor.a = 0;
         _activeButton.GetComponent<Image>().color = newcolor;
 
-        _activeButton = Button;
+        _activeButton = button;
 
         newcolor = _activeButton.GetComponent<Image>().color;
         newcolor.a = 130.0f/255.0f;
-        Debug.Log(newcolor);
         _activeButton.GetComponent<Image>().color = newcolor;
+    }
+
+    public void SMSetMusicVolume(Slider slider) { AudioMixer.SetFloat("MusicVolume", Mathf.Log10(slider.value) * 20); }
+    public void SMSetSFXVolume(Slider slider) { AudioMixer.SetFloat("SFXVolume", Mathf.Log10(slider.value) * 20); }
+
+    public void SMSwitchCBMode(GameObject check)
+    {
+        switch (_isCBActive)
+        {
+            case true:
+                _isCBActive = false; break;
+            case false:
+                _isCBActive = true; break;
+        }
+
+        check.SetActive(_isCBActive);
     }
 
 
@@ -66,19 +100,11 @@ public class BON_Menus : MonoBehaviour
 
 
 
-    // Start is called before the first frame update
+
     void Start()
     {
         _activeCanva = InitialCanva;
         _activePanel = InitialPanel;
         _activeButton = InitialButton;
-
-        InitialCanva.SetActive(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
