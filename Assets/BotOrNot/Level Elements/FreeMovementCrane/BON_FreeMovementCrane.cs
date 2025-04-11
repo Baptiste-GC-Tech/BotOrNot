@@ -11,7 +11,7 @@ public class BON_FreeMovementCrane : BON_Controllable
      *  FIELDS
      */
 
-    private bool _isMoving;
+    private bool _IsMovingByPlayer;
     [SerializeField] float _speedMax;
     private float _speed;
     private float _acceleration;
@@ -67,7 +67,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (_direction == new Vector3(0, 1, 0) || _direction == Vector3.zero)
         {
-            _isMoving = true;
+            _IsMovingByPlayer = true;
             _direction = new Vector2(0, 1);
         }
         else
@@ -80,7 +80,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (_direction == new Vector3(0, -1, 0) || _direction == Vector3.zero)
         {
-            _isMoving = true;
+            _IsMovingByPlayer = true;
             _direction = new Vector2(0, -1);
         }
         else
@@ -93,7 +93,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero)
         {
-            _isMoving = true;
+            _IsMovingByPlayer = true;
             _direction = new Vector2(-1, 0);
         }
         else
@@ -106,7 +106,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         if (_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero)
         {
-            _isMoving = true;
+            _IsMovingByPlayer = true;
             _direction = new Vector2(1, 0);
         }
         else
@@ -117,7 +117,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Stop()
     {
-        _isMoving = false;
+        _IsMovingByPlayer = false;
     }
 
 
@@ -135,7 +135,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     }
     private void FixedUpdate()
     {
-        if (_isMoving || _speed > 0)
+        if (_IsMovingByPlayer || _speed > 0)
         {
             Vector3 nextPos = gameObject.transform.position + _direction * _speed * Time.deltaTime;
             foreach (Vector4 Box in _boundaries)
@@ -155,15 +155,15 @@ public class BON_FreeMovementCrane : BON_Controllable
 
         float oneAcceleration = _acceleration * Time.deltaTime;
 
-        if (_isMoving && _speed + oneAcceleration < _speedMax)
+        if (_IsMovingByPlayer && _speed + oneAcceleration < _speedMax)
         {
             _speed += oneAcceleration;
         }
-        else if(!_isMoving && _speed - oneAcceleration > 0)
+        else if(!_IsMovingByPlayer && _speed - oneAcceleration > 0)
         {
             _speed -= oneAcceleration;
         }
-        else if (!_isMoving || _isBlocked)
+        else if (!_IsMovingByPlayer || _isBlocked)
         {
             _speed = 0;
             _direction = Vector2.zero;

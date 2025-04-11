@@ -18,7 +18,7 @@ public class BON_SControllingMachine : BON_State
     {
         if (_player.AvatarState.IsConstrollingMachine)
         {
-            _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+            _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
         }
     }
 }

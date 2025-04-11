@@ -59,7 +59,6 @@ public class BON_CCPlayer : MonoBehaviour
         if (other.gameObject.tag == "collectibles_DR") //trigger with items <- change tag name
         {
             _collectible = other.gameObject;
-            _avatarState.IsNearItem = true;
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
@@ -73,11 +72,7 @@ public class BON_CCPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "collectibles_DR")
-        {
-            _avatarState.IsNearItem = false;
-        }
-        else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
+        if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
             _isDRInRange = false;
         }

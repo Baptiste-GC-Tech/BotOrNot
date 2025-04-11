@@ -45,17 +45,17 @@ public class BON_MoveDR : MonoBehaviour
         //for changing state
         if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
         {
-            _player.AvatarState.IsMoving = true;
+            _player.AvatarState.IsMovingByPlayer = true;
         }
         else
         {
-            _player.AvatarState.IsMoving = false;
+            _player.AvatarState.IsMovingByPlayer = false;
         }
         transform.position += new Vector3(_moveInputValue.x * Time.deltaTime, 0, 0);
 
         if (_jumpAction.WasPressedThisFrame() && _player.AvatarState.IsGrounded) //si on saute au sol
         {
-            _player.AvatarState.IsJumping = true;
+            _player.AvatarState.IsGrounded = false;
             //GetComponent<Rigidbody>().AddForce(new Vector3(0,300,0)); -> in BON_SJump Enter
         }
     }

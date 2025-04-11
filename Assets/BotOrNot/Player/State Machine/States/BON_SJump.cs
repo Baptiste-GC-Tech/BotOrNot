@@ -11,20 +11,20 @@ public class BON_SJump : BON_State
 
     public override void Exit()
     {
-        _player.AvatarState.IsJumping = false;
+        _player.AvatarState.IsGrounded = true;
     }
 
     public override void UpState()
     {
         if (_player.AvatarState.IsGrounded) //au moment de retomber, switch state to moving if move or idle else
         {
-            if (_player.AvatarState.IsMoving)
+            if (_player.AvatarState.IsMovingByPlayer)
             {
-                _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Moving);
             }
             else
             {
-                _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
             }
         }
     }

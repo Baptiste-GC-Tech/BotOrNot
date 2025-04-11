@@ -106,13 +106,13 @@ public class BON_Cable : MonoBehaviour
                     interactive.Activate();
                 }
                 // State Machine
-                _player.AvatarState.IsthrowingCable = true;
+                _player.AvatarState.HasCableOut = true;
             }
         }
         else
         {
             // State Machine
-            _player.AvatarState.IsthrowingCable = false;
+            _player.AvatarState.HasCableOut = false;
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));

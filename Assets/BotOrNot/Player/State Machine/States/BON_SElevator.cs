@@ -15,7 +15,7 @@ public class BON_SElevator : BON_State
     {
         //regive move 
         BON_GameManager.Instance().EnableCompPlayer(BON_GameManager.Instance().CurrentCharacterPlayed);
-        _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+        _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
     }
 
     public override void UpState()

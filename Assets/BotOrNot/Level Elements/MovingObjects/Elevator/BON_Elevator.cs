@@ -23,7 +23,7 @@ public class BON_Elevator : BON_Actionnable
     GameObject _player;                     
     bool _isPlayerMoving;                                   //is the player moving to the elevator
     bool _isElevatorMoving;                                 //is the elevator movnig to it's final destination
-    bool _isMovingOut;                                      //is the player moving out of the elevator
+    bool _IsMovingByPlayerOut;                                      //is the player moving out of the elevator
     bool _previousStatus;                                   //allows us to change the status of the actionable without calling it every frame
     bool _elevatorHasAlredyMoved;                           //check if the elevator has reach the final destination
     bool _elevatorNeedsToChangePosition;                    //if the elevator is not on the same level as the actionnable, changes it's position
@@ -72,7 +72,7 @@ public class BON_Elevator : BON_Actionnable
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>().gameObject;
         _isPlayerMoving = false;
         _isElevatorMoving = false;
-        _isMovingOut = false;
+        _IsMovingByPlayerOut = false;
         _previousStatus = Status;
         _elevatorHasAlredyMoved = false;
         _elevatorNeedsToChangePosition = false;
@@ -131,12 +131,12 @@ public class BON_Elevator : BON_Actionnable
         //stop the motion of the elevator and start the motion of the player
         if (!_elevator.GetComponent<BON_MovObj_ListBased>().Status && _elevatorHasAlredyMoved)
         {
-            _isMovingOut = true;
+            _IsMovingByPlayerOut = true;
             _elevatorHasAlredyMoved = false;
             _player.transform.parent = null;
         }
         //moves the player out of the elevator
-        if (_isMovingOut)
+        if (_IsMovingByPlayerOut)
         {
             float step = _playerSpeed * Time.deltaTime;
             //if the elevator cycling of the elevator is false (i.e. the elevator is up), player moves to the second location (count = 1)
@@ -151,7 +151,7 @@ public class BON_Elevator : BON_Actionnable
             if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
             {
                 Debug.Log("finish");
-                _isMovingOut = false;
+                _IsMovingByPlayerOut = false;
                 _elevatorStatus = false;
                 base.Toggle();
             }

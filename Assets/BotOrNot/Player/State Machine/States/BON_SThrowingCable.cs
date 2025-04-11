@@ -16,15 +16,15 @@ public class BON_SThrowingCable : BON_State
 
     public override void UpState()
     {
-        if (!_player.AvatarState.IsthrowingCable) //a la fin du cable
+        if (!_player.AvatarState.HasCableOut) //a la fin du cable
         {
-            if (_player.AvatarState.IsMoving) //si on bouge -> etat moving
+            if (_player.AvatarState.IsMovingByPlayer) //si on bouge -> etat moving
             {
-                _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Moving);
             }
             else //sinon idle
             {
-                _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
             }
         }
     }

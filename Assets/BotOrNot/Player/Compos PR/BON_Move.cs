@@ -191,11 +191,11 @@ public class BON_Move : MonoBehaviour
         //if (_PRstate != null)
             if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
             {
-                _player.AvatarState.IsMoving = true;
+                _player.AvatarState.IsMovingByPlayer = true;
             }
             else
             {
-                _player.AvatarState.IsMoving = false;
+                _player.AvatarState.IsMovingByPlayer = false;
             }
 
 
