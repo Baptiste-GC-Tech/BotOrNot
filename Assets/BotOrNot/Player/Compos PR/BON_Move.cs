@@ -18,7 +18,6 @@ public class BON_Move : MonoBehaviour
     /* Objects & GO related */
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
-    //private BON_PRState _PRstate;
 
     public LayerMask Deez;
 
@@ -141,7 +140,6 @@ public class BON_Move : MonoBehaviour
         {
             _heightBonceStart = _bounceHeight + 1;
         }
-        //_PRstate = _player.GetComponent<BON_PRState>();
         _previousDirection = _moveInputValue.normalized;
     }
 
@@ -160,55 +158,54 @@ public class BON_Move : MonoBehaviour
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
-        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
-        //Drift
-        if (_desiredDirection != Vector3.zero)
-        {
-            if (_isFirstMove)
-            {
-                _isFirstMove = false;
-                _previousDirection = _moveInputValue.normalized;
-            }
-            if (_previousDirection != _moveInputValue.normalized)
-            {
-                _previousDirection = _moveInputValue.normalized;
-                _driftTimer = _driftDuration; 
-            }
-            if (_driftTimer > 0)
-            {
-                Debug.Log("Drifting");
-                _driftTimer -= Time.deltaTime;
-                _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
-                _curMoveDir = - _curMoveDir;
-                //_currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
-            }
-            else
-            {
-                Debug.Log("End Drifting");
-                Vector3 targetVelocity = _desiredDirection * _curSpeed;
-                //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
-                //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
-            }
-        }
+        //_desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+        ////Drift
+        //if (_desiredDirection != Vector3.zero)
+        //{
+        //    if (_isFirstMove)
+        //    {
+        //        _isFirstMove = false;
+        //        _previousDirection = _moveInputValue.normalized;
+        //    }
+        //    if (_previousDirection != _moveInputValue.normalized)
+        //    {
+        //        _previousDirection = _moveInputValue.normalized;
+        //        _driftTimer = _driftDuration; 
+        //    }
+        //    if (_driftTimer > 0)
+        //    {
+        //        Debug.Log("Drifting");
+        //        _driftTimer -= Time.deltaTime;
+        //        _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
+        //        _curMoveDir = - _curMoveDir;
+        //        //_currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("End Drifting");
+        //        Vector3 targetVelocity = _desiredDirection * _curSpeed;
+        //        //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
+        //        //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
+        //    }
+        //}
 
         //Bounce
         if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
-            Debug.Log("SHould enter bounce");
+            Debug.Log("Should enter bounce");
             _isBouncing = true;
             _bounceCount = 0;
         }
 
         /* Changes the state */
-        //if (_PRstate != null)
-            if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
-            {
-                _player.AvatarState.IsMovingByPlayer = true;
-            }
-            else
-            {
-                _player.AvatarState.IsMovingByPlayer = false;
-            }
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
+        {
+            _player.AvatarState.IsMovingByPlayer = true;
+        }
+        else
+        {
+            _player.AvatarState.IsMovingByPlayer = false;
+        }
 
 
         /* Applies the movement */
@@ -217,9 +214,7 @@ public class BON_Move : MonoBehaviour
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
         movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
         transform.Translate(movementThisFrame);
-
         //Debug.Log("Movement this frame : " + movementThisFrame);
-        //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

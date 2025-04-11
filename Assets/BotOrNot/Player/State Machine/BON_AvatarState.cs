@@ -198,8 +198,6 @@ public class BON_AvatarState : ScriptableObject
 
     public void UpdateGroundedBool() //check if there ground under
     {
-        //Debug.DrawRay(_player.transform.position, -Vector3.up, Color.red);
-
         _isGrounded = Physics.Raycast(_player.transform.position, -Vector3.up, distToGround + 0.5f);
     }
 

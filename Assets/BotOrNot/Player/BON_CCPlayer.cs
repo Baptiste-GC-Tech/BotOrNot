@@ -8,9 +8,9 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  FIELDS
      */
+    private Rigidbody _rb;
 
     // state machine reference
-
     [SerializeField] BON_AvatarState _avatarState;
     public BON_AvatarState AvatarState
     {
@@ -37,11 +37,13 @@ public class BON_CCPlayer : MonoBehaviour
     //Instance gameManager
     private BON_GameManager _instance;    
 
+
     /*
      *  UNITY METHODS
      */
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         _instance = BON_GameManager.Instance();
         DontDestroyOnLoad(_instance);
 
