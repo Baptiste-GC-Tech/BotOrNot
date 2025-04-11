@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hook
   - TriggerZone
+  - Floor
   layers:
   - Default
   - TransparentFX

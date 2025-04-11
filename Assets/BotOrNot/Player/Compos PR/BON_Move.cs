@@ -49,6 +49,16 @@ public class BON_Move : MonoBehaviour
     private float _driftTimer;
     private Vector3 _currentVelocity;
 
+    /*Bounce related*/
+    private bool _isGrounded;
+    private bool _isBouncing;
+    private Vector3 _fallHeight;
+    private Vector3 _landingHeight;
+    [SerializeField] int _numberOfBounce = 2;
+    [SerializeField] float _bounceHeight = 5.0f;
+    [SerializeField] float _heightBonceStart = 6.0f;
+    private int _bounceCount;
+
     /*
      *  CLASS METHODS
      */
@@ -114,6 +124,7 @@ public class BON_Move : MonoBehaviour
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -159,9 +170,47 @@ public class BON_Move : MonoBehaviour
             }
         }
 
+        //Bounce
+        if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        {
+            Debug.Log("SHould enter bounce");
+            _isBouncing = true;
+            _bounceCount = 0;
+        }
+
         /* Applies the movement */
         transform.Translate(_currentVelocity * Time.deltaTime, Space.World);
         //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            _isGrounded = true;
+            _landingHeight = gameObject.transform.position;
+        }
+        if (_isBouncing)
+        {
+            Debug.Log("bouncing");
+            _bounceCount++;
+            _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            _rb.AddForce(Vector3.up * (_bounceHeight / _bounceCount), ForceMode.Impulse);
+
+            if (_bounceCount >= _numberOfBounce)
+            {
+                _isBouncing = false;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            _isGrounded = false;
+            _fallHeight = gameObject.transform.position;
+        }
     }
 
 }
