@@ -15203,6 +15203,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1039898141 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4273664084141280948, guid: 507714f662df5a54893180b3be9c6601,
+    type: 3}
+  m_PrefabInstance: {fileID: 2097538390004208936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1050812791
 Mesh:
   m_ObjectHideFlags: 0
@@ -21143,6 +21149,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1474913898 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 429466150893682963, guid: 507714f662df5a54893180b3be9c6601,
+    type: 3}
+  m_PrefabInstance: {fileID: 2097538390004208936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1481249524
 Mesh:
   m_ObjectHideFlags: 0
@@ -31080,6 +31092,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 403332338}
+    - target: {fileID: 1874935558227972898, guid: 507714f662df5a54893180b3be9c6601,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2470414205230083982, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}
       propertyPath: m_Mesh
@@ -31255,6 +31272,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1437695829}
+    - target: {fileID: 9101784801391429051, guid: 507714f662df5a54893180b3be9c6601,
+        type: 3}
+      propertyPath: '_transformsList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1474913898}
+    - target: {fileID: 9101784801391429051, guid: 507714f662df5a54893180b3be9c6601,
+        type: 3}
+      propertyPath: '_transformsList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1039898141}
     - target: {fileID: 9103317638008381601, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}
       propertyPath: m_Mesh
@@ -32699,12 +32726,12 @@ PrefabInstance:
     - target: {fileID: 4117075908506146126, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.9
+      value: -34.98
       objectReference: {fileID: 0}
     - target: {fileID: 4117075908506146126, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 4117075908506146126, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}

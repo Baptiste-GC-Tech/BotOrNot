@@ -11,7 +11,7 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
 
     [SerializeField]
     protected float _timerMax;
-    private float _currentTimer = 0f;
+    [SerializeField] float _currentTimer = 0f;
 
     private bool _returning = false;
 
