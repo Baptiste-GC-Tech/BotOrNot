@@ -131,17 +131,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6dc94ffe-9176-4ab9-a05e-ac504bbc9cc3",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";touchScreen",
-                    "action": "Cable",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
                     "path": "<Keyboard>/e",
                     "interactions": "",

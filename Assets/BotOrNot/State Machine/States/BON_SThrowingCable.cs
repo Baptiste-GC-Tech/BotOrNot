@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_SThrowingCable : MonoBehaviour
+public class BON_SThrowingCable : BON_State
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Exit()
     {
-        
+
+    }
+
+    public override void UpState()
+    {
+        if (!_player.AvatarState.IsthrowingCable) //a la fin du cable
+        {
+            if (_player.AvatarState.IsMoving) //si on bouge -> etat moving
+            {
+                _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
+            }
+            else //sinon idle
+            {
+                _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
+            }
+        }
     }
 }

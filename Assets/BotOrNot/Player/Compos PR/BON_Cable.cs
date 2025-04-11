@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BON_Cable : MonoBehaviour
@@ -24,6 +25,9 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _waveFrequency = 2f;
     [SerializeField] private float _swingAmplitude = 0.1f;
     [SerializeField] private float _swingFrequency = 2f;
+
+    // player reference
+    [SerializeField] private BON_CCPlayer _player;
 
     private bool _lineVisible = false;
     private bool _animating = false;
@@ -94,13 +98,40 @@ public class BON_Cable : MonoBehaviour
                 _lineRenderer.positionCount = _lineSegments;
                 _targetPoint = closest.position;
                 StartCoroutine(PRIVAnimerLigneAvecVague());
+
+                // Activation du hook via BON_Interactive
+                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                if (interactive != null)
+                {
+                    interactive.Activate();
+                }
+                // State Machine
+                _player.AvatarState.IsthrowingCable = true;
             }
         }
         else
         {
+            // State Machine
+            _player.AvatarState.IsthrowingCable = false;
             StartCoroutine(PRIVRetirerLigne());
+
+            Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
+
+            if (closest != null)
+            {
+                // De-Activation du hook via BON_Interactive
+                _targetPoint = closest.position;
+                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                if (interactive != null)
+                {
+                    interactive.Activate();
+                }
+            }
+
+
         }
     }
+
 
     private Transform PRIVTrouverPlusProcheHook(GameObject[] hooks)
     {

@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class BON_GameManager : MonoBehaviour
@@ -7,6 +11,7 @@ public class BON_GameManager : MonoBehaviour
     *  FIELDS
     */
   
+    //his instance
     private static BON_GameManager _gameManager;
 
     // inventory script reference
@@ -34,9 +39,29 @@ public class BON_GameManager : MonoBehaviour
 
     private Scenes _currentScene;
 
+    /* player gestion related */
+    private List<List<MonoBehaviour>> _componentsAvatar;
+
+    [SerializeField] protected List<MonoBehaviour> _componentsPR;
+    [SerializeField] protected List<MonoBehaviour> _componentsDR;
+
+    private int _currentCharacterPlayed; //0 = PR, 1= DR, other = machine
+    public int CurrentCharacterPlayed
+    {
+        get { return _currentCharacterPlayed; }
+    }
+    private int _lastCharacterPlayed; //var tampon pour recup le controle
+
+    private bool _isSwitching = false;  //bool for switch player/machines
+    public bool IsSwitching
+    {
+        get { return _isSwitching; }
+        set { _isSwitching = value; }
+    }
+
     public enum Scenes
     {
-        //modify for futur with trues scenes names
+        //modify for future with trues scenes names
         Menu,
         Level1,
         Level2
@@ -48,10 +73,8 @@ public class BON_GameManager : MonoBehaviour
 
     public static BON_GameManager Instance()
     {
-        print(_gameManager);
         if (_gameManager == null)
         {
-            print("gm is null");
             GameObject newObject = new GameObject("BON_GameManager");
             newObject.AddComponent<BON_GameManager>();
             _gameManager = newObject.GetComponent<BON_GameManager>();
@@ -66,6 +89,18 @@ public class BON_GameManager : MonoBehaviour
         _inventory = _player.GetComponent<BON_Inventory>();
         _isPlayingNut = true;
         _collectiblesToWin = 4;
+
+        _componentsPR = new ()
+        {
+            _player.GetComponent<BON_Move>(),
+            _player.GetComponent<BON_Interact>(),
+            _player.GetComponent<BON_Cable>()
+        };
+        _componentsDR = new ()
+        {
+            _player.GetComponent<BON_MoveDR>(),
+            _player.GetComponent<BON_InteractDR>()
+        };
 
         //init la scene actuelle
         _currentScene = Scenes.Menu;
@@ -118,21 +153,105 @@ public class BON_GameManager : MonoBehaviour
         }
     }
 
+    public void GiveControl() //donner le controle a une machine
+    {
+        _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
+        _currentCharacterPlayed = -1;
+        _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
+        DisableCompPlayer(_lastCharacterPlayed);
+        _componentsAvatar[_lastCharacterPlayed][2].enabled = true;
+        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
+    }
+
+    public void SwitchPlayer()
+    {
+        //switch PR to DR
+        if (_currentCharacterPlayed == 0) //switch PR to DR
+        {
+            EnableCompPlayer(1);
+            DisableCompPlayer(0);
+            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+            _isPlayingNut = false;
+            _currentCharacterPlayed = 1;
+        }
+        else if (_currentCharacterPlayed == 1)//switch DR to PR
+        {
+            EnableCompPlayer(0);
+            DisableCompPlayer(1);
+            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+            _isPlayingNut = true;
+            _currentCharacterPlayed = 0;
+        }
+        //_avatarState = _listAvatarsStates[_currentCharacterPlayed];
+        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
+    }
+
+    public void RecoverControl() //reprendre le controle
+    {
+        _currentCharacterPlayed = _lastCharacterPlayed;
+        EnableCompPlayer(_lastCharacterPlayed);
+        if (_currentCharacterPlayed == 0)
+        {
+            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
+        }
+        else
+        {
+            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
+        }
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+    }
+
+    public void DisableCompPlayer(int CharacterStopPlaying)
+    {
+        for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
+        {
+            if (_componentsAvatar[CharacterStopPlaying][i].enabled)
+            {
+                _componentsAvatar[CharacterStopPlaying][i].enabled = false;
+            }
+        }
+    }
+
+    public void EnableCompPlayer(int CharacterWillPlay)
+    {
+        for (int i = 0; i < _componentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
+        {
+            if (!_componentsAvatar[CharacterWillPlay][i].enabled)
+            {
+                _componentsAvatar[CharacterWillPlay][i].enabled = true;
+            }
+        }
+    }
+    public IEnumerator CooldownSwitchControl()
+    {
+        _isSwitching = true;
+        yield return new WaitForSeconds(0.5f); //durée anim?
+        _isSwitching = false;
+    }
+
+
     /*
      *  UNITY METHODS
      */
 
     // Start is called before the first frame update
     void Start()
-    {     
+    {    //init player values
+        _currentCharacterPlayed = 0; //PR play
+        _lastCharacterPlayed = _currentCharacterPlayed;
+        _componentsAvatar = new();
+        _componentsAvatar.Add(_componentsPR);
+        _componentsAvatar.Add(_componentsDR);
+
+        //start with PR => disable DR
+        DisableCompPlayer(1); //disable DR comp
+        EnableCompPlayer(0); //enable PR
+
         //init la scene au Menu
         _currentScene = Scenes.Menu;
 
         //init player
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
-
-        //init la current state
-        //_player.AvatarState.InitState(BON_AvatarState.States.Idle); bug  nullref<- parce que le start de l'avatar se fait apres je pense ?
 
         //Lancer la scene du level1
         //ChangeScene(Scenes.Level1);

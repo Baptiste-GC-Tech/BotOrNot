@@ -63,13 +63,13 @@ public class BON_ControlsManager : MonoBehaviour
         }
         else
         {
-            if (_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false)
+            if ((_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compPlayerButtons.IsEnabled == false) 
+                && (_compHUDButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compHUDButtons.IsEnabled == false))
             {
                 var feedback = Instantiate(_touchFeedback);
                 feedback.transform.SetParent(transform);
                 feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
                 feedback.transform.localScale = Vector3.one;
-                Destroy(feedback, 0.2f);
 
                 Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
                 RaycastHit hit;
@@ -106,7 +106,7 @@ public class BON_ControlsManager : MonoBehaviour
                     _hasPassedThresholdList.Add(false);
                 }
 
-                else if (touch.phase == TouchPhase.Moved)
+                else if (touch.phase == TouchPhase.Moved && _compJoystick.IsEnabled)
                 {
                     _currentTouchPos[i] = touch.position;
 

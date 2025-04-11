@@ -43,12 +43,12 @@ public class BON_MachineInteractDR : MonoBehaviour
         }
         if (_quitMachineAction.WasPressedThisFrame())
         {
-            if (!_player.IsSwitching)
+            if (BON_GameManager.Instance().IsSwitching)
             {
                 print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
                 _player.AvatarState.IsConstrollingMachine = false;
-                StartCoroutine(_player.CooldownSwitchControl());
-                _player.RecoverControl();
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+                BON_GameManager.Instance().RecoverControl();
             }
         }
     }
@@ -71,11 +71,11 @@ public class BON_MachineInteractDR : MonoBehaviour
         // Take item action handling
         if (_interactMachineAction.WasReleasedThisFrame()) //interact
         {
-            if (_player.AvatarState.IsNearIOMInteractible && !_player.IsSwitching) //machine pas loin et pas en cours d'activation
+            if (_player.AvatarState.IsNearIOMInteractible && BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
                 _player.AvatarState.IsConstrollingMachine = true;
-                StartCoroutine(_player.CooldownSwitchControl()); 
-                _player.GiveControl();
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+                BON_GameManager.Instance().GiveControl();
             }
         }
         if (_player.AvatarState.IsConstrollingMachine)

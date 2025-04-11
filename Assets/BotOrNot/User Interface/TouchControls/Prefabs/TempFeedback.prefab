@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 247729014477159239}
   - component: {fileID: 1156633124009901738}
   - component: {fileID: 4583869228480419249}
+  - component: {fileID: 7716257365948927799}
   m_Layer: 2
   m_Name: TempFeedback
   m_TagString: Untagged
@@ -72,3 +73,15 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &7716257365948927799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720486045141032420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7359b3d8f3a8e524ca03e2333756361d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
