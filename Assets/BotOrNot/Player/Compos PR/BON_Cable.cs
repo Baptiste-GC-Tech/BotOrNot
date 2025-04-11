@@ -117,12 +117,18 @@ public class BON_Cable : MonoBehaviour
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
 
-            // De-Activation du hook via BON_Interactive
-            BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
-            if (interactive != null)
+            if (closest != null)
             {
-                interactive.Activate();
+                // De-Activation du hook via BON_Interactive
+                _targetPoint = closest.position;
+                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                if (interactive != null)
+                {
+                    interactive.Activate();
+                }
             }
+
+
         }
     }
 
