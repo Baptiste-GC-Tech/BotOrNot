@@ -194,16 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _listAvatarsStates:
-  - {fileID: 11400000, guid: 66247a5d906685d4e9fc30264579865f, type: 2}
-  - {fileID: 11400000, guid: cadd4aeefc446cf4faac57e6a7a2532c, type: 2}
-  _componentsPR:
-  - {fileID: 8521182800846610668}
-  - {fileID: 1560708334678475253}
-  - {fileID: 1131842411062934407}
-  _componentsDR:
-  - {fileID: 2267452174958741305}
-  - {fileID: 7109465325933060018}
+  _avatarState: {fileID: 0}
 --- !u!114 &2267452174958741305
 MonoBehaviour:
   m_ObjectHideFlags: 0

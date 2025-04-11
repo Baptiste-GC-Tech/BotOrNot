@@ -104,21 +104,29 @@ public class BON_MovObj_ListBased : BON_Actionnable
 
     public void FixedUpdate()
     {
-        if (Status) 
-        {
-            float oneSpeed = _moveSpeed * Time.deltaTime;
+        if (!Status || _transformsList == null || _transformsList.Count < 2) return;
 
-            if (oneSpeed >= (_transformsList[_nextNodeIndex].position - gameObject.transform.position).magnitude)
-            {
-                gameObject.transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
-                if (_isCyclingPositive) { NextNodeIndex++; } else { NextNodeIndex--; }
-            }
-            else
-            {
-                float movementFraction = oneSpeed / _currentTotalDistance;
-                gameObject.transform.position += _currentDirection * oneSpeed;
-                gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + _currentRotation * movementFraction);
-            }
+        if (_nextNodeIndex < 0 || _nextNodeIndex >= _transformsList.Count)
+        {
+            Debug.LogWarning($"{gameObject.name} : _nextNodeIndex ({_nextNodeIndex}) est en dehors des bornes de _transformsList (count: {_transformsList.Count})");
+            Status = false;
+            return;
+        }
+
+        float oneSpeed = _moveSpeed * Time.deltaTime;
+
+        if (oneSpeed >= (_transformsList[_nextNodeIndex].position - transform.position).magnitude)
+        {
+            transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
+            if (_isCyclingPositive) NextNodeIndex++;
+            else NextNodeIndex--;
+        }
+        else
+        {
+            float movementFraction = oneSpeed / _currentTotalDistance;
+            transform.position += _currentDirection * oneSpeed;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + _currentRotation * movementFraction);
         }
     }
+
 }
