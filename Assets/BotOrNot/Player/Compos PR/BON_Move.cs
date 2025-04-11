@@ -53,6 +53,7 @@ public class BON_Move : MonoBehaviour
     [Header("Drift")]
     [SerializeField] private float _driftDuration = 0.3f;
     [SerializeField] private float _driftAcceleration = 10f;
+    [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
     private Vector2 _previousDirection;
@@ -177,7 +178,7 @@ public class BON_Move : MonoBehaviour
         {
             _timeSinceLastMove += Time.deltaTime;
         }
-        if (_timeSinceLastMove >= 0.3)
+        if (_timeSinceLastMove >= _timeBetweenDrifts)
         {
             _timeSinceLastMove = 0;
             _needToResetDrift = true;
