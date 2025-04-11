@@ -125,6 +125,10 @@ public class BON_Move : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+        if (_bounceHeight >= _heightBonceStart)
+        {
+            _heightBonceStart = _bounceHeight + 1;
+        }
     }
 
     void Update()
