@@ -63,7 +63,8 @@ public class BON_ControlsManager : MonoBehaviour
         }
         else
         {
-            if (_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compPlayerButtons.IsEnabled == false)
+            if ((_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compPlayerButtons.IsEnabled == false) 
+                && (_compHUDButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compHUDButtons.IsEnabled == false))
             {
                 var feedback = Instantiate(_touchFeedback);
                 feedback.transform.SetParent(transform);

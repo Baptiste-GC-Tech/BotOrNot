@@ -8689,39 +8689,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1499913565}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GererClic
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BON_Cable, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4341213111053961228, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7078602358084792295, guid: d05a804f36c8b6a46af8bcd0e55f32f5,
         type: 3}
       propertyPath: m_Name
@@ -14468,7 +14438,7 @@ Transform:
   m_GameObject: {fileID: 931079811}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -34.80148, y: 0.40000004, z: -14.07}
+  m_LocalPosition: {x: -46.80148, y: 0.40000004, z: -14.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17739,7 +17709,7 @@ PrefabInstance:
     - target: {fileID: 4163083667041903421, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.8
+      value: -46.8
       objectReference: {fileID: 0}
     - target: {fileID: 4163083667041903421, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
@@ -17834,7 +17804,7 @@ PrefabInstance:
     - target: {fileID: 7899894628391025003, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
       propertyPath: m_TrackedObjectOffset.x
-      value: -5.999999
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7899894628391025003, guid: 2624e7f9d678dcc42bda79f12cd5b7f3,
         type: 3}
@@ -23804,7 +23774,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventory: {fileID: 0}
-  _AvatarState: {fileID: 0}
 --- !u!4 &1524273682
 Transform:
   m_ObjectHideFlags: 0

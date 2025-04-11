@@ -61,6 +61,7 @@ public class BON_COMPJoystick : BON_TouchComps
         base.TouchEnd();
 
         _isCompActive = false;
+        _inputValues = Vector2.zero;
 
         PRIVHideJoystick();
     }
