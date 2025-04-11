@@ -230,8 +230,8 @@ public class BON_Cable : MonoBehaviour
         _joint.connectedAnchor = cible;
 
         float distance = Vector3.Distance(transform.position, cible);
-        _joint.maxDistance = distance * 0.8f;
-        _joint.minDistance = distance * 0.25f;
+        _joint.maxDistance = distance * 0.75f;
+        _joint.minDistance = 0.2f;
         _joint.spring = _springForce;
         _joint.damper = _damping;
         _joint.massScale = 1f;
