@@ -41,13 +41,17 @@ public class BON_MoveDR : MonoBehaviour
     {
         /* Read input value */
         _moveInputValue = _moveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(_moveInputValue.x * Time.deltaTime, 0, 0);
 
-        //for changing state in BON_Avatarstate
-        if (_moveInputValue != null)
+        //for changing state
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
         {
             _player.AvatarState.IsMoving = true;
         }
+        else
+        {
+            _player.AvatarState.IsMoving = false;
+        }
+        transform.position += new Vector3(_moveInputValue.x * Time.deltaTime, 0, 0);
 
         if (_jumpAction.WasPressedThisFrame() && _player.AvatarState.IsGrounded) //si on saute au sol
         {

@@ -17,7 +17,7 @@ public class BON_Move : MonoBehaviour
     /* Objects & GO related */
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
-    private BON_PRState _PRstate;
+    //private BON_PRState _PRstate;
 
     public LayerMask Deez;
 

@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76068fc0838002449da911f02ed2383, type: 3}
-  m_Name: BON_PR State
+  m_Script: {fileID: 11500000, guid: cfd3f053287f9c44c802f69276499279, type: 3}
+  m_Name: BON_Avatar State
   m_EditorClassIdentifier: 

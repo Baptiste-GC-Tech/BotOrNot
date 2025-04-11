@@ -31,7 +31,7 @@ public class BON_Interact : MonoBehaviour
         // Take item action handling
         if (_ItemInteractAction.WasPressedThisFrame()) //interact
         {
-            if (_player.IsDRInRange) //dame robot pas loin
+            /*if (_player.IsDRInRange) //dame robot pas loin
             {
                 //give inventory item(s) to DR
 
@@ -41,6 +41,12 @@ public class BON_Interact : MonoBehaviour
                 {
                     _inventory.DeleteItem(i);
                 }
+            }*/
+            if (!BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsNearIOMInteractible) //Pas de machine a porté et pas deja en train de switch
+            {
+                
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+                BON_GameManager.Instance().SwitchPlayer();
             }
         }
     }

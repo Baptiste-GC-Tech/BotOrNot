@@ -89,9 +89,6 @@ public class BON_Cable : MonoBehaviour
     {
         if (!_lineVisible)
         {
-            // State Machine
-            _player.AvatarState.IsthrowingCable = true;
-
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
 
             if (closest != null)
@@ -108,6 +105,8 @@ public class BON_Cable : MonoBehaviour
                 {
                     interactive.Activate();
                 }
+                // State Machine
+                _player.AvatarState.IsthrowingCable = true;
             }
         }
         else
