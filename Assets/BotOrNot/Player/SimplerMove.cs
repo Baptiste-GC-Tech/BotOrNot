@@ -9,21 +9,13 @@ using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
-public class BON_Move : MonoBehaviour
+public class SimplerMove : MonoBehaviour
 {
     /*
      *  FIELDS
      */
-    /* Objects & GO related */
-    [SerializeField] private BON_CCPlayer _player;
-    private BON_PRState _PRstate;
-
-    public LayerMask Deez;
-
     /* Input related */
     private InputAction _MoveAction;
-    [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
-    private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
 
     /* Speed related */
@@ -38,7 +30,7 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
     private Vector3 _curMoveDir;
-    private Vector3 _groundNormalVect;  
+    private Vector3 _groundNormalVect;
 
 
     /*
@@ -77,25 +69,17 @@ public class BON_Move : MonoBehaviour
         // Case in which there is no input : don't touch anything
         if (Mathf.Approximately(_moveInputValue.x, 0.0f) && Mathf.Approximately(_moveInputValue.y, 0.0f)) return;
 
-        // Turns the PR around
         _moveXAxisDir = _moveInputValue.x > 0.0f ? 1 : -1;
-        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);    // TODO: make it a rotation, no ?
 
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.forward;
-        // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
-        else
-        {
-            Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
-            Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
-            _curMoveDir.x = 0;
-            _curMoveDir.y = worldSpaceMoveDir.y;
-            _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
+        // Case of a sloped ground : finds the tangent to the normal of the ground
+        else _curMoveDir = Vector3.Cross(_groundNormalVect, Vector3.right);
 
-            Debug.Log("Going towards " + _moveXAxisDir + " (X axis), given normal " + _groundNormalVect + " and that direction, crossBTerm = " + crossBTerm + ". Mathematically, we have " + worldSpaceMoveDir + " and logically " + _curMoveDir);
-        }
+        // Turns the PR around
+        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);
 
-        //Debug.Log("moveDirThisFrame : " + _curMoveDir);
+        Debug.Log("moveDirThisFrame : " + _curMoveDir);
     }
 
     // Updates the ground's normal that PR is standing on
@@ -116,8 +100,6 @@ public class BON_Move : MonoBehaviour
     void Start()
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
-        _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
-        //_PRstate = _player.GetComponent<BON_PRState>();
     }
 
     void Update()
@@ -136,24 +118,12 @@ public class BON_Move : MonoBehaviour
         UpdateCurSpeed();
 
 
-        /* Changes the state */
-        //if (_PRstate != null)
-            if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
-            {
-                _player.AvatarState.IsMoving = true;
-            }
-            else
-            {
-                _player.AvatarState.IsMoving = false;
-            }
-
-
         /* Applies the movement */
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
         movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
         transform.Translate(_curMoveDir * _curSpeed * Time.deltaTime);
 
-        //Debug.Log("Movement this frame : " + movementThisFrame);
+        Debug.Log("Movement this frame : " + movementThisFrame);
     }
 
 }

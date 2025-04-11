@@ -370,6 +370,7 @@ MonoBehaviour:
   _waveFrequency: 2
   _swingAmplitude: 0.1
   _swingFrequency: 2
+  _player: {fileID: 0}
 --- !u!114 &4038749844960875241
 MonoBehaviour:
   m_ObjectHideFlags: 0
