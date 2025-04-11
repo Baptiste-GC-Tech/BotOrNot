@@ -47,7 +47,8 @@ public class BON_Move : MonoBehaviour
     [SerializeField] private float _driftAcceleration = 10f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
-    private Vector3 _currentVelocity;
+    private Vector2 _previousDirection;
+    private bool _isFirstMove = true;
 
     /*Bounce related*/
     private bool _isGrounded;
@@ -141,6 +142,7 @@ public class BON_Move : MonoBehaviour
             _heightBonceStart = _bounceHeight + 1;
         }
         //_PRstate = _player.GetComponent<BON_PRState>();
+        _previousDirection = _moveInputValue.normalized;
     }
 
     void Update()
@@ -159,23 +161,33 @@ public class BON_Move : MonoBehaviour
         UpdateCurSpeed();
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
-
         //Drift
         if (_desiredDirection != Vector3.zero)
         {
-            if (Vector3.Dot(_currentVelocity.normalized, _desiredDirection.normalized) < -0.5f)
+            if (_isFirstMove)
             {
+                _isFirstMove = false;
+                _previousDirection = _moveInputValue.normalized;
+            }
+            if (_previousDirection != _moveInputValue.normalized)
+            {
+                _previousDirection = _moveInputValue.normalized;
                 _driftTimer = _driftDuration; 
             }
             if (_driftTimer > 0)
             {
+                Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
-                _currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
+                _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
+                _curMoveDir = - _curMoveDir;
+                //_currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
             }
             else
             {
+                Debug.Log("End Drifting");
                 Vector3 targetVelocity = _desiredDirection * _curSpeed;
-                _currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
+                //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
+                //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
             }
         }
 
