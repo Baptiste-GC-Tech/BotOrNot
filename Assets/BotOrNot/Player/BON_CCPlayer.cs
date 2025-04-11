@@ -9,8 +9,6 @@ public class BON_CCPlayer : MonoBehaviour
      *  FIELDS
      */
 
-    //[SerializeField] protected List<BON_AvatarState> _listAvatarsStates = new List<BON_AvatarState>(2); //stock les 2 state machines robots
-
     // state machine reference
 
     [SerializeField] BON_AvatarState _avatarState;
@@ -46,16 +44,6 @@ public class BON_CCPlayer : MonoBehaviour
     {
         _instance = BON_GameManager.Instance();
         DontDestroyOnLoad(_instance);
-
-        //set state machine PR or DR
-        //if (_instance.IsPlayingNut)
-        //{
-        //    _avatarState = _listAvatarsStates[0];
-        //}
-        //else
-        //{
-        //    _avatarState = _listAvatarsStates[1];
-        //}
 
         _avatarState.Init(); //init state machine (current state, player ref, dictionnary)
     }
