@@ -88,7 +88,7 @@ public class BON_Move : MonoBehaviour
         else _curMoveDir = Vector3.Cross(_groundNormalVect, Vector3.forward);
 
         // Turns the PR around
-        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);
+        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 0, 0) : new Vector3(0, 180, 0);
 
         //Debug.Log("moveDirThisFrame : " + _moveXAxisDir);
     }
@@ -145,7 +145,8 @@ public class BON_Move : MonoBehaviour
 
         /* Applies the movement */
         //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
-        transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+        transform.Translate(new Vector3(_curMoveDir.z * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+        Debug.Log(_curSpeed);   
     }
 
 }
