@@ -93,7 +93,7 @@ public class BON_Move : MonoBehaviour
             _curMoveDir.y = worldSpaceMoveDir.y;
             _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
 
-            Debug.Log("Going towards " + _moveXAxisDir + " (X axis), given normal " + _groundNormalVect + " and that direction, crossBTerm = " + crossBTerm + ". Mathematically, we have " + worldSpaceMoveDir + " and logically " + _curMoveDir);
+            //Debug.Log("Going towards " + _moveXAxisDir + " (X axis), given normal " + _groundNormalVect + " and that direction, crossBTerm = " + crossBTerm + ". Mathematically, we have " + worldSpaceMoveDir + " and logically " + _curMoveDir);
         }
 
         //Debug.Log("moveDirThisFrame : " + _curMoveDir);
