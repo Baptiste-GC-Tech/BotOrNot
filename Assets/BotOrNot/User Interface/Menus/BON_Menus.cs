@@ -74,8 +74,7 @@ public class BON_Menus : MonoBehaviour
         _activeButton.GetComponent<Image>().color = newcolor;
     }
 
-    public void SMSetMusicVolume(Slider slider) { AudioMixer.SetFloat("MusicVolume", Mathf.Log10(slider.value) * 20); }
-    public void SMSetSFXVolume(Slider slider) { AudioMixer.SetFloat("SFXVolume", Mathf.Log10(slider.value) * 20); }
+    public void SMSetSliderVolume(Slider slider) { AudioMixer.SetFloat(slider.name, Mathf.Log10(slider.value) * 20); }
 
     public void SMSwitchCBMode(GameObject check)
     {
