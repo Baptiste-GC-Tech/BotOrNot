@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
+using UnityEngine.Windows;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
@@ -39,8 +40,25 @@ public class BON_Move : MonoBehaviour
     /* Direction related */
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
     private Vector3 _curMoveDir;
-    private Vector3 _groundNormalVect;  
+    private Vector3 _groundNormalVect;
 
+    /*Drift related*/
+    [SerializeField] private float _driftDuration = 0.3f;
+    [SerializeField] private float _driftAcceleration = 10f;
+    private Vector3 _desiredDirection;
+    private float _driftTimer;
+    private Vector2 _previousDirection;
+    private bool _isFirstMove = true;
+
+    /*Bounce related*/
+    private bool _isGrounded;
+    private bool _isBouncing;
+    private Vector3 _fallHeight;
+    private Vector3 _landingHeight;
+    [SerializeField] int _numberOfBounce = 2;
+    [SerializeField] float _bounceHeight = 5.0f;
+    [SerializeField] float _heightBonceStart = 6.0f;
+    private int _bounceCount;
 
     /*
      *  CLASS METHODS
@@ -118,7 +136,13 @@ public class BON_Move : MonoBehaviour
     {
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
+        _rb = GetComponent<Rigidbody>();
+        if (_bounceHeight >= _heightBonceStart)
+        {
+            _heightBonceStart = _bounceHeight + 1;
+        }
         //_PRstate = _player.GetComponent<BON_PRState>();
+        _previousDirection = _moveInputValue.normalized;
     }
 
     void Update()
@@ -136,6 +160,44 @@ public class BON_Move : MonoBehaviour
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
+        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+        //Drift
+        if (_desiredDirection != Vector3.zero)
+        {
+            if (_isFirstMove)
+            {
+                _isFirstMove = false;
+                _previousDirection = _moveInputValue.normalized;
+            }
+            if (_previousDirection != _moveInputValue.normalized)
+            {
+                _previousDirection = _moveInputValue.normalized;
+                _driftTimer = _driftDuration; 
+            }
+            if (_driftTimer > 0)
+            {
+                Debug.Log("Drifting");
+                _driftTimer -= Time.deltaTime;
+                _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
+                _curMoveDir = - _curMoveDir;
+                //_currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
+            }
+            else
+            {
+                Debug.Log("End Drifting");
+                Vector3 targetVelocity = _desiredDirection * _curSpeed;
+                //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
+                //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
+            }
+        }
+
+        //Bounce
+        if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        {
+            Debug.Log("SHould enter bounce");
+            _isBouncing = true;
+            _bounceCount = 0;
+        }
 
         /* Changes the state */
         //if (_PRstate != null)
@@ -150,11 +212,44 @@ public class BON_Move : MonoBehaviour
 
 
         /* Applies the movement */
+        //Need to change to use the drift     /!\
+        //transform.Translate(_currentVelocity * Time.deltaTime, Space.World);
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
         movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
         transform.Translate(_curMoveDir * _curSpeed * Time.deltaTime);
 
         //Debug.Log("Movement this frame : " + movementThisFrame);
+        //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            _isGrounded = true;
+            _landingHeight = gameObject.transform.position;
+        }
+        if (_isBouncing)
+        {
+            Debug.Log("bouncing");
+            _bounceCount++;
+            _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            _rb.AddForce(Vector3.up * (_bounceHeight / _bounceCount), ForceMode.Impulse);
+
+            if (_bounceCount >= _numberOfBounce)
+            {
+                _isBouncing = false;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            _isGrounded = false;
+            _fallHeight = gameObject.transform.position;
+        }
     }
 
 }
