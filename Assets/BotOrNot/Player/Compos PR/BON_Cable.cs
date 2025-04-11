@@ -54,9 +54,6 @@ public class BON_Cable : MonoBehaviour
     {
         if (_clickAction != null && _clickAction.triggered)
         {
-            //_player.AvatarState.IsthrowingCable = !_player.AvatarState.IsthrowingCable; //true if false, etc
-            //TO DO :  ca marche pas bien, mais ca vient peut etre pas de la mais de la state en elle meme 
-
             GererClic();
         }
 
@@ -92,6 +89,7 @@ public class BON_Cable : MonoBehaviour
     {
         if (!_lineVisible)
         {
+            // State Machine
             _player.AvatarState.IsthrowingCable = true;
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
@@ -103,14 +101,32 @@ public class BON_Cable : MonoBehaviour
                 _lineRenderer.positionCount = _lineSegments;
                 _targetPoint = closest.position;
                 StartCoroutine(PRIVAnimerLigneAvecVague());
+
+                // Activation du hook via BON_Interactive
+                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                if (interactive != null)
+                {
+                    interactive.Activate();
+                }
             }
         }
         else
         {
-            _player.AvatarState.IsthrowingCable =false;
+            // State Machine
+            _player.AvatarState.IsthrowingCable = false;
             StartCoroutine(PRIVRetirerLigne());
+
+            Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
+
+            // De-Activation du hook via BON_Interactive
+            BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+            if (interactive != null)
+            {
+                interactive.Activate();
+            }
         }
     }
+
 
     private Transform PRIVTrouverPlusProcheHook(GameObject[] hooks)
     {
