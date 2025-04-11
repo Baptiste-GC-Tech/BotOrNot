@@ -5,7 +5,10 @@ using UnityEngine.InputSystem;
 
 public class BON_Controllable : BON_Actionnable
 {
-    //CLASS METHODS
+    /*
+     *  CLASS METHODS
+     */
+
     public override void On()
     {
         GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
@@ -15,7 +18,8 @@ public class BON_Controllable : BON_Actionnable
     {
         GameObject.FindWithTag("Player").GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
     }
-    public virtual void ReadInput(Vector2 Input)
+
+    public virtual void ProcessInput(Vector2 Input)
     {
 
     }

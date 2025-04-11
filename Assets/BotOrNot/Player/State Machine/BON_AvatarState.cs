@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AvatarState")]
@@ -8,10 +9,12 @@ public class BON_AvatarState : ScriptableObject
     *  FIELDS
     */
 
-    //link States enum to States class
-    protected Dictionary<States, BON_State> _stateDict = new();
+    //link State enum to State class
+    protected Dictionary<State, BON_State> _stateDict = new();
 
-    /* bool for states */
+    /*
+     *  Booleans for Common State (both PR and DR)
+     */
 
     bool _isGrounded = false;  //1 if touch the ground 
     public bool IsGrounded //for jump -> need to setup
@@ -25,11 +28,11 @@ public class BON_AvatarState : ScriptableObject
         get { return _isAgainstWall; }
         set { _isAgainstWall = value; }
     }
-    bool _isMoving = false; //1 if move, 0 if idle
-    public bool IsMoving //for state
+    bool _isMovingByPlayer = false; //1 if move, 0 if idle
+    public bool IsMovingByPlayer //for state
     {
-        get { return _isMoving; }
-        set { _isMoving = value; }
+        get { return _isMovingByPlayer; }
+        set { _isMovingByPlayer = value; }
     }
     bool _isInElevator = false; //1 if in elevator
     public bool IsInElevator //for state -> need to setup
@@ -37,9 +40,12 @@ public class BON_AvatarState : ScriptableObject
         get { return _isInElevator; }
         set { _isInElevator = value; }
     }
-    
 
-    //bool PR
+
+    /*
+     *  Booleans exclusive to PR
+     */
+
     bool _isNearIOMInteractible = false; //<-- Terminaux, grue, ... for switching player/machine
     public bool IsNearIOMInteractible
     {
@@ -54,21 +60,25 @@ public class BON_AvatarState : ScriptableObject
         set { _isConstrollingMachine = value; }
     }
 
-    bool _isthrowingCable = false; //1 if using cable, 0 if not for state
-    public bool IsthrowingCable
+    bool _hasCableOut = false; //1 if using cable, 0 if not for state
+    public bool HasCableOut
     {
-        get { return _isthrowingCable; }
-        set { _isthrowingCable = value; }
+        get { return _hasCableOut; }
+        set { _hasCableOut = value; }
     }
 
-    bool _isNearItem = false; //<-- Truc pour l’inventaire 
-    public bool IsNearItem
-    {
-        get { return _isNearItem; }
-        set { _isNearItem = value; }
-    }
+    //bool _isNearItem = false; //<-- Truc pour l’inventaire 
+    //public bool IsNearItem
+    //{
+    //    get { return _isNearItem; }
+    //    set { _isNearItem = value; }
+    //}
 
-    //bool DR
+
+    /*
+     *  Booleans exclusive to PR
+     */
+
     bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) <- useless now ?
     public bool IsNearHumanoidObject
     {
@@ -76,33 +86,33 @@ public class BON_AvatarState : ScriptableObject
         set { _isNearHumanoidObject = value; }
     }
 
-    bool _isJumping = false; //1 if in air - for state
-    public bool IsJumping
-    {
-        get { return _isJumping; }
-        set { _isJumping = value; }
-    }
+    //bool _isJumping = false; //1 if in air - for state
+    //public bool IsJumping
+    //{
+    //    get { return _isJumping; }
+    //    set { _isJumping = value; }
+    //}
 
 
-    protected States _currentState;
-    public States CurrentState
+    protected State _currentState;
+    public State CurrentState
     {
         get { return _currentState; }
     }
 
-    protected BON_State _currentStateAsset;
 
     // player reference
     private BON_CCPlayer _player;
+    protected BON_State _currentStateAsset;
 
-    private Collider _collider;
+    private Collider _playerCollider;
 
     //for isgrounded
     float distToGround;
     //for isagainstWall
     float distToWall;
 
-    public enum States
+    public enum State
     {
         Idle,
         Moving,
@@ -111,12 +121,13 @@ public class BON_AvatarState : ScriptableObject
         ControllingMachine,
         ThrowingCable,
     };
+    
 
     /*
-    *  CLASS METHODS
-    */
+     *  CLASS METHODS
+     */
 
-    protected void SetState(States state)
+    protected void SetState(State state)
     {
         _currentStateAsset?.Exit();      // Quitter l’ancien état
         _currentState = state;
@@ -125,14 +136,11 @@ public class BON_AvatarState : ScriptableObject
         _currentStateAsset?.Enter();    // Entrer dans le nouveau
     }
 
-    //protected abstract bool CheckStatePossible(States currentState); // <-- (eg robot cannot Jump, Dame robot cannot use cable)
-    // see childre
-
-    protected bool CheckStatePossible(States newState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
+    protected bool CheckStatePossible(State newState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
     {
         if (BON_GameManager.Instance().CurrentCharacterPlayed == 0) //PR
         {
-            if (newState == States.Jump)
+            if (newState == State.Jump)
             {
                 Debug.Log("état pas possible pour le robot");
                 return false;
@@ -140,7 +148,7 @@ public class BON_AvatarState : ScriptableObject
         }
         else if (BON_GameManager.Instance().CurrentCharacterPlayed == 1) //DR
         {
-            if (newState == States.ControllingMachine || newState == States.ThrowingCable)
+            if (newState == State.ControllingMachine || newState == State.ThrowingCable)
             {
                 MonoBehaviour.print("état pas possible pour la dame robot");
                 return false;
@@ -149,9 +157,7 @@ public class BON_AvatarState : ScriptableObject
         return true;
     }
 
-    //public abstract void ChangeState(States state);
-
-    public void ChangeState(States state)
+    public void ChangeState(State state)
     {
         if (_currentState != state && CheckStatePossible(state))
         {
@@ -165,20 +171,20 @@ public class BON_AvatarState : ScriptableObject
 
     public void Init()
     {
-        _stateDict.Add(States.Idle,new BON_SIdle());
-        _stateDict.Add(States.Moving,new BON_SMoving());
-        _stateDict.Add(States.Jump,new BON_SJump());
-        _stateDict.Add(States.ControllingMachine,new BON_SControllingMachine());
-        _stateDict.Add(States.ThrowingCable,new BON_SThrowingCable());
-        _stateDict.Add(States.Elevator,new BON_SElevator());
+        _stateDict.Add(State.Idle,new BON_SIdle());
+        _stateDict.Add(State.Moving,new BON_SMoving());
+        _stateDict.Add(State.Jump,new BON_SJump());
+        _stateDict.Add(State.ControllingMachine,new BON_SControllingMachine());
+        _stateDict.Add(State.ThrowingCable,new BON_SThrowingCable());
+        _stateDict.Add(State.Elevator,new BON_SElevator());
 
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
-        _collider = _player.GetComponent<Collider>();
-        distToGround = _collider.bounds.extents.y;
-        distToWall = _collider.bounds.extents.x;
+        _playerCollider = _player.GetComponent<Collider>();
+        distToGround = _playerCollider.bounds.extents.y;
+        distToWall = _playerCollider.bounds.extents.x;
 
-        _currentState =  BON_AvatarState.States.Idle;
-        _currentStateAsset = _stateDict[BON_AvatarState.States.Idle];
+        _currentState =  BON_AvatarState.State.Idle;
+        _currentStateAsset = _stateDict[BON_AvatarState.State.Idle];
         _currentStateAsset?.InitPlayer(_player); //set le player
         _currentStateAsset?.Enter();
     }
@@ -186,18 +192,18 @@ public class BON_AvatarState : ScriptableObject
     public void UpdateState() //update state and mains bools
     {
         _currentStateAsset?.UpState();
-        Isgrounded();
-        IsagainstWall();
+        UpdateGroundedBool();
+        UpdateAgainstWallBool();
     }
 
-    public void Isgrounded() //check if there ground under
+    public void UpdateGroundedBool() //check if there ground under
     {
         //Debug.DrawRay(_player.transform.position, -Vector3.up, Color.red);
 
         _isGrounded = Physics.Raycast(_player.transform.position, -Vector3.up, distToGround + 0.5f);
     }
 
-    private void IsagainstWall() //check if there wall forward
+    private void UpdateAgainstWallBool() //check if there wall forward
     {
         //Debug.DrawRay(_player.transform.position, Vector3.left, Color.blue);
         //Debug.DrawRay(_player.transform.position, Vector3.right, Color.blue);

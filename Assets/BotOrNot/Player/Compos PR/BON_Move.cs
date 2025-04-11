@@ -42,14 +42,14 @@ public class BON_Move : MonoBehaviour
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
 
-    /*Drift related*/
+    /* Drift related */
     [SerializeField] private float _driftDuration = 0.3f;
     [SerializeField] private float _driftAcceleration = 10f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
     private Vector3 _currentVelocity;
 
-    /*Bounce related*/
+    /* Bounce related */
     private bool _isGrounded;
     private bool _isBouncing;
     private Vector3 _fallHeight;
@@ -204,7 +204,7 @@ public class BON_Move : MonoBehaviour
         //transform.Translate(_currentVelocity * Time.deltaTime, Space.World);
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
         movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
-        transform.Translate(_curMoveDir * _curSpeed * Time.deltaTime);
+        transform.Translate(movementThisFrame);
 
         //Debug.Log("Movement this frame : " + movementThisFrame);
         //transform.Translate(new Vector3(_curMoveDir.x * _curSpeed, _curMoveDir.y * _curSpeed, 0.0f) * Time.deltaTime);

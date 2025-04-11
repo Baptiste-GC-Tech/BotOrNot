@@ -10,6 +10,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     /*
      *  FIELDS
      */
+
     private bool _isMoving;
     [SerializeField] float _speedMax;
     private float _speed;
@@ -17,6 +18,9 @@ public class BON_FreeMovementCrane : BON_Controllable
     private Vector3 _direction;
     [SerializeField] List<Vector4> _boundaries;
     private bool _isBlocked;
+
+
+
     /*
      *  CLASS METHODS
      */
@@ -27,7 +31,7 @@ public class BON_FreeMovementCrane : BON_Controllable
         Stop();
     }
 
-    public override void ReadInput(Vector2 Input)
+    public override void ProcessInput(Vector2 Input)
     {
         if (System.Math.Abs(Input.x) > 0.1f || System.Math.Abs(Input.y) > 0.1f)
         {
