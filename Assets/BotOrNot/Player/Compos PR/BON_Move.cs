@@ -16,6 +16,7 @@ public class BON_Move : MonoBehaviour
      *  FIELDS
      */
     /* Objects & GO related */
+    [Header("Player")]
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
 
@@ -27,12 +28,17 @@ public class BON_Move : MonoBehaviour
     private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
 
+
     /* Speed related */
+    [Space]
+    [Header("Speed")]
     [SerializeField] float _maxSpeed;
     [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     private float _curSpeed;
 
     /* Accelartion related */
+    [Space]
+    [Header("Acceleration")]
     [SerializeField] AnimationCurve _AccelOverSpeed;
     [SerializeField] AnimationCurve _DeccelOverSpeed;
 
@@ -42,21 +48,27 @@ public class BON_Move : MonoBehaviour
     private Vector3 _groundNormalVect;
 
     /* Drift related */
+    [Space]
+    [Header("Drift")]
     [SerializeField] private float _driftDuration = 0.3f;
     [SerializeField] private float _driftAcceleration = 10f;
+    [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
     private Vector2 _previousDirection;
     private bool _isFirstMove = true;
+    private bool _needToResetDrift = false;
+    private float _timeSinceLastMove = 0;
 
     /* Bounce related */
-    private bool _isGrounded;
-    private bool _isBouncing;
-    private Vector3 _fallHeight;
-    private Vector3 _landingHeight;
+    [Space]
+    [Header("Bounce")]
     [SerializeField] int _numberOfBounce = 2;
     [SerializeField] float _bounceHeight = 5.0f;
     [SerializeField] float _heightBonceStart = 6.0f;
+    private bool _isGrounded;
+    private bool _isBouncing;
+    private Vector3 _fallHeight;
     private int _bounceCount;
 
     /*
@@ -222,7 +234,6 @@ public class BON_Move : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             _isGrounded = true;
-            _landingHeight = gameObject.transform.position;
         }
         if (_isBouncing)
         {

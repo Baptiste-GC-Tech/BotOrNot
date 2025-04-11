@@ -31987,6 +31987,11 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1209
       objectReference: {fileID: 0}
+    - target: {fileID: 4193704052337652247, guid: 89594e3fde835c34991e01c78d8c917f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 4930938241950558664, guid: 89594e3fde835c34991e01c78d8c917f,
         type: 3}
       propertyPath: m_Mesh

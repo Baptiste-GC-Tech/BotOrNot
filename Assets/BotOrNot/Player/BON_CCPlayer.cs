@@ -26,12 +26,12 @@ public class BON_CCPlayer : MonoBehaviour
         set { _collectible = value; }
     }
 
-    /*  triggers bool */
-
-    private bool _isDRInRange = false;
-    public bool IsDRInRange
+    // for stock machine ref ?
+    private BON_Controllable _machineToPossess = null;
+    public BON_Controllable MachineToPossess
     {
-        get { return _isDRInRange; }
+        get { return _machineToPossess; }
+        set { _machineToPossess = value; }
     }
 
     //Instance gameManager
@@ -64,11 +64,12 @@ public class BON_CCPlayer : MonoBehaviour
         }
         else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
-            _isDRInRange = true;
+            _avatarState.IsDRInRange = true;
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
+            //_machineToPossess = other.transform.parent;  -> mettre le trigger en enfant , et recup le parent du trigger ?
         }
     }
 
@@ -76,11 +77,12 @@ public class BON_CCPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "Finish") //trigger with DR (broken)
         {
-            _isDRInRange = false;
+            _avatarState.IsDRInRange = false;
         }
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = false;
+            _machineToPossess = null;
         }
     }
 }
