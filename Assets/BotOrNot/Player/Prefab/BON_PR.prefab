@@ -192,16 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1a082ad793d934eb27ae38892ae777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _listAvatarsStates:
-  - {fileID: 11400000, guid: 66247a5d906685d4e9fc30264579865f, type: 2}
-  - {fileID: 11400000, guid: cadd4aeefc446cf4faac57e6a7a2532c, type: 2}
-  _componentsPR:
-  - {fileID: 4201512721507981953}
-  - {fileID: 6810279269352235306}
-  - {fileID: 3826716711832122923}
-  _componentsDR:
-  - {fileID: 6669185972278408590}
-  - {fileID: 1109174685659549784}
+  _avatarState: {fileID: 11400000, guid: 89eaf25eae1f78342963802581c0d462, type: 2}
 --- !u!114 &4201512721507981953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 4550041491405986981}
   Deez:
     serializedVersion: 2
     m_Bits: 0
@@ -331,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb73d229a8ee614ba6df933ad0fe60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 4550041491405986981}
 --- !u!114 &6810279269352235306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63190cff01e6c79499200502402004e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 4550041491405986981}
 --- !u!114 &1109174685659549784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a18189d6c36c6f4eb9e3c08ddc33df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 4550041491405986981}
 --- !u!114 &6032400181627639119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a2366ee6760064590fee17d4550bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 4550041491405986981}
 --- !u!114 &2628937723230120011
 MonoBehaviour:
   m_ObjectHideFlags: 0
