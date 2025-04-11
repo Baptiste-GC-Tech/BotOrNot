@@ -11,6 +11,7 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private Transform _gunOrigin;
     [SerializeField] private LayerMask _raycastLayers;
+    [SerializeField] private Transform _directionReference;
 
     [Header("Hook Settings")]
     [SerializeField] private float _rayDistance = 100f;
@@ -93,6 +94,7 @@ public class BON_Cable : MonoBehaviour
 
             if (closest != null)
             {
+                
                 _lineVisible = true;
                 _lineRenderer.enabled = true;
                 _lineRenderer.positionCount = _lineSegments;
@@ -111,8 +113,10 @@ public class BON_Cable : MonoBehaviour
         }
         else
         {
+            
             // State Machine
             _player.AvatarState.HasCableOut = false;
+
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
@@ -127,8 +131,6 @@ public class BON_Cable : MonoBehaviour
                     interactive.Activate();
                 }
             }
-
-
         }
     }
 
@@ -138,7 +140,7 @@ public class BON_Cable : MonoBehaviour
         Transform closest = null;
         float shortest = Mathf.Infinity;
 
-        Vector3 direction = transform.right;
+        Vector3 direction = _directionReference != null ? _directionReference.forward : transform.forward;
 
         foreach (GameObject hook in hooks)
         {
@@ -154,9 +156,9 @@ public class BON_Cable : MonoBehaviour
                 }
             }
         }
-
         return closest;
     }
+
 
     private IEnumerator PRIVAnimerLigneAvecVague()
     {
@@ -228,8 +230,8 @@ public class BON_Cable : MonoBehaviour
         _joint.connectedAnchor = cible;
 
         float distance = Vector3.Distance(transform.position, cible);
-        _joint.maxDistance = distance * 0.8f;
-        _joint.minDistance = distance * 0.25f;
+        _joint.maxDistance = distance * 0.75f;
+        _joint.minDistance = 0.2f;
         _joint.spring = _springForce;
         _joint.damper = _damping;
         _joint.massScale = 1f;
