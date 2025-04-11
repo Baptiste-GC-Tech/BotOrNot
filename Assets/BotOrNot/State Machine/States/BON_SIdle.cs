@@ -36,9 +36,5 @@ public class BON_SIdle : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.Moving);
         }
-        else
-        {
-            
-        }
     }
 }

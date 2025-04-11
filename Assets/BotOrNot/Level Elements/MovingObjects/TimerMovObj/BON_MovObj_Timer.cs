@@ -11,7 +11,7 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
 
     [SerializeField]
     protected float _timerMax;
-    private float _currentTimer = 0f;
+    [SerializeField] float _currentTimer = 0f;
 
     private bool _returning = false;
 
@@ -73,6 +73,16 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
             _currentRotation = _transformsList[_nextNodeIndex].rotation.eulerAngles - _transformsList[_currentNodeIndex].rotation.eulerAngles;
             _currentTotalDistance = (_transformsList[_nextNodeIndex].position - _transformsList[_currentNodeIndex].position).magnitude;
         }
+    }
+
+    /*
+    * CLASS METHODS
+    */
+
+    public override void Off()
+    {
+        _returning = !_returning;
+        _currentTimer = 0f;
     }
 
     /*

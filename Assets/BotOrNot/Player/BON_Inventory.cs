@@ -10,7 +10,7 @@ public class BON_Inventory : MonoBehaviour
 
     private List<int> _items = new();
 
-
+    public List<int> Items {  get { return _items; } }
     /*
      *  CLASS METHODS
      */

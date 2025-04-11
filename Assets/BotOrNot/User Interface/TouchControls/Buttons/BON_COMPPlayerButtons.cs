@@ -13,8 +13,6 @@ public class BON_COMPPlayerButtons : BON_TouchComps
     * FIELDS
     */
 
-    // private BON_OrthoRaycastLine _hookButton;
-    // [SerializeField] Button _button;
     private List<Transform> _children = new List<Transform>();
 
     /*
@@ -43,7 +41,7 @@ public class BON_COMPPlayerButtons : BON_TouchComps
 
     public bool TryIsButtonThere(Vector2 touchPos)
     {
-        for (int i = 0; i < _children.Count(); i++)
+        for (int i = 0; i < _children.Count; i++)
         {
             if (_children[i].gameObject.activeSelf)
             {
@@ -85,7 +83,6 @@ public class BON_COMPPlayerButtons : BON_TouchComps
 
     override protected void Start()
     {
-
         base.Start();
 
         foreach(Transform child in transform)

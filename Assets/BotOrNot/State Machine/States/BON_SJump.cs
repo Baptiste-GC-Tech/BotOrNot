@@ -6,7 +6,6 @@ public class BON_SJump : BON_State
 {
     public override void Enter()
     {
-        _player.AvatarState.IsGrounded = false;
         _player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 300, 0));
     }
 

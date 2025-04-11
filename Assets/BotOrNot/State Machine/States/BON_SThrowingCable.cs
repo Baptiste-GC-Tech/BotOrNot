@@ -27,9 +27,5 @@ public class BON_SThrowingCable : BON_State
                 _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
             }
         }
-        else
-        {
-            
-        }
     }
 }

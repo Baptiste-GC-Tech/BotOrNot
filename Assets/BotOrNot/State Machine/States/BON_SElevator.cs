@@ -7,19 +7,22 @@ public class BON_SElevator : BON_State
     public override void Enter()
     {
         //anim ?
-        //cancel move ?
+        //cancel move 
+        BON_GameManager.Instance().DisableCompPlayer(BON_GameManager.Instance().CurrentCharacterPlayed);
     }
 
     public override void Exit()
     {
-        //regive move ?
+        //regive move 
+        BON_GameManager.Instance().EnableCompPlayer(BON_GameManager.Instance().CurrentCharacterPlayed);
+        _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
     }
 
     public override void UpState()
     {
-        if (!_player.AvatarState.IsInElevator) //switch state ton Idle at the end of elevator
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.States.Moving); _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
-        }
+        /*anim / elevator moving / TP
+         => go to the exit
+         then Exit()*/
+        Debug.Log("elevator");
     }
 }

@@ -32,10 +32,10 @@ public class BON_InteractDR : MonoBehaviour
     {
         if (_interactAction.WasPressedThisFrame() ) //interact => switch player button
         {
-            if (!_player.IsSwitching && !_player.AvatarState.IsNearIOMInteractible) //Pas de machine a porté et pas deja en train de switch
+            if (!BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsNearHumanoidObject) //Pas d'interact humain a porté et pas deja en train de switch
             {
-                StartCoroutine(_player.CooldownSwitchControl());
-                _player.SwitchPlayer();
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+                BON_GameManager.Instance().SwitchPlayer();
             }
         }
     }

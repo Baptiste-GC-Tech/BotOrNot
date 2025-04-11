@@ -20,11 +20,11 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.ThrowingCable);
         }
-        else if (_player.AvatarState.IsJumping && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
+        if (_player.AvatarState.IsJumping && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.Jump);
         }
-        else if (!_player.AvatarState.IsMoving)
+        if (!_player.AvatarState.IsMoving)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.States.Idle);
         }
