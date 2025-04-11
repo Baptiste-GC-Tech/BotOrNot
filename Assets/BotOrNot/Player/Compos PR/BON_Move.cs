@@ -16,6 +16,7 @@ public class BON_Move : MonoBehaviour
      *  FIELDS
      */
     /* Objects & GO related */
+    [Header("Player")]
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
     //private BON_PRState _PRstate;
@@ -28,12 +29,17 @@ public class BON_Move : MonoBehaviour
     private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
 
+
     /* Speed related */
+    [Space]
+    [Header("Speed")]
     [SerializeField] float _maxSpeed;
     [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     private float _curSpeed;
 
     /* Accelartion related */
+    [Space]
+    [Header("Acceleration")]
     [SerializeField] AnimationCurve _AccelOverSpeed;
     [SerializeField] AnimationCurve _DeccelOverSpeed;
 
@@ -43,21 +49,26 @@ public class BON_Move : MonoBehaviour
     private Vector3 _groundNormalVect;
 
     /* Drift related */
+    [Space]
+    [Header("Drift")]
     [SerializeField] private float _driftDuration = 0.3f;
     [SerializeField] private float _driftAcceleration = 10f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
     private Vector2 _previousDirection;
     private bool _isFirstMove = true;
+    private bool _needToResetDrift = false;
+    private float _timeSinceLastMove = 0;
 
     /* Bounce related */
-    private bool _isGrounded;
-    private bool _isBouncing;
-    private Vector3 _fallHeight;
-    private Vector3 _landingHeight;
+    [Space]
+    [Header("Bounce")]
     [SerializeField] int _numberOfBounce = 2;
     [SerializeField] float _bounceHeight = 5.0f;
     [SerializeField] float _heightBonceStart = 6.0f;
+    private bool _isGrounded;
+    private bool _isBouncing;
+    private Vector3 _fallHeight;
     private int _bounceCount;
 
     /*
@@ -162,6 +173,16 @@ public class BON_Move : MonoBehaviour
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
+        if (_player.AvatarState.IsMovingByPlayer == false && _needToResetDrift == false)
+        {
+            _timeSinceLastMove += Time.deltaTime;
+        }
+        if (_timeSinceLastMove >= 0.3)
+        {
+            _timeSinceLastMove = 0;
+            _needToResetDrift = true;
+            _isFirstMove = true;
+        }
         if (_desiredDirection != Vector3.zero)
         {
             if (_isFirstMove)
@@ -186,6 +207,7 @@ public class BON_Move : MonoBehaviour
             {
                 Debug.Log("End Drifting");
                 Vector3 targetVelocity = _desiredDirection * _curSpeed;
+                _needToResetDrift = false;
                 //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
                 //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
             }
@@ -227,7 +249,6 @@ public class BON_Move : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             _isGrounded = true;
-            _landingHeight = gameObject.transform.position;
         }
         if (_isBouncing)
         {
