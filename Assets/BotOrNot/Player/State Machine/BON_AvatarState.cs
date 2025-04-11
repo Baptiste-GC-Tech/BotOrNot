@@ -86,6 +86,13 @@ public class BON_AvatarState : ScriptableObject
         set { _isNearHumanoidObject = value; }
     }
 
+    private bool _isDRInRange = false;
+    public bool IsDRInRange
+    {
+        get { return _isDRInRange; }
+        set { _isDRInRange = value; }
+    }
+
     //bool _isJumping = false; //1 if in air - for state
     //public bool IsJumping
     //{

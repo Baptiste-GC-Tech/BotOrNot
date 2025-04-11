@@ -152,7 +152,6 @@ public class BON_Move : MonoBehaviour
         {
             _heightBonceStart = _bounceHeight + 1;
         }
-        //_PRstate = _player.GetComponent<BON_PRState>();
         _previousDirection = _moveInputValue.normalized;
     }
 

@@ -15,45 +15,26 @@ public class BON_MachineControllerPR : MonoBehaviour
     Vector2 _moveMachineValue;
 
     // Player & State related
-    [SerializeField] private BON_CCPlayer _player;
+    [SerializeField] private BON_CCPlayer _player; 
 
-    // TODO: Wait for BON_Controllable to be implemented and then use it here so we can pass the input to whatever is being controlled.
-    //private GameObject _machine = null; //ou classe de la machine directement <-- Y E S
-    //public GameObject Machine
-    //{
-    //    get { return Machine; }
-    //    set { _machine = value; }
-    //}
-
-    BON_Actionnable _MachinePossesed;
-
+    private BON_Controllable _machinePossessed;
+    public BON_Controllable MachinePossessed
+    {
+        get { return _machinePossessed; }
+        set { _machinePossessed = value; }
+    }
 
     /*
      *  CLASS METHODS
      */
 
-    public void MoveMachine(/*class machine*/)
+    public void MoveMachine(BON_Controllable _machine)
     {
         // Reads input values
         _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
 
-        if (_moveMachineValue.x > 0)
-        {
-            /* machine.GoRight()*/
-        }
-        else if (_moveMachineValue.x < 0)
-        {
-            /* machine.GoLeft()*/
-        }
-        if (_moveMachineValue.y > 0)
-        {
-            /* machine.GoUp()*/
-        }
-        else if (_moveMachineValue.y < 0)
-        {
-            /* machine.GoDown()*/
-        }
-
+        _machine.On();
+        _machine.ProcessInput(_moveMachineValue);
 
         if(_QuitControlOfMachineAction.WasPressedThisFrame())
         {
@@ -91,7 +72,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         }
         if (_player.AvatarState.IsConstrollingMachine)
         {
-            MoveMachine();
+            //MoveMachine();
         }
 
         if (_TakeControlOfMachineAction == null)
