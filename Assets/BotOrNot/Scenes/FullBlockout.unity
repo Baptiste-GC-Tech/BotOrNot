@@ -30622,11 +30622,6 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1405
       objectReference: {fileID: 0}
-    - target: {fileID: 1524948115736695447, guid: 507714f662df5a54893180b3be9c6601,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 1538569944389480715, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}
       propertyPath: m_Mesh
@@ -30642,11 +30637,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1267566944}
-    - target: {fileID: 2690832986591202000, guid: 507714f662df5a54893180b3be9c6601,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 2783046057365943127, guid: 507714f662df5a54893180b3be9c6601,
         type: 3}
       propertyPath: m_Mesh
@@ -31344,11 +31334,6 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1394
       objectReference: {fileID: 0}
-    - target: {fileID: 729265747306969530, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 755176739019379052, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Name
@@ -31439,16 +31424,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 244027655}
-    - target: {fileID: 3125423520092954957, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
-    - target: {fileID: 3420676399865480064, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 3548316137752499533, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Mesh
@@ -31549,31 +31524,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 244027655}
-    - target: {fileID: 7058052365258159980, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 7204445084568083134, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 953786294}
-    - target: {fileID: 7390842537670869006, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 7799102515069099863, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1695258137}
-    - target: {fileID: 8326255188780319661, guid: b63a61052e481fc4188072a0e8b67a63,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 8436276747535026941, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Mesh
@@ -32027,6 +31987,11 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1209
       objectReference: {fileID: 0}
+    - target: {fileID: 4193704052337652247, guid: 89594e3fde835c34991e01c78d8c917f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 4930938241950558664, guid: 89594e3fde835c34991e01c78d8c917f,
         type: 3}
       propertyPath: m_Mesh
@@ -32442,16 +32407,6 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1059421328}
-    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
-        type: 3}
-      propertyPath: _driftDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
-        type: 3}
-      propertyPath: _numberOfBounce
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32959,21 +32914,11 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 846
       objectReference: {fileID: 0}
-    - target: {fileID: 4759646100681502629, guid: a091c986ed3662c41b69bfcc87a86e3f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 4967460474841008100, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2121816277}
-    - target: {fileID: 5001850772106045285, guid: a091c986ed3662c41b69bfcc87a86e3f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 5143257350285568263, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
@@ -33029,11 +32974,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2053193519}
-    - target: {fileID: 6830901986701020558, guid: a091c986ed3662c41b69bfcc87a86e3f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
-      objectReference: {fileID: 0}
     - target: {fileID: 6888918992025062279, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
