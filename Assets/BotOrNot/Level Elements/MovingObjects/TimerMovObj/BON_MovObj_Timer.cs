@@ -76,6 +76,16 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
     }
 
     /*
+    * CLASS METHODS
+    */
+
+    public override void Off()
+    {
+        _returning = !_returning;
+        _currentTimer = 0f;
+    }
+
+    /*
      * UNITY METHODS
      */
 
