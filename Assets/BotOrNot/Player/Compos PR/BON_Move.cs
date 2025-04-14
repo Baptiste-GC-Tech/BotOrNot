@@ -188,7 +188,7 @@ public class BON_Move : MonoBehaviour
             {
                 Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
-                _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
+                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;
             }
         }
