@@ -16,7 +16,12 @@ public class BON_Move : MonoBehaviour
      *  FIELDS
      */
     /* Objects & GO related */
+<<<<<<< Updated upstream
     [SerializeField] private BON_CCPlayer _player;
+=======
+    [Header("Player")]
+    [SerializeField] private BON_CCPlayer _CC;
+>>>>>>> Stashed changes
     private Rigidbody _rb;
     //private BON_PRState _PRstate;
 
@@ -33,7 +38,13 @@ public class BON_Move : MonoBehaviour
     [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     private float _curSpeed;
 
+<<<<<<< Updated upstream
     /* Accelartion related */
+=======
+    /* Acceleration related */
+    [Space]
+    [Header("Acceleration")]
+>>>>>>> Stashed changes
     [SerializeField] AnimationCurve _AccelOverSpeed;
     [SerializeField] AnimationCurve _DeccelOverSpeed;
 
@@ -84,10 +95,6 @@ public class BON_Move : MonoBehaviour
             _curSpeed -= _DeccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, _maxSpeed);
         }
-
-        // Applies the slope multiplier
-        //_curSpeed *= _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);
-        //Debug.Log(_SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y));
     }
 
     // Calculates the current movement direction induced by a player input 
@@ -134,6 +141,7 @@ public class BON_Move : MonoBehaviour
      */
     void Start()
     {
+        _CC = GetComponent<BON_CCPlayer>();
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
@@ -191,8 +199,9 @@ public class BON_Move : MonoBehaviour
             }
         }
 
-        //Bounce
-        if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        // Bounce
+        if (!_CC.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        //if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
             Debug.Log("SHould enter bounce");
             _isBouncing = true;
@@ -200,6 +209,7 @@ public class BON_Move : MonoBehaviour
         }
 
         /* Changes the state */
+<<<<<<< Updated upstream
         //if (_PRstate != null)
             if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
             {
@@ -209,6 +219,16 @@ public class BON_Move : MonoBehaviour
             {
                 _player.AvatarState.IsMovingByPlayer = false;
             }
+=======
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
+        {
+            _CC.AvatarState.IsMovingByPlayer = true;
+        }
+        else
+        {
+            _CC.AvatarState.IsMovingByPlayer = false;
+        }
+>>>>>>> Stashed changes
 
 
         /* Applies the movement */
@@ -224,12 +244,16 @@ public class BON_Move : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+<<<<<<< Updated upstream
         if (collision.gameObject.tag == "Floor")
         {
             _isGrounded = true;
             _landingHeight = gameObject.transform.position;
         }
         if (_isBouncing)
+=======
+       if (_isBouncing)
+>>>>>>> Stashed changes
         {
             Debug.Log("bouncing");
             _bounceCount++;
@@ -242,7 +266,6 @@ public class BON_Move : MonoBehaviour
             }
         }
     }
-
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")
@@ -251,5 +274,4 @@ public class BON_Move : MonoBehaviour
             _fallHeight = gameObject.transform.position;
         }
     }
-
 }

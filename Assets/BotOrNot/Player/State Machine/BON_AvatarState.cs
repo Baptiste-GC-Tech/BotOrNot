@@ -17,11 +17,13 @@ public class BON_AvatarState : ScriptableObject
      */
 
     bool _isGrounded = false;  //1 if touch the ground 
+    bool _wasGroundedLastFrame;
     public bool IsGrounded //for jump -> need to setup
     {
         get { return _isGrounded; }
         set { _isGrounded = value; }
     }
+
     bool _isAgainstWall = false; //1 if touch a wall
     public bool IsAgainstWall //  -> need to setup
     {

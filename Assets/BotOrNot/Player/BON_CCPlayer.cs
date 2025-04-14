@@ -81,4 +81,22 @@ public class BON_CCPlayer : MonoBehaviour
             _avatarState.IsNearIOMInteractible = false;
         }
     }
+
+    // Handles the grounded state
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            Debug.Log("Touching Ground !");
+            _avatarState.IsGrounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            Debug.Log("Leaving Ground !");
+            _avatarState.IsGrounded = false;
+        }
+    }
 }
