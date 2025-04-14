@@ -29773,6 +29773,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7772043320105942727, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820034606180497353, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       propertyPath: _canvas
