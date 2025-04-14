@@ -32429,8 +32429,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
+      propertyPath: _numberOfBounce
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
       propertyPath: _driftAcceleration
-      value: 400
+      value: 425
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
