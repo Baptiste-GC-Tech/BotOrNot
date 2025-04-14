@@ -51,7 +51,7 @@ public class BON_Move : MonoBehaviour
     [Space]
     [Header("Drift")]
     [SerializeField] private float _driftDuration = 0.5f;
-    [SerializeField] private float _driftAcceleration = 425f;
+    [SerializeField] private float _driftAcceleration = 400.0f;
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
