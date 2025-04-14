@@ -16,11 +16,19 @@ public class BON_AvatarState : ScriptableObject
      *  Booleans for Common State (both PR and DR)
      */
 
+    bool _wasGroundedLastFrame;
+    public bool WasGroundedLastFrame
+    {
+        get { return _wasGroundedLastFrame; }
+    }
     bool _isGrounded = false;  //1 if touch the ground 
     public bool IsGrounded //for jump -> need to setup
     {
         get { return _isGrounded; }
-        set { _isGrounded = value; }
+        set {
+            _wasGroundedLastFrame = _isGrounded;
+            _isGrounded = value;
+            }
     }
 
     bool _isAgainstWallLeft = false; //1 if touch a wall on left

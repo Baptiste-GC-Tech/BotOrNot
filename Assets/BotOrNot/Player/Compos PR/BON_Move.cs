@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Windows;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour
@@ -66,7 +67,6 @@ public class BON_Move : MonoBehaviour
     [SerializeField] int _numberOfBounce = 3;
     [SerializeField] float _bounceHeight = 5.0f;
     [SerializeField] float _heightBonceStart = 6.0f;
-    private bool _isGrounded;
     private bool _isBouncing;
     private Vector3 _fallHeight;
     private int _bounceCount;
@@ -178,7 +178,7 @@ public class BON_Move : MonoBehaviour
         {
             _moveInputValue.x = 0;
         }
-        print(_moveInputValue);
+        //print(_moveInputValue);
 
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
@@ -220,7 +220,7 @@ public class BON_Move : MonoBehaviour
         }
 
         //Bounce
-        if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
             Debug.Log("Should enter bounce");
             _isBouncing = true;
@@ -249,7 +249,7 @@ public class BON_Move : MonoBehaviour
     {
         if (collision.gameObject.tag == "Floor")
         {
-            _isGrounded = true;
+            _player.AvatarState.IsGrounded = true;
         }
         if (_isBouncing)
         {
@@ -269,7 +269,7 @@ public class BON_Move : MonoBehaviour
     {
         if (collision.gameObject.tag == "Floor")
         {
-            _isGrounded = false;
+            _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
         }
     }

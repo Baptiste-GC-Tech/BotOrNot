@@ -14,6 +14,8 @@ public class BON_DetectionWall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger Enter, also...");
+
         if (other.gameObject.CompareTag("Wall")) //wall
         {
             _WallPos = other.transform.position;
