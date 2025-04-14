@@ -49,6 +49,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveRight",
+                    "type": "Button",
+                    "id": "753004a1-ff14-44f6-b334-cc3487656168",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveLeft",
+                    "type": "Button",
+                    "id": "72ecf452-01c9-490e-8bb7-f79caaf67145",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -192,6 +210,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "CablemoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f7fb92e-7855-431f-b9b9-0f4ff8e957fb",
+                    "path": "<Joystick>/stick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6fd4f03-86cc-4870-9edc-2ba59ad14fc2",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1efbef9e-47f4-415a-85a7-d88e7b7f6503",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2a6099f-45e3-4c8f-bac7-bacc61350241",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

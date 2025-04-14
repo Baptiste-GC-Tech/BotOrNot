@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BON_Cable : MonoBehaviour
@@ -12,12 +11,14 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private Transform _gunOrigin;
     [SerializeField] private LayerMask _raycastLayers;
     [SerializeField] private Transform _directionReference;
+    [SerializeField] private BON_CCPlayer _player;
 
     [Header("Hook Settings")]
     [SerializeField] private float _rayDistance = 100f;
-    [SerializeField] private float _springForce = 30f; 
+    [SerializeField] private float _springForce = 30f;
     [SerializeField] private float _damping = 5f;
     [SerializeField] private float _cableLengthSpeed = 5f;
+    [SerializeField] private float _swingForce = 5f;
 
     [Header("Visual Settings")]
     [SerializeField] private int _lineSegments = 20;
@@ -27,25 +28,37 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _swingAmplitude = 0.1f;
     [SerializeField] private float _swingFrequency = 2f;
 
-    // player reference
-    [SerializeField] private BON_CCPlayer _player;
+    [Header("Swing Settings")]
+    [SerializeField] private float _swingMaxSpeed = 10f;
+    [SerializeField] private float _swingAccel = 25f;
+    [SerializeField] private float _lateralDamping = 1f;
+
 
     private bool _lineVisible = false;
     private bool _animating = false;
+    private Vector3 _targetPoint;
+    private float _swingTimer;
+
     private InputAction _clickAction;
     private InputAction _CablemoveDown;
     private InputAction _CablemoveUp;
+    private InputAction _CablemoveLeft;
+    private InputAction _CablemoveRight;
+
     private SpringJoint _joint;
     private Rigidbody _rb;
-    private float _swingTimer;
-    private Vector3 _targetPoint;
+    private BON_Move _moveScript;
 
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
         _CablemoveDown = InputSystem.actions.FindAction("ActionsMapPR/CablemoveDown");
         _CablemoveUp = InputSystem.actions.FindAction("ActionsMapPR/CablemoveUp");
+        _CablemoveLeft = InputSystem.actions.FindAction("ActionsMapPR/CablemoveLeft");
+        _CablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
+
         _rb = GetComponent<Rigidbody>();
+        _moveScript = GetComponent<BON_Move>();
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
@@ -67,22 +80,35 @@ public class BON_Cable : MonoBehaviour
         if (_joint != null)
         {
             float lengthChange = 0f;
-
             if (_CablemoveUp != null && _CablemoveUp.ReadValue<float>() > 0.5f)
-            {
                 lengthChange -= _cableLengthSpeed * Time.deltaTime;
-            }
-
             if (_CablemoveDown != null && _CablemoveDown.ReadValue<float>() > 0.5f)
-            {
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
+
+            Vector3 toAnchor = _joint.connectedAnchor - transform.position;
+            Vector3 tangentDir = Vector3.Cross(Vector3.up, toAnchor.normalized).normalized;
+
+            bool left = _CablemoveLeft != null && _CablemoveLeft.IsPressed();
+            bool right = _CablemoveRight != null && _CablemoveRight.IsPressed();
+
+            float swingInput = 0f;
+            if (left && !right) swingInput = -1f;
+            if (right && !left) swingInput = 1f;
+
+            float currentLateralSpeed = Vector3.Dot(_rb.velocity, tangentDir);
+            if (swingInput != 0f && Mathf.Abs(currentLateralSpeed) < _swingMaxSpeed)
+            {
+                _rb.velocity += tangentDir * swingInput * _swingAccel * Time.deltaTime;
             }
 
-            if (Mathf.Abs(lengthChange) > 0.001f)
+            if (swingInput == 0f)
             {
-                _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
+                Vector3 lateralVel = Vector3.Project(_rb.velocity, tangentDir);
+                _rb.velocity -= lateralVel * _lateralDamping * Time.deltaTime;
             }
         }
+
 
     }
 
@@ -94,46 +120,38 @@ public class BON_Cable : MonoBehaviour
 
             if (closest != null)
             {
-                
                 _lineVisible = true;
                 _lineRenderer.enabled = true;
                 _lineRenderer.positionCount = _lineSegments;
                 _targetPoint = closest.position;
+
                 StartCoroutine(PRIVAnimerLigneAvecVague());
 
-                // Activation du hook via BON_Interactive
                 BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
                 if (interactive != null)
-                {
                     interactive.Activate();
-                }
-                // State Machine
+
                 _player.AvatarState.HasCableOut = true;
+                if (_moveScript != null) _moveScript.enabled = false;
             }
         }
         else
         {
-            
-            // State Machine
             _player.AvatarState.HasCableOut = false;
-
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
-
             if (closest != null)
             {
-                // De-Activation du hook via BON_Interactive
                 _targetPoint = closest.position;
                 BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
                 if (interactive != null)
-                {
                     interactive.Activate();
-                }
             }
+
+            if (_moveScript != null) _moveScript.enabled = true;
         }
     }
-
 
     private Transform PRIVTrouverPlusProcheHook(GameObject[] hooks)
     {
@@ -146,7 +164,7 @@ public class BON_Cable : MonoBehaviour
         {
             Vector3 toHook = hook.transform.position - _gunOrigin.position;
 
-            if (Vector3.Dot(direction, toHook.normalized) > 0) // hook dans la direction du regard
+            if (Vector3.Dot(direction, toHook.normalized) > 0)
             {
                 float dist = toHook.magnitude;
                 if (dist <= _rayDistance && dist < shortest)
@@ -158,7 +176,6 @@ public class BON_Cable : MonoBehaviour
         }
         return closest;
     }
-
 
     private IEnumerator PRIVAnimerLigneAvecVague()
     {
@@ -197,7 +214,6 @@ public class BON_Cable : MonoBehaviour
         PRIVSupprimerRappel();
 
         float timer = 0f;
-
         while (timer < _deployTime)
         {
             timer += Time.deltaTime;
