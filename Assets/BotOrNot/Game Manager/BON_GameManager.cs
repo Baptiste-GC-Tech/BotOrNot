@@ -229,6 +229,16 @@ public class BON_GameManager : MonoBehaviour
         _isSwitching = false;
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1.0f;
+    }
+
 
     /*
      *  UNITY METHODS
