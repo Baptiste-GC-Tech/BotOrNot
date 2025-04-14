@@ -53,11 +53,9 @@ public class BON_Move : MonoBehaviour
     [SerializeField] private float _driftDuration = 0.5f;
     [SerializeField] private float _driftAcceleration = 400.0f;
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
-    private Vector3 _desiredDirection;
     private float _driftTimer;
-    private Vector2 _previousDirection;
+    private float _previousDirection;
     private bool _isFirstMove = true;
-    private bool _needToResetDrift = false;
     private float _timeSinceLastMove = 0;
 
     /* Bounce related */
@@ -140,6 +138,22 @@ public class BON_Move : MonoBehaviour
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
 
+    private float UpdateDirection()
+    {
+        if (_moveInputValue.x > 0)
+        {
+            return 1;
+        }
+        else if (_moveInputValue.x < 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     /*
      *  UNITY METHODS
      */
@@ -152,7 +166,7 @@ public class BON_Move : MonoBehaviour
         {
             _heightBonceStart = _bounceHeight + 1;
         }
-        _previousDirection = _moveInputValue.normalized;
+        _previousDirection =  UpdateDirection();
     }
 
     void Update()
@@ -160,33 +174,33 @@ public class BON_Move : MonoBehaviour
         // We do this first since it's always good data to have
         UpdateGroundNormal();
 
-        /* Handles the input */
+        /* Handles the input */   
 #if UNITY_EDITOR
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+            _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
-        _moveInputValue = _joystick.InputValues;
+            _moveInputValue = _joystick.InputValues;
 #endif
+
 
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
-        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+        print(_moveInputValue);
         //Drift
-        if (_desiredDirection != Vector3.zero)
+        if (_moveInputValue != Vector2.zero)
         {
             if (_isFirstMove)
             {
                 _isFirstMove = false;
-                _previousDirection = _moveInputValue.normalized;
+                _previousDirection =  UpdateDirection();
             }
-            if (_previousDirection != _moveInputValue.normalized)
+            if (_previousDirection != UpdateDirection())
             {
-                _previousDirection = _moveInputValue.normalized;
+                _previousDirection = UpdateDirection();
                 _driftTimer = _driftDuration;
             }
             if (_driftTimer > 0)
             {
-                Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
                 _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;
@@ -209,7 +223,6 @@ public class BON_Move : MonoBehaviour
         //Bounce
         if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
-            Debug.Log("Should enter bounce");
             _isBouncing = true;
             _bounceCount = 0;
         }
