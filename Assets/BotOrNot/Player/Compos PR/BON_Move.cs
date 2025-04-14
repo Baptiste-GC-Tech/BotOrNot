@@ -170,36 +170,41 @@ public class BON_Move : MonoBehaviour
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
 
-        //_desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
-        ////Drift
-        //if (_desiredDirection != Vector3.zero)
-        //{
-        //    if (_isFirstMove)
-        //    {
-        //        _isFirstMove = false;
-        //        _previousDirection = _moveInputValue.normalized;
-        //    }
-        //    if (_previousDirection != _moveInputValue.normalized)
-        //    {
-        //        _previousDirection = _moveInputValue.normalized;
-        //        _driftTimer = _driftDuration; 
-        //    }
-        //    if (_driftTimer > 0)
-        //    {
-        //        Debug.Log("Drifting");
-        //        _driftTimer -= Time.deltaTime;
-        //        _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
-        //        _curMoveDir = - _curMoveDir;
-        //        //_currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, Time.deltaTime * _driftAcceleration);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("End Drifting");
-        //        Vector3 targetVelocity = _desiredDirection * _curSpeed;
-        //        //_curSpeed = Mathf.Lerp(_curSpeed, targetVelocity.magnitude, Time.deltaTime * _driftAcceleration);
-        //        //_currentVelocity = Vector3.Lerp(_currentVelocity, targetVelocity, Time.deltaTime * _driftAcceleration);
-        //    }
-        //}
+        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+        //Drift
+        if (_desiredDirection != Vector3.zero)
+        {
+            if (_isFirstMove)
+            {
+                _isFirstMove = false;
+                _previousDirection = _moveInputValue.normalized;
+            }
+            if (_previousDirection != _moveInputValue.normalized)
+            {
+                _previousDirection = _moveInputValue.normalized;
+                _driftTimer = _driftDuration;
+            }
+            if (_driftTimer > 0)
+            {
+                Debug.Log("Drifting");
+                _driftTimer -= Time.deltaTime;
+                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
+                _curMoveDir = -_curMoveDir;
+            }
+        }
+        if (_player.AvatarState.IsMovingByPlayer)
+        {
+            _timeSinceLastMove = 0;
+        }
+        else
+        {
+            _timeSinceLastMove += Time.deltaTime;
+        }
+
+        if (_timeSinceLastMove > _timeBetweenDrifts)
+        {
+            _isFirstMove = true;
+        }
 
         //Bounce
         if (!_isGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
@@ -221,8 +226,6 @@ public class BON_Move : MonoBehaviour
 
 
         /* Applies the movement */
-        //Need to change to use the drift     /!\
-        //transform.Translate(_currentVelocity * Time.deltaTime, Space.World);
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
         movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
         transform.Translate(movementThisFrame);

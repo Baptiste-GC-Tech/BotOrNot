@@ -31534,6 +31534,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1695258137}
+    - target: {fileID: 8326255188780319661, guid: b63a61052e481fc4188072a0e8b67a63,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
     - target: {fileID: 8436276747535026941, guid: b63a61052e481fc4188072a0e8b67a63,
         type: 3}
       propertyPath: m_Mesh
@@ -32417,6 +32422,16 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1059421328}
+    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _driftDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521182800846610668, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _driftAcceleration
+      value: 400
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
