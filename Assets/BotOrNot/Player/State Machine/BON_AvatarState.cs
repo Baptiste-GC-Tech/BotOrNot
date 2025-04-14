@@ -22,12 +22,21 @@ public class BON_AvatarState : ScriptableObject
         get { return _isGrounded; }
         set { _isGrounded = value; }
     }
-    bool _isAgainstWall = false; //1 if touch a wall
-    public bool IsAgainstWall //  -> need to setup
+
+    bool _isAgainstWallLeft = false; //1 if touch a wall on left
+    public bool IsAgainstWallLeft
     {
-        get { return _isAgainstWall; }
-        set { _isAgainstWall = value; }
+        get { return _isAgainstWallLeft; }
+        set { _isAgainstWallLeft = value; }
     }
+
+    bool _isAgainstWallRight = false; //1 if touch a wall on left
+    public bool IsAgainstWallRight
+    {
+        get { return _isAgainstWallRight; }
+        set { _isAgainstWallRight = value; }
+    }
+
     bool _isMovingByPlayer = false; //1 if move, 0 if idle
     public bool IsMovingByPlayer //for state
     {
@@ -199,20 +208,5 @@ public class BON_AvatarState : ScriptableObject
     public void UpdateState() //update state and mains bools
     {
         _currentStateAsset?.UpState();
-        UpdateGroundedBool();
-        UpdateAgainstWallBool();
-    }
-
-    public void UpdateGroundedBool() //check if there ground under
-    {
-        _isGrounded = Physics.Raycast(_player.transform.position, -Vector3.up, distToGround + 0.5f);
-    }
-
-    private void UpdateAgainstWallBool() //check if there wall forward
-    {
-        //Debug.DrawRay(_player.transform.position, Vector3.left, Color.blue);
-        //Debug.DrawRay(_player.transform.position, Vector3.right, Color.blue);
-
-        _isAgainstWall = (Physics.Raycast(_player.transform.position, Vector3.right, distToWall + 0.2f) || Physics.Raycast(_player.transform.position, Vector3.left, distToWall + 0.2f));
     }
 }

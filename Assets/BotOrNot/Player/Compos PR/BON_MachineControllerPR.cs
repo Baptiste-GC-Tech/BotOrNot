@@ -33,17 +33,16 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Reads input values
         _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
 
-        _machine.On();
         _machine.ProcessInput(_moveMachineValue);
 
         if(_QuitControlOfMachineAction.WasPressedThisFrame())
         {
             if (BON_GameManager.Instance().IsSwitching)
             {
-                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
                 _player.AvatarState.IsConstrollingMachine = false;
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().RecoverControl();
+                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
             }
         }
     }
@@ -65,14 +64,16 @@ public class BON_MachineControllerPR : MonoBehaviour
         {
             if (_player.AvatarState.IsNearIOMInteractible && BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
-                _player.AvatarState.IsConstrollingMachine = true;
+                _machinePossessed = _player.MachineToPossess;
+                _machinePossessed.On();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().GiveControl();
+                _player.AvatarState.IsConstrollingMachine = true;
             }
         }
         if (_player.AvatarState.IsConstrollingMachine)
         {
-            //MoveMachine();
+            MoveMachine(_machinePossessed);
         }
 
         if (_TakeControlOfMachineAction == null)

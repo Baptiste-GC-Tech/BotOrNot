@@ -69,7 +69,7 @@ public class BON_CCPlayer : MonoBehaviour
         else if (other.gameObject.tag == "Machine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
-            //_machineToPossess = other.transform.parent;  -> mettre le trigger en enfant , et recup le parent du trigger ?
+            //_machineToPossess = other.transform.parent;  //-> mettre le trigger en enfant , et recup le parent du trigger ?
         }
     }
 

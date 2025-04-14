@@ -153,6 +153,8 @@ public class BON_Move : MonoBehaviour
             _heightBonceStart = _bounceHeight + 1;
         }
         _previousDirection = _moveInputValue.normalized;
+        _player.AvatarState.IsAgainstWallRight = false; // init false in avatarState but stuck at True (?????)
+        _player.AvatarState.IsAgainstWallLeft = false; //
     }
 
     void Update()
@@ -166,6 +168,17 @@ public class BON_Move : MonoBehaviour
 #elif UNITY_ANDROID
         _moveInputValue = _joystick.InputValues;
 #endif
+
+        //if wall on right/left, stop input
+        if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
+        {
+            _moveInputValue.x = 0;
+        }
+        if (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)
+        {
+            _moveInputValue.x = 0;
+        }
+        print(_moveInputValue);
 
         UpdateMoveDirFromInput();
         UpdateCurSpeed();

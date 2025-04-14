@@ -157,7 +157,6 @@ public class BON_GameManager : MonoBehaviour
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
-        _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
         DisableCompPlayer(_lastCharacterPlayed);
         _componentsAvatar[_lastCharacterPlayed][2].enabled = true;
         print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
@@ -190,7 +189,7 @@ public class BON_GameManager : MonoBehaviour
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
         EnableCompPlayer(_lastCharacterPlayed);
-        if (_currentCharacterPlayed == 0)
+        /*if (_currentCharacterPlayed == 0)   in Contollable.off()
         {
             _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
         }
@@ -198,11 +197,13 @@ public class BON_GameManager : MonoBehaviour
         {
             _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
         }
-        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);*/
     }
 
     public void DisableCompPlayer(int CharacterStopPlaying)
     {
+        if (_componentsAvatar == null) return;
+
         for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
         {
             if (_componentsAvatar[CharacterStopPlaying][i].enabled)
@@ -214,6 +215,8 @@ public class BON_GameManager : MonoBehaviour
 
     public void EnableCompPlayer(int CharacterWillPlay)
     {
+        if (_componentsAvatar == null) return;
+
         for (int i = 0; i < _componentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
             if (!_componentsAvatar[CharacterWillPlay][i].enabled)

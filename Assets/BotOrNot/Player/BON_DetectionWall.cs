@@ -5,6 +5,7 @@ using UnityEngine;
 public class BON_DetectionWall : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
+    private Vector3 _WallPos;
 
     private void Start()
     {
@@ -13,20 +14,36 @@ public class BON_DetectionWall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Wall") //wall
+        if (other.gameObject.CompareTag("Wall")) //wall
         {
-            //TO DO stop move
-            //bool againt wall true
-            _CCPlayer.AvatarState.IsAgainstWall = true;
+            _WallPos = other.transform.position;
+            if( transform.position.x < _WallPos.x) //wall on right
+            {
+                print("wall on right");
+                _CCPlayer.AvatarState.IsAgainstWallRight = true;
+            }
+            else
+            {
+                print("wall on left");
+                _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Wall") //wall
+        if (other.gameObject.CompareTag("Wall")) //wall
         {
-            //TO DO regive move
-            _CCPlayer.AvatarState.IsAgainstWall = false;
+            print("no wall");
+            _WallPos = other.transform.position;
+            if (transform.position.x < _WallPos.x) //wall on right
+            {
+                _CCPlayer.AvatarState.IsAgainstWallRight = false;
+            }
+            else
+            {
+                _CCPlayer.AvatarState.IsAgainstWallLeft = false;
+            }
         }
     }
 }
