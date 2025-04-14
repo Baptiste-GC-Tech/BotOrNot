@@ -50,8 +50,8 @@ public class BON_Move : MonoBehaviour
     /* Drift related */
     [Space]
     [Header("Drift")]
-    [SerializeField] private float _driftDuration = 0.3f;
-    [SerializeField] private float _driftAcceleration = 10f;
+    [SerializeField] private float _driftDuration = 0.5f;
+    [SerializeField] private float _driftAcceleration = 425f;
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
@@ -63,7 +63,7 @@ public class BON_Move : MonoBehaviour
     /* Bounce related */
     [Space]
     [Header("Bounce")]
-    [SerializeField] int _numberOfBounce = 2;
+    [SerializeField] int _numberOfBounce = 3;
     [SerializeField] float _bounceHeight = 5.0f;
     [SerializeField] float _heightBonceStart = 6.0f;
     private bool _isGrounded;
@@ -188,7 +188,7 @@ public class BON_Move : MonoBehaviour
             {
                 Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
-                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
+                _curSpeed = Mathf.Lerp(_curSpeed, 0, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;
             }
         }
