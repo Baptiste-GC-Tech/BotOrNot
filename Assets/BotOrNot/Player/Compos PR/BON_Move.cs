@@ -178,7 +178,6 @@ public class BON_Move : MonoBehaviour
         {
             _moveInputValue.x = 0;
         }
-        //print(_moveInputValue);
 
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
@@ -237,6 +236,7 @@ public class BON_Move : MonoBehaviour
             _player.AvatarState.IsMovingByPlayer = false;
         }
 
+        //print(_curSpeed);
 
         /* Applies the movement */
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;

@@ -158,8 +158,8 @@ public class BON_GameManager : MonoBehaviour
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
         DisableCompPlayer(_lastCharacterPlayed);
-        _componentsAvatar[_lastCharacterPlayed][2].enabled = true;
-        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
+        _componentsAvatar[_lastCharacterPlayed][1].enabled = true;
+        Debug.Log("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void SwitchPlayer()

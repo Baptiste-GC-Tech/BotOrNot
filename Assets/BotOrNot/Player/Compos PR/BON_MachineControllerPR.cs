@@ -37,12 +37,13 @@ public class BON_MachineControllerPR : MonoBehaviour
 
         if(_QuitControlOfMachineAction.WasPressedThisFrame())
         {
-            if (BON_GameManager.Instance().IsSwitching)
+            if (!BON_GameManager.Instance().IsSwitching)
             {
-                _player.AvatarState.IsConstrollingMachine = false;
-                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().RecoverControl();
+                _machinePossessed.Off();
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+                _player.AvatarState.IsConstrollingMachine = false;
             }
         }
     }
@@ -62,7 +63,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasReleasedThisFrame()) //interact
         {
-            if (_player.AvatarState.IsNearIOMInteractible && BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
+            if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
                 _machinePossessed = _player.MachineToPossess;
                 _machinePossessed.On();
