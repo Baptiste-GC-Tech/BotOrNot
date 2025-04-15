@@ -27,7 +27,7 @@ public class BON_Interact : MonoBehaviour
     void Update()
     {
         // Take item action handling
-        if (_ItemInteractAction.WasPressedThisFrame()) //interact
+        if (_ItemInteractAction.WasReleasedThisFrame()) //interact
         {
             /*if (_player.IsDRInRange) //dame robot pas loin
             {

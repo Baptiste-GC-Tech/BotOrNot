@@ -84,14 +84,6 @@ public class BON_AvatarState : ScriptableObject
         set { _hasCableOut = value; }
     }
 
-    //bool _isNearItem = false; //<-- Truc pour l’inventaire 
-    //public bool IsNearItem
-    //{
-    //    get { return _isNearItem; }
-    //    set { _isNearItem = value; }
-    //}
-
-
     /*
      *  Booleans exclusive to PR
      */
@@ -109,14 +101,6 @@ public class BON_AvatarState : ScriptableObject
         get { return _isDRInRange; }
         set { _isDRInRange = value; }
     }
-
-    //bool _isJumping = false; //1 if in air - for state
-    //public bool IsJumping
-    //{
-    //    get { return _isJumping; }
-    //    set { _isJumping = value; }
-    //}
-
 
     protected State _currentState;
     public State CurrentState

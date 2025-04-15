@@ -17,8 +17,8 @@ public class BON_MachineControllerPR : MonoBehaviour
     // Player & State related
     [SerializeField] private BON_CCPlayer _player; 
 
-    private BON_Controllable _machinePossessed;
-    public BON_Controllable MachinePossessed
+    private BON_Interactive _machinePossessed;
+    public BON_Interactive MachinePossessed
     {
         get { return _machinePossessed; }
         set { _machinePossessed = value; }
@@ -39,10 +39,9 @@ public class BON_MachineControllerPR : MonoBehaviour
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
+                _machinePossessed.Activate();
                 BON_GameManager.Instance().RecoverControl();
-                _machinePossessed.Off();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
                 _player.AvatarState.IsConstrollingMachine = false;
             }
         }
@@ -61,14 +60,15 @@ public class BON_MachineControllerPR : MonoBehaviour
     void Update()
     { 
         // Control management (gaining control of the machine or taking back control of PR)
-        if (_TakeControlOfMachineAction.WasReleasedThisFrame()) //interact
+        if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
             Debug.Log("click");
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
                 Debug.Log("click machine");
-                _machinePossessed = _player.MachineToPossess;
-                _machinePossessed.On();
+                _machinePossessed = _player.MachineToActivate;
+                _machinePossessed.Activate();
+
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().GiveControl();
                 _player.AvatarState.IsConstrollingMachine = true;
@@ -76,7 +76,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         }
         if (_player.AvatarState.IsConstrollingMachine)
         {
-            MoveMachine(_machinePossessed);
+            //MoveMachine(_machinePossessed);
         }
 
         if (_TakeControlOfMachineAction == null)
