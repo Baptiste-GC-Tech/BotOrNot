@@ -66,10 +66,13 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = true;
         }
-        else if (other.gameObject.tag == "Machine") //trigger with machine
+        else if (other.gameObject.tag == "TriggerZone") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
-            //_machineToPossess = other.transform.parent;  //-> mettre le trigger en enfant , et recup le parent du trigger ?
+            //_machineToPossess = other.transform.parent.gameObject;  //->  DOTO : rcup la machine ->mettre le trigger en enfant , et recup le parent du trigger ?
+            _machineToPossess = other.GetComponentInParent<BON_Controllable>();
+            print("c'est recup");
+            print(_machineToPossess);
         }
     }
 
@@ -79,7 +82,7 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = false;
         }
-        else if (other.gameObject.tag == "Machine") //trigger with machine
+        else if (other.gameObject.tag == "TriggerZone") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToPossess = null;

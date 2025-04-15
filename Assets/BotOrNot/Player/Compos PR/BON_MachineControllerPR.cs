@@ -63,8 +63,10 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasReleasedThisFrame()) //interact
         {
+            Debug.Log("click");
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
+                Debug.Log("click machine");
                 _machinePossessed = _player.MachineToPossess;
                 _machinePossessed.On();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
