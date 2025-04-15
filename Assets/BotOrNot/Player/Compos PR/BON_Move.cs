@@ -132,7 +132,7 @@ public class BON_Move : MonoBehaviour
     private void UpdateGroundNormal()
     {
         RaycastHit groundRaycastHit;
-        Debug.DrawRay(transform.position, Vector3.down * 1.5f, Color.red, Time.deltaTime);
+        //Debug.DrawRay(transform.position, Vector3.down * 1.5f, Color.red, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
         Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 1.5f);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
