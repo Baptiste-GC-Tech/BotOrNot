@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Metadata;
 using static UnityEngine.Rendering.DebugUI;
 
 public class BON_Menus : MonoBehaviour

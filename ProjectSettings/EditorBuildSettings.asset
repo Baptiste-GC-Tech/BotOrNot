@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/BotOrNot/Scenes/UI.unity
     guid: bb5bb53bca52e6442b8a7c3ecce4c7ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/BotOrNot/Scenes/Credits.unity
     guid: 73458a66ca83dac4fa29319df271a1bb
-  - enabled: 1
+  - enabled: 0
     path: Assets/BotOrNot/Scenes/MainMenu.unity
     guid: b6787b456e9f14e49a7ecaed17c3813d
   - enabled: 1
