@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BotOrNot/Scenes/Credits.unity
     guid: 73458a66ca83dac4fa29319df271a1bb
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/MainMenu.unity
+    guid: b6787b456e9f14e49a7ecaed17c3813d
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/UI_Blockout.unity
+    guid: 9aa3821fc64d89d4c85453d9adb1dc26
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: afea3284868cd7944a20e17107876b05,
       type: 2}

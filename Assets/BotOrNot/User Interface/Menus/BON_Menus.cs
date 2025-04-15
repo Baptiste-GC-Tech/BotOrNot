@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Metadata;
+using static UnityEngine.Rendering.DebugUI;
 
 public class BON_Menus : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class BON_Menus : MonoBehaviour
     [SerializeField] GameObject InitialCanva;
     [SerializeField] GameObject InitialPanel;
     [SerializeField] GameObject InitialButton;
+
+    [SerializeField] GameObject OtherCanva;
 
     private GameObject _activeCanva;
     private GameObject _activePanel;
@@ -58,7 +63,8 @@ public class BON_Menus : MonoBehaviour
         _activePanel = panel;
         _activePanel.SetActive(true);
 
-        PRIVSMSwitchButton(panel.transform.parent.gameObject);
+        if (_activeButton != null)
+            PRIVSMSwitchButton(panel.transform.parent.gameObject);
     }
 
     private void PRIVSMSwitchButton(GameObject button)
@@ -89,6 +95,57 @@ public class BON_Menus : MonoBehaviour
         check.SetActive(_isCBActive);
     }
 
+    public void PMPauseStart(GameObject panel)
+    {
+        _activePanel = panel;
+        _activePanel.SetActive(true);
+
+        var cMana = OtherCanva.GetComponent<BON_ControlsManager>();
+        cMana.IsTouchEnabled = false;
+        cMana.CJoystick.ComponentToggle();
+        cMana.CPButtons.ComponentToggle();
+        cMana.CHUDButtons.ComponentToggle();
+
+        BON_GameManager.Instance().PauseGame();
+        PRIVSMUpdateSliders();
+    }
+
+    public void PMQuitGame()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    public void PMPauseEnd()
+    {
+        _activePanel.SetActive(false);
+        _activePanel = null;
+
+        var cMana = OtherCanva.GetComponent<BON_ControlsManager>();
+        cMana.IsTouchEnabled = true;
+        cMana.CJoystick.ComponentToggle();
+        cMana.CPButtons.ComponentToggle();
+        cMana.CHUDButtons.ComponentToggle();
+
+        BON_GameManager.Instance().UnpauseGame();
+    }
+
+    private void PRIVSMUpdateSliders()
+    {
+        foreach (Transform child in transform)
+        {
+            var children = child.GetComponentsInChildren<Slider>();
+
+            for (int i = 0; i < children.Length; i++)
+            {
+                Debug.Log("Je change " + children[i].name);
+                AudioMixer.GetFloat(children[i].name, out float value);
+                Debug.Log(value);
+                children[i].value = Mathf.Pow(value, 10);
+                Debug.Log(children[i].value);
+            }
+        }   
+    }
+
 
 
 
@@ -102,8 +159,11 @@ public class BON_Menus : MonoBehaviour
 
     void Start()
     {
-        _activeCanva = InitialCanva;
-        _activePanel = InitialPanel;
-        _activeButton = InitialButton;
+        if (InitialCanva != null)
+            _activeCanva = InitialCanva;
+        if (InitialPanel != null)
+            _activePanel = InitialPanel;
+        if (InitialButton != null)
+            _activeButton = InitialButton;
     }
 }

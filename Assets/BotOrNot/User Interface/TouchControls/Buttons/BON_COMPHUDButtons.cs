@@ -59,10 +59,13 @@ public class BON_COMPHUDButtons : BON_TouchComps
     {
         Rect rect = rectTr.rect;
 
-        float leftSide = rectTr.anchoredPosition.x + (Screen.width / 2);
-        float rightSide = rectTr.anchoredPosition.x + rect.width + (Screen.width / 2);
-        float topSide = rectTr.anchoredPosition.y + rect.height / 2 + (Screen.height / 2);
-        float bottomSide = rectTr.anchoredPosition.y - rect.height / 2 + (Screen.height / 2);
+        float leftSide = rectTr.anchoredPosition.x - rect.width / 2 + (Screen.width / 2);
+        float rightSide = rectTr.anchoredPosition.x + rect.width / 2 + (Screen.width / 2);
+        float topSide = rectTr.anchoredPosition.y + rect.height + (Screen.height / 2);
+        float bottomSide = rectTr.anchoredPosition.y + (Screen.height / 2);
+
+        Debug.Log(leftSide + " ; " + rightSide + " | " + posToTry.x);
+        Debug.Log(topSide + " ; " + bottomSide + " | " + posToTry.y);
 
         if (posToTry.x <= rightSide &&
             posToTry.x >= leftSide &&
