@@ -94,12 +94,14 @@ public class BON_GameManager : MonoBehaviour
         {
             _player.GetComponent<BON_Move>(),
             _player.GetComponent<BON_Interact>(),
-            _player.GetComponent<BON_Cable>()
+            _player.GetComponent<BON_Cable>(),
+            _player.GetComponent<BON_MachineControllerPR>()
         };
         _componentsDR = new ()
         {
             _player.GetComponent<BON_MoveDR>(),
-            _player.GetComponent<BON_InteractDR>()
+            _player.GetComponent<BON_InteractDR>(),
+            //_player.GetComponent<BON_MachineInteractDR>()
         };
 
         //init la scene actuelle
@@ -181,7 +183,6 @@ public class BON_GameManager : MonoBehaviour
             _isPlayingNut = true;
             _currentCharacterPlayed = 0;
         }
-        //_avatarState = _listAvatarsStates[_currentCharacterPlayed];
         print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
@@ -189,15 +190,7 @@ public class BON_GameManager : MonoBehaviour
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
         EnableCompPlayer(_lastCharacterPlayed);
-        /*if (_currentCharacterPlayed == 0)   in Contollable.off()
-        {
-            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-        }
-        else
-        {
-            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-        }
-        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);*/
+        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void DisableCompPlayer(int CharacterStopPlaying)

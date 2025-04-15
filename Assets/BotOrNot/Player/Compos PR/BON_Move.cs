@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Windows;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_Move : MonoBehaviour

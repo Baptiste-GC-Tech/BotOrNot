@@ -23,7 +23,7 @@ public class BON_InteractDR : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _interactAction = InputSystem.actions.FindAction("ActionsMapDR/Interact");
+        _interactAction = InputSystem.actions.FindAction("ActionsMapDR/SwitchPR");
         _inventory = GetComponent<BON_Inventory>();
     }
 

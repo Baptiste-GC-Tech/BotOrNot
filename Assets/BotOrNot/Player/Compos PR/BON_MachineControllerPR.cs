@@ -17,12 +17,20 @@ public class BON_MachineControllerPR : MonoBehaviour
     // Player & State related
     [SerializeField] private BON_CCPlayer _player; 
 
+    private BON_Interactive _machineToActivate;
+    public BON_Interactive MachineToActivate
+    {
+        get { return _machineToActivate; }
+        set { _machineToActivate = value; }
+    }
+
     private BON_Controllable _machinePossessed;
     public BON_Controllable MachinePossessed
     {
         get { return _machinePossessed; }
         set { _machinePossessed = value; }
     }
+
 
     /*
      *  CLASS METHODS
@@ -39,10 +47,9 @@ public class BON_MachineControllerPR : MonoBehaviour
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
+                _machineToActivate.Activate();
                 BON_GameManager.Instance().RecoverControl();
-                _machinePossessed.Off();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
                 _player.AvatarState.IsConstrollingMachine = false;
             }
         }
@@ -56,19 +63,20 @@ public class BON_MachineControllerPR : MonoBehaviour
         _TakeControlOfMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
         _QuitControlOfMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         _JoystickMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
+        _player.AvatarState.IsConstrollingMachine = false ;
     }
 
     void Update()
-    { 
+    {
         // Control management (gaining control of the machine or taking back control of PR)
-        if (_TakeControlOfMachineAction.WasReleasedThisFrame()) //interact
+        if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
             Debug.Log("click");
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {
-                Debug.Log("click machine");
-                _machinePossessed = _player.MachineToPossess;
-                _machinePossessed.On();
+            {                                       // 2 machines : free crane et "levier"
+                Debug.Log("activate");
+                _machineToActivate = _player.MachineToActivate;
+                _machineToActivate.Activate();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().GiveControl();
                 _player.AvatarState.IsConstrollingMachine = true;

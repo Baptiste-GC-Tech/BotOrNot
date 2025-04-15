@@ -20,14 +20,14 @@ public class BON_Interact : MonoBehaviour
 
     void Start()
     {
-        _ItemInteractAction = InputSystem.actions.FindAction("ActionsMapPR/Interact");
+        _ItemInteractAction = InputSystem.actions.FindAction("ActionsMapPR/SwitchDR");
         _inventory = GetComponent<BON_Inventory>();
     }
 
     void Update()
     {
         // Take item action handling
-        if (_ItemInteractAction.WasPressedThisFrame()) //interact
+        if (_ItemInteractAction.WasReleasedThisFrame()) //interact
         {
             /*if (_player.IsDRInRange) //dame robot pas loin
             {
@@ -40,9 +40,10 @@ public class BON_Interact : MonoBehaviour
                     _inventory.DeleteItem(i);
                 }
             }*/
+            Debug.Log("click interact");
             if (!BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsNearIOMInteractible) //Pas de machine a porté et pas deja en train de switch
             {
-                
+                Debug.Log("switch DR");
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().SwitchPlayer();
             }
