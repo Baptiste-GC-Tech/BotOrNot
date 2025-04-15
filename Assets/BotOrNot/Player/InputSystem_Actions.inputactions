@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchDR",
+                    "type": "Button",
+                    "id": "30b08e90-b703-4402-807e-c41241d2474b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cable",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
@@ -166,6 +175,28 @@
                     "processors": "",
                     "groups": ";touchScreen",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f20e463-b9f7-4fa8-8284-db0340d20979",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchDR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a82d12dd-12ab-49dc-afdb-63fc599d88c1",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "SwitchDR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -789,6 +820,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "SwitchPR",
+                    "type": "Button",
+                    "id": "f1a21a91-35ad-4f2f-b0be-541c57294905",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "20bd34bb-7ce2-43a9-ba31-60049d5f299e",
@@ -904,6 +944,28 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81a1bc9d-0dfc-4317-ac63-39c4c8f43b6d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchPR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55b822ac-5974-449a-8a91-088660f46faa",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "SwitchPR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -22239,7 +22239,7 @@ GameObject:
   - component: {fileID: 1546397478}
   m_Layer: 0
   m_Name: triggerMachine
-  m_TagString: TriggerZone
+  m_TagString: TriggerMachine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
