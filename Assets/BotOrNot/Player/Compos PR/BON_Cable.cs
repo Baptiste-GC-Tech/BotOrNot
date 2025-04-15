@@ -15,10 +15,10 @@ public class BON_Cable : MonoBehaviour
 
     [Header("Hook Settings")]
     [SerializeField] private float _rayDistance = 100f;
-    [SerializeField] private float _springForce = 30f;
+    [SerializeField] private float _springForce = 20f;
     [SerializeField] private float _damping = 5f;
     [SerializeField] private float _cableLengthSpeed = 5f;
-    [SerializeField] private float _swingForce = 5f;
+    [SerializeField] private float _swingForce = 6f;
 
     [Header("Visual Settings")]
     [SerializeField] private int _lineSegments = 20;
@@ -29,8 +29,6 @@ public class BON_Cable : MonoBehaviour
     [SerializeField] private float _swingFrequency = 2f;
 
     [Header("Swing Settings")]
-    [SerializeField] private float _swingMaxSpeed = 10f;
-    [SerializeField] private float _swingAccel = 25f;
     [SerializeField] private float _lateralDamping = 1f;
 
 
@@ -80,37 +78,35 @@ public class BON_Cable : MonoBehaviour
         if (_joint != null)
         {
             float lengthChange = 0f;
-            if (_CablemoveUp != null && _CablemoveUp.ReadValue<float>() > 0.5f)
+            if (_CablemoveUp?.ReadValue<float>() > 0.5f)
                 lengthChange -= _cableLengthSpeed * Time.deltaTime;
-            if (_CablemoveDown != null && _CablemoveDown.ReadValue<float>() > 0.5f)
+            if (_CablemoveDown?.ReadValue<float>() > 0.5f)
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
             _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
 
-            Vector3 toAnchor = _joint.connectedAnchor - transform.position;
-            Vector3 tangentDir = Vector3.Cross(Vector3.up, toAnchor.normalized).normalized;
-
-            bool left = _CablemoveLeft != null && _CablemoveLeft.IsPressed();
-            bool right = _CablemoveRight != null && _CablemoveRight.IsPressed();
 
             float swingInput = 0f;
-            if (left && !right) swingInput = -1f;
-            if (right && !left) swingInput = 1f;
+            if (_CablemoveLeft != null && _CablemoveLeft.IsPressed()) swingInput = -1f;
+            if (_CablemoveRight != null && _CablemoveRight.IsPressed()) swingInput = 1f;
 
-            float currentLateralSpeed = Vector3.Dot(_rb.velocity, tangentDir);
-            if (swingInput != 0f && Mathf.Abs(currentLateralSpeed) < _swingMaxSpeed)
+            Vector3 toAnchor = _joint.connectedAnchor - transform.position;
+            Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
+            Vector3 swingDir = Vector3.Cross(Vector3.up, horizontalToAnchor).normalized;
+
+            if (swingInput != 0f)
             {
-                _rb.velocity += tangentDir * swingInput * _swingAccel * Time.deltaTime;
+                Vector3 force = swingDir * swingInput * _swingForce;
+                _rb.AddForce(force, ForceMode.VelocityChange);
             }
-
-            if (swingInput == 0f)
+            else
             {
-                Vector3 lateralVel = Vector3.Project(_rb.velocity, tangentDir);
+                Vector3 lateralVel = Vector3.Project(_rb.velocity, swingDir);
                 _rb.velocity -= lateralVel * _lateralDamping * Time.deltaTime;
             }
         }
 
-
     }
+
 
     public void GererClic()
     {
@@ -137,7 +133,7 @@ public class BON_Cable : MonoBehaviour
         }
         else
         {
-            _player.AvatarState.HasCableOut = false;
+            
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
@@ -148,7 +144,7 @@ public class BON_Cable : MonoBehaviour
                 if (interactive != null)
                     interactive.Activate();
             }
-
+            _player.AvatarState.HasCableOut = false;
             if (_moveScript != null) _moveScript.enabled = true;
         }
     }

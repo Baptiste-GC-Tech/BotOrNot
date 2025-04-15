@@ -1165,7 +1165,12 @@ PrefabInstance:
     - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
       propertyPath: _swingForce
-      value: 50
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
+        type: 3}
+      propertyPath: _springForce
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1131842411062934407, guid: abf6bd9db0073d04abf55b2f4649b595,
         type: 3}
