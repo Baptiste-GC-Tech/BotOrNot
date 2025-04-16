@@ -12,8 +12,10 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
     [SerializeField]
     protected float _timerMax;
     [SerializeField] float _currentTimer = 0f;
+    [SerializeField] float _holdTimer = 0f;
 
     private bool _returning = false;
+    private bool _isMoving = false;
 
     new public int NextNodeIndex
     {
@@ -61,7 +63,7 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
                         _isCyclingPositive = !_isCyclingPositive;
                     }
                     _currentTimer = 0;
-                    Status = false;
+                    _isMoving = false;
                 }
             }
             else
@@ -94,14 +96,18 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
 
     new void FixedUpdate()
     {
-        if (Status)
+        if (Status && _isMoving == false && _returning == false)
+        {
+            _isMoving = true;
+        }
+
+        else if (_isMoving)
         {
             float oneSpeed = _moveSpeed * Time.deltaTime;
             if (oneSpeed >= (_transformsList[_nextNodeIndex].position - gameObject.transform.position).magnitude)
             {
                 gameObject.transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
                 if (_isCyclingPositive) { NextNodeIndex++; } else { NextNodeIndex--; }
-                
             }
             else
             {
@@ -110,12 +116,23 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
                 gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + _currentRotation * movementFraction);
             }
         }
-        else if (_returning)
+
+        else if (_returning && Status == false && _isMoving == false)
         {
             _currentTimer += Time.deltaTime;
-            if (_currentTimer >= _timerMax)
+            if (_currentTimer >= _holdTimer)
             {
-                Status = true;
+                _isMoving = true;
+                _holdTimer = 0;
+            }
+        }
+
+        else if (_returning && Status == true && _isMoving == false)
+        {
+            _holdTimer += Time.deltaTime * 4;
+            if (_holdTimer >= _timerMax)
+            {
+                _holdTimer = _timerMax;
             }
         }
     }
