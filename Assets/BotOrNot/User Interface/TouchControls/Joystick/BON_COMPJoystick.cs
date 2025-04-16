@@ -73,7 +73,7 @@ public class BON_COMPJoystick : BON_TouchComps
     private void PRIVMoveJoystick()
     {
         gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
-        gameObject.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
+        gameObject.transform.SetLocalPositionAndRotation(Vector3.Lerp(pos, new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), 0.01f), rot);
 
         //Magnetude entre le pos initial et le currentPos
         _inputValues.x += (_currentTouchPos.x - _previousTouchPos.x)/200;

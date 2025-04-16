@@ -8,6 +8,7 @@ TagManager:
   - TriggerZone
   - Floor
   - Wall
+  - TriggerMachine
   layers:
   - Default
   - TransparentFX

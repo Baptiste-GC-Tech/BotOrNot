@@ -12,22 +12,45 @@ public class BON_AvatarState : ScriptableObject
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
 
+    /*  
+    *  Animator Controller
+    */
+
+    private Animator _animator;
+
     /*
      *  Booleans for Common State (both PR and DR)
      */
 
+    bool _wasGroundedLastFrame;
+    public bool WasGroundedLastFrame
+    {
+        get { return _wasGroundedLastFrame; }
+    }
     bool _isGrounded = false;  //1 if touch the ground 
     public bool IsGrounded //for jump -> need to setup
     {
         get { return _isGrounded; }
-        set { _isGrounded = value; }
+        set {
+            _wasGroundedLastFrame = _isGrounded;
+            _isGrounded = value;
+            }
     }
-    bool _isAgainstWall = false; //1 if touch a wall
-    public bool IsAgainstWall //  -> need to setup
+
+    bool _isAgainstWallLeft = false; //1 if touch a wall on left
+    public bool IsAgainstWallLeft
     {
-        get { return _isAgainstWall; }
-        set { _isAgainstWall = value; }
+        get { return _isAgainstWallLeft; }
+        set { _isAgainstWallLeft = value; }
     }
+
+    bool _isAgainstWallRight = false; //1 if touch a wall on left
+    public bool IsAgainstWallRight
+    {
+        get { return _isAgainstWallRight; }
+        set { _isAgainstWallRight = value; }
+    }
+
     bool _isMovingByPlayer = false; //1 if move, 0 if idle
     public bool IsMovingByPlayer //for state
     {
@@ -67,14 +90,6 @@ public class BON_AvatarState : ScriptableObject
         set { _hasCableOut = value; }
     }
 
-    //bool _isNearItem = false; //<-- Truc pour l’inventaire 
-    //public bool IsNearItem
-    //{
-    //    get { return _isNearItem; }
-    //    set { _isNearItem = value; }
-    //}
-
-
     /*
      *  Booleans exclusive to PR
      */
@@ -92,14 +107,6 @@ public class BON_AvatarState : ScriptableObject
         get { return _isDRInRange; }
         set { _isDRInRange = value; }
     }
-
-    //bool _isJumping = false; //1 if in air - for state
-    //public bool IsJumping
-    //{
-    //    get { return _isJumping; }
-    //    set { _isJumping = value; }
-    //}
-
 
     protected State _currentState;
     public State CurrentState
@@ -126,7 +133,8 @@ public class BON_AvatarState : ScriptableObject
         Jump, 
         Elevator, 
         ControllingMachine,
-        ThrowingCable,
+        ThrowingCable
+        //Grounded
     };
     
 
@@ -141,7 +149,26 @@ public class BON_AvatarState : ScriptableObject
         _currentStateAsset = _stateDict[state];
         _currentStateAsset?.InitPlayer(_player); //set le player
         _currentStateAsset?.Enter();    // Entrer dans le nouveau
+        UpdateAnimator(state);
     }
+
+    private void UpdateAnimator(State state)
+    {
+        if (_animator == null) return;
+
+        _animator.SetBool("IsIdle", state == State.Idle);
+        _animator.SetBool("IsMoving", state == State.Moving);
+        _animator.SetBool("IsJumping", state == State.Jump);
+        _animator.SetBool("IsControllingMachine", state == State.ControllingMachine);
+        _animator.SetBool("IsInElevator", state == State.Elevator);
+        _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
+        //_animator.SetBool("IsGrounded", state == State.Grounded);
+
+        // Optionnel : remettre certains flags à false
+        // if (state != State.Jump) _animator.SetBool("IsJumping", false);
+        // if (state != State.Moving) _animator.SetBool("IsMoving", false);
+    }
+
 
     protected bool CheckStatePossible(State newState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
     {
@@ -178,41 +205,47 @@ public class BON_AvatarState : ScriptableObject
 
     public void Init()
     {
-        _stateDict.Add(State.Idle,new BON_SIdle());
-        _stateDict.Add(State.Moving,new BON_SMoving());
-        _stateDict.Add(State.Jump,new BON_SJump());
-        _stateDict.Add(State.ControllingMachine,new BON_SControllingMachine());
-        _stateDict.Add(State.ThrowingCable,new BON_SThrowingCable());
-        _stateDict.Add(State.Elevator,new BON_SElevator());
-
+        // 1. Trouve le joueur
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
-        _playerCollider = _player.GetComponent<Collider>();
-        distToGround = _playerCollider.bounds.extents.y;
-        distToWall = _playerCollider.bounds.extents.x;
 
-        _currentState =  BON_AvatarState.State.Idle;
-        _currentStateAsset = _stateDict[BON_AvatarState.State.Idle];
-        _currentStateAsset?.InitPlayer(_player); //set le player
+        if (_player == null)
+        {
+            Debug.LogError("BON_AvatarState.Init() : BON_CCPlayer introuvable !");
+            return;
+        }
+
+        // 2. Trouve l'Animator dans ses enfants
+        _animator = _player.GetComponentInChildren<Animator>();
+        if (_animator == null)
+        {
+            Debug.LogWarning("BON_AvatarState.Init() : Animator non trouvé dans les enfants de BON_CCPlayer.");
+        }
+
+        // 3. Trouve son collider
+        _playerCollider = _player.GetComponent<Collider>();
+        if (_playerCollider != null)
+        {
+            distToGround = _playerCollider.bounds.extents.y;
+            distToWall = _playerCollider.bounds.extents.x;
+        }
+
+        // 4. Initialise les états
+        _stateDict.Add(State.Idle, new BON_SIdle());
+        _stateDict.Add(State.Moving, new BON_SMoving());
+        _stateDict.Add(State.Jump, new BON_SJump());
+        _stateDict.Add(State.ControllingMachine, new BON_SControllingMachine());
+        _stateDict.Add(State.ThrowingCable, new BON_SThrowingCable());
+        _stateDict.Add(State.Elevator, new BON_SElevator());
+        // 5. État initial
+        _currentState = State.Idle;
+        _currentStateAsset = _stateDict[_currentState];
+        _currentStateAsset?.InitPlayer(_player);
         _currentStateAsset?.Enter();
     }
+
 
     public void UpdateState() //update state and mains bools
     {
         _currentStateAsset?.UpState();
-        UpdateGroundedBool();
-        UpdateAgainstWallBool();
-    }
-
-    public void UpdateGroundedBool() //check if there ground under
-    {
-        _isGrounded = Physics.Raycast(_player.transform.position, -Vector3.up, distToGround + 0.5f);
-    }
-
-    private void UpdateAgainstWallBool() //check if there wall forward
-    {
-        //Debug.DrawRay(_player.transform.position, Vector3.left, Color.blue);
-        //Debug.DrawRay(_player.transform.position, Vector3.right, Color.blue);
-
-        _isAgainstWall = (Physics.Raycast(_player.transform.position, Vector3.right, distToWall + 0.2f) || Physics.Raycast(_player.transform.position, Vector3.left, distToWall + 0.2f));
     }
 }

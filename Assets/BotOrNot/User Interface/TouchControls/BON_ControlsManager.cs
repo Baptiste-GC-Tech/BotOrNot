@@ -25,10 +25,25 @@ public class BON_ControlsManager : MonoBehaviour
     }
 
     [SerializeField] BON_COMPJoystick _compJoystick;
+    public BON_COMPJoystick CJoystick
+    { get { return _compJoystick; } }
+
     [SerializeField] BON_COMPPlayerButtons _compPlayerButtons;
+    public BON_COMPPlayerButtons CPButtons
+    { get { return _compPlayerButtons; } }
+
     [SerializeField] BON_COMPHUDButtons _compHUDButtons;
+    public BON_COMPHUDButtons CHUDButtons
+    { get { return _compHUDButtons; } }
 
     [SerializeField] GameObject _touchFeedback;
+
+    private bool _isTouchEnabled = true;
+    public bool IsTouchEnabled
+    {
+        get { return _isTouchEnabled; }
+        set { _isTouchEnabled = value; }
+    }
 
     private GameObject _lastInteractedObj;
     private Vector3 _lastInteractedPos;
@@ -92,7 +107,7 @@ public class BON_ControlsManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && _isTouchEnabled)
         {
             for (int i = 0;  i < Input.touchCount; i++)
             {

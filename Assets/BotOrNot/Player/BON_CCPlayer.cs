@@ -27,15 +27,15 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     // for stock machine ref ?
-    private BON_Controllable _machineToPossess = null;
-    public BON_Controllable MachineToPossess
+    private BON_Interactive _machineToActivate = null;
+    public BON_Interactive MachineToActivate
     {
-        get { return _machineToPossess; }
-        set { _machineToPossess = value; }
+        get { return _machineToActivate; }
+        set { _machineToActivate = value; }
     }
 
     //Instance gameManager
-    private BON_GameManager _instance;    
+    public BON_GameManager _instance;
 
 
     /*
@@ -66,10 +66,10 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = true;
         }
-        else if (other.gameObject.tag == "Machine") //trigger with machine
+        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
-            //_machineToPossess = other.transform.parent;  -> mettre le trigger en enfant , et recup le parent du trigger ?
+            _machineToActivate = other.GetComponentInParent<BON_Interactive>();
         }
     }
 
@@ -79,10 +79,10 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = false;
         }
-        else if (other.gameObject.tag == "Machine") //trigger with machine
+        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = false;
-            _machineToPossess = null;
+            _machineToActivate = null;
         }
     }
 }

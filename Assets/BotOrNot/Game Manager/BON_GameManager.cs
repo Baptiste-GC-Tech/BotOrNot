@@ -88,9 +88,9 @@ public class BON_GameManager : MonoBehaviour
 
         _componentsPR = new ()
         {
-            _player.GetComponent<BON_Move>(),
-            _player.GetComponent<BON_Interact>(),
-            _player.GetComponent<BON_Cable>()
+            _player.GetComponent<BON_MovePR>(),
+            _player.GetComponent<BON_InteractPR>(),
+            _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
@@ -146,7 +146,7 @@ public class BON_GameManager : MonoBehaviour
                     }
                     else
                     {
-                        print("condition non respecté");
+                        print("condition non respectï¿½");
                     }
                 }
                 break;
@@ -158,10 +158,9 @@ public class BON_GameManager : MonoBehaviour
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
-        _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("MachineControl");
         DisableCompPlayer(_lastCharacterPlayed);
-        _componentsAvatar[_lastCharacterPlayed][2].enabled = true;
-        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
+        _componentsAvatar[_lastCharacterPlayed][1].enabled = true;
+        Debug.Log("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void SwitchPlayer()
@@ -183,7 +182,6 @@ public class BON_GameManager : MonoBehaviour
             _isPlayingNut = true;
             _currentCharacterPlayed = 0;
         }
-        //_avatarState = _listAvatarsStates[_currentCharacterPlayed];
         print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
@@ -191,19 +189,13 @@ public class BON_GameManager : MonoBehaviour
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
         EnableCompPlayer(_lastCharacterPlayed);
-        if (_currentCharacterPlayed == 0)
-        {
-            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapPR");
-        }
-        else
-        {
-            _player.GetComponent<PlayerInput>().SwitchCurrentActionMap("ActionsMapDR");
-        }
-        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void DisableCompPlayer(int CharacterStopPlaying)
     {
+        if (_componentsAvatar == null) return;
+
         for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
         {
             if (_componentsAvatar[CharacterStopPlaying][i].enabled)
@@ -215,6 +207,8 @@ public class BON_GameManager : MonoBehaviour
 
     public void EnableCompPlayer(int CharacterWillPlay)
     {
+        if (_componentsAvatar == null) return;
+
         for (int i = 0; i < _componentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
             if (!_componentsAvatar[CharacterWillPlay][i].enabled)
@@ -227,7 +221,7 @@ public class BON_GameManager : MonoBehaviour
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
-        yield return new WaitForSeconds(0.5f); //durée anim?
+        yield return new WaitForSeconds(0.5f); //durï¿½e anim?
         _isSwitching = false;
     }
 

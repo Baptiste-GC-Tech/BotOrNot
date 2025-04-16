@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchDR",
+                    "type": "Button",
+                    "id": "30b08e90-b703-4402-807e-c41241d2474b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cable",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
@@ -45,6 +54,24 @@
                     "name": "CablemoveDown",
                     "type": "Button",
                     "id": "82473c8d-747c-4827-a451-bd5829843a4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveRight",
+                    "type": "Button",
+                    "id": "753004a1-ff14-44f6-b334-cc3487656168",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CablemoveLeft",
+                    "type": "Button",
+                    "id": "72ecf452-01c9-490e-8bb7-f79caaf67145",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -153,6 +180,28 @@
                 },
                 {
                     "name": "",
+                    "id": "3f20e463-b9f7-4fa8-8284-db0340d20979",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchDR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a82d12dd-12ab-49dc-afdb-63fc599d88c1",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "SwitchDR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fec325f1-dd82-4804-9ab0-060030e64f8d",
                     "path": "<Joystick>/stick/up",
                     "interactions": "",
@@ -192,6 +241,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "CablemoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f7fb92e-7855-431f-b9b9-0f4ff8e957fb",
+                    "path": "<Joystick>/stick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6fd4f03-86cc-4870-9edc-2ba59ad14fc2",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1efbef9e-47f4-415a-85a7-d88e7b7f6503",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "CablemoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2a6099f-45e3-4c8f-bac7-bacc61350241",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CablemoveLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -727,6 +820,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "SwitchPR",
+                    "type": "Button",
+                    "id": "f1a21a91-35ad-4f2f-b0be-541c57294905",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "20bd34bb-7ce2-43a9-ba31-60049d5f299e",
@@ -844,6 +946,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81a1bc9d-0dfc-4317-ac63-39c4c8f43b6d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchPR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55b822ac-5974-449a-8a91-088660f46faa",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";touchScreen",
+                    "action": "SwitchPR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -905,6 +1029,28 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Up",
+                    "id": "daf08069-c8a0-4e96-b095-0f8d51c8ad22",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Up",
+                    "id": "41e931ed-8677-4e15-a4b9-4edeb38d782e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "right",
                     "id": "77931617-db02-4233-821f-b7881f98b538",
                     "path": "<Keyboard>/d",
@@ -927,9 +1073,31 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Down",
+                    "id": "d308d4b5-b922-4bdf-bfc0-1efffa6936be",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "c8e3af12-b9d5-4452-9713-e6a53bf66fea",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "8815232d-e176-4776-9a71-240e2f98b579",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
