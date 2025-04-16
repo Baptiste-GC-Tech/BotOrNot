@@ -35,7 +35,7 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     //Instance gameManager
-    private BON_GameManager _instance;    
+    public BON_GameManager _instance;
 
 
     /*
