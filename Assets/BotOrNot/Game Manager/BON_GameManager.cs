@@ -15,7 +15,7 @@ public class BON_GameManager : MonoBehaviour
     private static BON_GameManager _gameManager;
 
     // inventory script reference
-    [SerializeField] private BON_Inventory _inventory;
+    [SerializeField] public BON_Inventory Inventory;
 
     // player reference
     private BON_CCPlayer _player;
@@ -26,9 +26,6 @@ public class BON_GameManager : MonoBehaviour
         get { return _currentState; }
         set { _currentState = value; }
     }
-
-    /*  Level1 requirement */
-    private int _collectiblesToWin;
 
     private bool _isPlayingNut; ////true if nut, false if Dame robot
     public bool IsPlayingNut
@@ -86,9 +83,8 @@ public class BON_GameManager : MonoBehaviour
     public void InitFields()
     {
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
-        _inventory = _player.GetComponent<BON_Inventory>();
+        Inventory = _player.GetComponent<BON_Inventory>();
         _isPlayingNut = true;
-        _collectiblesToWin = 4;
 
         _componentsPR = new ()
         {
@@ -108,6 +104,10 @@ public class BON_GameManager : MonoBehaviour
 
     public void ChangeScene(Scenes nextScene)
     {
+        _currentScene = nextScene;
+        SceneManager.LoadScene(nextScene.ToString());    
+
+        /*
         print("Chnage scene from "+_currentScene +" to "+ nextScene.ToString());
         switch (_currentScene)
         {
@@ -151,6 +151,7 @@ public class BON_GameManager : MonoBehaviour
                 }
                 break;
         }
+        */
     }
 
     public void GiveControl() //donner le controle a une machine
@@ -222,6 +223,7 @@ public class BON_GameManager : MonoBehaviour
             }
         }
     }
+    
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
@@ -238,7 +240,6 @@ public class BON_GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
     }
-
 
     /*
      *  UNITY METHODS
