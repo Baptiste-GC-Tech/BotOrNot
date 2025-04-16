@@ -149,6 +149,7 @@ public class BON_MovePR : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+        _player.AvatarState.InjectMoveScript(this);
         if (_bounceHeight >= _heightBonceStart)
         {
             _heightBonceStart = _bounceHeight + 1;
