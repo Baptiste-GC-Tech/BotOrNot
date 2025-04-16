@@ -11,6 +11,11 @@ public class BON_Interactive : MonoBehaviour
     [SerializeField]
     protected List<BON_Actionnable> _actionnablesList;
 
+    public List<BON_Actionnable> ActionnablesList
+    {
+        get { return _actionnablesList; }
+    }
+
     /*
      *  CLASS METHODS
      */

@@ -9,8 +9,8 @@ using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Windows;
 
-// TODO: Implement the pause of acceleration and speed update when in the air
-public class BON_Move : MonoBehaviour
+// TODO: Implement the pause of accelaration and speed update when in the air
+public class BON_MovePR : MonoBehaviour
 {
     /*
      *  FIELDS
