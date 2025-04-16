@@ -27,8 +27,8 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     // for stock machine ref ?
-    private BON_Interactive _machineToActivate = null;
-    public BON_Interactive MachineToActivate
+    private BON_Interactive_Actionnables _machineToActivate = null;
+    public BON_Interactive_Actionnables MachineToActivate
     {
         get { return _machineToActivate; }
         set { _machineToActivate = value; }
@@ -69,7 +69,7 @@ public class BON_CCPlayer : MonoBehaviour
         else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
-            _machineToActivate = other.GetComponentInParent<BON_Interactive>();
+            _machineToActivate = other.GetComponentInParent<BON_Interactive_Actionnables>();
         }
     }
 
