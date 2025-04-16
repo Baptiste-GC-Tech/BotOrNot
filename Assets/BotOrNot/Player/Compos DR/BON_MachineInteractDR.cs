@@ -5,82 +5,97 @@ using UnityEngine.InputSystem;
 
 public class BON_MachineInteractDR : MonoBehaviour
 {
-    /*
-     *  FIELDS
-     */
+    ///*
+    // *  FIELDS
+    // */
+    ////Input related
+    //InputAction _TakeControlOfMachineAction;    // Upon machine interaction, represents taking control of it and losing control of PR
+    //InputAction _QuitControlOfMachineAction;    // Upon machine interaction, represents forfeiting control of it and gaining back control of PR
+    //InputAction _JoystickMachineAction;         // When controling a machine, sends the input over to it so it can do stuff
+    //Vector2 _moveMachineValue;
 
-    InputAction _interactMachineAction; //interact pour prendre le controle
-    InputAction _quitMachineAction; //rappuyer pour quitter le controle
-    InputAction _moveMachineAction; //bouger quand la machine est controlable
+    //// Player & State related
+    //[SerializeField] private BON_CCPlayer _player;
 
-    // player script reference
-    [SerializeField] private BON_CCPlayer _player;
+    //private BON_Interactive _machineToActivate;
+    //public BON_Interactive MachineToActivate
+    //{
+    //    get { return _machineToActivate; }
+    //    set { _machineToActivate = value; }
+    //}
 
-    Vector2 _moveMachineValue;
+    //private BON_Controllable _machinePossessed;
+    //public BON_Controllable MachinePossessed
+    //{
+    //    get { return _machinePossessed; }
+    //    set { _machinePossessed = value; }
+    //}
+
 
     /*
      *  CLASS METHODS
      */
 
-    public void MoveMachine(/*class machine*/)
-    {
-        _moveMachineValue = _moveMachineAction.ReadValue<Vector2>();
-        if (_moveMachineValue.x > 0)
-        {
-            /* machine.GoRight()*/
-        }
-        else if (_moveMachineValue.x < 0)
-        {
-            /* machine.GoLeft()*/
-        }
-        if (_moveMachineValue.y > 0)
-        {
-            /* machine.GoUp()*/
-        }
-        else if (_moveMachineValue.y < 0)
-        {
-            /* machine.GoDown()*/
-        }
-        if (_quitMachineAction.WasPressedThisFrame())
-        {
-            if (BON_GameManager.Instance().IsSwitching)
-            {
-                print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
-                _player.AvatarState.IsConstrollingMachine = false;
-                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                BON_GameManager.Instance().RecoverControl();
-            }
-        }
-    }
+    //public void MoveMachine(BON_Controllable _machine)
+    //{
+    //    // Reads input values
+    //    _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
+
+    //    _machine.ProcessInput(_moveMachineValue);
+
+    //    if (_QuitControlOfMachineAction.WasPressedThisFrame())
+    //    {
+    //        if (!BON_GameManager.Instance().IsSwitching)
+    //        {
+    //            _machineToActivate.Activate();
+    //            BON_GameManager.Instance().RecoverControl();
+    //            StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+    //            _player.AvatarState.IsConstrollingMachine = false;
+    //        }
+    //    }
+    //}
 
     /*
      *  UNITY METHODS
      */
-
-    // Start is called before the first frame update
     void Start()
     {
-        _interactMachineAction = InputSystem.actions.FindAction("ActionsMapDR/Interact"); //take control machine
-        _quitMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
-        _moveMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
+    //    _TakeControlOfMachineAction = InputSystem.actions.FindAction("ActionsMapDR/Interact"); //take control machine
+    //    _QuitControlOfMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
+    //    _JoystickMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Take item action handling
-        if (_interactMachineAction.WasReleasedThisFrame()) //interact
-        {
-            if (_player.AvatarState.IsNearIOMInteractible && BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {
-                _player.AvatarState.IsConstrollingMachine = true;
-                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                BON_GameManager.Instance().GiveControl();
-            }
-        }
-        if (_player.AvatarState.IsConstrollingMachine)
-        {
-            MoveMachine();
-        }
+        //Debug.Log(_player.AvatarState.IsConstrollingMachine);
+        //// Control management (gaining control of the machine or taking back control of PR)
+        //if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
+        //{
+        //    Debug.Log("click");
+        //    if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
+        //    {                                       // 2 machines : free crane et "levier"
+        //        Debug.Log("activate");
+        //        _machineToActivate = _player.MachineToActivate;
+        //        _machineToActivate.Activate();
+        //        StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+        //        BON_GameManager.Instance().GiveControl();
+        //        if (_machineToActivate.GetType() == typeof(BON_Controllable)) //si la machine est controllable (free crane)
+        //        {
+        //            Debug.Log("passe a true");
+        //            _player.AvatarState.IsConstrollingMachine = true;
+        //        }
+        //    }
+        //}
+        //if (_player.AvatarState.IsConstrollingMachine)
+        //{
+        //    MoveMachine(_machinePossessed);
+        //}
+
+        //if (_TakeControlOfMachineAction == null)
+        //    Debug.LogError("_TakeControlOfMachineAction introuvable");
+        //if (_QuitControlOfMachineAction == null)
+        //    Debug.LogError("_QuitControlOfMachineAction introuvable");
+        //if (_JoystickMachineAction == null)
+        //    Debug.LogError("_JoystickMachineAction introuvable");
     }
 }

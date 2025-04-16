@@ -66,7 +66,7 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = true;
         }
-        else if (other.gameObject.tag == "TriggerZone") //trigger with machine
+        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
              //->  TODO : récup la machine ->mettre le trigger en enfant , et recup le parent du trigger ?
@@ -81,7 +81,7 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsDRInRange = false;
         }
-        else if (other.gameObject.tag == "TriggerZone") //trigger with machine
+        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;

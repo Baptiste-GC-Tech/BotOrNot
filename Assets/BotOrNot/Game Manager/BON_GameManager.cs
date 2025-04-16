@@ -101,7 +101,7 @@ public class BON_GameManager : MonoBehaviour
         {
             _player.GetComponent<BON_MoveDR>(),
             _player.GetComponent<BON_InteractDR>(),
-            _player.GetComponent<BON_MachineInteractDR>()
+            //_player.GetComponent<BON_MachineInteractDR>()
         };
 
         //init la scene actuelle
@@ -183,7 +183,6 @@ public class BON_GameManager : MonoBehaviour
             _isPlayingNut = true;
             _currentCharacterPlayed = 0;
         }
-        //_avatarState = _listAvatarsStates[_currentCharacterPlayed];
         print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
@@ -198,7 +197,6 @@ public class BON_GameManager : MonoBehaviour
     {
         if (_componentsAvatar == null) return;
 
-        print(CharacterStopPlaying);
         for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
         {
             if (_componentsAvatar[CharacterStopPlaying][i].enabled)
