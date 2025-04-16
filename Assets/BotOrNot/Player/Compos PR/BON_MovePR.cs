@@ -250,6 +250,25 @@ public class BON_MovePR : MonoBehaviour
         //Debug.Log("moveDir : " + _curMoveDir);
         if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
+
+        Animator animator = _player.GetComponentInChildren<Animator>();
+        if (animator != null)
+        {
+            // Envoie la vitesse
+            animator.SetFloat("Speed", _curSpeed);
+
+            // Détection de direction inversée
+            bool didTurnBack = Vector2.Dot(_previousDirection, _moveInputValue.normalized) < -0.8f;
+            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            bool triggerSkid = didTurnBack && isSpeedHighEnough;
+
+            // Détection d'arrêt brutal
+            bool triggerStop = _curSpeed > 0.5f && _moveInputValue.magnitude < 0.1f;
+
+            animator.SetBool("DirectionChangedQuickly", triggerSkid);
+            animator.SetBool("StoppedAbruptly", triggerStop);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
