@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BON_DetectionWall : MonoBehaviour
+public class BON_DetectionWallPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
     private Vector3 _WallPos;

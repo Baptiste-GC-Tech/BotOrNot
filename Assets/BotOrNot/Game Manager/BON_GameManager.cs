@@ -92,9 +92,9 @@ public class BON_GameManager : MonoBehaviour
 
         _componentsPR = new ()
         {
-            _player.GetComponent<BON_Move>(),
-            _player.GetComponent<BON_Interact>(),
-            _player.GetComponent<BON_Cable>(),
+            _player.GetComponent<BON_MovePR>(),
+            _player.GetComponent<BON_InteractPR>(),
+            _player.GetComponent<BON_CablePR>(),
             _player.GetComponent<BON_MachineControllerPR>()
         };
         _componentsDR = new ()
