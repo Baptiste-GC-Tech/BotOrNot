@@ -44,6 +44,10 @@ public class BON_MovePR : MonoBehaviour
 
     /* Direction related */
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
+    public int MoveXAxisDir
+    {
+        get { return _moveXAxisDir; }
+    }
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
 
@@ -246,11 +250,36 @@ public class BON_MovePR : MonoBehaviour
         //Debug.Log("moveDir : " + _curMoveDir);
         if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
+
+        Animator animator = _player.GetComponentInChildren<Animator>();
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", _curSpeed);
+
+            Vector2 currentDir = _moveInputValue.normalized;
+            float dot = Vector2.Dot(_previousDirection, currentDir);
+
+            bool didTurnBack = dot < -0.8f;
+            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            bool triggerSkid = didTurnBack && isSpeedHighEnough;
+
+            bool triggerStop = _curSpeed > 0.5f && _moveInputValue.magnitude < 0.1f;
+
+            animator.SetBool("DirectionChangedQuickly", triggerSkid);
+            animator.SetBool("StoppedAbruptly", triggerStop);
+
+            if (_moveInputValue.magnitude > 0.1f)
+                _previousDirection = currentDir;
+
+            if (triggerSkid) Debug.Log("Drift detected !");
+
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
         }
@@ -270,7 +299,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;

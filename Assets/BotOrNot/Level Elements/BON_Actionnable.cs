@@ -7,6 +7,7 @@ public class BON_Actionnable : MonoBehaviour
     /*
      *  FIELDS
      */
+    [SerializeField]
     protected bool _status ;
     public bool Status {  
         get { return _status; } 

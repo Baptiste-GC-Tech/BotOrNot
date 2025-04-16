@@ -5,7 +5,6 @@ using UnityEngine;
 public class BON_DetectionWallPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
-    private Vector3 _WallPos;
 
     private void Start()
     {
@@ -16,17 +15,14 @@ public class BON_DetectionWallPR : MonoBehaviour
     {
         Debug.Log("Trigger Enter, also...");
 
-        if (other.gameObject.CompareTag("Wall")) //wall
+        if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) //wall
         {
-            _WallPos = other.transform.position;
-            if( transform.position.x < _WallPos.x) //wall on right
+            if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1) //wall on right
             {
-                print("wall on right");
                 _CCPlayer.AvatarState.IsAgainstWallRight = true;
             }
-            else
+            else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
             {
-                print("wall on left");
                 _CCPlayer.AvatarState.IsAgainstWallLeft = true;
             }
         }
@@ -34,18 +30,10 @@ public class BON_DetectionWallPR : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Wall")) //wall
+        if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) //wall
         {
-            print("no wall");
-            _WallPos = other.transform.position;
-            if (transform.position.x < _WallPos.x) //wall on right
-            {
-                _CCPlayer.AvatarState.IsAgainstWallRight = false;
-            }
-            else
-            {
-                _CCPlayer.AvatarState.IsAgainstWallLeft = false;
-            }
+            _CCPlayer.AvatarState.IsAgainstWallRight = false;
+            _CCPlayer.AvatarState.IsAgainstWallLeft = false;            
         }
     }
 }

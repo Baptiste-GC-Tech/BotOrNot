@@ -18,14 +18,6 @@ public class BON_CCPlayer : MonoBehaviour
         set { _avatarState = value; }
     }
 
-    // for stock collectible ref ?
-    private GameObject _collectible = null;
-    public GameObject Collectible
-    {
-        get { return _collectible; }
-        set { _collectible = value; }
-    }
-
     // for stock machine ref ?
     private BON_Interactive _machineToActivate = null;
     public BON_Interactive MachineToActivate
@@ -54,19 +46,10 @@ public class BON_CCPlayer : MonoBehaviour
     {
         //print(_avatarState.CurrentState);
         _avatarState.UpdateState();
-        //print(_avatarState.IsAgainstWall);
     }
     private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "collectibles_DR") //trigger with items <- change tag name
-        {
-            _collectible = other.gameObject;
-        }
-        else if (other.gameObject.tag == "Finish") //trigger with DR (broken)
-        {
-            _avatarState.IsDRInRange = true;
-        }
-        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
+    { //tag with "Finish" (DR) remove -> useless
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
             _machineToActivate = other.GetComponentInParent<BON_Interactive>();
@@ -75,11 +58,7 @@ public class BON_CCPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Finish") //trigger with DR (broken)
-        {
-            _avatarState.IsDRInRange = false;
-        }
-        else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine 
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;

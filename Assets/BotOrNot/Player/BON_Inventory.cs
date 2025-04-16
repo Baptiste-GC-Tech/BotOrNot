@@ -24,12 +24,21 @@ public class BON_Inventory : MonoBehaviour
     }
     public void DeleteItem(int i) //remove the item i from the list and destroy it
     {
-        _items.RemoveAt(i);
+        _items.Remove(i);
     }
 
     public int CountItem() //count how much item are on the list
     {
         return _items.Count;
+    }
+
+    public bool HasItem(int i)
+    {
+        foreach (var item in _items) 
+        {
+            if (item == i) return true;
+        }
+        return false;
     }
 
     // DEBUGGING METHODS

@@ -16,12 +16,12 @@ TagManager:
   - TouchInteractive
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - Floor
+  - Hook
+  - TriggerZone
+  - TriggerMachine
   - 
   - 
   - 
