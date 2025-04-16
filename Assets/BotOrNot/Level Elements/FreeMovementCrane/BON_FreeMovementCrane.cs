@@ -19,7 +19,13 @@ public class BON_FreeMovementCrane : BON_Controllable
     [SerializeField] List<Vector4> _boundaries;
     private bool _isBlocked;
 
+    /* physics related */
+    private bool _isCollideDown;
+    private bool _isCollideUp;
+    private bool _isCollideLeft;
+    private bool _isCollideRight;
 
+    private Rigidbody _rigidbody;
 
     /*
      *  CLASS METHODS
@@ -65,7 +71,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     }
     public void Up()
     {
-        if (_direction == new Vector3(0, 1, 0) || _direction == Vector3.zero)
+        if ((_direction == new Vector3(0, 1, 0) || _direction == Vector3.zero) && !_isCollideUp)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(0, 1);
@@ -78,7 +84,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Down() 
     {
-        if (_direction == new Vector3(0, -1, 0) || _direction == Vector3.zero)
+        if ((_direction == new Vector3(0, -1, 0) || _direction == Vector3.zero) && !_isCollideDown)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(0, -1);
@@ -91,7 +97,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Left()
     {
-        if (_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero)
+        if (_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero && !_isCollideLeft)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(-1, 0);
@@ -104,7 +110,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Right()
     {
-        if (_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero)
+        if (_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero && !_isCollideRight)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(1, 0);
@@ -121,7 +127,6 @@ public class BON_FreeMovementCrane : BON_Controllable
     }
 
 
-
     /*
      *  UNITY METHODS
      */
@@ -132,17 +137,29 @@ public class BON_FreeMovementCrane : BON_Controllable
         _speed = 0;
         _acceleration = _speedMax / 3;
         _isBlocked = false;
+        _rigidbody = GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
     {
+        //test collision
+        if ((_direction == Vector3.up && _isCollideUp) ||
+            (_direction == Vector3.down && _isCollideDown) ||
+            (_direction == Vector3.left && _isCollideLeft) ||
+            (_direction == Vector3.right && _isCollideRight))
+        {
+            _isBlocked = true;
+            return;
+        }
+
+
         if (_IsMovingByPlayer || _speed > 0)
         {
-            Vector3 nextPos = gameObject.transform.position + _direction * _speed * Time.deltaTime;
+            Vector3 nextPos = _rigidbody.position + _direction * _speed * Time.deltaTime;
             foreach (Vector4 Box in _boundaries)
             {
                 if (Box[0] <= nextPos.x && nextPos.x <= Box[1] && Box[2] <= nextPos.y && nextPos.y <= Box[3])
                 {
-                    gameObject.transform.position += _direction * _speed * Time.deltaTime;
+                    _rigidbody.MovePosition(nextPos);
                     _isBlocked = false;
                     break;
                 }
@@ -168,5 +185,35 @@ public class BON_FreeMovementCrane : BON_Controllable
             _speed = 0;
             _direction = Vector2.zero;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor") ||
+            collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                Vector3 normal = contact.normal;
+
+                if (normal.y > 0.5f)
+                    _isCollideDown = true;
+                else if (normal.y < -0.5f)
+                    _isCollideUp = true;
+
+                if (normal.x > 0.5f)
+                    _isCollideLeft = true;
+                else if (normal.x < -0.5f)
+                    _isCollideRight = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        _isCollideUp = false;
+        _isCollideDown = false;
+        _isCollideLeft = false;
+        _isCollideRight = false;
     }
 }
