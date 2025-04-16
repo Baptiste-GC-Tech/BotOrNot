@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BON_Cable : MonoBehaviour
+public class BON_CablePR : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera _mainCam;
@@ -45,7 +45,7 @@ public class BON_Cable : MonoBehaviour
 
     private SpringJoint _joint;
     private Rigidbody _rb;
-    private BON_Move _moveScript;
+    private BON_MovePR _moveScript;
 
     private void Start()
     {
@@ -56,7 +56,7 @@ public class BON_Cable : MonoBehaviour
         _CablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
 
         _rb = GetComponent<Rigidbody>();
-        _moveScript = GetComponent<BON_Move>();
+        _moveScript = GetComponent<BON_MovePR>();
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");

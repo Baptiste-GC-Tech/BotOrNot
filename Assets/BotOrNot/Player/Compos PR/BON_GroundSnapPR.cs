@@ -9,7 +9,7 @@ public class BON_GroundSnapPR : MonoBehaviour
     */
     /* References */
     private BON_CCPlayer _CC;
-    private BON_Move _moveComp;
+    private BON_MovePR _moveComp;
 
     /* Raycast offsets */
     private Vector3 _farLeftRayOffset = new Vector3(-0.5f, -0.5f, 0.0f);
@@ -25,7 +25,7 @@ public class BON_GroundSnapPR : MonoBehaviour
     private void Start()
     {
         _CC = GetComponent<BON_CCPlayer>();
-        _moveComp = GetComponent<BON_Move>();
+        _moveComp = GetComponent<BON_MovePR>();
     }
 
     private void Update()

@@ -92,9 +92,9 @@ public class BON_GameManager : MonoBehaviour
 
         _componentsPR = new ()
         {
-            _player.GetComponent<BON_Move>(),
-            _player.GetComponent<BON_Interact>(),
-            _player.GetComponent<BON_Cable>()
+            _player.GetComponent<BON_MovePR>(),
+            _player.GetComponent<BON_InteractPR>(),
+            _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
@@ -146,7 +146,7 @@ public class BON_GameManager : MonoBehaviour
                     }
                     else
                     {
-                        print("condition non respecté");
+                        print("condition non respectï¿½");
                     }
                 }
                 break;
@@ -219,7 +219,7 @@ public class BON_GameManager : MonoBehaviour
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
-        yield return new WaitForSeconds(0.5f); //durée anim?
+        yield return new WaitForSeconds(0.5f); //durï¿½e anim?
         _isSwitching = false;
     }
 
