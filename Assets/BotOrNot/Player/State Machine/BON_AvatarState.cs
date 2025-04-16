@@ -161,7 +161,7 @@ public class BON_AvatarState : ScriptableObject
         _animator.SetBool("IsInElevator", state == State.Elevator);
         _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
         _animator.SetBool("StoppedAbruptly", state == State.Drift);
-        _animator.SetFloat("Speed", _player.GetComponent<BON_MovePR>().CurSpeed);
+        _animator.SetBool("DirectionChangedQuickly",state==State.Drift);
         //_animator.SetBool("IsGrounded", state == State.Grounded);
 
         // Optionnel : remettre certains flags à false
