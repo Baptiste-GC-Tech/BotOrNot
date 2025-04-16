@@ -21,11 +21,6 @@ public class BON_GameManager : MonoBehaviour
     private BON_CCPlayer _player;
 
     private BON_AvatarState _currentState;
-    public BON_AvatarState CurrentState
-    {
-        get { return _currentState; }
-        set { _currentState = value; }
-    }
 
     private bool _isPlayingNut; ////true if nut, false if Dame robot
     public bool IsPlayingNut
@@ -158,7 +153,10 @@ public class BON_GameManager : MonoBehaviour
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
-        DisableCompPlayer(_lastCharacterPlayed);
+        if (_lastCharacterPlayed != -1)
+        {
+            DisableCompPlayer(_lastCharacterPlayed);
+        }
         _componentsAvatar[_lastCharacterPlayed][1].enabled = true;
         Debug.Log("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }

@@ -64,6 +64,13 @@ public class BON_AvatarState : ScriptableObject
         set { _isInElevator = value; }
     }
 
+    bool _isNearElevator = false; //1 if is near elevator
+    public bool IsNearElevator 
+    {
+        get { return _isNearElevator; }
+        set { _isNearElevator = value; }
+    }
+
 
     /*
      *  Booleans exclusive to PR
@@ -101,19 +108,7 @@ public class BON_AvatarState : ScriptableObject
         set { _isNearHumanoidObject = value; }
     }
 
-    private bool _isDRInRange = false;
-    public bool IsDRInRange
-    {
-        get { return _isDRInRange; }
-        set { _isDRInRange = value; }
-    }
-
     protected State _currentState;
-    public State CurrentState
-    {
-        get { return _currentState; }
-    }
-
 
     // player reference
     private BON_CCPlayer _player;

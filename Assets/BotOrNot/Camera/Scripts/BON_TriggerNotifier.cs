@@ -12,8 +12,8 @@ public class BON_TriggerNotifier : MonoBehaviour
     [Tooltip("Référence vers le script CameraFollowMode à notifier.")]
     [SerializeField] private BON_CameraFollowMode _cameraFollow;
 
-    [Tooltip("Le tag que le joueur doit avoir pour activer cette zone (par défaut : 'Player').")]
-    [SerializeField] private string _playerTag = "Player";
+    //[Tooltip("Le tag que le joueur doit avoir pour activer cette zone (par défaut : 'Player').")]
+    //[SerializeField] private string _playerTag = "Player";
 
     [Header("Options de suivi")]
 
@@ -43,7 +43,7 @@ public class BON_TriggerNotifier : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_playerTag) && !_isActive)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player") && !_isActive)
         {
             _isActive = true;
 
@@ -56,7 +56,7 @@ public class BON_TriggerNotifier : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(_playerTag))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             CancelInvoke();
             _isActive = false;
