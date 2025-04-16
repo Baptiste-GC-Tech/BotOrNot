@@ -23,7 +23,7 @@ public class BON_MovePR : MonoBehaviour
     public LayerMask Deez;
 
     /* Input related */
-    private InputAction _MoveAction;
+    private InputAction _moveAction;
     [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
     private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
@@ -33,14 +33,14 @@ public class BON_MovePR : MonoBehaviour
     [Space]
     [Header("Speed")]
     [SerializeField] float _maxSpeed;
-    [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
+    [SerializeField] AnimationCurve _speedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     private float _curSpeed;
 
     /* Accelartion related */
     [Space]
     [Header("Acceleration")]
-    [SerializeField] AnimationCurve _AccelOverSpeed;
-    [SerializeField] AnimationCurve _DeccelOverSpeed;
+    [SerializeField] AnimationCurve _accelOverSpeed;
+    [SerializeField] AnimationCurve _deccelOverSpeed;
 
     /* Direction related */
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
@@ -57,7 +57,6 @@ public class BON_MovePR : MonoBehaviour
     private float _driftTimer;
     private Vector2 _previousDirection;
     private bool _isFirstMove = true;
-    private bool _needToResetDrift = false;
     private float _timeSinceLastMove = 0;
 
     /* Bounce related */
@@ -77,7 +76,7 @@ public class BON_MovePR : MonoBehaviour
     private void UpdateCurSpeed()
     {
 
-        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
+        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _speedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
         float speedDelta = deFactoMaxSpeed - _curSpeed;
 
         //Debug.Log("defactoMax - cur = delta : " + deFactoMaxSpeed + " - " + _curSpeed + " = " + speedDelta);
@@ -85,13 +84,13 @@ public class BON_MovePR : MonoBehaviour
         // Case in which we are below our de facto max speed : we want to go faster
         if (speedDelta > 0.0f)
         {
-            _curSpeed += _AccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
+            _curSpeed += _accelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, deFactoMaxSpeed);
         }
         // Case in which we are above our de facto max speed : we want to go slower
         if (speedDelta < 0.0f)
         {
-            _curSpeed -= _DeccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
+            _curSpeed -= _deccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, _maxSpeed);
         }
 
@@ -144,7 +143,7 @@ public class BON_MovePR : MonoBehaviour
      */
     void Start()
     {
-        _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _moveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
         if (_bounceHeight >= _heightBonceStart)
@@ -163,7 +162,7 @@ public class BON_MovePR : MonoBehaviour
 
         /* Handles the input */
 #if UNITY_EDITOR
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+        _moveInputValue = _moveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
         _moveInputValue = _joystick.InputValues;
 #endif
@@ -197,7 +196,6 @@ public class BON_MovePR : MonoBehaviour
             }
             if (_driftTimer > 0)
             {
-                Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
                 _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;
@@ -220,7 +218,6 @@ public class BON_MovePR : MonoBehaviour
         //Bounce
         if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
-            Debug.Log("Should enter bounce");
             _isBouncing = true;
             _bounceCount = 0;
         }

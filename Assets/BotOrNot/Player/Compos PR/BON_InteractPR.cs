@@ -6,7 +6,7 @@ public class BON_InteractPR : MonoBehaviour
     /*
      *  FIELDS
      */
-    InputAction _ItemInteractAction;
+    InputAction _itemInteractAction;
 
     // player script reference
     [SerializeField] private BON_CCPlayer _player;
@@ -20,14 +20,14 @@ public class BON_InteractPR : MonoBehaviour
 
     void Start()
     {
-        _ItemInteractAction = InputSystem.actions.FindAction("ActionsMapPR/SwitchDR");
+        _itemInteractAction = InputSystem.actions.FindAction("ActionsMapPR/SwitchDR");
         _inventory = GetComponent<BON_Inventory>();
     }
 
     void Update()
     {
         // Take item action handling
-        if (_ItemInteractAction.WasReleasedThisFrame()) //interact
+        if (_itemInteractAction.WasReleasedThisFrame()) //interact
         {
             /*if (_player.IsDRInRange) //dame robot pas loin
             {

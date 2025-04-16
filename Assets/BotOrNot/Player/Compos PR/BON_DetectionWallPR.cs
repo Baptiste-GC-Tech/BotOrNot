@@ -5,7 +5,7 @@ using UnityEngine;
 public class BON_DetectionWallPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
-    private Vector3 _WallPos;
+    private Vector3 _wallPos;
 
     private void Start()
     {
@@ -18,8 +18,8 @@ public class BON_DetectionWallPR : MonoBehaviour
 
         if (other.gameObject.CompareTag("Wall")) //wall
         {
-            _WallPos = other.transform.position;
-            if( transform.position.x < _WallPos.x) //wall on right
+            _wallPos = other.transform.position;
+            if( transform.position.x < _wallPos.x) //wall on right
             {
                 print("wall on right");
                 _CCPlayer.AvatarState.IsAgainstWallRight = true;
@@ -37,8 +37,8 @@ public class BON_DetectionWallPR : MonoBehaviour
         if (other.gameObject.CompareTag("Wall")) //wall
         {
             print("no wall");
-            _WallPos = other.transform.position;
-            if (transform.position.x < _WallPos.x) //wall on right
+            _wallPos = other.transform.position;
+            if (transform.position.x < _wallPos.x) //wall on right
             {
                 _CCPlayer.AvatarState.IsAgainstWallRight = false;
             }
