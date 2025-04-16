@@ -254,19 +254,25 @@ public class BON_MovePR : MonoBehaviour
         Animator animator = _player.GetComponentInChildren<Animator>();
         if (animator != null)
         {
-            // Envoie la vitesse
             animator.SetFloat("Speed", _curSpeed);
 
-            // Détection de direction inversée
-            bool didTurnBack = Vector2.Dot(_previousDirection, _moveInputValue.normalized) < -0.8f;
+            Vector2 currentDir = _moveInputValue.normalized;
+            float dot = Vector2.Dot(_previousDirection, currentDir);
+
+            bool didTurnBack = dot < -0.8f;
             bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
             bool triggerSkid = didTurnBack && isSpeedHighEnough;
 
-            // Détection d'arrêt brutal
             bool triggerStop = _curSpeed > 0.5f && _moveInputValue.magnitude < 0.1f;
 
             animator.SetBool("DirectionChangedQuickly", triggerSkid);
             animator.SetBool("StoppedAbruptly", triggerStop);
+
+            if (_moveInputValue.magnitude > 0.1f)
+                _previousDirection = currentDir;
+
+            if (triggerSkid) Debug.Log("Drift detected !");
+
         }
 
     }
