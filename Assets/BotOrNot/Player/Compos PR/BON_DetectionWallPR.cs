@@ -11,11 +11,6 @@ public class BON_DetectionWallPR : MonoBehaviour
         _CCPlayer = GameObject.FindFirstObjectByType<BON_CCPlayer>();
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger Enter, also...");
@@ -25,7 +20,6 @@ public class BON_DetectionWallPR : MonoBehaviour
             if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1) //wall on right
             {
                 _CCPlayer.AvatarState.IsAgainstWallRight = true;
-                print(_CCPlayer.AvatarState.IsAgainstWallRight);
             }
             else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
             {

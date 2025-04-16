@@ -46,7 +46,6 @@ public class BON_CCPlayer : MonoBehaviour
     {
         //print(_avatarState.CurrentState);
         _avatarState.UpdateState();
-        //print(_avatarState.IsAgainstWall);
     }
     private void OnTriggerEnter(Collider other)
     { //tag with "Finish" (DR) remove -> useless
@@ -65,9 +64,4 @@ public class BON_CCPlayer : MonoBehaviour
             _machineToActivate = null;
         }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    print("collide with " + collision.gameObject);
-    //    print("collide with layer : " + LayerMask.LayerToName(collision.gameObject.layer));
-    //}
 }

@@ -68,7 +68,7 @@ public class BON_MachineControllerPR : MonoBehaviour
     void Update()
     {
         // Control management (gaining control of the machine or taking back control of PR)
-        if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
+        if (_TakeControlOfMachineAction.WasPressedThisFrame() && !_player.AvatarState.IsConstrollingMachine) //interact & pas deja le controle
         {
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {                                     

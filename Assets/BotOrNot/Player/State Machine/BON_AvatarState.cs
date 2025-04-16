@@ -102,18 +102,8 @@ public class BON_AvatarState : ScriptableObject
     }
 
     private bool _isDRInRange = false;
-    public bool IsDRInRange
-    {
-        get { return _isDRInRange; }
-        set { _isDRInRange = value; }
-    }
 
     protected State _currentState;
-    public State CurrentState
-    {
-        get { return _currentState; }
-    }
-
 
     // player reference
     private BON_CCPlayer _player;
