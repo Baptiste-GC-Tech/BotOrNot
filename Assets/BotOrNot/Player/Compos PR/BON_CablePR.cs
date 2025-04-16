@@ -145,7 +145,7 @@ public class BON_CablePR : MonoBehaviour
                     interactive.Activate();
             }
             _player.AvatarState.HasCableOut = false;
-            if (_moveScript != null) _moveScript.enabled = true;
+            if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
         }
     }
 

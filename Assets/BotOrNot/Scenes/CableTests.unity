@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 181551246}
   - component: {fileID: 181551245}
   - component: {fileID: 181551244}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2025,7 +2025,7 @@ GameObject:
   - component: {fileID: 1261672200}
   - component: {fileID: 1261672199}
   - component: {fileID: 1261672198}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformL18 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2164,6 +2164,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 987231977214566558, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1165315780596959558, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2269,11 +2274,21 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1530048635}
+    - target: {fileID: 3455680625491081906, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3833803982372987210, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 692058974}
+    - target: {fileID: 3879912248575459213, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3970423578695887222, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
@@ -2294,6 +2309,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1680266172}
+    - target: {fileID: 4169760587662296534, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4389594844529218352, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
@@ -2303,6 +2323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VersionIndex
       value: 846
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946058376739710739, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4967460474841008100, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
@@ -2449,6 +2474,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: d569956abd4f81c41b7922692956d15a, type: 2}
+    - target: {fileID: 8445973143686492954, guid: a091c986ed3662c41b69bfcc87a86e3f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8453731545167526606, guid: a091c986ed3662c41b69bfcc87a86e3f,
         type: 3}
       propertyPath: m_Mesh
@@ -3116,7 +3146,7 @@ GameObject:
   - component: {fileID: 1646298370}
   - component: {fileID: 1646298369}
   - component: {fileID: 1646298368}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformL18 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,6 +9,9 @@ public class BON_AvatarState : ScriptableObject
     *  FIELDS
     */
 
+    private BON_MovePR _moveScript;
+
+
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
 
@@ -28,13 +31,22 @@ public class BON_AvatarState : ScriptableObject
         get { return _wasGroundedLastFrame; }
     }
     bool _isGrounded = false;  //1 if touch the ground 
-    public bool IsGrounded //for jump -> need to setup
+    public bool IsGrounded
     {
         get { return _isGrounded; }
-        set {
+        set
+        {
             _wasGroundedLastFrame = _isGrounded;
             _isGrounded = value;
-            }
+            /*
+            if (_moveScript != null)
+                _moveScript.enabled = _isGrounded || _hasCableOut;*/
+        }
+    }
+
+    public void InjectMoveScript(BON_MovePR moveScript)
+    {
+        _moveScript = moveScript;
     }
 
     bool _isAgainstWallLeft = false; //1 if touch a wall on left
@@ -94,8 +106,15 @@ public class BON_AvatarState : ScriptableObject
     public bool HasCableOut
     {
         get { return _hasCableOut; }
-        set { _hasCableOut = value; }
+        set
+        {
+            _hasCableOut = value;
+            /*
+            if (_moveScript != null)
+                _moveScript.enabled = _isGrounded || _hasCableOut;*/
+        }
     }
+
 
     /*
      *  Booleans exclusive to PR

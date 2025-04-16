@@ -150,6 +150,7 @@ public class BON_MovePR : MonoBehaviour
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
         _player.AvatarState.InjectMoveScript(this);
+
         if (_bounceHeight >= _heightBonceStart)
         {
             _heightBonceStart = _bounceHeight + 1;
@@ -188,7 +189,7 @@ public class BON_MovePR : MonoBehaviour
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
-        if (_desiredDirection != Vector3.zero)
+        if (_desiredDirection != Vector3.zero && _player.AvatarState.IsGrounded!)
         {
             if (_isFirstMove)
             {
@@ -275,7 +276,6 @@ public class BON_MovePR : MonoBehaviour
             if (triggerSkid) Debug.Log("Drift detected !");
 
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -283,8 +283,9 @@ public class BON_MovePR : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
+            Debug.Log("IsGrounded = " + _player.AvatarState.IsGrounded);
         }
-        if (_isBouncing)
+        if (_isBouncing && _player.AvatarState.IsGrounded!)
         {
             Debug.Log("bouncing");
             _bounceCount++;
