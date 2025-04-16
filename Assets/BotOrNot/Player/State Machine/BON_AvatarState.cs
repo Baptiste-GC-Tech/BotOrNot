@@ -64,6 +64,13 @@ public class BON_AvatarState : ScriptableObject
         set { _isInElevator = value; }
     }
 
+    bool _isDrifting;
+    public bool IsDrifting
+    {
+        get { return _isDrifting; }
+        set { _isDrifting = value; }
+    }
+
 
     /*
      *  Booleans exclusive to PR
@@ -91,7 +98,7 @@ public class BON_AvatarState : ScriptableObject
     }
 
     /*
-     *  Booleans exclusive to PR
+     *  Booleans exclusive to DR
      */
 
     bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) <- useless now ?
@@ -123,7 +130,8 @@ public class BON_AvatarState : ScriptableObject
         Jump, 
         Elevator, 
         ControllingMachine,
-        ThrowingCable
+        ThrowingCable,
+        Drift
         //Grounded
     };
     
@@ -152,6 +160,8 @@ public class BON_AvatarState : ScriptableObject
         _animator.SetBool("IsControllingMachine", state == State.ControllingMachine);
         _animator.SetBool("IsInElevator", state == State.Elevator);
         _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
+        _animator.SetBool("StoppedAbruptly", state == State.Drift);
+        _animator.SetFloat("Speed", _player.GetComponent<BON_MovePR>().CurSpeed);
         //_animator.SetBool("IsGrounded", state == State.Grounded);
 
         // Optionnel : remettre certains flags à false
@@ -226,6 +236,7 @@ public class BON_AvatarState : ScriptableObject
         _stateDict.Add(State.ControllingMachine, new BON_SControllingMachine());
         _stateDict.Add(State.ThrowingCable, new BON_SThrowingCable());
         _stateDict.Add(State.Elevator, new BON_SElevator());
+        _stateDict.Add(State.Drift, new BON_SDrift());
         // 5. État initial
         _currentState = State.Idle;
         _currentStateAsset = _stateDict[_currentState];

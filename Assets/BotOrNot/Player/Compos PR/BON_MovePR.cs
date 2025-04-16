@@ -35,6 +35,17 @@ public class BON_MovePR : MonoBehaviour
     [SerializeField] float _maxSpeed;
     [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     private float _curSpeed;
+    public float CurSpeed
+    {
+        get { return _curSpeed; }
+        set { _curSpeed = value; }
+    }
+    private bool _shouldNotMove = false;
+    public bool ShouldNotMove
+    { 
+        get { return _shouldNotMove; } 
+        set { _shouldNotMove = value; }
+    }
 
     /* Accelartion related */
     [Space]
@@ -184,7 +195,6 @@ public class BON_MovePR : MonoBehaviour
 
         UpdateMoveDirFromInput();
         UpdateCurSpeed();
-
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
         if (_desiredDirection != Vector3.zero)
@@ -197,14 +207,17 @@ public class BON_MovePR : MonoBehaviour
             if (_previousDirection != _moveInputValue.normalized)
             {
                 _previousDirection = _moveInputValue.normalized;
+                _player.AvatarState.IsDrifting = true;
                 _driftTimer = _driftDuration;
             }
-            if (_driftTimer > 0)
+           if (_driftTimer > 0)
             {
                 Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
-                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
-                _curMoveDir = -_curMoveDir;
+            }
+            else
+            {
+                _player.AvatarState.IsDrifting = false;
             }
         }
         if (_player.AvatarState.IsMovingByPlayer)
@@ -224,7 +237,6 @@ public class BON_MovePR : MonoBehaviour
         // Bounce
         if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
-            Debug.Log("Should enter bounce");
             _isBouncing = true;
             _bounceCount = 0;
         }
@@ -274,7 +286,6 @@ public class BON_MovePR : MonoBehaviour
             if (triggerSkid) Debug.Log("Drift detected !");
 
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -285,7 +296,6 @@ public class BON_MovePR : MonoBehaviour
         }
         if (_isBouncing)
         {
-            Debug.Log("bouncing");
             _bounceCount++;
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
             _rb.AddForce(Vector3.up * (_bounceHeight / _bounceCount), ForceMode.Impulse);
