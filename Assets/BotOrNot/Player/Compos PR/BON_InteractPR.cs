@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BON_Interact : MonoBehaviour
+public class BON_InteractPR : MonoBehaviour
 {
     /*
      *  FIELDS

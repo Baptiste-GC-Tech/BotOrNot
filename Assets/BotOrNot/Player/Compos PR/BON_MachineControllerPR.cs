@@ -9,8 +9,8 @@ public class BON_MachineControllerPR : MonoBehaviour
      *  FIELDS
      */
     //Input related
-    InputAction _TakeControlOfMachineAction;    // Upon machine interaction, represents taking control of it and losing control of PR
-    InputAction _QuitControlOfMachineAction;    // Upon machine interaction, represents forfeiting control of it and gaining back control of PR
+    InputAction _TakeControlOfMachineAction;    //E Upon machine interaction, represents taking control of it and losing control of PR
+    InputAction _QuitControlOfMachineAction;    //F Upon machine interaction, represents forfeiting control of it and gaining back control of PR
     InputAction _JoystickMachineAction;         // When controling a machine, sends the input over to it so it can do stuff
     Vector2 _moveMachineValue;
 
@@ -40,10 +40,9 @@ public class BON_MachineControllerPR : MonoBehaviour
     {
         // Reads input values
         _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
-
         _machine.ProcessInput(_moveMachineValue);
 
-        if(_QuitControlOfMachineAction.WasPressedThisFrame())
+        if(_QuitControlOfMachineAction.WasReleasedThisFrame())
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
@@ -71,12 +70,11 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
-            Debug.Log("click");
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {                                       // 2 machines : free crane et "levier"
-                Debug.Log("activate");
+            {                                     
                 _machineToActivate = _player.MachineToActivate;
                 _machineToActivate.Activate();
+                _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().GiveControl();
                 _player.AvatarState.IsConstrollingMachine = true;

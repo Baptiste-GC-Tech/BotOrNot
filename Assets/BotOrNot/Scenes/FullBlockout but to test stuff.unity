@@ -7964,11 +7964,11 @@ GameObject:
   - component: {fileID: 565458568}
   m_Layer: 0
   m_Name: '[DLT ME]Sphere'
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &565458567
 Transform:
   m_ObjectHideFlags: 0
@@ -7978,7 +7978,7 @@ Transform:
   m_GameObject: {fileID: 565458566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.664, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7999,7 +7999,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -29956,6 +29956,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5567e198caa445a41a8683264e090978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _CC: {fileID: 0}
+  _moveComp: {fileID: 0}
+  _farLeftRayOffset: {x: -0.5, y: -0.5, z: 0}
+  _leftRayOffset: {x: -0.25, y: -0.75, z: 0}
+  _middleRayOffset: {x: 0, y: -1, z: 0}
+  _rightRayOffset: {x: 0.25, y: -0.75, z: 0}
+  _farRightRayOffset: {x: 0.5, y: -0.5, z: 0}
 --- !u!64 &7762971795956609433
 MeshCollider:
   m_ObjectHideFlags: 0
