@@ -25,6 +25,7 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
             if (value >= _transformsList.Count || value < 0)
             {
                 _returning = !_returning;
+                _currentTimer = 0f;
 
                 if (_looping)
                 {
@@ -60,7 +61,6 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
                     {
                         _isCyclingPositive = !_isCyclingPositive;
                     }
-                    _currentTimer = 0;
                     Status = false;
                 }
             }
@@ -78,6 +78,12 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
     /*
     * CLASS METHODS
     */
+
+    public override void Off()
+    {
+        _returning = !_returning;
+        _currentTimer = 0f;
+    }
 
     /*
      * UNITY METHODS
@@ -109,11 +115,10 @@ public class BON_MovObj_Timer : BON_MovObj_ListBased
                 gameObject.transform.position += _currentDirection * oneSpeed;
                 gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles + _currentRotation * movementFraction);
             }
-        }
-        else if (_returning)
+        }else if (_returning)
         {
             _currentTimer += Time.deltaTime;
-            if (_currentTimer >= _timerMax)
+            if (_currentTimer >= _timerMax) 
             {
                 Status = true;
             }
