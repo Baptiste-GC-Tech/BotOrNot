@@ -38,10 +38,10 @@ public class BON_CablePR : MonoBehaviour
     private float _swingTimer;
 
     private InputAction _clickAction;
-    private InputAction _CablemoveDown;
-    private InputAction _CablemoveUp;
-    private InputAction _CablemoveLeft;
-    private InputAction _CablemoveRight;
+    private InputAction _cablemoveDown;
+    private InputAction _cablemoveUp;
+    private InputAction _cablemoveLeft;
+    private InputAction _cablemoveRight;
 
     private SpringJoint _joint;
     private Rigidbody _rb;
@@ -50,10 +50,10 @@ public class BON_CablePR : MonoBehaviour
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
-        _CablemoveDown = InputSystem.actions.FindAction("ActionsMapPR/CablemoveDown");
-        _CablemoveUp = InputSystem.actions.FindAction("ActionsMapPR/CablemoveUp");
-        _CablemoveLeft = InputSystem.actions.FindAction("ActionsMapPR/CablemoveLeft");
-        _CablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
+        _cablemoveDown = InputSystem.actions.FindAction("ActionsMapPR/CablemoveDown");
+        _cablemoveUp = InputSystem.actions.FindAction("ActionsMapPR/CablemoveUp");
+        _cablemoveLeft = InputSystem.actions.FindAction("ActionsMapPR/CablemoveLeft");
+        _cablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
 
         _rb = GetComponent<Rigidbody>();
         _moveScript = GetComponent<BON_MovePR>();
@@ -78,16 +78,16 @@ public class BON_CablePR : MonoBehaviour
         if (_joint != null)
         {
             float lengthChange = 0f;
-            if (_CablemoveUp?.ReadValue<float>() > 0.5f)
+            if (_cablemoveUp?.ReadValue<float>() > 0.5f)
                 lengthChange -= _cableLengthSpeed * Time.deltaTime;
-            if (_CablemoveDown?.ReadValue<float>() > 0.5f)
+            if (_cablemoveDown?.ReadValue<float>() > 0.5f)
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
             _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
 
 
             float swingInput = 0f;
-            if (_CablemoveLeft != null && _CablemoveLeft.IsPressed()) swingInput = -1f;
-            if (_CablemoveRight != null && _CablemoveRight.IsPressed()) swingInput = 1f;
+            if (_cablemoveLeft != null && _cablemoveLeft.IsPressed()) swingInput = -1f;
+            if (_cablemoveRight != null && _cablemoveRight.IsPressed()) swingInput = 1f;
 
             Vector3 toAnchor = _joint.connectedAnchor - transform.position;
             Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
