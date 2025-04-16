@@ -17,8 +17,8 @@ public class BON_MachineControllerPR : MonoBehaviour
     // Player & State related
     [SerializeField] private BON_CCPlayer _player; 
 
-    private BON_Interactive _machineToActivate;
-    public BON_Interactive MachineToActivate
+    private BON_Interactive_Actionnables _machineToActivate;
+    public BON_Interactive_Actionnables MachineToActivate
     {
         get { return _machineToActivate; }
         set { _machineToActivate = value; }
