@@ -54,6 +54,10 @@ public class BON_CCPlayer : MonoBehaviour
             _avatarState.IsNearIOMInteractible = true;
             _machineToActivate = other.GetComponentInParent<BON_Interactive>();
         }
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
+        {
+            _avatarState.IsNearElevator = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -62,6 +66,10 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;
+        }
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
+        {
+            _avatarState.IsNearElevator = false;
         }
     }
 }

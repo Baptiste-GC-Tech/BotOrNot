@@ -153,7 +153,6 @@ public class BON_GameManager : MonoBehaviour
     {
         _lastCharacterPlayed = _currentCharacterPlayed; //save l'id du perso
         _currentCharacterPlayed = -1;
-        print("player = "+ _lastCharacterPlayed);
         if (_lastCharacterPlayed != -1)
         {
             DisableCompPlayer(_lastCharacterPlayed);

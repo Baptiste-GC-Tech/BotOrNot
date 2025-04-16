@@ -13,8 +13,6 @@ public class BON_DetectionWallPR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Enter, also...");
-
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) //wall
         {
             if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1) //wall on right

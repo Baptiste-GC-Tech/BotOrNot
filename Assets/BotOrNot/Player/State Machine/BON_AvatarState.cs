@@ -8,8 +8,6 @@ public class BON_AvatarState : ScriptableObject
     /*
     *  FIELDS
     */
-    private BON_MovePR _moveScript;
-
 
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
@@ -30,28 +28,14 @@ public class BON_AvatarState : ScriptableObject
         get { return _wasGroundedLastFrame; }
     }
     bool _isGrounded = false;  //1 if touch the ground 
-    public bool IsGrounded
+    public bool IsGrounded //for jump -> need to setup
     {
         get { return _isGrounded; }
-        set
-        {
+        set {
             _wasGroundedLastFrame = _isGrounded;
             _isGrounded = value;
-
-            if (_moveScript != null)
-            {
-                bool enableMove = _isGrounded || _hasCableOut;
-                _moveScript.enabled = enableMove;
-
-                Debug.Log($"[IsGrounded Setter] Grounded: {_isGrounded} | HasCableOut: {_hasCableOut} => MovePR.enabled = {enableMove}");
             }
-            else
-            {
-                Debug.LogWarning("[IsGrounded Setter] _moveScript is null");
-            }
-        }
     }
-
 
     bool _isAgainstWallLeft = false; //1 if touch a wall on left
     public bool IsAgainstWallLeft
@@ -80,6 +64,13 @@ public class BON_AvatarState : ScriptableObject
         set { _isInElevator = value; }
     }
 
+    bool _isNearElevator = false; //1 if is near elevator
+    public bool IsNearElevator 
+    {
+        get { return _isNearElevator; }
+        set { _isNearElevator = value; }
+    }
+
 
     /*
      *  Booleans exclusive to PR
@@ -103,17 +94,8 @@ public class BON_AvatarState : ScriptableObject
     public bool HasCableOut
     {
         get { return _hasCableOut; }
-        set
-        {
-            _hasCableOut = value;
-
-            if (_moveScript != null)
-            {
-                _moveScript.enabled = _isGrounded || _hasCableOut;
-            }
-        }
+        set { _hasCableOut = value; }
     }
-
 
     /*
      *  Booleans exclusive to PR
@@ -126,19 +108,7 @@ public class BON_AvatarState : ScriptableObject
         set { _isNearHumanoidObject = value; }
     }
 
-    private bool _isDRInRange = false;
-    public bool IsDRInRange
-    {
-        get { return _isDRInRange; }
-        set { _isDRInRange = value; }
-    }
-
     protected State _currentState;
-    public State CurrentState
-    {
-        get { return _currentState; }
-    }
-
 
     // player reference
     private BON_CCPlayer _player;
@@ -226,11 +196,6 @@ public class BON_AvatarState : ScriptableObject
         {
             Debug.Log("changement non validé");
         }
-    }
-
-    public void InjectMoveScript(BON_MovePR moveScript)
-    {
-        _moveScript = moveScript;
     }
 
     public void Init()
