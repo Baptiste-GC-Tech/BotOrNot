@@ -172,9 +172,6 @@ public class BON_MovePR : MonoBehaviour
         _moveInputValue = _joystick.InputValues;
 #endif
 
-
-        print(_player.AvatarState.IsAgainstWallRight);
-        print(_moveInputValue.x);
         // if wall on right/left, stop input
         if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
         {
@@ -204,7 +201,7 @@ public class BON_MovePR : MonoBehaviour
             }
             if (_driftTimer > 0)
             {
-                //Debug.Log("Drifting");
+                Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
                 _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;

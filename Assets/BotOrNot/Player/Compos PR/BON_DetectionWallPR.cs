@@ -24,13 +24,11 @@ public class BON_DetectionWallPR : MonoBehaviour
         {
             if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1) //wall on right
             {
-                print("wall right");
                 _CCPlayer.AvatarState.IsAgainstWallRight = true;
                 print(_CCPlayer.AvatarState.IsAgainstWallRight);
             }
             else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
             {
-                print("wall left");
                 _CCPlayer.AvatarState.IsAgainstWallLeft = true;
             }
         }
