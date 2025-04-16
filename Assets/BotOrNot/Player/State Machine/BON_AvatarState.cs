@@ -12,6 +12,12 @@ public class BON_AvatarState : ScriptableObject
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
 
+    /*  
+    *  Animator Controller
+    */
+
+    private Animator _animator;
+
     /*
      *  Booleans for Common State (both PR and DR)
      */
@@ -127,7 +133,8 @@ public class BON_AvatarState : ScriptableObject
         Jump, 
         Elevator, 
         ControllingMachine,
-        ThrowingCable,
+        ThrowingCable
+        //Grounded
     };
     
 
@@ -142,7 +149,26 @@ public class BON_AvatarState : ScriptableObject
         _currentStateAsset = _stateDict[state];
         _currentStateAsset?.InitPlayer(_player); //set le player
         _currentStateAsset?.Enter();    // Entrer dans le nouveau
+        UpdateAnimator(state);
     }
+
+    private void UpdateAnimator(State state)
+    {
+        if (_animator == null) return;
+
+        _animator.SetBool("IsIdle", state == State.Idle);
+        _animator.SetBool("IsMoving", state == State.Moving);
+        _animator.SetBool("IsJumping", state == State.Jump);
+        _animator.SetBool("IsControllingMachine", state == State.ControllingMachine);
+        _animator.SetBool("IsInElevator", state == State.Elevator);
+        _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
+        //_animator.SetBool("IsGrounded", state == State.Grounded);
+
+        // Optionnel : remettre certains flags à false
+        // if (state != State.Jump) _animator.SetBool("IsJumping", false);
+        // if (state != State.Moving) _animator.SetBool("IsMoving", false);
+    }
+
 
     protected bool CheckStatePossible(State newState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)
     {
@@ -179,23 +205,44 @@ public class BON_AvatarState : ScriptableObject
 
     public void Init()
     {
-        _stateDict.Add(State.Idle,new BON_SIdle());
-        _stateDict.Add(State.Moving,new BON_SMoving());
-        _stateDict.Add(State.Jump,new BON_SJump());
-        _stateDict.Add(State.ControllingMachine,new BON_SControllingMachine());
-        _stateDict.Add(State.ThrowingCable,new BON_SThrowingCable());
-        _stateDict.Add(State.Elevator,new BON_SElevator());
-
+        // 1. Trouve le joueur
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
-        _playerCollider = _player.GetComponent<Collider>();
-        distToGround = _playerCollider.bounds.extents.y;
-        distToWall = _playerCollider.bounds.extents.x;
 
-        _currentState =  BON_AvatarState.State.Idle;
-        _currentStateAsset = _stateDict[BON_AvatarState.State.Idle];
-        _currentStateAsset?.InitPlayer(_player); //set le player
+        if (_player == null)
+        {
+            Debug.LogError("BON_AvatarState.Init() : BON_CCPlayer introuvable !");
+            return;
+        }
+
+        // 2. Trouve l'Animator dans ses enfants
+        _animator = _player.GetComponentInChildren<Animator>();
+        if (_animator == null)
+        {
+            Debug.LogWarning("BON_AvatarState.Init() : Animator non trouvé dans les enfants de BON_CCPlayer.");
+        }
+
+        // 3. Trouve son collider
+        _playerCollider = _player.GetComponent<Collider>();
+        if (_playerCollider != null)
+        {
+            distToGround = _playerCollider.bounds.extents.y;
+            distToWall = _playerCollider.bounds.extents.x;
+        }
+
+        // 4. Initialise les états
+        _stateDict.Add(State.Idle, new BON_SIdle());
+        _stateDict.Add(State.Moving, new BON_SMoving());
+        _stateDict.Add(State.Jump, new BON_SJump());
+        _stateDict.Add(State.ControllingMachine, new BON_SControllingMachine());
+        _stateDict.Add(State.ThrowingCable, new BON_SThrowingCable());
+        _stateDict.Add(State.Elevator, new BON_SElevator());
+        // 5. État initial
+        _currentState = State.Idle;
+        _currentStateAsset = _stateDict[_currentState];
+        _currentStateAsset?.InitPlayer(_player);
         _currentStateAsset?.Enter();
     }
+
 
     public void UpdateState() //update state and mains bools
     {
