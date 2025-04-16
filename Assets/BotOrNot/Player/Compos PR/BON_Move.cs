@@ -9,7 +9,7 @@ using UnityEngine.ProBuilder;
 using UnityEngine.Rendering;
 using UnityEngine.Windows;
 
-// TODO: Implement the pause of accelaration and speed update when in the air
+// TODO: Implement the pause of acceleration and speed update when in the air
 public class BON_Move : MonoBehaviour
 {
     /*
@@ -46,6 +46,8 @@ public class BON_Move : MonoBehaviour
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
+
+    private Vector3 _prevMoveDir;
 
     /* Drift related */
     [Space]
@@ -94,20 +96,16 @@ public class BON_Move : MonoBehaviour
             _curSpeed -= _DeccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, _maxSpeed);
         }
-
-        // Applies the slope multiplier
-        //_curSpeed *= _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);
-        //Debug.Log(_SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y));
     }
 
     // Calculates the current movement direction induced by a player input 
     private void UpdateMoveDirFromInput()
     {
-        // Case in which there is no input : don't touch anything
-        if (Mathf.Approximately(_moveInputValue.x, 0.0f) && Mathf.Approximately(_moveInputValue.y, 0.0f)) return;
+        // Updates only if there is an input on the X-axis
+        if (!Mathf.Approximately(_moveInputValue.x, 0.0f))
+            _moveXAxisDir = _moveInputValue.x > 0.0f ? 1 : -1;
 
         // Turns the PR around
-        _moveXAxisDir = _moveInputValue.x > 0.0f ? 1 : -1;
         transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);    // TODO: make it a rotation, no ?
 
         // Case of a flat ground : uses the forward direction instead of doing math
@@ -131,9 +129,9 @@ public class BON_Move : MonoBehaviour
     private void UpdateGroundNormal()
     {
         RaycastHit groundRaycastHit;
-        //Debug.DrawRay(transform.position, Vector3.down * 1.5f, Color.red, Time.deltaTime);
+        Debug.DrawRay(transform.position, Vector3.down * 3f, Color.green, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 1.5f);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 3f);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
@@ -154,6 +152,8 @@ public class BON_Move : MonoBehaviour
         _previousDirection = _moveInputValue.normalized;
         _player.AvatarState.IsAgainstWallRight = false; // init false in avatarState but stuck at True (?????)
         _player.AvatarState.IsAgainstWallLeft = false; //
+
+        _prevMoveDir = _curMoveDir;
     }
 
     void Update()
@@ -168,7 +168,7 @@ public class BON_Move : MonoBehaviour
         _moveInputValue = _joystick.InputValues;
 #endif
 
-        //if wall on right/left, stop input
+        // if wall on right/left, stop input
         if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
         {
             _moveInputValue.x = 0;
@@ -217,7 +217,7 @@ public class BON_Move : MonoBehaviour
             _isFirstMove = true;
         }
 
-        //Bounce
+        // Bounce
         if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
             Debug.Log("Should enter bounce");
@@ -239,9 +239,13 @@ public class BON_Move : MonoBehaviour
 
         /* Applies the movement */
         Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
-        movementThisFrame.x = 0.0f;     // Hard-coded constranit that prevent movement to the left or right
+        movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
         transform.Translate(movementThisFrame);
         //Debug.Log("Movement this frame : " + movementThisFrame);
+
+        //Debug.Log("moveDir : " + _curMoveDir);
+        if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
+        _prevMoveDir = _curMoveDir;
     }
 
     private void OnCollisionEnter(Collision collision)
