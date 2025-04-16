@@ -44,6 +44,10 @@ public class BON_MovePR : MonoBehaviour
 
     /* Direction related */
     private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
+    public int MoveXAxisDir
+    {
+        get { return _moveXAxisDir; }
+    }
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
 
@@ -168,6 +172,9 @@ public class BON_MovePR : MonoBehaviour
         _moveInputValue = _joystick.InputValues;
 #endif
 
+
+        print(_player.AvatarState.IsAgainstWallRight);
+        print(_moveInputValue.x);
         // if wall on right/left, stop input
         if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
         {
@@ -197,7 +204,7 @@ public class BON_MovePR : MonoBehaviour
             }
             if (_driftTimer > 0)
             {
-                Debug.Log("Drifting");
+                //Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
                 _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
                 _curMoveDir = -_curMoveDir;
@@ -250,7 +257,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
         }
@@ -270,7 +277,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
