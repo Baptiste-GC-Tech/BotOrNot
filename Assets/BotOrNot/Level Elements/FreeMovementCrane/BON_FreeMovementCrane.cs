@@ -33,7 +33,6 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public override void ProcessInput(Vector2 Input)
     {
-        print(Input);
         if (System.Math.Abs(Input.x) > 0.1f || System.Math.Abs(Input.y) > 0.1f)
         {
             if (System.Math.Abs(Input.y) > System.Math.Abs(Input.x))

@@ -40,7 +40,6 @@ public class BON_MachineControllerPR : MonoBehaviour
     {
         // Reads input values
         _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
-        print(_machine);
         _machine.ProcessInput(_moveMachineValue);
 
         if(_QuitControlOfMachineAction.WasReleasedThisFrame())
@@ -71,10 +70,8 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
-            Debug.Log("click");
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {                                       // 2 machines : free crane et "levier"
-                Debug.Log("activate");
+            {                                     
                 _machineToActivate = _player.MachineToActivate;
                 _machineToActivate.Activate();
                 _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
