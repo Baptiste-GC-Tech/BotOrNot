@@ -35,7 +35,7 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     //Instance gameManager
-    private BON_GameManager _instance;    
+    public BON_GameManager _instance;
 
 
     /*
@@ -69,9 +69,7 @@ public class BON_CCPlayer : MonoBehaviour
         else if (other.gameObject.tag == "TriggerMachine") //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
-             //->  TODO : récup la machine ->mettre le trigger en enfant , et recup le parent du trigger ?
             _machineToActivate = other.GetComponentInParent<BON_Interactive>();
-            print(_machineToActivate);
         }
     }
 

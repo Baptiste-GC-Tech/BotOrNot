@@ -94,14 +94,12 @@ public class BON_GameManager : MonoBehaviour
         {
             _player.GetComponent<BON_MovePR>(),
             _player.GetComponent<BON_InteractPR>(),
-            _player.GetComponent<BON_CablePR>(),
-            _player.GetComponent<BON_MachineControllerPR>()
+            _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
             _player.GetComponent<BON_MoveDR>(),
-            _player.GetComponent<BON_InteractDR>(),
-            //_player.GetComponent<BON_MachineInteractDR>()
+            _player.GetComponent<BON_InteractDR>()
         };
 
         //init la scene actuelle
@@ -148,7 +146,7 @@ public class BON_GameManager : MonoBehaviour
                     }
                     else
                     {
-                        print("condition non respecté");
+                        print("condition non respectï¿½");
                     }
                 }
                 break;
@@ -190,7 +188,7 @@ public class BON_GameManager : MonoBehaviour
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
         EnableCompPlayer(_lastCharacterPlayed);
-        print("control switch to " + GetComponent<PlayerInput>().currentActionMap);
+        print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     public void DisableCompPlayer(int CharacterStopPlaying)
@@ -221,7 +219,7 @@ public class BON_GameManager : MonoBehaviour
     public IEnumerator CooldownSwitchControl()
     {
         _isSwitching = true;
-        yield return new WaitForSeconds(0.5f); //durée anim?
+        yield return new WaitForSeconds(0.5f); //durï¿½e anim?
         _isSwitching = false;
     }
 

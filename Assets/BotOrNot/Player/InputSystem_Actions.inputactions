@@ -1029,6 +1029,28 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Up",
+                    "id": "daf08069-c8a0-4e96-b095-0f8d51c8ad22",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Up",
+                    "id": "41e931ed-8677-4e15-a4b9-4edeb38d782e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "right",
                     "id": "77931617-db02-4233-821f-b7881f98b538",
                     "path": "<Keyboard>/d",
@@ -1051,9 +1073,31 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Down",
+                    "id": "d308d4b5-b922-4bdf-bfc0-1efffa6936be",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "c8e3af12-b9d5-4452-9713-e6a53bf66fea",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "8815232d-e176-4776-9a71-240e2f98b579",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

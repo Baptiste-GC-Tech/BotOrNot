@@ -21,6 +21,6 @@ public class BON_Controllable : BON_Actionnable
 
     public virtual void ProcessInput(Vector2 Input)
     {
-
+        
     }
 }
