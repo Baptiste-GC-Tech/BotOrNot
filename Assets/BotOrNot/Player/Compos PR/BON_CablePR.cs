@@ -128,7 +128,7 @@ public class BON_CablePR : MonoBehaviour
                     interactive.Activate();
 
                 _player.AvatarState.HasCableOut = true;
-                if (_moveScript != null) _moveScript.enabled = false;
+                //  if (_moveScript != null) _moveScript.enabled = false;
             }
         }
         else
@@ -145,7 +145,7 @@ public class BON_CablePR : MonoBehaviour
                     interactive.Activate();
             }
             _player.AvatarState.HasCableOut = false;
-            if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
+            // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
         }
     }
 
