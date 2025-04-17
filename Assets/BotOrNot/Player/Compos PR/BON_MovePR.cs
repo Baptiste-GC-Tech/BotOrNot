@@ -160,6 +160,7 @@ public class BON_MovePR : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+
         if (_bounceHeight >= _heightBonceStart)
         {
             _heightBonceStart = _bounceHeight + 1;
@@ -192,12 +193,19 @@ public class BON_MovePR : MonoBehaviour
         {
             _moveInputValue.x = 0;
         }
+        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded)
+        {
+            UpdateMoveDirFromInput();
+            UpdateCurSpeed();
+        }
+        else
+        {
+            _curSpeed = 0f;
+        }
 
-        UpdateMoveDirFromInput();
-        UpdateCurSpeed();
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
-        if (_desiredDirection != Vector3.zero)
+        if (_desiredDirection != Vector3.zero && (_player.AvatarState.IsGrounded || _player.AvatarState.HasCableOut))
         {
             if (_isFirstMove)
             {
@@ -254,9 +262,12 @@ public class BON_MovePR : MonoBehaviour
         //print(_curSpeed);
 
         /* Applies the movement */
-        Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
-        movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
-        transform.Translate(movementThisFrame);
+        if (!_player.AvatarState.HasCableOut)
+        {
+            Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
+            movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
+            transform.Translate(movementThisFrame);
+        }
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
         //Debug.Log("moveDir : " + _curMoveDir);
@@ -293,8 +304,9 @@ public class BON_MovePR : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
+            Debug.Log("IsGrounded = " + _player.AvatarState.IsGrounded);
         }
-        if (_isBouncing)
+        if (_isBouncing && _player.AvatarState.IsGrounded!)
         {
             _bounceCount++;
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);

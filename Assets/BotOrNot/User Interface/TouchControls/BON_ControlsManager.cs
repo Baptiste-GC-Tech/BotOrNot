@@ -93,7 +93,7 @@ public class BON_ControlsManager : MonoBehaviour
                 {
                     _lastInteractedObj = hit.transform.gameObject;
                     _lastInteractedPos = _lastInteractedObj.transform.position;
-
+                    _lastInteractedObj.GetComponent<BON_Interactive>().Activate();
                     Debug.Log(_lastInteractedObj.name);
                 }
             }

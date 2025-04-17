@@ -299,9 +299,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: -2099379676528639254, guid: ecfa846606ce84d4c8ea34fe15bfac4b,
+          type: 3}
         m_TargetAssemblyTypeName: BON_Cable, Assembly-CSharp
-        m_MethodName: GererClic
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

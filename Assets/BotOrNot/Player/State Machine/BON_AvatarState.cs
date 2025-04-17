@@ -9,6 +9,7 @@ public class BON_AvatarState : ScriptableObject
     *  FIELDS
     */
 
+
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
 
@@ -28,13 +29,14 @@ public class BON_AvatarState : ScriptableObject
         get { return _wasGroundedLastFrame; }
     }
     bool _isGrounded = false;  //1 if touch the ground 
-    public bool IsGrounded //for jump -> need to setup
+    public bool IsGrounded
     {
         get { return _isGrounded; }
-        set {
+        set
+        {
             _wasGroundedLastFrame = _isGrounded;
             _isGrounded = value;
-            }
+        }
     }
 
     bool _isAgainstWallLeft = false; //1 if touch a wall on left
@@ -63,12 +65,18 @@ public class BON_AvatarState : ScriptableObject
         get { return _isInElevator; }
         set { _isInElevator = value; }
     }
-
     bool _isDrifting;
     public bool IsDrifting
     {
         get { return _isDrifting; }
         set { _isDrifting = value; }
+
+    }
+    bool _isNearElevator = false; //1 if is near elevator
+    public bool IsNearElevator 
+    {
+        get { return _isNearElevator; }
+        set { _isNearElevator = value; }
     }
 
 
@@ -94,21 +102,23 @@ public class BON_AvatarState : ScriptableObject
     public bool HasCableOut
     {
         get { return _hasCableOut; }
-        set { _hasCableOut = value; }
+        set
+        {
+            _hasCableOut = value;
+        }
     }
+
 
     /*
      *  Booleans exclusive to DR
      */
 
-    bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) <- useless now ?
+    bool _isNearHumanoidObject = false; //<-- (eg.ï¿½chelle, ...) <- useless now ?
     public bool IsNearHumanoidObject
     {
         get { return _isNearHumanoidObject; }
         set { _isNearHumanoidObject = value; }
     }
-
-    private bool _isDRInRange = false;
 
     protected State _currentState;
 
@@ -142,7 +152,7 @@ public class BON_AvatarState : ScriptableObject
 
     protected void SetState(State state)
     {
-        _currentStateAsset?.Exit();      // Quitter l’ancien état
+        _currentStateAsset?.Exit();      // Quitter lï¿½ancien ï¿½tat
         _currentState = state;
         _currentStateAsset = _stateDict[state];
         _currentStateAsset?.InitPlayer(_player); //set le player
@@ -164,7 +174,7 @@ public class BON_AvatarState : ScriptableObject
         _animator.SetBool("DirectionChangedQuickly",state==State.Drift);
         //_animator.SetBool("IsGrounded", state == State.Grounded);
 
-        // Optionnel : remettre certains flags à false
+        // Optionnel : remettre certains flags ï¿½ false
         // if (state != State.Jump) _animator.SetBool("IsJumping", false);
         // if (state != State.Moving) _animator.SetBool("IsMoving", false);
     }
@@ -176,7 +186,7 @@ public class BON_AvatarState : ScriptableObject
         {
             if (newState == State.Jump)
             {
-                Debug.Log("état pas possible pour le robot");
+                Debug.Log("ï¿½tat pas possible pour le robot");
                 return false;
             }
         }
@@ -184,7 +194,7 @@ public class BON_AvatarState : ScriptableObject
         {
             if (newState == State.ControllingMachine || newState == State.ThrowingCable)
             {
-                MonoBehaviour.print("état pas possible pour la dame robot");
+                MonoBehaviour.print("ï¿½tat pas possible pour la dame robot");
                 return false;
             }
         }
@@ -199,7 +209,7 @@ public class BON_AvatarState : ScriptableObject
         }
         else
         {
-            Debug.Log("changement non validé");
+            Debug.Log("changement non validï¿½");
         }
     }
 
@@ -218,7 +228,7 @@ public class BON_AvatarState : ScriptableObject
         _animator = _player.GetComponentInChildren<Animator>();
         if (_animator == null)
         {
-            Debug.LogWarning("BON_AvatarState.Init() : Animator non trouvé dans les enfants de BON_CCPlayer.");
+            Debug.LogWarning("BON_AvatarState.Init() : Animator non trouvï¿½ dans les enfants de BON_CCPlayer.");
         }
 
         // 3. Trouve son collider
@@ -229,7 +239,7 @@ public class BON_AvatarState : ScriptableObject
             distToWall = _playerCollider.bounds.extents.x;
         }
 
-        // 4. Initialise les états
+        // 4. Initialise les ï¿½tats
         _stateDict.Add(State.Idle, new BON_SIdle());
         _stateDict.Add(State.Moving, new BON_SMoving());
         _stateDict.Add(State.Jump, new BON_SJump());
@@ -237,7 +247,7 @@ public class BON_AvatarState : ScriptableObject
         _stateDict.Add(State.ThrowingCable, new BON_SThrowingCable());
         _stateDict.Add(State.Elevator, new BON_SElevator());
         _stateDict.Add(State.Drift, new BON_SDrift());
-        // 5. État initial
+        // 5. ï¿½tat initial
         _currentState = State.Idle;
         _currentStateAsset = _stateDict[_currentState];
         _currentStateAsset?.InitPlayer(_player);

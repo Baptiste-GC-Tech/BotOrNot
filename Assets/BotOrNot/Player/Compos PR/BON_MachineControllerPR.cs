@@ -9,16 +9,16 @@ public class BON_MachineControllerPR : MonoBehaviour
      *  FIELDS
      */
     //Input related
-    InputAction _TakeControlOfMachineAction;    //E Upon machine interaction, represents taking control of it and losing control of PR
-    InputAction _QuitControlOfMachineAction;    //F Upon machine interaction, represents forfeiting control of it and gaining back control of PR
+    InputAction _TakeControlOfMachineAction;    // Upon machine interaction, represents taking control of it and losing control of PR
+    InputAction _QuitControlOfMachineAction;    // Upon machine interaction, represents forfeiting control of it and gaining back control of PR
     InputAction _JoystickMachineAction;         // When controling a machine, sends the input over to it so it can do stuff
     Vector2 _moveMachineValue;
 
     // Player & State related
     [SerializeField] private BON_CCPlayer _player; 
 
-    private BON_Interactive _machineToActivate;
-    public BON_Interactive MachineToActivate
+    private BON_Interactive_Actionnables _machineToActivate;
+    public BON_Interactive_Actionnables MachineToActivate
     {
         get { return _machineToActivate; }
         set { _machineToActivate = value; }
@@ -71,7 +71,8 @@ public class BON_MachineControllerPR : MonoBehaviour
         if (_TakeControlOfMachineAction.WasPressedThisFrame() && !_player.AvatarState.IsConstrollingMachine) //interact & pas deja le controle
         {
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {                                     
+            {
+                print(_player.MachineToActivate);
                 _machineToActivate = _player.MachineToActivate;
                 _machineToActivate.Activate();
                 _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
