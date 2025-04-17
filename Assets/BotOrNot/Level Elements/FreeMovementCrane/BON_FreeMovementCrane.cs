@@ -97,7 +97,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Left()
     {
-        if (_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero && !_isCollideLeft)
+        if ((_direction == new Vector3(-1, 0, 0) || _direction == Vector3.zero) && !_isCollideLeft)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(-1, 0);
@@ -110,7 +110,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     public void Right()
     {
-        if (_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero && !_isCollideRight)
+        if ((_direction == new Vector3(1, 0, 0) || _direction == Vector3.zero) && !_isCollideRight)
         {
             _IsMovingByPlayer = true;
             _direction = new Vector2(1, 0);
@@ -137,36 +137,45 @@ public class BON_FreeMovementCrane : BON_Controllable
         _speed = 0;
         _acceleration = _speedMax / 3;
         _isBlocked = false;
+        _isCollideUp = false;
+        _isCollideDown = false;
+        _isCollideLeft = false;
+        _isCollideRight = false;
         _rigidbody = GetComponent<Rigidbody>();
     }
+
     private void FixedUpdate()
     {
-        //test collision
-        if ((_direction == Vector3.up && _isCollideUp) ||
+        // On vérifie si la direction actuelle est bloquée, on ne bloque pas tout
+        bool directionBlocked =
+            (_direction == Vector3.up && _isCollideUp) ||
             (_direction == Vector3.down && _isCollideDown) ||
             (_direction == Vector3.left && _isCollideLeft) ||
-            (_direction == Vector3.right && _isCollideRight))
-        {
-            _isBlocked = true;
-            return;
-        }
+            (_direction == Vector3.right && _isCollideRight);
 
-
-        if (_IsMovingByPlayer || _speed > 0)
+        if ((_IsMovingByPlayer || _speed > 0) && !directionBlocked)
         {
             Vector3 nextPos = _rigidbody.position + _direction * _speed * Time.deltaTime;
+            bool isInsideBounds = false;
+
             foreach (Vector4 Box in _boundaries)
             {
-                if (Box[0] <= nextPos.x && nextPos.x <= Box[1] && Box[2] <= nextPos.y && nextPos.y <= Box[3])
+                if (Box[0] <= nextPos.x && nextPos.x <= Box[1] &&
+                    Box[2] <= nextPos.y && nextPos.y <= Box[3])
                 {
-                    _rigidbody.MovePosition(nextPos);
-                    _isBlocked = false;
+                    isInsideBounds = true;
                     break;
                 }
-                else
-                {
-                    _isBlocked = true;
-                }
+            }
+
+            if (isInsideBounds)
+            {
+                _rigidbody.MovePosition(nextPos);
+                _isBlocked = false;
+            }
+            else
+            {
+                _isBlocked = true;
             }
         }
 
@@ -176,16 +185,17 @@ public class BON_FreeMovementCrane : BON_Controllable
         {
             _speed += oneAcceleration;
         }
-        else if(!_IsMovingByPlayer && _speed - oneAcceleration > 0)
+        else if (!_IsMovingByPlayer && _speed - oneAcceleration > 0)
         {
             _speed -= oneAcceleration;
         }
-        else if (!_IsMovingByPlayer || _isBlocked)
+        else if (!_IsMovingByPlayer || _isBlocked || directionBlocked)
         {
             _speed = 0;
             _direction = Vector2.zero;
         }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
