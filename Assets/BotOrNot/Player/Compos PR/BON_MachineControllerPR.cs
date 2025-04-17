@@ -71,7 +71,8 @@ public class BON_MachineControllerPR : MonoBehaviour
         if (_TakeControlOfMachineAction.WasPressedThisFrame() && !_player.AvatarState.IsConstrollingMachine) //interact & pas deja le controle
         {
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {                                     
+            {
+                print(_player.MachineToActivate);
                 _machineToActivate = _player.MachineToActivate;
                 _machineToActivate.Activate();
                 _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
