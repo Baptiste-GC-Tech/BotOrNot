@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AvatarState")]
@@ -65,7 +66,7 @@ public class BON_AvatarState : ScriptableObject
         get { return _isInElevator; }
         set { _isInElevator = value; }
     }
-    bool _isDrifting;
+    bool _isDrifting = false;
     public bool IsDrifting
     {
         get { return _isDrifting; }
@@ -171,7 +172,7 @@ public class BON_AvatarState : ScriptableObject
         _animator.SetBool("IsInElevator", state == State.Elevator);
         _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
         _animator.SetBool("StoppedAbruptly", state == State.Drift);
-        _animator.SetBool("DirectionChangedQuickly",state==State.Drift);
+        _animator.SetBool("DirectionChangedQuickly", state == State.Drift);
         //_animator.SetBool("IsGrounded", state == State.Grounded);
 
         // Optionnel : remettre certains flags � false

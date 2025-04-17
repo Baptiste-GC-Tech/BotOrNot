@@ -11,8 +11,8 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: StoppedAbruptly
     m_EventTreshold: 0
-  - m_ConditionMode: 3
-    m_ConditionEvent: Speed
+  - m_ConditionMode: 1
+    m_ConditionEvent: DirectionChangedQuickly
     m_EventTreshold: 8
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2345490684026552036}
@@ -180,6 +180,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsIdle
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: DirectionChangedQuickly
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6290304738191786003}

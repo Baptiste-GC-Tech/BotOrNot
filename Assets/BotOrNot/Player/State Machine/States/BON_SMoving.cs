@@ -16,21 +16,22 @@ public class BON_SMoving : BON_State
 
     public override void UpState()
     {
-        if (_player.AvatarState.HasCableOut)
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.ThrowingCable);
-        }
-        if (!_player.AvatarState.IsGrounded && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);
-        }
-        if (!_player.AvatarState.IsMovingByPlayer)
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
-        }
         if (_player.AvatarState.IsDrifting)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Drift);
         }
+        else if (_player.AvatarState.HasCableOut)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.ThrowingCable);
+        }
+        else if (!_player.AvatarState.IsGrounded && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);
+        }
+        else if (!_player.AvatarState.IsMovingByPlayer )
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
+        }
+
     }
 }

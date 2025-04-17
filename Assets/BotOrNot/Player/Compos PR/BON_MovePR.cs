@@ -74,7 +74,7 @@ public class BON_MovePR : MonoBehaviour
     private float _driftTimer;
     private Vector2 _previousDirection;
     private bool _isFirstMove = true;
-    private bool _needToResetDrift = false;
+    private bool _shouldDrift = false;
     private float _timeSinceLastMove = 0;
 
     /* Bounce related */
@@ -170,6 +170,7 @@ public class BON_MovePR : MonoBehaviour
         _player.AvatarState.IsAgainstWallLeft = false; //
 
         _prevMoveDir = _curMoveDir;
+        _player.AvatarState.IsDrifting = false;
     }
 
     void Update()
@@ -205,22 +206,23 @@ public class BON_MovePR : MonoBehaviour
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
-        if (_desiredDirection != Vector3.zero && (_player.AvatarState.IsGrounded || _player.AvatarState.HasCableOut))
+        if (_desiredDirection != Vector3.zero /*&& (_player.AvatarState.IsGrounded || _player.AvatarState.HasCableOut)*/)
         {
             if (_isFirstMove)
             {
                 _isFirstMove = false;
                 _previousDirection = _moveInputValue.normalized;
+                _player.AvatarState.IsDrifting = false;
             }
             if (_previousDirection != _moveInputValue.normalized)
             {
                 _previousDirection = _moveInputValue.normalized;
                 _player.AvatarState.IsDrifting = true;
                 _driftTimer = _driftDuration;
+                Debug.Log("Please drift");
             }
-           if (_driftTimer > 0)
+            if (_driftTimer > 0)
             {
-                Debug.Log("Drifting");
                 _driftTimer -= Time.deltaTime;
             }
             else
@@ -274,28 +276,44 @@ public class BON_MovePR : MonoBehaviour
         if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
-        Animator animator = _player.GetComponentInChildren<Animator>();
-        if (animator != null)
+        /* Animator animator = _player.GetComponentInChildren<Animator>();
+         if (animator != null)
+         {
+             animator.SetFloat("Speed", _curSpeed);
+
+             Vector2 currentDir = _moveInputValue.normalized;
+             float dot = Vector2.Dot(_previousDirection, currentDir);
+
+             bool didTurnBack = dot < -0.8f;
+             bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+             bool triggerSkid = didTurnBack && isSpeedHighEnough;
+
+             bool triggerStop = _shouldDrift;
+
+             animator.SetBool("DirectionChangedQuickly", triggerSkid);
+             animator.SetBool("StoppedAbruptly", triggerStop);
+
+             if (_moveInputValue.magnitude > 0.1f)
+                 _previousDirection = currentDir;
+
+             if (triggerSkid)
+             {
+                 _player.AvatarState.IsDrifting = true;
+                 Debug.Log("DRIFFFFFFFFFFT");
+             }
+             else if(_driftTimer <= 0)
+             {
+                 _player.AvatarState.IsDrifting = false;
+                 _shouldDrift = false;
+             }
+             if (_driftTimer > 0)
+             {
+                 _driftTimer -= Time.deltaTime;
+             }
+         }*/
+        if (_player.AvatarState.IsDrifting == true)
         {
-            animator.SetFloat("Speed", _curSpeed);
-
-            Vector2 currentDir = _moveInputValue.normalized;
-            float dot = Vector2.Dot(_previousDirection, currentDir);
-
-            bool didTurnBack = dot < -0.8f;
-            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
-            bool triggerSkid = didTurnBack && isSpeedHighEnough;
-
-            bool triggerStop = _curSpeed > 0.5f && _moveInputValue.magnitude < 0.1f;
-
-            animator.SetBool("DirectionChangedQuickly", triggerSkid);
-            animator.SetBool("StoppedAbruptly", triggerStop);
-
-            if (_moveInputValue.magnitude > 0.1f)
-                _previousDirection = currentDir;
-
-            if (triggerSkid) Debug.Log("Drift detected !");
-
+            Debug.Log("DRIFTTTTTTTTT");
         }
     }
 
