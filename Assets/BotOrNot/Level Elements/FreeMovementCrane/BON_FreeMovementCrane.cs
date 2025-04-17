@@ -147,15 +147,13 @@ public class BON_FreeMovementCrane : BON_Controllable
     private void FixedUpdate()
     {
         // vérifie si la direction actuelle est bloquée
-        if((_direction == Vector3.up && _isCollideUp) ||
+        bool directionBlocked =
+            (_direction == Vector3.up && _isCollideUp) ||
             (_direction == Vector3.down && _isCollideDown) ||
             (_direction == Vector3.left && _isCollideLeft) ||
-            (_direction == Vector3.right && _isCollideRight))
-        {
-            _isBlocked = true;
-        }
+            (_direction == Vector3.right && _isCollideRight);
 
-        if ((_IsMovingByPlayer || _speed > 0) && !_isBlocked)
+        if ((_IsMovingByPlayer || _speed > 0) && !directionBlocked)
         {
             Vector3 nextPos = _rigidbody.position + _direction * _speed * Time.deltaTime;
             bool isInsideBounds = false;
@@ -190,7 +188,7 @@ public class BON_FreeMovementCrane : BON_Controllable
         {
             _speed -= oneAcceleration;
         }
-        else if (!_IsMovingByPlayer || _isBlocked)
+        else if (!_IsMovingByPlayer || _isBlocked || directionBlocked)
         {
             _speed = 0;
             _direction = Vector2.zero;
