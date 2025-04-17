@@ -165,18 +165,34 @@ public class BON_CablePR : MonoBehaviour
         float shortest = Mathf.Infinity;
 
         Vector3 direction = _directionReference != null ? _directionReference.forward : transform.forward;
+        Debug.DrawRay(_gunOrigin.position, direction * _rayDistance, Color.red, 2f);
 
         foreach (GameObject hook in hooks)
         {
             Vector3 toHook = hook.transform.position - _gunOrigin.position;
+            Debug.DrawLine(_gunOrigin.position, hook.transform.position, Color.yellow, 2f);
+            float dist = toHook.magnitude;
 
-            if (Vector3.Dot(direction, toHook.normalized) > 0)
+            // On check si la distance entre target et origine est bien la bonne sinon il y a obstacle
+            if (Vector3.Dot(direction, toHook.normalized) > 0 && dist <= _rayDistance)
             {
-                float dist = toHook.magnitude;
+                Ray ray = new Ray(_gunOrigin.position, toHook.normalized);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, dist, _raycastLayers))
+                {
+                    if (hit.transform != hook.transform)
+                    {
+                        Debug.Log($"Hook '{hook.name}' bloqué par : {hit.transform.name}");
+                        continue;
+                    }
+                }
+
                 if (dist <= _rayDistance && dist < shortest)
                 {
                     shortest = dist;
                     closest = hook.transform;
+                    Debug.DrawLine(_gunOrigin.position, closest.position, Color.green, 2f);
                 }
             }
         }
