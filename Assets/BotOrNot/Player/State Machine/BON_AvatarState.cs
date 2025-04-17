@@ -9,8 +9,6 @@ public class BON_AvatarState : ScriptableObject
     *  FIELDS
     */
 
-    private BON_MovePR _moveScript;
-
 
     //link State enum to State class
     protected Dictionary<State, BON_State> _stateDict = new();
@@ -38,15 +36,7 @@ public class BON_AvatarState : ScriptableObject
         {
             _wasGroundedLastFrame = _isGrounded;
             _isGrounded = value;
-            /*
-            if (_moveScript != null)
-                _moveScript.enabled = _isGrounded || _hasCableOut;*/
         }
-    }
-
-    public void InjectMoveScript(BON_MovePR moveScript)
-    {
-        _moveScript = moveScript;
     }
 
     bool _isAgainstWallLeft = false; //1 if touch a wall on left
@@ -109,9 +99,6 @@ public class BON_AvatarState : ScriptableObject
         set
         {
             _hasCableOut = value;
-            /*
-            if (_moveScript != null)
-                _moveScript.enabled = _isGrounded || _hasCableOut;*/
         }
     }
 
