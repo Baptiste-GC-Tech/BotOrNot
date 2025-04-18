@@ -109,7 +109,7 @@ public class BON_MovePR : MonoBehaviour
         // Case in which we are above our de facto max speed : we want to go slower
         if (speedDelta < 0.0f)
         {
-            _curSpeed -= _DeccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime * 2;
+            _curSpeed -= _DeccelOverSpeed.Evaluate(_curSpeed) * _maxSpeed * Time.deltaTime;
             _curSpeed = Mathf.Clamp(_curSpeed, 0.0f, _maxSpeed);
         }
     }
@@ -217,7 +217,7 @@ public class BON_MovePR : MonoBehaviour
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
-        if (_desiredDirection != Vector3.zero)
+        if (_desiredDirection != Vector3.zero /*&& (_player.AvatarState.IsGrounded || _player.AvatarState.HasCableOut)*/)
         {
             if (_isFirstMove)
             {
@@ -310,9 +310,30 @@ public class BON_MovePR : MonoBehaviour
 
              bool didTurnBack = dot < -0.8f;
              bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            /* bool triggerSkid = didTurnBack && isSpeedHighEnough;
+
+             bool triggerStop = _shouldDrift;
+
+             animator.SetBool("DirectionChangedQuickly", triggerSkid);
+             animator.SetBool("StoppedAbruptly", triggerStop);*/
 
              if (_moveInputValue.magnitude > 0.1f)
                  _previousDirection = currentDir;
+
+             /*if (triggerSkid)
+             {
+                 _player.AvatarState.IsDrifting = true;
+                 Debug.Log("DRIFFFFFFFFFFT");
+             }
+             else if(_driftTimer <= 0)
+             {
+                 _player.AvatarState.IsDrifting = false;
+                 _shouldDrift = false;
+             }
+             if (_driftTimer > 0)
+             {
+                 _driftTimer -= Time.deltaTime;
+             }*/
          }
     }
 
