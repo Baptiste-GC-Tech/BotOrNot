@@ -1,13 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
-using UnityEngine.Rendering;
-using UnityEngine.Windows;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
@@ -15,6 +7,7 @@ public class BON_MovePR : MonoBehaviour
     /*
      *  FIELDS
      */
+
     /* Objects & GO related */
     [Header("Player")]
     [SerializeField] private BON_CCPlayer _player;
@@ -40,7 +33,7 @@ public class BON_MovePR : MonoBehaviour
     public float CurSpeed
     { get { return _curSpeed; } }
 
-    /* Accelartion related */
+    /* Acceleration related */
     [Space]
     [Header("Acceleration")]
     [SerializeField] AnimationCurve _AccelOverSpeed;
@@ -54,6 +47,7 @@ public class BON_MovePR : MonoBehaviour
     }
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
+    private CapsuleCollider _PRCollider;       // Used to scale relatively the ground check raycast
 
     private Vector3 _prevMoveDir;
 
@@ -105,7 +99,7 @@ public class BON_MovePR : MonoBehaviour
     public string Tag = null;
 
 
-    //Properties are mainly for debugTool
+    //Properties are mainly created for debugTool
 
     /*
      *  CLASS METHODS
@@ -114,7 +108,8 @@ public class BON_MovePR : MonoBehaviour
     private void UpdateCurSpeed()
     {
 
-        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
+        //float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
+        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x);
         float speedDelta = deFactoMaxSpeed - _curSpeed;
 
         //Debug.Log("defactoMax - cur = delta : " + deFactoMaxSpeed + " - " + _curSpeed + " = " + speedDelta);
@@ -163,10 +158,12 @@ public class BON_MovePR : MonoBehaviour
     // Updates the ground's normal that PR is standing on
     private void UpdateGroundNormal()
     {
+        float groundRayLength = 0.55f * _PRCollider.height * transform.localScale.x;
+
         RaycastHit groundRaycastHit;
-        Debug.DrawRay(transform.position, Vector3.down * 3f, Color.green, Time.deltaTime);
+        Debug.DrawRay(transform.position, Vector3.down * groundRayLength, Color.green, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 3f);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
@@ -180,6 +177,7 @@ public class BON_MovePR : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+        _PRCollider = GetComponent<CapsuleCollider>();
 
         if (_bounceHeight >= _heightBonceStart)
         {
@@ -204,7 +202,7 @@ public class BON_MovePR : MonoBehaviour
         _moveInputValue = _joystick.InputValues;
 #endif
 
-        // if wall on right/left, stop input
+        // if input + wall on right/left, stop input
         if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
         {
             _moveInputValue.x = 0;
@@ -330,16 +328,9 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Tag = collision.gameObject.tag;
-        name = collision.gameObject.name;
-        Debug.Log($"Collision avec: {collision.gameObject.name}, Tag: {collision.gameObject.tag}, Layer: {LayerMask.LayerToName(collision.gameObject.layer)}");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
-        }
-        else
-        {
-            Layer = LayerMask.LayerToName(collision.gameObject.layer);
         }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
@@ -358,6 +349,9 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        Tag = collision.gameObject.tag;
+        name = collision.gameObject.name;
+        Layer = LayerMask.LayerToName(collision.gameObject.layer);
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
@@ -365,7 +359,6 @@ public class BON_MovePR : MonoBehaviour
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
         {
-            Debug.Log("bouncing");
             _bounceCount++;
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
             _rb.AddForce(Vector3.up * (_bounceHeight / _bounceCount), ForceMode.Impulse);
@@ -384,5 +377,8 @@ public class BON_MovePR : MonoBehaviour
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
         }
+        Tag = null;
+        name = null;
+        Layer = null;
     }
 }
