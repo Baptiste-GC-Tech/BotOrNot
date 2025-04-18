@@ -20,6 +20,11 @@ public class BON_GameManager : MonoBehaviour
     // player reference
     private BON_CCPlayer _player;
 
+    public BON_CCPlayer Player
+    {
+        get { return _player; }
+    }
+
     private BON_AvatarState _currentState;
 
     private bool _isPlayingNut; ////true if nut, false if Dame robot
