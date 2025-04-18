@@ -34,6 +34,7 @@ public class BON_MovePR : MonoBehaviour
     [Header("Speed")]
     [SerializeField] float _maxSpeed;
     [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
+    [SerializeField, Range(0.01f, 0.05f)] float _rotationLerpSpeed = 0.025f;
     private float _curSpeed;
     public float CurSpeed
     {
@@ -123,7 +124,15 @@ public class BON_MovePR : MonoBehaviour
         // Turns the PR around
         if (_moveXAxisDir != 0)
         {
-            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), 0.1f) ): (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), 0.1f));    // TODO: make it a rotation, no ?
+            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed) ): (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
+        }
+        if (transform.eulerAngles.y - 90 < 0.1 && transform.eulerAngles.y - 90 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        if (transform.eulerAngles.y - 270 < 0.1 && transform.eulerAngles.y -270 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 270, 0);
         }
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.forward;
@@ -245,7 +254,6 @@ public class BON_MovePR : MonoBehaviour
         {
             _isFirstMove = true;
             _player.AvatarState.IsMovingByPlayer = false;
-            Debug.Log(_timeSinceLastMove);
         }
 
         // Bounce
@@ -270,8 +278,16 @@ public class BON_MovePR : MonoBehaviour
         /* Applies the movement */
         if (!_player.AvatarState.HasCableOut)
         {
+            if (transform.eulerAngles != (new Vector3(0, 90.0f, 0)))
+            {
+                if (transform.eulerAngles != (new Vector3(0, 270.0f, 0)))
+                {
+                    _curSpeed = 0;
+                }
+            }
             if (_shouldNotMove)
             {
+                //Debug.Log(transform.eulerAngles);
                 _curSpeed = 0;
             }
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
