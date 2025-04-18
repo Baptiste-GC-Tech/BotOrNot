@@ -9,6 +9,7 @@ public class BON_SDrift : BON_State
         //Debug.LogWarning("Enterring the Drift");
         _player.GetComponent<BON_MovePR>().ShouldNotMove = true;
         _player.GetComponent<BON_MovePR>().CurSpeed = 0;
+        _player.AvatarState.IsDrifting = false;
     }
 
     public override void Exit()
