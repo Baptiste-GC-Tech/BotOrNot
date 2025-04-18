@@ -1,13 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
-using UnityEngine.Rendering;
-using UnityEngine.Windows;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
@@ -15,6 +7,7 @@ public class BON_MovePR : MonoBehaviour
     /*
      *  FIELDS
      */
+
     /* Objects & GO related */
     [Header("Player")]
     [SerializeField] private BON_CCPlayer _player;
@@ -27,6 +20,8 @@ public class BON_MovePR : MonoBehaviour
     [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
     private BON_COMPJoystick _joystick;
     Vector2 _moveInputValue;
+    public Vector2 MoveInputValue
+    { get { return _moveInputValue; }}
 
 
     /* Speed related */
@@ -48,20 +43,21 @@ public class BON_MovePR : MonoBehaviour
         set { _shouldNotMove = value; }
     }
 
-    /* Accelartion related */
+    /* Acceleration related */
     [Space]
     [Header("Acceleration")]
     [SerializeField] AnimationCurve _AccelOverSpeed;
     [SerializeField] AnimationCurve _DeccelOverSpeed;
 
     /* Direction related */
-    private int _moveXAxisDir;      // Useless now since we are actually rotating the GO instead
+    private int _moveXAxisDir;
     public int MoveXAxisDir
     {
         get { return _moveXAxisDir; }
     }
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
+    private CapsuleCollider _PRCollider;       // Used to scale relatively the ground check raycast
 
     private Vector3 _prevMoveDir;
 
@@ -69,7 +65,11 @@ public class BON_MovePR : MonoBehaviour
     [Space]
     [Header("Drift")]
     [SerializeField] private float _driftDuration = 0.5f;
+    public float DriftDuration
+    { get { return _driftDuration; } }
     [SerializeField] private float _driftAcceleration = 400.0f;
+    public float DriftAcceleration
+        { get { return _driftAcceleration; } }
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
@@ -77,6 +77,8 @@ public class BON_MovePR : MonoBehaviour
     private bool _isFirstMove = true;
     private bool _isPLayerMoving = false;
     private float _timeSinceLastMove = 0;
+    public float TimeSinceLastMove
+    { get { return _timeSinceLastMove; } }
 
     /* Bounce related */
     [Space]
@@ -85,8 +87,29 @@ public class BON_MovePR : MonoBehaviour
     [SerializeField] float _bounceHeight = 5.0f;
     [SerializeField] float _heightBonceStart = 6.0f;
     private bool _isBouncing;
+    public bool IsBouncing
+    { get { return _isBouncing; } }
     private Vector3 _fallHeight;
+    public Vector3 FallHeight
+        { get { return _fallHeight; } }
     private int _bounceCount;
+    public int BounceCount
+    { get { return _bounceCount; } }
+
+    /* animator related */
+    private float _dot;
+    private Vector2 _currentDir;
+    private bool _didTurnBack;
+    private bool _isSpeedHighEnough;
+    private bool _triggerSkid;
+    private bool _triggerStop;
+
+    /* for debugTool */
+    public string Layer = "";
+    public string Tag = null;
+
+
+    //Properties are mainly created for debugTool
 
     /*
      *  CLASS METHODS
@@ -95,7 +118,8 @@ public class BON_MovePR : MonoBehaviour
     private void UpdateCurSpeed()
     {
 
-        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
+        //float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x) * _SpeedMultiplierOverSlope.Evaluate(_groundNormalVect.y);  // This speed depends on the intensity of the player's input
+        float deFactoMaxSpeed = _maxSpeed * Mathf.Abs(_moveInputValue.x);
         float speedDelta = deFactoMaxSpeed - _curSpeed;
 
         //Debug.Log("defactoMax - cur = delta : " + deFactoMaxSpeed + " - " + _curSpeed + " = " + speedDelta);
@@ -154,10 +178,12 @@ public class BON_MovePR : MonoBehaviour
     // Updates the ground's normal that PR is standing on
     private void UpdateGroundNormal()
     {
+        float groundRayLength = 0.55f * _PRCollider.height * transform.localScale.x;
+
         RaycastHit groundRaycastHit;
-        Debug.DrawRay(transform.position, Vector3.down * 3f, Color.green, Time.deltaTime);
+        Debug.DrawRay(transform.position, Vector3.down * groundRayLength, Color.green, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 3f);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
@@ -171,6 +197,7 @@ public class BON_MovePR : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+        _PRCollider = GetComponent<CapsuleCollider>();
 
         if (_bounceHeight >= _heightBonceStart)
         {
@@ -196,7 +223,7 @@ public class BON_MovePR : MonoBehaviour
         _moveInputValue = _joystick.InputValues;
 #endif
 
-        // if wall on right/left, stop input
+        // if input + wall on right/left, stop input
         if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
         {
             _moveInputValue.x = 0;
@@ -214,6 +241,16 @@ public class BON_MovePR : MonoBehaviour
         {
             _curSpeed = 0f;
         }
+
+        if (_player.AvatarState.IsGrounded)
+        {
+            _rb.useGravity = false;
+        }
+        else
+        {
+            _rb.useGravity = true;
+        }
+
 
         _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
         //Drift
@@ -257,7 +294,7 @@ public class BON_MovePR : MonoBehaviour
         }
 
         // Bounce
-        if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        if ((_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
             _isBouncing = true;
             _bounceCount = 0;
@@ -321,9 +358,32 @@ public class BON_MovePR : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
         {
             _player.AvatarState.IsGrounded = true;
-            Debug.Log("IsGrounded = " + _player.AvatarState.IsGrounded);
         }
-        if (_isBouncing && _player.AvatarState.IsGrounded!)
+
+        if (_isBouncing && !_player.AvatarState.IsGrounded)
+        {
+            _bounceCount++;
+            _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            _rb.AddForce(Vector3.up * (_bounceHeight / _bounceCount), ForceMode.Impulse);
+
+            if (_bounceCount >= _numberOfBounce)
+            {
+                _isBouncing = false;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Tag = collision.gameObject.tag;
+        name = collision.gameObject.name;
+        Layer = LayerMask.LayerToName(collision.gameObject.layer);
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        {
+            _player.AvatarState.IsGrounded = true;
+        }
+
+        if (_isBouncing && !_player.AvatarState.IsGrounded)
         {
             _bounceCount++;
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
@@ -343,6 +403,8 @@ public class BON_MovePR : MonoBehaviour
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
         }
+        Tag = null;
+        name = null;
+        Layer = null;
     }
-
 }
