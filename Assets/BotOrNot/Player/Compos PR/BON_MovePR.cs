@@ -231,7 +231,7 @@ public class BON_MovePR : MonoBehaviour
         }
 
         // Bounce
-        if (!_player.AvatarState.IsGrounded && (_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
+        if ((_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
         {
             Debug.Log("Should enter bounce");
             _isBouncing = true;
