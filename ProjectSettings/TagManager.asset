@@ -9,6 +9,9 @@ TagManager:
   - Floor
   - Wall
   - TriggerMachine
+  - Dusty Floor
+  - Gravely Floor
+  - Dusty & Graely Floor
   layers:
   - Default
   - TransparentFX

@@ -33,7 +33,7 @@ public class BON_MovePR : MonoBehaviour
     public float CurSpeed
     { get { return _curSpeed; } }
 
-    /* Accelartion related */
+    /* Acceleration related */
     [Space]
     [Header("Acceleration")]
     [SerializeField] AnimationCurve _AccelOverSpeed;
@@ -47,6 +47,7 @@ public class BON_MovePR : MonoBehaviour
     }
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
+    private CapsuleCollider _PRCollider;       // Used to scale relatively the ground check raycast
 
     private Vector3 _prevMoveDir;
 
@@ -157,10 +158,12 @@ public class BON_MovePR : MonoBehaviour
     // Updates the ground's normal that PR is standing on
     private void UpdateGroundNormal()
     {
+        float groundRayLength = 0.55f * _PRCollider.height * transform.localScale.x;
+
         RaycastHit groundRaycastHit;
-        Debug.DrawRay(transform.position, Vector3.down * 3f, Color.green, Time.deltaTime);
+        Debug.DrawRay(transform.position, Vector3.down * groundRayLength, Color.green, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, 3f);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
@@ -174,6 +177,7 @@ public class BON_MovePR : MonoBehaviour
         _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
+        _PRCollider = GetComponent<CapsuleCollider>();
 
         if (_bounceHeight >= _heightBonceStart)
         {
