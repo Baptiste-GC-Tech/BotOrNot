@@ -46,6 +46,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
+                _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
                 _machineToActivate.Activate();
                 BON_GameManager.Instance().RecoverControl();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
@@ -72,10 +73,10 @@ public class BON_MachineControllerPR : MonoBehaviour
         {
             if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
             {
-                print(_player.MachineToActivate);
                 _machineToActivate = _player.MachineToActivate;
                 _machineToActivate.Activate();
                 _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
+                _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 BON_GameManager.Instance().GiveControl();
                 _player.AvatarState.IsConstrollingMachine = true;

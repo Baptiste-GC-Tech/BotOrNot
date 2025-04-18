@@ -146,7 +146,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     private void FixedUpdate()
     {
-        // On vérifie si la direction actuelle est bloquée, on ne bloque pas tout
+        // vérifie si la direction actuelle est bloquée
         bool directionBlocked =
             (_direction == Vector3.up && _isCollideUp) ||
             (_direction == Vector3.down && _isCollideDown) ||
@@ -167,7 +167,6 @@ public class BON_FreeMovementCrane : BON_Controllable
                     break;
                 }
             }
-
             if (isInsideBounds)
             {
                 _rigidbody.MovePosition(nextPos);
