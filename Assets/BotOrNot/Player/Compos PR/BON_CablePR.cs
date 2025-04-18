@@ -132,6 +132,10 @@ public class BON_CablePR : MonoBehaviour
                 _targetPoint = closest.position;
                 _hookActif = closest;
 
+                // Active FX
+                // Transform fx = _hookActif.Find("FX - Hooked Particle System");
+                // if (fx != null) fx.gameObject.SetActive(true);
+
                 StartCoroutine(PRIVAnimerLigneAvecVague());
 
                 BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
@@ -140,6 +144,8 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
                 //  if (_moveScript != null) _moveScript.enabled = false;
+
+
             }
         }
         else
@@ -147,6 +153,13 @@ public class BON_CablePR : MonoBehaviour
             // _fxhooked.Stop();
 
             StartCoroutine(PRIVRetirerLigne());
+
+            if (_hookActif != null)
+            {
+                // Désactive FX
+                Transform fx = _hookActif.Find("FX - Hooked Particle System");
+                if (fx != null) fx.gameObject.SetActive(false);
+            }
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
             if (closest != null)
@@ -231,6 +244,12 @@ public class BON_CablePR : MonoBehaviour
             yield return null;
         }
 
+        if (_hookActif != null)
+        {
+            Transform fx = _hookActif.Find("FX - Hooked Particle System");
+            if (fx != null) fx.gameObject.SetActive(true);
+        }
+
         Vector3 finalTarget = _hookActif != null ? _hookActif.position : _targetPoint;
         PRIVActiverRappel(finalTarget);
         _swingTimer = 0f;
@@ -240,8 +259,6 @@ public class BON_CablePR : MonoBehaviour
 
     private IEnumerator PRIVRetirerLigne()
     {
-        Vector3 start = _gunOrigin.position;
-
         PRIVSupprimerRappel();
 
         float timer = 0f;
@@ -252,8 +269,8 @@ public class BON_CablePR : MonoBehaviour
             float t = 1f - Mathf.Clamp01(timer / _deployTime);
 
             Vector3 currentStart = _gunOrigin.position;
-
-            Vector3 end = _hookActif != null ? _hookActif.position : _targetPoint;
+            Vector3 end = _hookActif != null ? _hookActif.position : _targetPoint; 
+            // Vector3 end = _hookActif != null ? _hookActif.position : _joint.connectedAnchor;
 
             Vector3 direction = (end - currentStart).normalized;
             Vector3 normal = Vector3.Cross(direction, Vector3.forward);
@@ -273,6 +290,7 @@ public class BON_CablePR : MonoBehaviour
         _lineVisible = false;
         _hookActif = null;
     }
+
 
 
     private void PRIVActiverRappel(Vector3 cible)
