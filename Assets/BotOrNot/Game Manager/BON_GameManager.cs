@@ -20,6 +20,11 @@ public class BON_GameManager : MonoBehaviour
     // player reference
     private BON_CCPlayer _player;
 
+    public BON_CCPlayer Player
+    {
+        get { return _player; }
+    }
+
     private BON_AvatarState _currentState;
 
     private bool _isPlayingNut; ////true if nut, false if Dame robot
@@ -84,13 +89,13 @@ public class BON_GameManager : MonoBehaviour
         _componentsPR = new ()
         {
             _player.GetComponent<BON_MovePR>(),
-            _player.GetComponent<BON_InteractPR>(),
+            _player.GetComponent<BON_SwitchPlayerPR>(),
             _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
             _player.GetComponent<BON_MoveDR>(),
-            _player.GetComponent<BON_InteractDR>()
+            _player.GetComponent<BON_SwitchPlayerDR>()
         };
 
         //init la scene actuelle

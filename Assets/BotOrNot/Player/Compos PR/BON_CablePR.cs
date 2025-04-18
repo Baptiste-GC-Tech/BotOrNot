@@ -18,7 +18,7 @@ public class BON_CablePR : MonoBehaviour
     [SerializeField] private float _springForce = 20f;
     [SerializeField] private float _damping = 5f;
     [SerializeField] private float _cableLengthSpeed = 5f;
-    [SerializeField] private float _swingForce = 6f;
+    [SerializeField] private float _swingForce = 0.3f;
 
     [Header("Visual Settings")]
     [SerializeField] private int _lineSegments = 20;
@@ -45,6 +45,7 @@ public class BON_CablePR : MonoBehaviour
     private InputAction _cablemoveRight;
 
     private SpringJoint _joint;
+    private ParticleSystem _fxhooked;
     private Rigidbody _rb;
     private BON_MovePR _moveScript;
 
@@ -58,6 +59,7 @@ public class BON_CablePR : MonoBehaviour
 
         _rb = GetComponent<Rigidbody>();
         _moveScript = GetComponent<BON_MovePR>();
+        
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
@@ -142,7 +144,8 @@ public class BON_CablePR : MonoBehaviour
         }
         else
         {
-            
+            // _fxhooked.Stop();
+
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
@@ -184,6 +187,8 @@ public class BON_CablePR : MonoBehaviour
                     if (hit.transform != hook.transform)
                     {
                         Debug.Log($"Hook '{hook.name}' bloqué par : {hit.transform.name}");
+                        //_fxhooked = hook.GetComponent<ParticleSystem>();
+                        //_fxhooked.Play();
                         continue;
                     }
                 }

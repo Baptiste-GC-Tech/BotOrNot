@@ -13,6 +13,9 @@ public class BON_MachineControllerPR : MonoBehaviour
     InputAction _QuitControlOfMachineAction;    // Upon machine interaction, represents forfeiting control of it and gaining back control of PR
     InputAction _JoystickMachineAction;         // When controling a machine, sends the input over to it so it can do stuff
     Vector2 _moveMachineValue;
+    public Vector2 MoveMachineValue
+    { get { return _moveMachineValue; } }
+
 
     // Player & State related
     [SerializeField] private BON_CCPlayer _player; 
