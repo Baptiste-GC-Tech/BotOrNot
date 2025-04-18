@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8649625971802586795}
   - component: {fileID: 278448083291030322}
   - component: {fileID: 7257891052986091023}
+  - component: {fileID: 1699494558233169158}
+  - component: {fileID: 2055245864432529546}
   m_Layer: 8
   m_Name: OneWayPlatform
   m_TagString: Untagged
@@ -56,6 +58,42 @@ BoxCollider:
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7257891052986091023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040691401861137144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1336c90ca1390ea4bb8f438b547548d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entryDirecton: {x: 0, y: 1, z: 0}
+  _localDirection: 0
+  _triggerscale: 1.25
+--- !u!65 &1699494558233169158
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040691401861137144}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2055245864432529546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
