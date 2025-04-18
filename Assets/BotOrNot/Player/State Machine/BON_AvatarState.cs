@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "State/AvatarState")]
@@ -104,7 +103,7 @@ public class BON_AvatarState : ScriptableObject
 
 
     /*
-     *  Booleans exclusive to PR
+     *  Booleans exclusive to DR
      */
 
     bool _isNearHumanoidObject = false; //<-- (eg.échelle, ...) <- useless now ?
@@ -115,6 +114,10 @@ public class BON_AvatarState : ScriptableObject
     }
 
     protected State _currentState;
+    public State CurrentState
+    {
+        get { return _currentState; }
+    }
 
     // player reference
     private BON_CCPlayer _player;
