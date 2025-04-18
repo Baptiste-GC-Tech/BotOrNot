@@ -84,13 +84,13 @@ public class BON_GameManager : MonoBehaviour
         _componentsPR = new ()
         {
             _player.GetComponent<BON_MovePR>(),
-            _player.GetComponent<BON_InteractPR>(),
+            _player.GetComponent<BON_SwitchPlayerPR>(),
             _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
             _player.GetComponent<BON_MoveDR>(),
-            _player.GetComponent<BON_InteractDR>()
+            _player.GetComponent<BON_SwitchPlayerDR>()
         };
 
         //init la scene actuelle
