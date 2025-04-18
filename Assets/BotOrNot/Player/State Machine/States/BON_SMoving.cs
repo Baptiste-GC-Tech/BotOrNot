@@ -28,7 +28,7 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);
         }
-        else if (!_player.AvatarState.IsMovingByPlayer )
+        else if (!_player.AvatarState.IsMovingByPlayer && !_player.AvatarState.IsDrifting)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
         }

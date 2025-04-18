@@ -74,7 +74,7 @@ public class BON_MovePR : MonoBehaviour
     private float _driftTimer;
     private Vector2 _previousDirection;
     private bool _isFirstMove = true;
-    private bool _shouldDrift = false;
+    private bool _isPLayerMoving = false;
     private float _timeSinceLastMove = 0;
 
     /* Bounce related */
@@ -219,7 +219,6 @@ public class BON_MovePR : MonoBehaviour
                 _previousDirection = _moveInputValue.normalized;
                 _player.AvatarState.IsDrifting = true;
                 _driftTimer = _driftDuration;
-                Debug.Log("Please drift");
             }
             if (_driftTimer > 0)
             {
@@ -230,9 +229,10 @@ public class BON_MovePR : MonoBehaviour
                 _player.AvatarState.IsDrifting = false;
             }
         }
-        if (_player.AvatarState.IsMovingByPlayer)
+        if (_isPLayerMoving)
         {
             _timeSinceLastMove = 0;
+            _player.AvatarState.IsMovingByPlayer = true;
         }
         else
         {
@@ -242,6 +242,8 @@ public class BON_MovePR : MonoBehaviour
         if (_timeSinceLastMove > _timeBetweenDrifts)
         {
             _isFirstMove = true;
+            _player.AvatarState.IsMovingByPlayer = false;
+            Debug.Log(_timeSinceLastMove);
         }
 
         // Bounce
@@ -254,11 +256,11 @@ public class BON_MovePR : MonoBehaviour
         /* Changes the state */
         if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
         {
-            _player.AvatarState.IsMovingByPlayer = true;
+            _isPLayerMoving = true;
         }
         else
         {
-            _player.AvatarState.IsMovingByPlayer = false;
+            _isPLayerMoving = false;
         }
 
         //print(_curSpeed);
@@ -276,7 +278,7 @@ public class BON_MovePR : MonoBehaviour
         if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
-        /* Animator animator = _player.GetComponentInChildren<Animator>();
+        Animator animator = _player.GetComponentInChildren<Animator>();
          if (animator != null)
          {
              animator.SetFloat("Speed", _curSpeed);
@@ -286,17 +288,17 @@ public class BON_MovePR : MonoBehaviour
 
              bool didTurnBack = dot < -0.8f;
              bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
-             bool triggerSkid = didTurnBack && isSpeedHighEnough;
+            /* bool triggerSkid = didTurnBack && isSpeedHighEnough;
 
              bool triggerStop = _shouldDrift;
 
              animator.SetBool("DirectionChangedQuickly", triggerSkid);
-             animator.SetBool("StoppedAbruptly", triggerStop);
+             animator.SetBool("StoppedAbruptly", triggerStop);*/
 
              if (_moveInputValue.magnitude > 0.1f)
                  _previousDirection = currentDir;
 
-             if (triggerSkid)
+             /*if (triggerSkid)
              {
                  _player.AvatarState.IsDrifting = true;
                  Debug.Log("DRIFFFFFFFFFFT");
@@ -309,12 +311,8 @@ public class BON_MovePR : MonoBehaviour
              if (_driftTimer > 0)
              {
                  _driftTimer -= Time.deltaTime;
-             }
-         }*/
-        if (_player.AvatarState.IsDrifting == true)
-        {
-            Debug.Log("DRIFTTTTTTTTT");
-        }
+             }*/
+         }
     }
 
     private void OnCollisionEnter(Collision collision)
