@@ -7,17 +7,16 @@ using UnityEngine;
 public class BON_OneWayBoxCollider : MonoBehaviour
 {
     /*
-     *  FIELDS
+     * FIELDS
      */
     [SerializeField] Vector3 _entryDirecton = Vector3.up;
     [SerializeField] bool _localDirection = false;
     [SerializeField, Range(1.0f, 2.0f)] float _triggerscale = 1.25f;
-    private BoxCollider _collider = null;
-    private BoxCollider _collisionCheckTrigger;
-
+    BoxCollider _collider = null;
+    BoxCollider _collisionCheckTrigger;
 
     /*
-     *  UNITY METHODS
+     * UNITY METHODS
      */
     private void Awake()
     {
