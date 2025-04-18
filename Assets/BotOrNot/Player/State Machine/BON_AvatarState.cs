@@ -122,6 +122,10 @@ public class BON_AvatarState : ScriptableObject
     }
 
     protected State _currentState;
+    public State CurrentState
+    {
+        get { return _currentState; }
+    }
 
     // player reference
     private BON_CCPlayer _player;

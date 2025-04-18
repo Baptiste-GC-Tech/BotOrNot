@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BON_CCPlayer : MonoBehaviour 
 {
@@ -48,7 +45,7 @@ public class BON_CCPlayer : MonoBehaviour
         _avatarState.UpdateState();
     }
     private void OnTriggerEnter(Collider other)
-    { //tag with "Finish" (DR) remove -> useless
+    { //tag with "Finish" (DR) removed -> useless
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine
         {
             _avatarState.IsNearIOMInteractible = true;
