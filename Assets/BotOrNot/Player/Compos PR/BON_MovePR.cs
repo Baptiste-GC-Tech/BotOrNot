@@ -121,8 +121,10 @@ public class BON_MovePR : MonoBehaviour
             _moveXAxisDir = _moveInputValue.x > 0.0f ? 1 : -1;
 
         // Turns the PR around
-        transform.eulerAngles = _moveXAxisDir == 1 ? new Vector3(0, 90, 0) : new Vector3(0, -90, 0);    // TODO: make it a rotation, no ?
-
+        if (_moveXAxisDir != 0)
+        {
+            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), 0.1f) ): (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), 0.1f));    // TODO: make it a rotation, no ?
+        }
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.forward;
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
@@ -268,6 +270,10 @@ public class BON_MovePR : MonoBehaviour
         /* Applies the movement */
         if (!_player.AvatarState.HasCableOut)
         {
+            if (_shouldNotMove)
+            {
+                _curSpeed = 0;
+            }
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
             transform.Translate(movementThisFrame);
