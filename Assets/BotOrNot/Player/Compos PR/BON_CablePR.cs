@@ -18,7 +18,7 @@ public class BON_CablePR : MonoBehaviour
     [SerializeField] private float _springForce = 20f;
     [SerializeField] private float _damping = 5f;
     [SerializeField] private float _cableLengthSpeed = 5f;
-    [SerializeField] private float _swingForce = 6f;
+    [SerializeField] private float _swingForce = 0.3f;
 
     [Header("Visual Settings")]
     [SerializeField] private int _lineSegments = 20;
