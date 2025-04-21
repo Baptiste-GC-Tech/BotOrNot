@@ -42,7 +42,7 @@ public class BON_Menus : MonoBehaviour
 
     public void MMNewGame()
     {
-        SceneManager.LoadScene("UI_Blockout", LoadSceneMode.Single);
+        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
     }
 
     public void MMContinue()
