@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7257891052986091023}
   - component: {fileID: 1699494558233169158}
   - component: {fileID: 2055245864432529546}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: OneWayPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 4533682380586211685}
   - component: {fileID: 7808218962710473794}
   - component: {fileID: 5405891495565241481}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: L1_deco_cube_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
