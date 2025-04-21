@@ -20,8 +20,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - Wall
-  - Floor
+  - Terrain
+  - 
   - Hook
   - TriggerZone
   - TriggerMachine

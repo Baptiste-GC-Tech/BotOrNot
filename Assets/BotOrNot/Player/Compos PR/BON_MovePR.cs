@@ -108,6 +108,10 @@ public class BON_MovePR : MonoBehaviour
     public string Layer = "";
     public string Tag = null;
 
+    /* detection layer related*/
+    private Vector3 CollisionPos;
+    private Vector3 delta;
+
 
     //Properties are mainly created for debugTool
 
@@ -355,9 +359,18 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _player.AvatarState.IsGrounded = true;
+            if (collision.contactCount > 0)
+            {
+                CollisionPos = collision.GetContact(0).point; //contact point
+                delta = CollisionPos - transform.position;
+
+                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x)) //collide on Y => floor
+                {
+                    _player.AvatarState.IsGrounded = true;
+                }
+            }
         }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
@@ -378,9 +391,19 @@ public class BON_MovePR : MonoBehaviour
         Tag = collision.gameObject.tag;
         name = collision.gameObject.name;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _player.AvatarState.IsGrounded = true;
+            if (collision.contactCount > 0)
+            {
+                CollisionPos = collision.GetContact(0).point; //contact point
+                delta = CollisionPos - transform.position;
+
+                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x)) //collide on Y => floor
+                {
+                    _player.AvatarState.IsGrounded = true;
+                }
+            }
         }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
@@ -398,7 +421,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;

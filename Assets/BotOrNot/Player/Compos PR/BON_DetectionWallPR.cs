@@ -5,6 +5,8 @@ using UnityEngine;
 public class BON_DetectionWallPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
+    private Vector3 otherPos;
+    private Vector3 delta;
 
     private void Start()
     {
@@ -12,26 +14,35 @@ public class BON_DetectionWallPR : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) //wall
+    {        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1) //wall on right
+            otherPos = other.ClosestPoint(transform.position); //contact point
+            delta = otherPos - transform.position;
+
+            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) //collide on X => wall
             {
-                _CCPlayer.AvatarState.IsAgainstWallRight = true;
-            }
-            else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
-            {
-                _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1)
+                {
+                    _CCPlayer.AvatarState.IsAgainstWallRight = true;
+                }
+                else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
+                {
+                    _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                }
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall")) //wall
+        if (other.gameObject.layer == LayerMask.NameToLayer("Terrain")) //wall
         {
-            _CCPlayer.AvatarState.IsAgainstWallRight = false;
-            _CCPlayer.AvatarState.IsAgainstWallLeft = false;            
+            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) //collide on X => wall
+            {
+                _CCPlayer.AvatarState.IsAgainstWallRight = false;
+                _CCPlayer.AvatarState.IsAgainstWallLeft = false;
+            }
         }
     }
 }

@@ -9670,10 +9670,15 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 54276093}
+    - target: {fileID: 1196423776398449719, guid: 5fd15690ddd5b9946b67427e7d133050,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1275737425548176957, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1351284597788430215, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
@@ -10008,7 +10013,7 @@ PrefabInstance:
     - target: {fileID: 7355839346693762328, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7430003860311403208, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
@@ -10068,7 +10073,7 @@ PrefabInstance:
     - target: {fileID: 8224179150047185486, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8224179150047185486, guid: 5fd15690ddd5b9946b67427e7d133050,
         type: 3}
@@ -12459,7 +12464,7 @@ PrefabInstance:
     - target: {fileID: 2770629161578044046, guid: 935f781d764276547a238d00b098d167,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2770629161578044046, guid: 935f781d764276547a238d00b098d167,
         type: 3}
@@ -12484,7 +12489,7 @@ PrefabInstance:
     - target: {fileID: 2857062159353507096, guid: 935f781d764276547a238d00b098d167,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2904195965237260267, guid: 935f781d764276547a238d00b098d167,
         type: 3}
@@ -33905,7 +33910,7 @@ GameObject:
   - component: {fileID: 7552149714314779190}
   - component: {fileID: 6195162141940182247}
   - component: {fileID: 7900618346786610217}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
