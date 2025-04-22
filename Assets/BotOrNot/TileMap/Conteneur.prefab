@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 605890383894774692}
   - component: {fileID: 517504844889331593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Conteneur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1.2, y: 1.1, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 623821095608151282}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 3979308762161601830}
   - component: {fileID: 2544716472798966754}
   - component: {fileID: 2249610862823688609}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: caisse5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
