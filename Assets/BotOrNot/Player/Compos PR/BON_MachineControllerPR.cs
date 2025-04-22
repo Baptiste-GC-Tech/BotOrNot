@@ -18,7 +18,7 @@ public class BON_MachineControllerPR : MonoBehaviour
 
 
     // Player & State related
-    [SerializeField] private BON_CCPlayer _player; 
+    private BON_CCPlayer _player; 
 
     private BON_Interactive_Actionnables _machineToActivate;
     public BON_Interactive_Actionnables MachineToActivate
@@ -63,6 +63,7 @@ public class BON_MachineControllerPR : MonoBehaviour
      */
     void Start()
     {
+        _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
         _TakeControlOfMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
         _QuitControlOfMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         _JoystickMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
