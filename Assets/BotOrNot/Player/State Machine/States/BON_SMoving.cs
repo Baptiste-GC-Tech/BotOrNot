@@ -20,6 +20,10 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.ThrowingCable);
         }
+        else if (_player.AvatarState.IsConstrollingMachine && BON_GameManager.Instance().IsPlayingNut) //si on joue le petit robot qui lance interagit avec une machine-> etat
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.ControllingMachine);
+        }
         else if (!_player.AvatarState.IsGrounded && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);

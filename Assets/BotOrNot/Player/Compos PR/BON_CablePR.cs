@@ -169,7 +169,7 @@ public class BON_CablePR : MonoBehaviour
                     interactive.Activate();
             }
 
-            
+            _hookActif = null;
         }
     }
 

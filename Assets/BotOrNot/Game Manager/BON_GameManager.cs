@@ -116,7 +116,6 @@ public class BON_GameManager : MonoBehaviour
         {
             DisableCompPlayer(_lastCharacterPlayed);
         }
-        _componentsAvatar[_lastCharacterPlayed][1].enabled = true;
         Debug.Log("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
@@ -145,7 +144,7 @@ public class BON_GameManager : MonoBehaviour
     public void RecoverControl() //reprendre le controle
     {
         _currentCharacterPlayed = _lastCharacterPlayed;
-        EnableCompPlayer(_lastCharacterPlayed);
+        EnableCompPlayer(_currentCharacterPlayed);
         print("control switch to " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
@@ -177,7 +176,7 @@ public class BON_GameManager : MonoBehaviour
         {
             if (_componentsAvatar[CharacterWillPlay][i] != null)
             {
-                if (_componentsAvatar[CharacterWillPlay][i].enabled)
+                if (!_componentsAvatar[CharacterWillPlay][i].enabled)
                 {
                     _componentsAvatar[CharacterWillPlay][i].enabled = true;
                 }
