@@ -199,6 +199,8 @@ public class BON_GameManager : MonoBehaviour
     {
         if (_componentsAvatar == null) return;
 
+        if (CharacterStopPlaying != 0 && CharacterStopPlaying != 1) return; //pas PR et pas DR
+
         for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
         {
             if (_componentsAvatar[CharacterStopPlaying][i].enabled)
@@ -211,6 +213,8 @@ public class BON_GameManager : MonoBehaviour
     public void EnableCompPlayer(int CharacterWillPlay)
     {
         if (_componentsAvatar == null) return;
+
+        if (CharacterWillPlay != 0 && CharacterWillPlay != 1) return; //pas PR et pas DR
 
         for (int i = 0; i < _componentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
