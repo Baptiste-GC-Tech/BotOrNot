@@ -38,6 +38,7 @@ public class BON_CCPlayer : MonoBehaviour
         DontDestroyOnLoad(_instance);
 
         _avatarState.Init(); //init state machine (current state, player ref, dictionnary)
+        _avatarState.IsGrounded = false;
     }
 
     void Update()
