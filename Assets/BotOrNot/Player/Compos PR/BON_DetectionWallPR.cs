@@ -1,10 +1,9 @@
 using UnityEngine;
-
 public class BON_DetectionWallPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
-    private Vector3 otherPos;
-    private Vector3 delta;
+    private Vector3 _otherPos;
+    private Vector3 _normal;
 
     private void Start()
     {
@@ -15,10 +14,10 @@ public class BON_DetectionWallPR : MonoBehaviour
     {        
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            otherPos = other.ClosestPoint(transform.position); //contact point
-            delta = otherPos - transform.position;
+            _otherPos = other.ClosestPoint(transform.position); //contact point
+            _normal = transform.position - _otherPos;
 
-            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) //collide on X => wall
+            if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
             {
                 if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1)
                 {

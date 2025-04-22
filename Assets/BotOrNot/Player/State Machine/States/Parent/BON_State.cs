@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class BON_State
 {
     protected BON_CCPlayer _player;

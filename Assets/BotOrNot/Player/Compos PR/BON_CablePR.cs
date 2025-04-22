@@ -60,6 +60,8 @@ public class BON_CablePR : MonoBehaviour
         
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
+
+        _player.AvatarState.HasCableOut = false;
     }
 
     private void Update()
@@ -135,13 +137,11 @@ public class BON_CablePR : MonoBehaviour
 
                 StartCoroutine(PRIVAnimerLigneAvecVague());
 
+                _player.AvatarState.HasCableOut = true;
+
                 BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
-
-                _player.AvatarState.HasCableOut = true;
-
-
             }
         }
         else
@@ -161,13 +161,15 @@ public class BON_CablePR : MonoBehaviour
             {
                 _targetPoint = _hookActif.position;
 
+                _player.AvatarState.HasCableOut = false;
+                _hookActif = null;
+
                 BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
 
-            _player.AvatarState.HasCableOut = false;
-            _hookActif = null;
+            
         }
     }
 
