@@ -47,7 +47,6 @@ public class BON_CablePR : MonoBehaviour
     private SpringJoint _joint;
     private ParticleSystem _fxhooked;
     private Rigidbody _rb;
-    private BON_MovePR _moveScript;
 
     private void Start()
     {
@@ -58,9 +57,7 @@ public class BON_CablePR : MonoBehaviour
         _cablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
 
         _rb = GetComponent<Rigidbody>();
-        _moveScript = GetComponent<BON_MovePR>();
         
-
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
     }
@@ -143,7 +140,6 @@ public class BON_CablePR : MonoBehaviour
                     interactive.Activate();
 
                 _player.AvatarState.HasCableOut = true;
-                //  if (_moveScript != null) _moveScript.enabled = false;
 
 
             }
@@ -161,16 +157,16 @@ public class BON_CablePR : MonoBehaviour
                 if (fx != null) fx.gameObject.SetActive(false);
             }
 
-            Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
-            if (closest != null)
+            if (_hookActif != null)
             {
-                _targetPoint = closest.position;
-                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                _targetPoint = _hookActif.position;
+
+                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
+
             _player.AvatarState.HasCableOut = false;
-            // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
             _hookActif = null;
         }
     }
