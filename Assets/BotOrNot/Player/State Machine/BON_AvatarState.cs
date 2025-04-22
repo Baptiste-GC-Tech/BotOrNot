@@ -131,13 +131,6 @@ public class BON_AvatarState : ScriptableObject
     private BON_CCPlayer _player;
     protected BON_State _currentStateAsset;
 
-    private Collider _playerCollider;
-
-    //for isgrounded
-    float distToGround;
-    //for isagainstWall
-    float distToWall;
-
     public enum State
     {
         Idle,
@@ -220,7 +213,6 @@ public class BON_AvatarState : ScriptableObject
 
     public void Init()
     {
-        // 1. Trouve le joueur
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
 
         if (_player == null)
@@ -229,22 +221,15 @@ public class BON_AvatarState : ScriptableObject
             return;
         }
 
-        // 2. Trouve l'Animator dans ses enfants
+        // find Animator in children
         _animator = _player.GetComponentInChildren<Animator>();
         if (_animator == null)
         {
             Debug.LogWarning("BON_AvatarState.Init() : Animator non trouv� dans les enfants de BON_CCPlayer.");
         }
 
-        // 3. Trouve son collider
-        _playerCollider = _player.GetComponent<Collider>();
-        if (_playerCollider != null)
-        {
-            distToGround = _playerCollider.bounds.extents.y;
-            distToWall = _playerCollider.bounds.extents.x;
-        }
 
-        // 4. Initialise les �tats
+        // Initialize states
         _stateDict.Add(State.Idle, new BON_SIdle());
         _stateDict.Add(State.Moving, new BON_SMoving());
         _stateDict.Add(State.Jump, new BON_SJump());
@@ -252,7 +237,8 @@ public class BON_AvatarState : ScriptableObject
         _stateDict.Add(State.ThrowingCable, new BON_SThrowingCable());
         _stateDict.Add(State.Elevator, new BON_SElevator());
         _stateDict.Add(State.Drift, new BON_SDrift());
-        // 5. �tat initial
+
+        // initial state
         _currentState = State.Idle;
         _currentStateAsset = _stateDict[_currentState];
         _currentStateAsset?.InitPlayer(_player);

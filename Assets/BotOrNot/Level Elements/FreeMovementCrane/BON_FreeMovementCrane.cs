@@ -198,8 +198,7 @@ public class BON_FreeMovementCrane : BON_Controllable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor") ||
-            collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             foreach (ContactPoint contact in collision.contacts)
             {

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BON_SMoving : BON_State
 {
     public override void Enter()
@@ -32,6 +28,5 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
         }
-
     }
 }

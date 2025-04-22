@@ -13,7 +13,15 @@ public class BON_HookAction : MonoBehaviour
     {
         if (_isHooked)
         {
-            _hook.Activate();
+            if (_hook != null)
+            {
+                _hook.Activate();
+            }
+            else
+            {
+                Debug.LogWarning("Tentative de désactivation du hook, mais _hook est null !");
+            }
+
             _isHooked = false;
             print("_isHooked :" + _isHooked);
         }
@@ -22,15 +30,27 @@ public class BON_HookAction : MonoBehaviour
             foreach (GameObject hook in GameObject.FindGameObjectsWithTag("Hook"))
             {
                 print(hook);
-                if ((gameObject.transform.forward.x <= 0 && hook.transform.position.x - gameObject.transform.position.x <= 0) || (gameObject.transform.forward.x >= 0 && hook.transform.position.x - gameObject.transform.position.x >= 0))
+
+                bool bonneDirection = (gameObject.transform.forward.x <= 0 && hook.transform.position.x - gameObject.transform.position.x <= 0)
+                                   || (gameObject.transform.forward.x >= 0 && hook.transform.position.x - gameObject.transform.position.x >= 0);
+
+                float distance = (hook.transform.position - gameObject.transform.position).magnitude;
+
+                if (bonneDirection && distance <= 10)
                 {
-                    if ((hook.transform.position - gameObject.transform.position).magnitude <= 10)
+                    _hook = hook.GetComponent<BON_Interactive>();
+
+                    if (_hook != null)
                     {
-                        _hook = hook.GetComponent<BON_Interactive>();
                         _hook.Activate();
                         _isHooked = true;
-                        break;
                     }
+                    else
+                    {
+                        Debug.LogWarning("Le GameObject '" + hook.name + "' n'a pas de BON_Interactive !");
+                    }
+
+                    break;
                 }
             }
         }

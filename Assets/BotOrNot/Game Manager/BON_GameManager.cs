@@ -89,13 +89,13 @@ public class BON_GameManager : MonoBehaviour
         _componentsPR = new ()
         {
             _player.GetComponent<BON_MovePR>(),
-            _player.GetComponent<BON_SwitchPlayerPR>(),
+            //_player.GetComponent<BON_SwitchPlayerPR>(),
             _player.GetComponent<BON_CablePR>()
         };
         _componentsDR = new ()
         {
-            _player.GetComponent<BON_MoveDR>(),
-            _player.GetComponent<BON_SwitchPlayerDR>()
+            //_player.GetComponent<BON_MoveDR>(),
+            //_player.GetComponent<BON_SwitchPlayerDR>()
         };
 
         //init la scene actuelle
@@ -106,52 +106,6 @@ public class BON_GameManager : MonoBehaviour
     {
         _currentScene = nextScene;
         SceneManager.LoadScene(nextScene.ToString());    
-
-        /*
-        print("Chnage scene from "+_currentScene +" to "+ nextScene.ToString());
-        switch (_currentScene)
-        {
-            case Scenes.Menu: // n'importe quel niveau possible?
-                _currentScene = nextScene;
-                SceneManager.LoadScene(nextScene.ToString());
-                print("good");
-                break;
-
-            case Scenes.Level1: //uniquement level2 ou menu possible
-                if (nextScene != Scenes.Level2 && nextScene != Scenes.Menu)
-                {
-                    //impossible
-                    print("tu ne peux pas");
-                }
-                else
-                {
-                    _currentScene = nextScene;
-                    SceneManager.LoadScene(nextScene.ToString());
-                    print("good");
-                }
-                break;
-            case Scenes.Level2: //uniquement menu possible (+ futurs levels)
-                if (nextScene != Scenes.Menu)
-                {
-                    //impossible
-                    print("tu ne peux pas");
-                }
-                else
-                {
-                    if ( _inventory.CountItem() == _collectiblesToWin) //si on stock bien tous les items necessaires
-                    {
-                        _currentScene = nextScene;
-                        SceneManager.LoadScene(nextScene.ToString());
-                        print("good");
-                    }
-                    else
-                    {
-                        print("condition non respect�");
-                    }
-                }
-                break;
-        }
-        */
     }
 
     public void GiveControl() //donner le controle a une machine
@@ -199,11 +153,16 @@ public class BON_GameManager : MonoBehaviour
     {
         if (_componentsAvatar == null) return;
 
+        if (CharacterStopPlaying != 0 && CharacterStopPlaying != 1) return; //pas PR et pas DR
+
         for (int i = 0; i < _componentsAvatar[CharacterStopPlaying].Count; i++) //disable all comps in list
         {
-            if (_componentsAvatar[CharacterStopPlaying][i].enabled)
+            if(_componentsAvatar[CharacterStopPlaying][i] != null)
             {
-                _componentsAvatar[CharacterStopPlaying][i].enabled = false;
+                if (_componentsAvatar[CharacterStopPlaying][i].enabled)
+                {
+                    _componentsAvatar[CharacterStopPlaying][i].enabled = false;
+                }
             }
         }
     }
@@ -212,11 +171,16 @@ public class BON_GameManager : MonoBehaviour
     {
         if (_componentsAvatar == null) return;
 
+        if (CharacterWillPlay != 0 && CharacterWillPlay != 1) return; //pas PR et pas DR
+
         for (int i = 0; i < _componentsAvatar[CharacterWillPlay].Count; i++) //enable all comps in list
         {
-            if (!_componentsAvatar[CharacterWillPlay][i].enabled)
+            if (_componentsAvatar[CharacterWillPlay][i] != null)
             {
-                _componentsAvatar[CharacterWillPlay][i].enabled = true;
+                if (_componentsAvatar[CharacterWillPlay][i].enabled)
+                {
+                    _componentsAvatar[CharacterWillPlay][i].enabled = true;
+                }
             }
         }
     }

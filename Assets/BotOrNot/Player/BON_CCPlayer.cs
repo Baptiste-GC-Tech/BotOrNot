@@ -24,6 +24,7 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     //Instance gameManager
+    [Tooltip("GameManager instance initialized auto in start")]
     public BON_GameManager _instance;
 
 

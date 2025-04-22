@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
@@ -107,6 +108,10 @@ public class BON_MovePR : MonoBehaviour
     /* for debugTool */
     public string Layer = "";
     public string Tag = null;
+
+    /* detection layer related*/
+    private Vector3 _collisionPos;
+    private Vector3 _collisionNormal;
 
 
     //Properties are mainly created for debugTool
@@ -217,7 +222,7 @@ public class BON_MovePR : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !UNITY_ANDROID
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
         _moveInputValue = _joystick.InputValues;
@@ -242,11 +247,11 @@ public class BON_MovePR : MonoBehaviour
             _curSpeed = 0f;
         }
 
-        if (_player.AvatarState.IsGrounded)
+        if (_player.AvatarState.IsGrounded && _rb.useGravity)
         {
             _rb.useGravity = false;
         }
-        else
+        else if (!_player.AvatarState.IsGrounded && !_rb.useGravity)
         {
             _rb.useGravity = true;
         }
@@ -355,9 +360,18 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _player.AvatarState.IsGrounded = true;
+            if (collision.contactCount > 0)
+            {
+                _collisionPos = collision.GetContact(0).point; //contact point
+                _collisionNormal = transform.position - _collisionPos;
+
+                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
+                {
+                    _player.AvatarState.IsGrounded = true;
+                }
+            }
         }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
@@ -378,9 +392,19 @@ public class BON_MovePR : MonoBehaviour
         Tag = collision.gameObject.tag;
         name = collision.gameObject.name;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _player.AvatarState.IsGrounded = true;
+            if (collision.contactCount > 0)
+            {
+                _collisionPos = collision.GetContact(0).point; //contact point
+                _collisionNormal = _collisionPos - transform.position;
+
+                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
+                {
+                    _player.AvatarState.IsGrounded = true;
+                }
+            }
         }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
@@ -398,7 +422,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;

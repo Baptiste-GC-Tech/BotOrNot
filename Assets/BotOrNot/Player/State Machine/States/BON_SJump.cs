@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BON_SJump : BON_State
@@ -16,7 +14,7 @@ public class BON_SJump : BON_State
 
     public override void UpState()
     {
-        if (_player.AvatarState.IsGrounded) //au moment de retomber, switch state to moving if move or idle else
+        if (_player.AvatarState.IsGrounded) //au moment de retomber,    switch state to moving if move or idle else
         {
             if (_player.AvatarState.IsMovingByPlayer)
             {

@@ -1,21 +1,17 @@
-using UnityEngine;
-
 public class BON_SIdle : BON_State
 {
     public override void Enter()
     {
-        //anim Idle        
+                
     }
 
     public override void Exit()
     {
-        //MonoBehaviour.print("exit idle");
+        
     }
 
     public override void UpState()
     {
-        //transitions d'etats -> from idle to .... :
-
         if (_player.AvatarState.HasCableOut && BON_GameManager.Instance().IsPlayingNut) //si on joue le petit robot qui lance le cable-> etat 
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.ThrowingCable);
