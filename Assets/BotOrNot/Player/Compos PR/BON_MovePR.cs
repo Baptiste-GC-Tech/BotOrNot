@@ -246,11 +246,11 @@ public class BON_MovePR : MonoBehaviour
             _curSpeed = 0f;
         }
 
-        if (_player.AvatarState.IsGrounded)
+        if (_player.AvatarState.IsGrounded && _rb.useGravity)
         {
             _rb.useGravity = false;
         }
-        else
+        else if (!_player.AvatarState.IsGrounded && !_rb.useGravity)
         {
             _rb.useGravity = true;
         }
