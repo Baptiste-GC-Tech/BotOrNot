@@ -49,7 +49,6 @@ public class BON_MachineControllerPR : MonoBehaviour
             {
                 _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
                 _machineToActivate.Activate();
-                BON_GameManager.Instance().RecoverControl();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 _player.AvatarState.IsConstrollingMachine = false;
             }
@@ -80,7 +79,6 @@ public class BON_MachineControllerPR : MonoBehaviour
                 _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
                 _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                BON_GameManager.Instance().GiveControl();
                 _player.AvatarState.IsConstrollingMachine = true;
             }
         }
