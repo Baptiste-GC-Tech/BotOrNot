@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
@@ -109,8 +110,8 @@ public class BON_MovePR : MonoBehaviour
     public string Tag = null;
 
     /* detection layer related*/
-    private Vector3 CollisionPos;
-    private Vector3 delta;
+    private Vector3 _collisionPos;
+    private Vector3 _collisionNormal;
 
 
     //Properties are mainly created for debugTool
@@ -363,10 +364,10 @@ public class BON_MovePR : MonoBehaviour
         {
             if (collision.contactCount > 0)
             {
-                CollisionPos = collision.GetContact(0).point; //contact point
-                delta = CollisionPos - transform.position;
+                _collisionPos = collision.GetContact(0).point; //contact point
+                _collisionNormal = transform.position - _collisionPos;
 
-                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x)) //collide on Y => floor
+                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
                 {
                     _player.AvatarState.IsGrounded = true;
                 }
@@ -396,10 +397,10 @@ public class BON_MovePR : MonoBehaviour
         {
             if (collision.contactCount > 0)
             {
-                CollisionPos = collision.GetContact(0).point; //contact point
-                delta = CollisionPos - transform.position;
+                _collisionPos = collision.GetContact(0).point; //contact point
+                _collisionNormal = _collisionPos - transform.position;
 
-                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x)) //collide on Y => floor
+                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
                 {
                     _player.AvatarState.IsGrounded = true;
                 }

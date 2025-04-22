@@ -8,8 +8,8 @@ public class BON_LevelEventTrigger : MonoBehaviour
      */
 
     [SerializeField, Tooltip("0 means all must be active")] protected int _minimumConditionsToFulfill;
-    protected List<BON_LevelEvent> _events = new List<BON_LevelEvent>();
-    protected List<BON_LevelEventCondition> _conditions = new List<BON_LevelEventCondition>();
+    [SerializeField] List<BON_LevelEvent> _events = new List<BON_LevelEvent>();
+    [SerializeField] List<BON_LevelEventCondition> _conditions = new List<BON_LevelEventCondition>();
 
     /*
      * CLASS METHODS
@@ -66,6 +66,7 @@ public class BON_LevelEventTrigger : MonoBehaviour
 
     private void Start()
     {
+        /*
         foreach (var myEvent in GetComponents<BON_LevelEvent>())
         {
             _events.Add(myEvent);
@@ -75,5 +76,6 @@ public class BON_LevelEventTrigger : MonoBehaviour
         {
             _conditions.Add(myCondition);
         }
+        */
     }
 }
