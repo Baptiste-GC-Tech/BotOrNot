@@ -36,11 +36,8 @@ public class BON_DetectionWallPR : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain")) //wall
         {
-            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y)) //collide on X => wall
-            {
-                _CCPlayer.AvatarState.IsAgainstWallRight = false;
-                _CCPlayer.AvatarState.IsAgainstWallLeft = false;
-            }
+            _CCPlayer.AvatarState.IsAgainstWallRight = false;
+            _CCPlayer.AvatarState.IsAgainstWallLeft = false;
         }
     }
 }
