@@ -13,15 +13,15 @@ public class BON_DetectionWallPR : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            if (other.gameObject.tag != "Slope")
-            {
-                _otherPos = other.ClosestPoint(transform.position); //contact point
-                _normal = transform.position - _otherPos;
+            _otherPos = other.ClosestPoint(transform.position); //contact point
+            _normal = transform.position - _otherPos;
 
-                if (_movePR != null && Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
+            if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
+            {
+                if (_movePR != null)
                 {
                     if (_movePR.MoveXAxisDir == 1)
                     {
