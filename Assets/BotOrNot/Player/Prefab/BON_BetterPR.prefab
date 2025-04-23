@@ -1924,7 +1924,7 @@ MonoBehaviour:
   _player: {fileID: 3316989274986919899}
   _canvas: {fileID: 0}
   _maxSpeed: 10
-  _rotationLerpSpeed: 0.025
+  _rotationLerpSpeed: 1
   _AccelOverSpeed:
     serializedVersion: 2
     m_Curve:
@@ -2001,7 +2001,7 @@ MonoBehaviour:
     m_Bits: 128
   _directionReference: {fileID: 4858370210193212142}
   _player: {fileID: 3316989274986919899}
-  _rayDistance: 100
+  _rayDistance: 20
   _springForce: 20
   _damping: 5
   _cableLengthSpeed: 5
