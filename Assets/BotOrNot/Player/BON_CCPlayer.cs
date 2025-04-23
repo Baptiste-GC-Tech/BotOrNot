@@ -5,7 +5,6 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  FIELDS
      */
-    private Rigidbody _rb;
 
     // state machine reference
     [SerializeField] BON_AvatarState _avatarState;
@@ -33,7 +32,6 @@ public class BON_CCPlayer : MonoBehaviour
      */
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         _instance = BON_GameManager.Instance();
         DontDestroyOnLoad(_instance);
 
@@ -52,6 +50,10 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsNearIOMInteractible = true;
             _machineToActivate = other.GetComponentInParent<BON_Interactive_Actionnables>();
+            if (_machineToActivate == null)
+            {
+                Debug.LogError("_machineToActivate est introuvable");
+            }
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
         {
