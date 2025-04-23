@@ -20,7 +20,7 @@ public class BON_Elevator : BON_Actionnable
     [SerializeField] Canvas _levelHUD;                      //A reference to the canvas to be able to disable the controls of the player
     [SerializeField] float _playerSpeed;                    //Refecrence to the player speed (right now it's set in the editor but might need to get the speed from the player's script)         
     Button[] _buttonsInHUD;                                 //Reference to the players button that we get from _levelHUD
-    GameObject _player;                     
+    [SerializeField] GameObject _player;                     
     bool _isPlayerMoving;                                   //is the player moving to the elevator
     bool _isElevatorMoving;                                 //is the elevator movnig to it's final destination
     bool _IsMovingByPlayerOut;                                      //is the player moving out of the elevator
@@ -118,6 +118,7 @@ public class BON_Elevator : BON_Actionnable
             {
                 _isPlayerMoving = false;
                 _isElevatorMoving = true;
+                Debug.LogWarning("PARENT THE PLAYER TO THE ELEVATOR");
                 _player.transform.parent = _elevator.transform;
             }
         }
