@@ -227,10 +227,10 @@ public class BON_MovePR : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #if UNITY_EDITOR && !UNITY_ANDROID
+        _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
-        //_moveInputValue = _joystick.InputValues;
+        _moveInputValue = _joystick.InputValues;
 #endif
 
         // if input + wall on right/left, stop input
