@@ -30,7 +30,7 @@ public class BON_MovePR : MonoBehaviour
     private BON_COMPJoystick _joystick;
     private Vector2 _moveInputValue;
     public Vector2 MoveInputValue
-    { get { return _moveInputValue; }}
+    { get { return _moveInputValue; } }
 
 
     /* Speed related */
@@ -69,7 +69,7 @@ public class BON_MovePR : MonoBehaviour
     { get { return _driftDuration; } }
     [SerializeField] private float _driftAcceleration = 400.0f;
     public float DriftAcceleration
-        { get { return _driftAcceleration; } }
+    { get { return _driftAcceleration; } }
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
@@ -91,7 +91,7 @@ public class BON_MovePR : MonoBehaviour
     { get { return _isBouncing; } }
     private Vector3 _fallHeight;
     public Vector3 FallHeight
-        { get { return _fallHeight; } }
+    { get { return _fallHeight; } }
     private int _bounceCount;
     public int BounceCount
     { get { return _bounceCount; } }
@@ -152,26 +152,29 @@ public class BON_MovePR : MonoBehaviour
         // Turns the PR around
         if (_moveXAxisDir != 0)
         {
-            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed)) : (Vector3.Lerp(transform.eulerAngles, new Vector3(0, -90, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
+            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed)) : (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
+        }
+        if (transform.eulerAngles.y - 90 < 0.1 && transform.eulerAngles.y - 90 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        if (transform.eulerAngles.y - 270 < 0.1 && transform.eulerAngles.y - 270 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 270, 0);
         }
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
         {
-            Debug.Log("Flat case");
             _curMoveDir = Vector3.forward;
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
         {
-            Debug.Log("Slope case");
-
             Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
             Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
             _curMoveDir.x = 0;
             _curMoveDir.y = worldSpaceMoveDir.y;
             _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
-
-    
         }
 
         //Debug.Log("moveDirThisFrame : " + _curMoveDir);
@@ -189,6 +192,25 @@ public class BON_MovePR : MonoBehaviour
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
+    }
+
+    private void StopMove()
+    {
+        _moveInputValue.x = 0; //stop input
+        _curSpeed = 0f; //stop speed
+        _rb.velocity = Vector3.zero;
+    }
+
+    private void UpdateState()
+    {
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
+        {
+            _isPLayerMoving = true;
+        }
+        else
+        {
+            _isPLayerMoving = false;
+        }
     }
 
     /*
@@ -219,31 +241,30 @@ public class BON_MovePR : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #if UNITY_EDITOR && !UNITY_ANDROID
+        _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
         //_moveInputValue = _joystick.InputValues;
 #endif
 
-        // if input + wall on right/left, stop input
-        if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
+        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+
+        // if input + wall on right/left, stop 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
         {
-            _moveInputValue.x = 0;
+            StopMove();
         }
-        if (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)
-        {
-            _moveInputValue.x = 0;
-        }
-        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded)
+        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
         {
             UpdateMoveDirFromInput();
             UpdateCurSpeed();
         }
-        else
+        else //other
         {
             _curSpeed = 0f;
         }
 
+        //if grounded => disable gravity
         if (_player.AvatarState.IsGrounded && _rb.useGravity)
         {
             _rb.useGravity = false;
@@ -273,6 +294,8 @@ public class BON_MovePR : MonoBehaviour
             if (_driftTimer > 0)
             {
                 _driftTimer -= Time.deltaTime;
+                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
+                _curMoveDir = -_curMoveDir;
             }
             else
             {
@@ -301,48 +324,44 @@ public class BON_MovePR : MonoBehaviour
             _isBouncing = true;
             _bounceCount = 0;
         }
-
-        /* Changes the state */
-        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
-        {
-            _isPLayerMoving = true;
-        }
-        else
-        {
-            _isPLayerMoving = false;
-        }
+        
+        UpdateState();
 
         //print(_curSpeed);
 
         /* Applies the movement, except if the cable is in use */
         if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
         {
-            Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
+            //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
             _MovThisFrame = movementThisFrame;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
+            if (_player.transform.position.z != 0)
+            {
+                movementThisFrame.y = -_player.transform.position.z;
+            }
             transform.Translate(movementThisFrame);
         }
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
         //Debug.Log("moveDir : " + _curMoveDir);
-        if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
+        //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
         Animator animator = _player.GetComponentInChildren<Animator>();
-         if (animator != null)
-         {
-             animator.SetFloat("Speed", _curSpeed);
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", _curSpeed);
 
-             Vector2 currentDir = _moveInputValue.normalized;
-             float dot = Vector2.Dot(_previousDirection, currentDir);
+            Vector2 currentDir = _moveInputValue.normalized;
+            float dot = Vector2.Dot(_previousDirection, currentDir);
 
-             bool didTurnBack = dot < -0.8f;
-             bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            bool didTurnBack = dot < -0.8f;
+            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
 
-             if (_moveInputValue.magnitude > 0.1f)
-                 _previousDirection = currentDir;
-         }
+            if (_moveInputValue.magnitude > 0.1f)
+                _previousDirection = currentDir;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
