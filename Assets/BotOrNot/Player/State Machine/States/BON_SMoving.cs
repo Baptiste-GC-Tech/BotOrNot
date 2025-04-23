@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class BON_SMoving : BON_State
 {
     public override void Enter()
@@ -28,9 +30,17 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);
         }
-        else if (!_player.AvatarState.IsMovingByPlayer && !_player.AvatarState.IsDrifting && _player.GetComponent<BON_MovePR>().CurSpeed <= 0.5f)
+        else if (!_player.AvatarState.IsMovingByPlayer && !_player.AvatarState.IsDrifting)
         {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
+            BON_MovePR _movePR = _player.GetComponent<BON_MovePR>();
+            if (_movePR == null) 
+            {
+                Debug.LogError("_movePR introuvable");
+            }
+            if (_movePR.CurSpeed <= 0.5f)
+            {
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
+            }
         }
     }
 }
