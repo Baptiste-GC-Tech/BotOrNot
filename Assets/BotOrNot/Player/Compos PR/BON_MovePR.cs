@@ -152,11 +152,11 @@ public class BON_MovePR : MonoBehaviour
         {
             transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed) ): (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
         }
-        if (transform.eulerAngles.y - 90 < 0.1 && transform.eulerAngles.y - 90 > -0.1)
+        if (transform.eulerAngles.y - 0 < 0.1 && transform.eulerAngles.y - 0 > -0.1)
         {
             transform.eulerAngles = new Vector3(0, 90, 0);
         }
-        if (transform.eulerAngles.y - 270 < 0.1 && transform.eulerAngles.y -270 > -0.1)
+        if (transform.eulerAngles.y - 180 < 0.1 && transform.eulerAngles.y - 180 > -0.1)
         {
             transform.eulerAngles = new Vector3(0, 270, 0);
         }
@@ -387,7 +387,6 @@ public class BON_MovePR : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         Tag = collision.gameObject.tag;
-        name = collision.gameObject.name;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
@@ -425,7 +424,6 @@ public class BON_MovePR : MonoBehaviour
             _fallHeight = gameObject.transform.position;
         }
         Tag = null;
-        name = null;
         Layer = null;
     }
 }
