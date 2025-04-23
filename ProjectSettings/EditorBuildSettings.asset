@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/BotOrNot/Scenes/MainMenu.unity
     guid: b6787b456e9f14e49a7ecaed17c3813d
   - enabled: 1
-    path: Assets/BotOrNot/Scenes/Level1.unity
+    path: Assets/BotOrNot/Scenes/Level1old.unity
     guid: 9cc3c7b605742b646abb2a75ff5e3dbe
   - enabled: 0
     path: Assets/BotOrNot/Scenes/UI_Blockout.unity

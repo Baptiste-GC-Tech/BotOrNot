@@ -244,8 +244,10 @@ public class BON_MovePR : MonoBehaviour
 #if UNITY_EDITOR && !UNITY_ANDROID
         _moveInputValue = _MoveAction.ReadValue<Vector2>();
 #elif UNITY_ANDROID
-        _moveInputValue = _joystick.InputValues;
+        //_moveInputValue = _joystick.InputValues;
 #endif
+
+        _moveInputValue = _MoveAction.ReadValue<Vector2>();
 
         // if input + wall on right/left, stop 
         if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
