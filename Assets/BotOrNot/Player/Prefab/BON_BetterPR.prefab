@@ -121,8 +121,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256223484865335486}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.392, y: 0.244, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.213, z: 0.3}
   m_LocalScale: {x: 0.18696998, y: 0.50839996, z: 0.38380003}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2034,10 +2034,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ee14bbeaceb43b87f90c1ace1744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _MovThisFrame: {x: 0, y: 0, z: 0}
   _player: {fileID: 3316989274986919899}
   _canvas: {fileID: 0}
   _maxSpeed: 10
-  _rotationLerpSpeed: 0.025
+  _rotationLerpSpeed: 1
   _AccelOverSpeed:
     serializedVersion: 2
     m_Curve:
@@ -2114,7 +2115,7 @@ MonoBehaviour:
     m_Bits: 128
   _directionReference: {fileID: 4858370210193212142}
   _player: {fileID: 3316989274986919899}
-  _rayDistance: 100
+  _rayDistance: 20
   _springForce: 20
   _damping: 5
   _cableLengthSpeed: 5
@@ -4242,7 +4243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6287174481512788799}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
