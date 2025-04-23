@@ -14,8 +14,6 @@ public class BON_MovePR : MonoBehaviour
     [SerializeField] private BON_CCPlayer _player;
     private Rigidbody _rb;
 
-    public LayerMask Deez;
-
     /* Input related */
     private InputAction _MoveAction;
     [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
@@ -29,7 +27,6 @@ public class BON_MovePR : MonoBehaviour
     [Space]
     [Header("Speed")]
     [SerializeField] float _maxSpeed;
-    [SerializeField] AnimationCurve _SpeedMultiplierOverSlope;   // The axis represent the y component of the normal's value
     [SerializeField, Range(0.01f, 0.05f)] float _rotationLerpSpeed = 0.025f;
     private float _curSpeed;
     public float CurSpeed

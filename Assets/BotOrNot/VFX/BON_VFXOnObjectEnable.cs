@@ -15,19 +15,19 @@ public class BON_VFXOnObjectEnable : MonoBehaviour
      * UNITY METHODS
      */
 
-    //private void Start()
-    //{
-    //    _vfx = GetComponent<VisualEffect>();
-    //}
+    private void Awake()
+    {
+        _vfx = GetComponent<VisualEffect>();
+    }
 
-    //private void OnEnable()
-    //{
-    //    _vfx.Play();
-    //}
+    private void OnEnable()
+    {
+        _vfx.Play();
+    }
 
-    //private void OnDisable()
-    //{
-    //    _vfx.Stop();
-    //}
+    private void OnDisable()
+    {
+        _vfx.Stop();
+    }
 
 }
