@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BON_Foot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /*
+     * FIELDS
+     */
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] BON_Actionnable[] _vfxActionnables;
+
+    /*
+     * UNITY METHODS
+     */
+
+    private void Start()
     {
-        
+        foreach (var actionnable in _vfxActionnables) 
+        {
+            actionnable.Status = false;
+        }
     }
 }
