@@ -9,6 +9,16 @@ public class BON_MovePR : MonoBehaviour
      *  FIELDS
      */
 
+
+    // DEBUG
+    public Vector3 _MovThisFrame;
+    private Vector3 _prevMoveDir;
+
+
+
+
+
+
     /* Objects & GO related */
     [Header("Player")]
     [SerializeField] private BON_CCPlayer _player;
@@ -18,7 +28,7 @@ public class BON_MovePR : MonoBehaviour
     private InputAction _MoveAction;
     [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
     private BON_COMPJoystick _joystick;
-    Vector2 _moveInputValue;
+    private Vector2 _moveInputValue;
     public Vector2 MoveInputValue
     { get { return _moveInputValue; }}
 
@@ -33,12 +43,6 @@ public class BON_MovePR : MonoBehaviour
     {
         get { return _curSpeed; }
         set { _curSpeed = value; }
-    }
-    private bool _shouldNotMove = false;
-    public bool ShouldNotMove
-    { 
-        get { return _shouldNotMove; } 
-        set { _shouldNotMove = value; }
     }
 
     /* Acceleration related */
@@ -56,8 +60,6 @@ public class BON_MovePR : MonoBehaviour
     private Vector3 _curMoveDir;
     private Vector3 _groundNormalVect;
     private CapsuleCollider _PRCollider;       // Used to scale relatively the ground check raycast
-
-    private Vector3 _prevMoveDir;
 
     /* Drift related */
     [Space]
@@ -150,28 +152,26 @@ public class BON_MovePR : MonoBehaviour
         // Turns the PR around
         if (_moveXAxisDir != 0)
         {
-            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed) ): (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
-        }
-        if (transform.eulerAngles.y - 90 < 0.1 && transform.eulerAngles.y - 90 > -0.1)
-        {
-            transform.eulerAngles = new Vector3(0, 90, 0);
-        }
-        if (transform.eulerAngles.y - 270 < 0.1 && transform.eulerAngles.y -270 > -0.1)
-        {
-            transform.eulerAngles = new Vector3(0, 270, 0);
+            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed)) : (Vector3.Lerp(transform.eulerAngles, new Vector3(0, -90, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
         }
         // Case of a flat ground : uses the forward direction instead of doing math
-        if (Mathf.Approximately(_groundNormalVect.y, 1.0f)) _curMoveDir = Vector3.forward;
+        if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
+        {
+            Debug.Log("Flat case");
+            _curMoveDir = Vector3.forward;
+        }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
         {
+            Debug.Log("Slope case");
+
             Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
             Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
             _curMoveDir.x = 0;
             _curMoveDir.y = worldSpaceMoveDir.y;
             _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
 
-            //Debug.Log("Going towards " + _moveXAxisDir + " (X axis), given normal " + _groundNormalVect + " and that direction, crossBTerm = " + crossBTerm + ". Mathematically, we have " + worldSpaceMoveDir + " and logically " + _curMoveDir);
+    
         }
 
         //Debug.Log("moveDirThisFrame : " + _curMoveDir);
@@ -314,22 +314,12 @@ public class BON_MovePR : MonoBehaviour
 
         //print(_curSpeed);
 
-        /* Applies the movement */
-        if (!_player.AvatarState.HasCableOut)
+        /* Applies the movement, except if the cable is in use */
+        if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
         {
-            if (transform.eulerAngles != (new Vector3(0, 90.0f, 0)))
-            {
-                if (transform.eulerAngles != (new Vector3(0, 270.0f, 0)))
-                {
-                    _curSpeed = 0;
-                }
-            }
-            if (_shouldNotMove)
-            {
-                //Debug.Log(transform.eulerAngles);
-                _curSpeed = 0;
-            }
+            Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
+            _MovThisFrame = movementThisFrame;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
             transform.Translate(movementThisFrame);
         }
@@ -387,7 +377,6 @@ public class BON_MovePR : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         Tag = collision.gameObject.tag;
-        name = collision.gameObject.name;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
@@ -425,7 +414,6 @@ public class BON_MovePR : MonoBehaviour
             _fallHeight = gameObject.transform.position;
         }
         Tag = null;
-        name = null;
         Layer = null;
     }
 }
