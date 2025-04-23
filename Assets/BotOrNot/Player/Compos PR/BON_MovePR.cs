@@ -333,7 +333,7 @@ public class BON_MovePR : MonoBehaviour
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
             if (_player.transform.position.z != 0)
             {
-                movementThisFrame.y 
+                movementThisFrame.y = -_player.transform.position.z;
             }
             transform.Translate(movementThisFrame);
         }
