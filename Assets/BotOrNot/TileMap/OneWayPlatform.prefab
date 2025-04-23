@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 5405891495565241481}
   m_Layer: 7
   m_Name: L1_deco_cube_01
-  m_TagString: Untagged
+  m_TagString: IgnoreWallColl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

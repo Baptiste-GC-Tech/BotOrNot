@@ -7,11 +7,11 @@ TagManager:
   - Hook
   - TriggerZone
   - Floor
-  - Wall
   - TriggerMachine
   - Dusty Floor
   - Gravely Floor
   - Dusty & Graely Floor
+  - IgnoreWallColl
   layers:
   - Default
   - TransparentFX

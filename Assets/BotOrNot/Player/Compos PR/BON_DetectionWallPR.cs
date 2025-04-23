@@ -14,18 +14,21 @@ public class BON_DetectionWallPR : MonoBehaviour
     {        
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _otherPos = other.ClosestPoint(transform.position); //contact point
-            _normal = transform.position - _otherPos;
-
-            if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
+            if (other.gameObject.tag != "Slope")
             {
-                if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1)
+                _otherPos = other.ClosestPoint(transform.position); //contact point
+                _normal = transform.position - _otherPos;
+
+                if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
                 {
-                    _CCPlayer.AvatarState.IsAgainstWallRight = true;
-                }
-                else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
-                {
-                    _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                    if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == 1)
+                    {
+                        _CCPlayer.AvatarState.IsAgainstWallRight = true;
+                    }
+                    else if (_CCPlayer.GetComponent<BON_MovePR>().MoveXAxisDir == -1)
+                    {
+                        _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                    }
                 }
             }
         }
