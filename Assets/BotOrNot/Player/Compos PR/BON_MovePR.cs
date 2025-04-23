@@ -165,21 +165,16 @@ public class BON_MovePR : MonoBehaviour
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
         {
-            Debug.Log("Flat case");
             _curMoveDir = Vector3.forward;
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
         {
-            Debug.Log("Slope case");
-
             Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
             Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
             _curMoveDir.x = 0;
             _curMoveDir.y = worldSpaceMoveDir.y;
             _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
-
-    
         }
 
         //Debug.Log("moveDirThisFrame : " + _curMoveDir);
@@ -197,6 +192,13 @@ public class BON_MovePR : MonoBehaviour
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
         //Debug.Log("_groundNormalVect : " + _groundNormalVect);
+    }
+
+    private void StopMove()
+    {
+        _moveInputValue.x = 0; //stop input
+        _curSpeed = 0f; //stop speed
+        _rb.velocity = Vector3.zero;
     }
 
     /*
@@ -233,14 +235,10 @@ public class BON_MovePR : MonoBehaviour
         //_moveInputValue = _joystick.InputValues;
 #endif
 
-        // if input + wall on right/left, stop input
-        if (_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft)
+        // if input + wall on right/left, stop 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
         {
-            _moveInputValue.x = 0;
-        }
-        if (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)
-        {
-            _moveInputValue.x = 0;
+            StopMove();
         }
         if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded)
         {
@@ -327,13 +325,13 @@ public class BON_MovePR : MonoBehaviour
         /* Applies the movement, except if the cable is in use */
         if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
         {
-            Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
+            //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
             _MovThisFrame = movementThisFrame;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
             if (_player.transform.position.z != 0)
             {
-                movementThisFrame.y 
+                movementThisFrame.y = -_player.transform.position.z;
             }
             transform.Translate(movementThisFrame);
         }
