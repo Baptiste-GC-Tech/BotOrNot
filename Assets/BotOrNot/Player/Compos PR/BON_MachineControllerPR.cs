@@ -59,7 +59,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         }
     }
 
-    public void CallMachine()
+    public void TakeControlOfMachine()
     {
         //si machine pas loin et pas deja en cours d'activation ou changement de perso
         if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsConstrollingMachine)
@@ -95,7 +95,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
-            CallMachine();
+            TakeControlOfMachine();
         }
         if (_player.AvatarState.IsConstrollingMachine && _machinePossessed != null)
         {
