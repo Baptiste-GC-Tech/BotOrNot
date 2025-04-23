@@ -152,7 +152,15 @@ public class BON_MovePR : MonoBehaviour
         // Turns the PR around
         if (_moveXAxisDir != 0)
         {
-            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed)) : (Vector3.Lerp(transform.eulerAngles, new Vector3(0, -90, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
+            transform.eulerAngles = _moveXAxisDir == 1 ? (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 90, 0), _rotationLerpSpeed)) : (Vector3.Lerp(transform.eulerAngles, new Vector3(0, 270, 0), _rotationLerpSpeed));    // TODO: make it a rotation, no ?
+        }
+        if (transform.eulerAngles.y - 90 < 0.1 && transform.eulerAngles.y - 90 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 90, 0);
+        }
+        if (transform.eulerAngles.y - 270 < 0.1 && transform.eulerAngles.y - 270 > -0.1)
+        {
+            transform.eulerAngles = new Vector3(0, 270, 0);
         }
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
@@ -273,6 +281,8 @@ public class BON_MovePR : MonoBehaviour
             if (_driftTimer > 0)
             {
                 _driftTimer -= Time.deltaTime;
+                _curSpeed = Mathf.Lerp(0, _curSpeed, Time.deltaTime * _driftAcceleration);
+                _curMoveDir = -_curMoveDir;
             }
             else
             {
@@ -321,6 +331,10 @@ public class BON_MovePR : MonoBehaviour
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
             _MovThisFrame = movementThisFrame;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
+            if (_player.transform.position.z != 0)
+            {
+                movementThisFrame.y = -_player.transform.position.z;
+            }
             transform.Translate(movementThisFrame);
         }
         //Debug.Log("Movement this frame : " + movementThisFrame);
