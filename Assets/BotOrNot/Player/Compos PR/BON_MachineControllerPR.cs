@@ -59,6 +59,25 @@ public class BON_MachineControllerPR : MonoBehaviour
         }
     }
 
+    public void CallMachine()
+    {
+        //si machine pas loin et pas deja en cours d'activation ou changement de perso
+        if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsConstrollingMachine)
+        {
+            _machineToActivate = _player.MachineToActivate;
+            _machineToActivate.Activate();
+            _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
+            _machinePossessedRb = _machinePossessed.GetComponent<Rigidbody>();
+            if (_machinePossessedRb == null)
+            {
+                Debug.LogError("_machinePossessedRb introuvable");
+            }
+            _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+            _player.AvatarState.IsConstrollingMachine = true;
+        }
+    }
+
     /*
      *  UNITY METHODS
      */
@@ -74,22 +93,9 @@ public class BON_MachineControllerPR : MonoBehaviour
     void Update()
     {
         // Control management (gaining control of the machine or taking back control of PR)
-        if (_TakeControlOfMachineAction.WasPressedThisFrame() && !_player.AvatarState.IsConstrollingMachine) //interact & pas deja le controle
+        if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
-            if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {
-                _machineToActivate = _player.MachineToActivate;
-                _machineToActivate.Activate();
-                _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
-                _machinePossessedRb = _machinePossessed.GetComponent<Rigidbody>();
-                if (_machinePossessedRb == null)
-                {
-                    Debug.LogError("_machinePossessedRb introuvable");
-                }
-                _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                _player.AvatarState.IsConstrollingMachine = true;
-            }
+            CallMachine();
         }
         if (_player.AvatarState.IsConstrollingMachine && _machinePossessed != null)
         {
