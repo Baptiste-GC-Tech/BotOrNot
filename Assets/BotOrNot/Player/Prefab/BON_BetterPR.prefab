@@ -846,6 +846,7 @@ GameObject:
   - component: {fileID: 1455361189492216247}
   - component: {fileID: 4791977869020667297}
   - component: {fileID: 1868234155571755251}
+  - component: {fileID: 1653451566341402303}
   m_Layer: 0
   m_Name: Gravel
   m_TagString: Untagged
@@ -948,6 +949,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1653451566341402303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501175635634353479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7ac1f63808c6c4da02db8686718f3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _status: 0
 --- !u!1 &1554374215343598675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2621,6 +2635,7 @@ GameObject:
   - component: {fileID: 5763877861342059980}
   - component: {fileID: 2772179682335859599}
   - component: {fileID: 7437111915697240757}
+  - component: {fileID: 4416241446489378104}
   m_Layer: 0
   m_Name: Dust
   m_TagString: Untagged
@@ -2723,6 +2738,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4416241446489378104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958325239201081148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7ac1f63808c6c4da02db8686718f3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _status: 0
 --- !u!1 &4143551285328697671
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,6 +4861,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28dbc6299b21c244bed3bf428a08e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vfxActionnables:
+  - {fileID: 1653451566341402303}
+  - {fileID: 4416241446489378104}
 --- !u!1 &6884257436563028353
 GameObject:
   m_ObjectHideFlags: 0
