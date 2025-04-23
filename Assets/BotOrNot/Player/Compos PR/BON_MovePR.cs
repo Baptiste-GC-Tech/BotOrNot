@@ -165,13 +165,13 @@ public class BON_MovePR : MonoBehaviour
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
         {
-            Debug.Log("Flat case");
+            //Debug.Log("Flat case");
             _curMoveDir = Vector3.forward;
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
         {
-            Debug.Log("Slope case");
+            //Debug.Log("Slope case");
 
             Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
             Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
@@ -327,7 +327,7 @@ public class BON_MovePR : MonoBehaviour
         /* Applies the movement, except if the cable is in use */
         if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
         {
-            Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
+            //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
             _MovThisFrame = movementThisFrame;
             movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
@@ -340,7 +340,7 @@ public class BON_MovePR : MonoBehaviour
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
         //Debug.Log("moveDir : " + _curMoveDir);
-        if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
+        //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
         Animator animator = _player.GetComponentInChildren<Animator>();
