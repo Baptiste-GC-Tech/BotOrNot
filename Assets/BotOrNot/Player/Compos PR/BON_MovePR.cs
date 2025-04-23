@@ -201,6 +201,18 @@ public class BON_MovePR : MonoBehaviour
         _rb.velocity = Vector3.zero;
     }
 
+    private void UpdateState()
+    {
+        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
+        {
+            _isPLayerMoving = true;
+        }
+        else
+        {
+            _isPLayerMoving = false;
+        }
+    }
+
     /*
      *  UNITY METHODS
      */
@@ -240,16 +252,17 @@ public class BON_MovePR : MonoBehaviour
         {
             StopMove();
         }
-        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded)
+        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
         {
             UpdateMoveDirFromInput();
             UpdateCurSpeed();
         }
-        else
+        else //other
         {
             _curSpeed = 0f;
         }
 
+        //if grounded => disable gravity
         if (_player.AvatarState.IsGrounded && _rb.useGravity)
         {
             _rb.useGravity = false;
@@ -309,16 +322,8 @@ public class BON_MovePR : MonoBehaviour
             _isBouncing = true;
             _bounceCount = 0;
         }
-
-        /* Changes the state */
-        if (_moveInputValue.y != 0 || _moveInputValue.x != 0) //if player move once, change state
-        {
-            _isPLayerMoving = true;
-        }
-        else
-        {
-            _isPLayerMoving = false;
-        }
+        
+        UpdateState();
 
         //print(_curSpeed);
 
