@@ -17,7 +17,7 @@ public class BON_MachineControllerPR : MonoBehaviour
 
 
     // Player & State related
-    private BON_CCPlayer _player; 
+    private BON_CCPlayer _player;
 
     private BON_Interactive_Actionnables _machineToActivate;
     public BON_Interactive_Actionnables MachineToActivate
@@ -44,7 +44,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
         _machine.ProcessInput(_moveMachineValue);
 
-        if(_QuitControlOfMachineAction.WasReleasedThisFrame())
+        if (_QuitControlOfMachineAction.WasReleasedThisFrame())
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
@@ -87,7 +87,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         _TakeControlOfMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
         _QuitControlOfMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         _JoystickMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
-        _player.AvatarState.IsConstrollingMachine = false ;
+        _player.AvatarState.IsConstrollingMachine = false;
     }
 
     void Update()

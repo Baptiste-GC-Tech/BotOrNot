@@ -30,7 +30,7 @@ public class BON_MovePR : MonoBehaviour
     private BON_COMPJoystick _joystick;
     private Vector2 _moveInputValue;
     public Vector2 MoveInputValue
-    { get { return _moveInputValue; }}
+    { get { return _moveInputValue; } }
 
 
     /* Speed related */
@@ -69,7 +69,7 @@ public class BON_MovePR : MonoBehaviour
     { get { return _driftDuration; } }
     [SerializeField] private float _driftAcceleration = 400.0f;
     public float DriftAcceleration
-        { get { return _driftAcceleration; } }
+    { get { return _driftAcceleration; } }
     [SerializeField, Range(0, 1)] private float _timeBetweenDrifts = 0.3f;
     private Vector3 _desiredDirection;
     private float _driftTimer;
@@ -91,7 +91,7 @@ public class BON_MovePR : MonoBehaviour
     { get { return _isBouncing; } }
     private Vector3 _fallHeight;
     public Vector3 FallHeight
-        { get { return _fallHeight; } }
+    { get { return _fallHeight; } }
     private int _bounceCount;
     public int BounceCount
     { get { return _bounceCount; } }
@@ -343,23 +343,23 @@ public class BON_MovePR : MonoBehaviour
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
         //Debug.Log("moveDir : " + _curMoveDir);
-        if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
+        //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
         Animator animator = _player.GetComponentInChildren<Animator>();
-         if (animator != null)
-         {
-             animator.SetFloat("Speed", _curSpeed);
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", _curSpeed);
 
-             Vector2 currentDir = _moveInputValue.normalized;
-             float dot = Vector2.Dot(_previousDirection, currentDir);
+            Vector2 currentDir = _moveInputValue.normalized;
+            float dot = Vector2.Dot(_previousDirection, currentDir);
 
-             bool didTurnBack = dot < -0.8f;
-             bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            bool didTurnBack = dot < -0.8f;
+            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
 
-             if (_moveInputValue.magnitude > 0.1f)
-                 _previousDirection = currentDir;
-         }
+            if (_moveInputValue.magnitude > 0.1f)
+                _previousDirection = currentDir;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
