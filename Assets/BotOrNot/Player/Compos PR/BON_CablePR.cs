@@ -66,6 +66,7 @@ public class BON_CablePR : MonoBehaviour
 
     private void Update()
     {
+
         if (_clickAction != null && _clickAction.triggered)
         {
             GererClic();
@@ -82,17 +83,17 @@ public class BON_CablePR : MonoBehaviour
         if (_joint != null)
         {
             if (_hookActif != null)
-            {
                 _joint.connectedAnchor = _hookActif.position;
-            }
 
             float lengthChange = 0f;
             if (_cablemoveUp?.ReadValue<float>() > 0.5f)
                 lengthChange -= _cableLengthSpeed * Time.deltaTime;
+
             if (_cablemoveDown?.ReadValue<float>() > 0.5f)
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 1f, _rayDistance);
 
+            _joint.minDistance = 0.2f;
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.2f, _rayDistance);
 
             float swingInput = 0f;
             if (_cablemoveLeft != null && _cablemoveLeft.IsPressed()) swingInput = -1f;
@@ -100,7 +101,7 @@ public class BON_CablePR : MonoBehaviour
 
             Vector3 toAnchor = _joint.connectedAnchor - transform.position;
             Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
-            Vector3 swingDir = Vector3.Cross(Vector3.up, horizontalToAnchor).normalized;
+            Vector3 swingDir = Vector3.Cross(horizontalToAnchor, Vector3.up).normalized;
 
             if (swingInput != 0f)
             {
@@ -113,6 +114,7 @@ public class BON_CablePR : MonoBehaviour
                 _rb.velocity -= lateralVel * _lateralDamping * Time.deltaTime;
             }
         }
+
 
     }
 
@@ -300,11 +302,12 @@ public class BON_CablePR : MonoBehaviour
         _joint.connectedAnchor = cible;
 
         float distance = Vector3.Distance(transform.position, cible);
-        _joint.maxDistance = distance * 0.75f;
         _joint.minDistance = 0.2f;
+        _joint.maxDistance = Mathf.Max(_joint.minDistance + 0.1f, distance * 0.75f);
         _joint.spring = _springForce;
         _joint.damper = _damping;
         _joint.massScale = 1f;
+
     }
 
     private void PRIVSupprimerRappel()
