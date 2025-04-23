@@ -27,7 +27,7 @@ public class BON_MovePR : MonoBehaviour
     [Space]
     [Header("Speed")]
     [SerializeField] float _maxSpeed;
-    [SerializeField, Range(0.01f, 0.05f)] float _rotationLerpSpeed = 0.025f;
+    [SerializeField, Range(0f, 1f)] float _rotationLerpSpeed = 0.025f;
     private float _curSpeed;
     public float CurSpeed
     {
@@ -254,46 +254,46 @@ public class BON_MovePR : MonoBehaviour
         }
 
 
-        //_desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
-        ////Drift
-        //if (_desiredDirection != Vector3.zero)
-        //{
-        //    if (_isFirstMove)
-        //    {
-        //        _isFirstMove = false;
-        //        _previousDirection = _moveInputValue.normalized;
-        //        _player.AvatarState.IsDrifting = false;
-        //    }
-        //    if (_previousDirection != _moveInputValue.normalized)
-        //    {
-        //        _previousDirection = _moveInputValue.normalized;
-        //        _player.AvatarState.IsDrifting = true;
-        //        _driftTimer = _driftDuration;
-        //    }
-        //    if (_driftTimer > 0)
-        //    {
-        //        _driftTimer -= Time.deltaTime;
-        //    }
-        //    else
-        //    {
-        //        _player.AvatarState.IsDrifting = false;
-        //    }
-        //}
-        //if (_isPLayerMoving)
-        //{
-        //    _timeSinceLastMove = 0;
-        //    _player.AvatarState.IsMovingByPlayer = true;
-        //}
-        //else
-        //{
-        //    _timeSinceLastMove += Time.deltaTime;
-        //}
+        _desiredDirection = transform.TransformDirection(_moveInputValue.normalized);
+        //Drift
+        if (_desiredDirection != Vector3.zero)
+        {
+            if (_isFirstMove)
+            {
+                _isFirstMove = false;
+                _previousDirection = _moveInputValue.normalized;
+                _player.AvatarState.IsDrifting = false;
+            }
+            if (_previousDirection != _moveInputValue.normalized)
+            {
+                _previousDirection = _moveInputValue.normalized;
+                _player.AvatarState.IsDrifting = true;
+                _driftTimer = _driftDuration;
+            }
+            if (_driftTimer > 0)
+            {
+                _driftTimer -= Time.deltaTime;
+            }
+            else
+            {
+                _player.AvatarState.IsDrifting = false;
+            }
+        }
+        if (_isPLayerMoving)
+        {
+            _timeSinceLastMove = 0;
+            _player.AvatarState.IsMovingByPlayer = true;
+        }
+        else
+        {
+            _timeSinceLastMove += Time.deltaTime;
+        }
 
-        //if (_timeSinceLastMove > _timeBetweenDrifts)
-        //{
-        //    _isFirstMove = true;
-        //    _player.AvatarState.IsMovingByPlayer = false;
-        //}
+        if (_timeSinceLastMove > _timeBetweenDrifts)
+        {
+            _isFirstMove = true;
+            _player.AvatarState.IsMovingByPlayer = false;
+        }
 
         // Bounce
         if ((_fallHeight.y - transform.position.y) >= _heightBonceStart && !_isBouncing)
