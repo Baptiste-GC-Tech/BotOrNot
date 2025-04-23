@@ -377,7 +377,6 @@ public class BON_MovePR : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         Tag = collision.gameObject.tag;
-        name = collision.gameObject.name;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
@@ -415,7 +414,6 @@ public class BON_MovePR : MonoBehaviour
             _fallHeight = gameObject.transform.position;
         }
         Tag = null;
-        name = null;
         Layer = null;
     }
 }
