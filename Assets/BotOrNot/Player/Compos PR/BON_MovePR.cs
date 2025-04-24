@@ -346,8 +346,8 @@ public class BON_MovePR : MonoBehaviour
 
         //print(_curSpeed);
 
-        /* Applies the movement, except if the cable is in use */
-        if (!_player.AvatarState.HasCableOut)
+        /* Applies the movement, except if the cable is in use or if he controls machine */
+        if (!_player.AvatarState.HasCableOut && !_player.AvatarState.IsConstrollingMachine)
         {
             //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
