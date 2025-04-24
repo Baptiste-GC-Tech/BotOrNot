@@ -19,17 +19,20 @@ public class BON_DetectionWallPR : MonoBehaviour
             _otherPos = other.ClosestPoint(transform.position); //contact point
             _normal = transform.position - _otherPos;
 
-            if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
+            if (other.gameObject.tag != "IgnoreWallColl")
             {
-                if (_movePR != null)
+                if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall
                 {
-                    if (_movePR.MoveXAxisDir == 1)
+                    if (_movePR != null)
                     {
-                        _CCPlayer.AvatarState.IsAgainstWallRight = true;
-                    }
-                    else if (_movePR.MoveXAxisDir == -1)
-                    {
-                        _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                        if (_movePR.MoveXAxisDir == 1)
+                        {
+                            _CCPlayer.AvatarState.IsAgainstWallRight = true;
+                        }
+                        else if (_movePR.MoveXAxisDir == -1)
+                        {
+                            _CCPlayer.AvatarState.IsAgainstWallLeft = true;
+                        }
                     }
                 }
             }

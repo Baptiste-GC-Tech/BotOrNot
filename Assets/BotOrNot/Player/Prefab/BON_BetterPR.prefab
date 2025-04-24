@@ -2130,11 +2130,11 @@ MonoBehaviour:
     m_Bits: 128
   _directionReference: {fileID: 4858370210193212142}
   _player: {fileID: 3316989274986919899}
-  _rayDistance: 20
-  _springForce: 20
-  _damping: 5
-  _cableLengthSpeed: 5
-  _swingForce: 0.3
+  _rayDistance: 15
+  _springForce: 2.5
+  _damping: 0.51
+  _cableLengthSpeed: 3.86
+  _swingForce: 0.32
   _lineSegments: 20
   _deployTime: 0.3
   _waveAmplitude: 0.5

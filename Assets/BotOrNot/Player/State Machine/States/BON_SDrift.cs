@@ -11,12 +11,16 @@ public class BON_SDrift : BON_State
     public override void Exit()
     {
         _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        _player.GetComponent<Rigidbody>().constraints = /*RigidbodyConstraints.FreezePositionX |*/ RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        _player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
     public override void UpState()
     {
-        if (_player.AvatarState.IsMovingByPlayer && _player.AvatarState.IsDrifting == false)
+        if (_player.AvatarState.IsInElevator)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.Elevator);
+        }
+        else if (_player.AvatarState.IsMovingByPlayer && _player.AvatarState.IsDrifting == false)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Moving);
         }

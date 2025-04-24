@@ -63,12 +63,12 @@ public class BON_CCPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine 
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //end trigger with machine 
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //end trigger with elevator 
         {
             _avatarState.IsNearElevator = false;
         }
