@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class BON_SoundPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    /*
+     * FIELDS
+     */
+
+    [SerializeField] BON_SoundCollection _sounds;
+    [SerializeField] AudioSource _audioSource;
+
+    /*
+     * CLASS METHODS
+     */
+
+    public void PlayRandom()
     {
-        
+        _audioSource.PlayOneShot(_sounds.GetRandom());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayIndex(int index)
     {
-        
+        _audioSource.PlayOneShot(_sounds.GetAt(index));
     }
 }
