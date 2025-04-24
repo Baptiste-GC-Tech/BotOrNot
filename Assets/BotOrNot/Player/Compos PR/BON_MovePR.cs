@@ -247,8 +247,8 @@ public class BON_MovePR : MonoBehaviour
         /* Handles the input */
         if (_player.AvatarState.IsGrounded)
         {
-            _moveInputValue = _MoveAction.ReadValue<Vector2>();
-            //_moveInputValue = _joystick.InputValues;
+            //_moveInputValue = _MoveAction.ReadValue<Vector2>();
+            _moveInputValue = _joystick.InputValues;
             if (_justChangedGrounded == true)
             {
                 _justChangedGrounded = false;
