@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class BON_Elevator : BON_Actionnable
@@ -118,7 +119,6 @@ public class BON_Elevator : BON_Actionnable
             {
                 _isPlayerMoving = false;
                 _isElevatorMoving = true;
-                Debug.LogWarning("PARENT THE PLAYER TO THE ELEVATOR");
                 _player.transform.parent = _elevator.transform;
             }
         }
@@ -147,18 +147,14 @@ public class BON_Elevator : BON_Actionnable
             {
                 count = 0;
             }
-            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
             //if the player is close to the final postion, stops their motion and changes the status of the Bon_Elevator)
+            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
             if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
             {
-                Debug.Log("finish");
                 _IsMovingByPlayerOut = false;
                 _elevatorStatus = false;
                 base.Toggle();
             }
-
         }
     }
-
-
 }
