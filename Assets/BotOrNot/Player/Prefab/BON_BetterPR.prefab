@@ -2107,6 +2107,7 @@ MonoBehaviour:
   _numberOfBounce: 3
   _bounceHeight: 5
   _heightBonceStart: 6
+  _prFoot: {fileID: 1270857662903726444}
   Layer: 
   Tag: 
 --- !u!114 &6279594155917816397

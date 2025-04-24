@@ -10,6 +10,7 @@ public class BON_Foot : MonoBehaviour
      */
 
     [SerializeField] BON_Actionnable[] _vfxActionnables;
+    List<bool> _temporaryRemember = new List<bool>();
 
     /*
      * UNITY METHODS
@@ -20,6 +21,24 @@ public class BON_Foot : MonoBehaviour
         foreach (var actionnable in _vfxActionnables) 
         {
             actionnable.Status = false;
+        }
+    }
+
+    public void SaveAndDisableParticles()
+    {
+        _temporaryRemember.Clear();
+        foreach (var actionnable in _vfxActionnables)
+        {
+            _temporaryRemember.Add(actionnable.Status);
+            actionnable.Status = false;
+        }
+    }
+
+    public void EnableParticlesFromSave()
+    {
+        for (int i = 0; i < _temporaryRemember.Count; i++)
+        {
+            _vfxActionnables[i].Status = _temporaryRemember[i];
         }
     }
 }

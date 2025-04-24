@@ -96,6 +96,10 @@ public class BON_MovePR : MonoBehaviour
     public int BounceCount
     { get { return _bounceCount; } }
 
+    /* foot particles related */
+    [SerializeField] BON_Foot _prFoot;
+    bool _justChangedGrounded = false;
+
     /* animator related */
     private float _dot;
     private Vector2 _currentDir;
@@ -241,13 +245,26 @@ public class BON_MovePR : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
-#if UNITY_EDITOR && !UNITY_ANDROID
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
-#elif UNITY_ANDROID
-        //_moveInputValue = _joystick.InputValues;
-#endif
+        if (_player.AvatarState.IsGrounded)
+        {
+            _moveInputValue = _MoveAction.ReadValue<Vector2>();
+            //_moveInputValue = _joystick.InputValues;
+            if (_justChangedGrounded == true)
+            {
+                _justChangedGrounded = false;
+                _prFoot.EnableParticlesFromSave();
+            }
 
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+        }
+        else
+        {
+            _moveInputValue = Vector2.zero;
+            if (_justChangedGrounded == false)
+            {
+                _justChangedGrounded = true;
+                _prFoot.SaveAndDisableParticles();
+            }
+        }
 
         // if input + wall on right/left, stop 
         if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
@@ -330,7 +347,7 @@ public class BON_MovePR : MonoBehaviour
         //print(_curSpeed);
 
         /* Applies the movement, except if the cable is in use */
-        if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
+        if (!_player.AvatarState.HasCableOut)
         {
             //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
