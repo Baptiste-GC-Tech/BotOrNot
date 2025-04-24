@@ -241,16 +241,15 @@ public class BON_MovePR : MonoBehaviour
         UpdateGroundNormal();
 
         /* Handles the input */
-#if UNITY_EDITOR && !UNITY_ANDROID
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
-#elif UNITY_ANDROID
-        //_moveInputValue = _joystick.InputValues;
-#endif
-
-        _moveInputValue = _MoveAction.ReadValue<Vector2>();
+        if (_player.AvatarState.IsGrounded)
+        {
+            _moveInputValue = _MoveAction.ReadValue<Vector2>();
+            //_moveInputValue = _joystick.InputValues;
+        }
+        else _moveInputValue = Vector2.zero;
 
         // if input + wall on right/left, stop 
-        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
             StopMove();
         }
@@ -330,7 +329,7 @@ public class BON_MovePR : MonoBehaviour
         //print(_curSpeed);
 
         /* Applies the movement, except if the cable is in use */
-        if (!_player.AvatarState.HasCableOut && _player.AvatarState.IsGrounded)
+        if (!_player.AvatarState.HasCableOut)
         {
             //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
             Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
@@ -344,7 +343,6 @@ public class BON_MovePR : MonoBehaviour
         }
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
-        //Debug.Log("moveDir : " + _curMoveDir);
         //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
