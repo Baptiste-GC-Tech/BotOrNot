@@ -813,7 +813,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3386,18 +3386,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-      - m_Target: {fileID: 7627071302535122092}
-        m_TargetAssemblyTypeName: BON_SoundPlayer, Assembly-CSharp
-        m_MethodName: PlayIndex
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6463824461364688895
 GameObject:
   m_ObjectHideFlags: 0
@@ -4844,6 +4832,11 @@ PrefabInstance:
       propertyPath: _playOnStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8718120591820393322, guid: cae5d72da69c78f4b96778f882d68c8b,
+        type: 3}
+      propertyPath: '_musics.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c686db8f28e3e324798ab05c796e819a, type: 3}
     - target: {fileID: 8849159575661718532, guid: cae5d72da69c78f4b96778f882d68c8b,
         type: 3}
       propertyPath: m_Name
