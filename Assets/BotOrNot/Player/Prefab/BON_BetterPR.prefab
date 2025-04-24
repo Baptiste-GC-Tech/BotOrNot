@@ -2131,8 +2131,8 @@ MonoBehaviour:
   _directionReference: {fileID: 4858370210193212142}
   _player: {fileID: 3316989274986919899}
   _rayDistance: 15
-  _springForce: 2.5
-  _damping: 0.51
+  _springForce: 5.76
+  _damping: 0.96
   _cableLengthSpeed: 3.86
   _swingForce: 0.32
   _lineSegments: 20

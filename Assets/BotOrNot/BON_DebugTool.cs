@@ -13,6 +13,7 @@ public class BON_DebugTool : MonoBehaviour
     [Header("Player")]
 
     public BON_CCPlayer Player;
+    public BON_MovePR PRMoveComp;
     public string CurrentPlayerPlayed;
     private BON_Controllable _machinePossessed;
 
@@ -43,6 +44,10 @@ public class BON_DebugTool : MonoBehaviour
     public Vector2 MoveMachineValue;
     public float CurSpeed;
     public bool UseGravity;
+    public Vector3 GroundNormalVect;
+    public Vector3 WrldSpcMoveDir;
+    public Vector3 MoveDir;
+    public Vector3 PRRBVelocity;
 
     [Space(5)]
     [Header("Drift")]
@@ -72,6 +77,7 @@ public class BON_DebugTool : MonoBehaviour
         AvatarState = Player.AvatarState;
         Inventory = BON_GameManager.Instance().Inventory;
         CurrentState = AvatarState.CurrentState;
+        PRMoveComp = Player.GetComponent<BON_MovePR>();
 
         _CompMov = Player.GetComponent<BON_MovePR>();
     }
@@ -107,17 +113,18 @@ public class BON_DebugTool : MonoBehaviour
         MoveMachineValue = Player.GetComponent<BON_MachineControllerPR>().MoveMachineValue;
         InputValues = _CompMov.MoveInputValue;
         CurSpeed = _CompMov.CurSpeed;
+
         UseGravity = Player.GetComponent<Rigidbody>().useGravity;
 
-        //drift
-        TimeSinceLastMove = _CompMov.TimeSinceLastMove;
-        DriftDuration = _CompMov.DriftDuration;
-        DriftAcceleration = _CompMov.DriftAcceleration;
+        ////////drift
+        //////TimeSinceLastMove = _CompMov.TimeSinceLastMove;
+        //////DriftDuration = _CompMov.DriftDuration;
+        //////DriftAcceleration = _CompMov.DriftAcceleration;
 
-        //bounce
-        IsBouncing = _CompMov.IsBouncing;
-        BounceCount = _CompMov.BounceCount;
-        FallHeight = _CompMov.FallHeight;
+        ////////bounce
+        //////IsBouncing = _CompMov.IsBouncing;
+        //////BounceCount = _CompMov.BounceCount;
+        //////FallHeight = _CompMov.FallHeight;
 
 
         // Environment Info

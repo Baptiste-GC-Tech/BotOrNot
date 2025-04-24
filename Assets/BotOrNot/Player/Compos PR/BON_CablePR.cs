@@ -84,17 +84,30 @@ public class BON_CablePR : MonoBehaviour
         {
             if (_hookActif != null)
             {
-                _joint.connectedAnchor = _hookActif.position;
+                // Verrouille XZ, garde Y stable pour éviter les sauts verticaux
+                Vector3 anchorPos = _hookActif.position;
+                anchorPos.y = _joint.connectedAnchor.y; // on ne change pas Y ici
+                _joint.connectedAnchor = anchorPos;
+
+                // Met à jour maxDistance selon la distance Y uniquement
+                // float verticalDistance = Mathf.Abs(transform.position.y - _joint.connectedAnchor.y);
+                //_joint.maxDistance = Mathf.Max(0.2f, verticalDistance); // évite les valeurs trop petites
             }
+
 
             float lengthChange = 0f;
 
             if (_cablemoveUp?.ReadValue<float>() > 0.5f)
             {
-                lengthChange -= _cableLengthSpeed * Time.deltaTime;
-                Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
+                if (_joint.maxDistance > 0.2f)
+                {
+                    lengthChange -= _cableLengthSpeed * Time.deltaTime;
+                    Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
+                    _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
+                }
             }
+
+
             else if (_cablemoveDown?.ReadValue<float>() > 0.5f)
             {
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
@@ -156,7 +169,7 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
 
-                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
+                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
@@ -164,7 +177,7 @@ public class BON_CablePR : MonoBehaviour
         else
         {
             // _fxhooked.Stop();
-            
+            /*
             StartCoroutine(PRIVRetirerLigne());
 
             if (_hookActif != null)
@@ -186,22 +199,21 @@ public class BON_CablePR : MonoBehaviour
             }
 
             _hookActif = null;
-
-            /*
+            */
+            
             StartCoroutine(PRIVRetirerLigne());
 
-            Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
-            if (closest != null)
+            if (_hookActif != null)
             {
-                _targetPoint = closest.position;
-                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
+                _targetPoint = _hookActif.position;
+                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
             _player.AvatarState.HasCableOut = false;
             // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
             _hookActif = null;
-            */
+            
         }
     }
 
@@ -259,7 +271,6 @@ public class BON_CablePR : MonoBehaviour
             Vector3 start = _gunOrigin.position;
 
             Vector3 end = _hookActif != null ? _hookActif.position : _targetPoint;
-
             Vector3 direction = (end - start).normalized;
             Vector3 normal = Vector3.Cross(direction, Vector3.forward);
 
@@ -274,17 +285,20 @@ public class BON_CablePR : MonoBehaviour
             yield return null;
         }
 
-        if (_hookActif != null)
-        {
-            Transform fx = _hookActif.Find("FX - Hooked Particle System");
-            if (fx != null) fx.gameObject.SetActive(true);
-        }
+        _animating = false;
 
-        Vector3 finalTarget = _hookActif != null ? _hookActif.position : _targetPoint;
+        if (!_lineVisible || _hookActif == null)
+            yield break;
+
+        // FX
+        Transform fx = _hookActif.Find("FX - Hooked Particle System");
+        if (fx != null) fx.gameObject.SetActive(true);
+
+        Vector3 finalTarget = _hookActif.position;
         PRIVActiverRappel(finalTarget);
         _swingTimer = 0f;
-        _animating = false;
     }
+
 
 
     private IEnumerator PRIVRetirerLigne()
