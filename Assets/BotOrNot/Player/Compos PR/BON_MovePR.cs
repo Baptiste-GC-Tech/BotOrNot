@@ -249,12 +249,12 @@ public class BON_MovePR : MonoBehaviour
         {
             _moveInputValue = _MoveAction.ReadValue<Vector2>();
             //_moveInputValue = _joystick.InputValues;
+
             if (_justChangedGrounded == true)
             {
                 _justChangedGrounded = false;
                 _prFoot.EnableParticlesFromSave();
             }
-
         }
         else
         {
@@ -267,7 +267,7 @@ public class BON_MovePR : MonoBehaviour
         }
 
         // if input + wall on right/left, stop 
-        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight)) 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
             StopMove();
         }
@@ -361,7 +361,6 @@ public class BON_MovePR : MonoBehaviour
         }
         //Debug.Log("Movement this frame : " + movementThisFrame);
 
-        //Debug.Log("moveDir : " + _curMoveDir);
         //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
 
