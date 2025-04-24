@@ -262,8 +262,8 @@ public class BON_MovePR : MonoBehaviour
         /* Handles the input */
         if (_player.AvatarState.IsGrounded)
         {
-            //_moveInputValue = _MoveAction.ReadValue<Vector2>(); //input pc
-            _moveInputValue = _joystick.InputValues; //input mobile 
+            _moveInputValue = _MoveAction.ReadValue<Vector2>(); //input pc
+            //_moveInputValue = _joystick.InputValues; //input mobile 
 
             if (_justChangedGrounded == true)
             {
