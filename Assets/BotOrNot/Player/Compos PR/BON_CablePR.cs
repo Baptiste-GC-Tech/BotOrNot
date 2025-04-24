@@ -156,7 +156,7 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
 
-                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
                 if (interactive != null)
                     interactive.Activate();
             }
@@ -164,7 +164,7 @@ public class BON_CablePR : MonoBehaviour
         else
         {
             // _fxhooked.Stop();
-            /*
+            
             StartCoroutine(PRIVRetirerLigne());
 
             if (_hookActif != null)
@@ -176,30 +176,32 @@ public class BON_CablePR : MonoBehaviour
                 _targetPoint = _hookActif.position;
 
                 _player.AvatarState.HasCableOut = false;
-                _hookActif = null;
+                
 
-                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
+                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
                 if (interactive != null)
                     interactive.Activate();
+
+                _hookActif = null;
             }
 
             _hookActif = null;
-            */
-            
+
+            /*
             StartCoroutine(PRIVRetirerLigne());
 
             Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
             if (closest != null)
             {
                 _targetPoint = closest.position;
-                BON_Interactive interactive = closest.GetComponent<BON_Interactive>();
+                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
                 if (interactive != null)
                     interactive.Activate();
             }
             _player.AvatarState.HasCableOut = false;
             // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
             _hookActif = null;
-
+            */
         }
     }
 
