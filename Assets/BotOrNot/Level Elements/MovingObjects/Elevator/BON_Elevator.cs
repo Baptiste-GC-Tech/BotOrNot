@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
 public class BON_Elevator : BON_Actionnable
@@ -29,6 +30,7 @@ public class BON_Elevator : BON_Actionnable
     bool _elevatorHasAlredyMoved;                           //check if the elevator has reach the final destination
     bool _elevatorNeedsToChangePosition;                    //if the elevator is not on the same level as the actionnable, changes it's position
     bool _elevatorHasFinishedChangingPosition;              //check if the elevator has reach the destination of the actionnable
+    Animator _playerAnimator;
 
 
     /*
@@ -73,6 +75,7 @@ public class BON_Elevator : BON_Actionnable
         _elevatorHasAlredyMoved = false;
         _elevatorNeedsToChangePosition = false;
         _elevatorHasFinishedChangingPosition = false;
+        _playerAnimator = _player.GetComponentInChildren<Animator>();
     }
     private void Update()
     {
@@ -102,6 +105,11 @@ public class BON_Elevator : BON_Actionnable
         {
             _isPlayerMoving = true;
             _elevatorHasFinishedChangingPosition = false;
+
+            _player.transform.eulerAngles = (_player.transform.position.x > _elevatorPosition.transform.position.x)? new Vector3(0, -90, 0): new Vector3(0, 90, 0);
+
+            _playerAnimator.SetBool("IsIdle", false);
+            _playerAnimator.SetBool("IsMoving", true);
         }
 
         //moves the player to the elevator
@@ -115,6 +123,8 @@ public class BON_Elevator : BON_Actionnable
                 _isPlayerMoving = false;
                 _isElevatorMoving = true;
                 _player.transform.parent = _elevator.transform;
+                _playerAnimator.SetBool("IsIdle", true);
+                _playerAnimator.SetBool("IsMoving", false);
             }
         }
         if (_isElevatorMoving)
@@ -130,6 +140,10 @@ public class BON_Elevator : BON_Actionnable
             _IsMovingByPlayerOut = true;
             _elevatorHasAlredyMoved = false;
             _player.transform.parent = null;
+
+
+            _playerAnimator.SetBool("IsIdle", false);
+            _playerAnimator.SetBool("IsMoving", true);
         }
         //moves the player out of the elevator
         if (_IsMovingByPlayerOut)
@@ -142,12 +156,15 @@ public class BON_Elevator : BON_Actionnable
             {
                 count = 0;
             }
+            _player.transform.eulerAngles = (_player.transform.position.x > _outTargetPosition[count].transform.position.x) ? new Vector3(0, -90, 0) : new Vector3(0, 90, 0);
             //if the player is close to the final postion, stops their motion and changes the status of the Bon_Elevator)
             _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
             if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
             {
                 _IsMovingByPlayerOut = false;
                 _elevatorStatus = false;
+                _playerAnimator.SetBool("IsIdle", true);
+                _playerAnimator.SetBool("IsMoving", false);
                 base.Toggle();
             }
         }

@@ -18,6 +18,8 @@ public class BON_CreditsManager : MonoBehaviour
 
     List<GameObject> _scrollingObjects = new List<GameObject>();
 
+    bool _shouldScroll = true;
+
     /*
      * CLASS METHODS
      */
@@ -38,10 +40,17 @@ public class BON_CreditsManager : MonoBehaviour
 
     void Update()
     {
-        Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime);
+        if (_shouldScroll)
+        {
+            Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime);
 
-        foreach (GameObject obj in _scrollingObjects) {
-            obj.transform.position += moveVec;
+            foreach (GameObject obj in _scrollingObjects) {
+                obj.transform.position += moveVec;
+                if (obj.transform.position.y >= 3514)
+                {
+                    _shouldScroll = false;
+                }
+            }
         }
     }
 }
