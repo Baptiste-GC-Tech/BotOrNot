@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class BON_Elevator : BON_Actionnable
@@ -20,7 +21,7 @@ public class BON_Elevator : BON_Actionnable
     [SerializeField] Canvas _levelHUD;                      //A reference to the canvas to be able to disable the controls of the player
     [SerializeField] float _playerSpeed;                    //Refecrence to the player speed (right now it's set in the editor but might need to get the speed from the player's script)         
     Button[] _buttonsInHUD;                                 //Reference to the players button that we get from _levelHUD
-    GameObject _player;                     
+    [SerializeField] GameObject _player;                     
     bool _isPlayerMoving;                                   //is the player moving to the elevator
     bool _isElevatorMoving;                                 //is the elevator movnig to it's final destination
     bool _IsMovingByPlayerOut;                                      //is the player moving out of the elevator
@@ -141,18 +142,14 @@ public class BON_Elevator : BON_Actionnable
             {
                 count = 0;
             }
-            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
             //if the player is close to the final postion, stops their motion and changes the status of the Bon_Elevator)
+            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
             if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
             {
-                Debug.Log("finish");
                 _IsMovingByPlayerOut = false;
                 _elevatorStatus = false;
                 base.Toggle();
             }
-
         }
     }
-
-
 }
