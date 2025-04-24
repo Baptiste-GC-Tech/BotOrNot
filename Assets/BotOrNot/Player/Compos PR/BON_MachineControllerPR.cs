@@ -35,13 +35,15 @@ public class BON_MachineControllerPR : MonoBehaviour
 
 
     /*
-     *  CLASS METHODS
+     *  CLASS METHODSs
      */
 
     public void MoveMachine(BON_Controllable _machine)
     {
         // Reads input values
-        _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
+        //_moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>(); //input pc
+        _moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
+
         _machine.ProcessInput(_moveMachineValue);
 
         if (_QuitControlOfMachineAction.WasReleasedThisFrame())
