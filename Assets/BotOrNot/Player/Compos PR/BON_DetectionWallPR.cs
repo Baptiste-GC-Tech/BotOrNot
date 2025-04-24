@@ -19,6 +19,7 @@ public class BON_DetectionWallPR : MonoBehaviour
         {
             _otherPos = other.ClosestPoint(transform.position); //contact point
             _normal = transform.position - _otherPos;
+
             if (other.gameObject.tag != "IgnoreWallColl")
             {
                 if (Mathf.Abs(_normal.x) > Mathf.Abs(_normal.y)) //collide on X => wall

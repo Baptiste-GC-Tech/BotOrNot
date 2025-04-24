@@ -17,12 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BotOrNot/Scenes/MainMenu.unity
     guid: b6787b456e9f14e49a7ecaed17c3813d
-  - enabled: 1
+  - enabled: 0
     path: Assets/BotOrNot/Scenes/Level1old.unity
     guid: 9cc3c7b605742b646abb2a75ff5e3dbe
   - enabled: 0
     path: Assets/BotOrNot/Scenes/UI_Blockout.unity
     guid: 9aa3821fc64d89d4c85453d9adb1dc26
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Level1.unity
+    guid: 6fed76d67951cfa4a9d626da9b47e242
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Cinematic.unity
+    guid: c9db64b03f9cb67488f3c3d34ea9a9f4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: afea3284868cd7944a20e17107876b05,
       type: 2}

@@ -262,8 +262,8 @@ public class BON_MovePR : MonoBehaviour
         /* Handles the input */
         if (_player.AvatarState.IsGrounded)
         {
-            _moveInputValue = _MoveAction.ReadValue<Vector2>();
-            //_moveInputValue = _joystick.InputValues;
+            _moveInputValue = _MoveAction.ReadValue<Vector2>(); //input pc
+            //_moveInputValue = _joystick.InputValues; //input mobile 
 
             if (_justChangedGrounded == true)
             {
@@ -359,8 +359,8 @@ public class BON_MovePR : MonoBehaviour
 
         UpdateState();
 
-        /* Applies the movement, except if the cable is in use */
-        if (!_player.AvatarState.HasCableOut)
+        /* Applies the movement, except if the cable is in use or if he controls machine */
+        if (!_player.AvatarState.HasCableOut && !_player.AvatarState.IsConstrollingMachine)
         {
             Vector3 worldMoveThisFrame = _WorldSpaceMoveDir * _curSpeed * Time.deltaTime;
             Vector3 localMoveThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
