@@ -169,7 +169,7 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
 
-                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
+                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
@@ -203,11 +203,10 @@ public class BON_CablePR : MonoBehaviour
             
             StartCoroutine(PRIVRetirerLigne());
 
-            Transform closest = PRIVTrouverPlusProcheHook(GameObject.FindGameObjectsWithTag("Hook"));
-            if (closest != null)
+            if (_hookActif != null)
             {
-                _targetPoint = closest.position;
-                BON_Interactive_Actionnables interactive = closest.GetComponent<BON_Interactive_Actionnables>();
+                _targetPoint = _hookActif.position;
+                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
                 if (interactive != null)
                     interactive.Activate();
             }
