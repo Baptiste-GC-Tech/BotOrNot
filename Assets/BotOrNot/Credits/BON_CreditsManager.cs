@@ -42,11 +42,11 @@ public class BON_CreditsManager : MonoBehaviour
     {
         if (_shouldScroll)
         {
-            Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime * 10);
+            Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime);
 
             foreach (GameObject obj in _scrollingObjects) {
                 obj.transform.position += moveVec;
-                if (obj.transform.position.y >= 3000)
+                if (obj.transform.position.y >= 3514)
                 {
                     _shouldScroll = false;
                 }
