@@ -36,14 +36,13 @@ public class BON_COMPJoystick : BON_TouchComps
 
     override public void TouchStart(Touch touch, Vector2 initialTouchPos)
     {
-        base.TouchStart(touch, initialTouchPos);
-
         _isCompActive = true;
         _inputValues = Vector2.zero;
         _initialTouchPos = initialTouchPos;
+        _currentTouchPos = _initialTouchPos;
 
-        gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
-        gameObject.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
+        base.TouchStart(touch, initialTouchPos);
+        gameObject.transform.localPosition = new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2);
 
         PRIVUnhideJoystick();
     }
@@ -72,10 +71,8 @@ public class BON_COMPJoystick : BON_TouchComps
     }
     private void PRIVMoveJoystick()
     {
-        gameObject.transform.GetLocalPositionAndRotation(out Vector3 pos, out Quaternion rot);
-        gameObject.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2), rot);
+        gameObject.transform.localPosition = new Vector3(_currentTouchPos.x - Screen.width / 2, _currentTouchPos.y - Screen.height / 2);
 
-        //Magnetude entre le pos initial et le currentPos
         _inputValues.x += (_currentTouchPos.x - _previousTouchPos.x)/200;
         _inputValues.y += (_currentTouchPos.y - _previousTouchPos.y)/200;
 
