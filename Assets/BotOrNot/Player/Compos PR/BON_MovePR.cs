@@ -96,6 +96,10 @@ public class BON_MovePR : MonoBehaviour
     public int BounceCount
     { get { return _bounceCount; } }
 
+    /* foot particles related */
+    [SerializeField] BON_Foot _prFoot;
+    bool _justChangedGrounded = false;
+
     /* animator related */
     private float _dot;
     private Vector2 _currentDir;
@@ -245,8 +249,22 @@ public class BON_MovePR : MonoBehaviour
         {
             _moveInputValue = _MoveAction.ReadValue<Vector2>();
             //_moveInputValue = _joystick.InputValues;
+
+            if (_justChangedGrounded == true)
+            {
+                _justChangedGrounded = false;
+                _prFoot.EnableParticlesFromSave();
+            }
         }
-        else _moveInputValue = Vector2.zero;
+        else
+        {
+            _moveInputValue = Vector2.zero;
+            if (_justChangedGrounded == false)
+            {
+                _justChangedGrounded = true;
+                _prFoot.SaveAndDisableParticles();
+            }
+        }
 
         // if input + wall on right/left, stop 
         if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
