@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class BON_SMoving : BON_State
 {
     public override void Enter()
@@ -12,7 +14,11 @@ public class BON_SMoving : BON_State
 
     public override void UpState()
     {
-        if (_player.AvatarState.IsDrifting)
+        if (_player.AvatarState.IsInElevator)
+        {
+            _player.AvatarState.ChangeState(BON_AvatarState.State.Elevator);
+        }
+        else if (_player.AvatarState.IsDrifting)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Drift);
         }
@@ -24,13 +30,22 @@ public class BON_SMoving : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.ControllingMachine);
         }
+        
         else if (!_player.AvatarState.IsGrounded && !BON_GameManager.Instance().IsPlayingNut) //si on joue dame robot et on saute -> etat
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Jump);
         }
-        else if (!_player.AvatarState.IsMovingByPlayer && !_player.AvatarState.IsDrifting && _player.GetComponent<BON_MovePR>().CurSpeed <= 0.5f)
+        else if (!_player.AvatarState.IsMovingByPlayer && !_player.AvatarState.IsDrifting)
         {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
+            BON_MovePR _movePR = _player.GetComponent<BON_MovePR>();
+            if (_movePR == null)
+            {
+                Debug.LogError("_movePR introuvable");
+            }
+            if (_movePR.CurSpeed <= 0.1f)
+            {
+                _player.AvatarState.ChangeState(BON_AvatarState.State.Idle);
+            }
         }
     }
 }

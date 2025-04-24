@@ -11,12 +11,13 @@ public class BON_MachineControllerPR : MonoBehaviour
     InputAction _QuitControlOfMachineAction;    // Upon machine interaction, represents forfeiting control of it and gaining back control of PR
     InputAction _JoystickMachineAction;         // When controling a machine, sends the input over to it so it can do stuff
     Vector2 _moveMachineValue;
+    Rigidbody _machinePossessedRb;
     public Vector2 MoveMachineValue
     { get { return _moveMachineValue; } }
 
 
     // Player & State related
-    private BON_CCPlayer _player; 
+    private BON_CCPlayer _player;
 
     private BON_Interactive_Actionnables _machineToActivate;
     public BON_Interactive_Actionnables MachineToActivate
@@ -34,24 +35,48 @@ public class BON_MachineControllerPR : MonoBehaviour
 
 
     /*
-     *  CLASS METHODS
+     *  CLASS METHODSs
      */
 
     public void MoveMachine(BON_Controllable _machine)
     {
         // Reads input values
-        _moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>();
+        //_moveMachineValue = _JoystickMachineAction.ReadValue<Vector2>(); //input pc
+        _moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
+
         _machine.ProcessInput(_moveMachineValue);
 
-        if(_QuitControlOfMachineAction.WasReleasedThisFrame())
+        if (_QuitControlOfMachineAction.WasReleasedThisFrame())
         {
             if (!BON_GameManager.Instance().IsSwitching)
             {
-                _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
+                if (_machinePossessedRb != null)
+                {
+                    _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                }
                 _machineToActivate.Activate();
                 StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
                 _player.AvatarState.IsConstrollingMachine = false;
             }
+        }
+    }
+
+    public void TakeControlOfMachine()
+    {
+        //si machine pas loin et pas deja en cours d'activation ou changement de perso
+        if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching && !_player.AvatarState.IsConstrollingMachine)
+        {
+            _machineToActivate = _player.MachineToActivate;
+            _machineToActivate.Activate();
+            _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
+            _machinePossessedRb = _machinePossessed.GetComponent<Rigidbody>();
+            if (_machinePossessedRb == null)
+            {
+                Debug.LogError("_machinePossessedRb introuvable");
+            }
+            _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+            _player.AvatarState.IsConstrollingMachine = true;
         }
     }
 
@@ -64,25 +89,17 @@ public class BON_MachineControllerPR : MonoBehaviour
         _TakeControlOfMachineAction = InputSystem.actions.FindAction("ActionsMapPR/Interact"); //take control machine
         _QuitControlOfMachineAction = InputSystem.actions.FindAction("MachineControl/Interact"); //recover control
         _JoystickMachineAction = InputSystem.actions.FindAction("MachineControl/Move"); //control machine
-        _player.AvatarState.IsConstrollingMachine = false ;
+        _player.AvatarState.IsConstrollingMachine = false;
     }
 
     void Update()
     {
         // Control management (gaining control of the machine or taking back control of PR)
-        if (_TakeControlOfMachineAction.WasPressedThisFrame() && !_player.AvatarState.IsConstrollingMachine) //interact & pas deja le controle
+        if (_TakeControlOfMachineAction.WasPressedThisFrame()) //interact
         {
-            if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching) //machine pas loin et pas en cours d'activation
-            {
-                _machineToActivate = _player.MachineToActivate;
-                _machineToActivate.Activate();
-                _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
-                _machinePossessed.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
-                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-                _player.AvatarState.IsConstrollingMachine = true;
-            }
+            TakeControlOfMachine();
         }
-        if (_player.AvatarState.IsConstrollingMachine)
+        if (_player.AvatarState.IsConstrollingMachine && _machinePossessed != null)
         {
             MoveMachine(_machinePossessed);
         }

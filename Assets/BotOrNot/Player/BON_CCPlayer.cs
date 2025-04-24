@@ -5,7 +5,6 @@ public class BON_CCPlayer : MonoBehaviour
     /*
      *  FIELDS
      */
-    private Rigidbody _rb;
 
     // state machine reference
     [SerializeField] BON_AvatarState _avatarState;
@@ -33,7 +32,6 @@ public class BON_CCPlayer : MonoBehaviour
      */
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         _instance = BON_GameManager.Instance();
         DontDestroyOnLoad(_instance);
 
@@ -52,6 +50,10 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsNearIOMInteractible = true;
             _machineToActivate = other.GetComponentInParent<BON_Interactive_Actionnables>();
+            if (_machineToActivate == null)
+            {
+                Debug.LogError("_machineToActivate est introuvable");
+            }
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
         {
@@ -61,12 +63,12 @@ public class BON_CCPlayer : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine 
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //end trigger with machine 
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
+        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //end trigger with elevator 
         {
             _avatarState.IsNearElevator = false;
         }

@@ -15,7 +15,7 @@ public class BON_VFXOnObjectEnable : MonoBehaviour
      * UNITY METHODS
      */
 
-    private void Start()
+    private void Awake()
     {
         _vfx = GetComponent<VisualEffect>();
     }

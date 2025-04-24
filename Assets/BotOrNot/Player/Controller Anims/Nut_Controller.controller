@@ -11,6 +11,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: DirectionChangedQuickly
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: StoppedAbruptly
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2345490684026552036}
   m_Solo: 0
@@ -301,16 +304,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6290304738191786003}
-    m_Position: {x: 260, y: 110, z: 0}
+    m_Position: {x: 230, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4715113101622820719}
-    m_Position: {x: 520, y: 110, z: 0}
+    m_Position: {x: 570, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2345490684026552036}
-    m_Position: {x: 400, y: -130, z: 0}
+    m_Position: {x: 400, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8361737669135074831}
-    m_Position: {x: 400, y: 30, z: 0}
+    m_Position: {x: 390, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6873330119741413042}
     m_Position: {x: 260, y: 210, z: 0}
