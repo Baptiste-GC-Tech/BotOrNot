@@ -200,7 +200,8 @@ public class BON_CablePR : MonoBehaviour
 
             _hookActif = null;
             */
-            
+            _player.AvatarState.HasCableOut = false;
+
             StartCoroutine(PRIVRetirerLigne());
 
             if (_hookActif != null)
@@ -210,7 +211,7 @@ public class BON_CablePR : MonoBehaviour
                 if (interactive != null)
                     interactive.Activate();
             }
-            _player.AvatarState.HasCableOut = false;
+            
             // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
             _hookActif = null;
             
