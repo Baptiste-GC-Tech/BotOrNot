@@ -59,7 +59,7 @@ public class BON_GameManager : MonoBehaviour
     public enum Scenes
     {
         //modify for future with trues scenes names
-        Menu,
+        MainMenu,
         Level1,
         Level2
     };
@@ -99,7 +99,7 @@ public class BON_GameManager : MonoBehaviour
         };
 
         //init la scene actuelle
-        _currentScene = Scenes.Menu;
+        _currentScene = Scenes.MainMenu;
     }
 
     public void ChangeScene(Scenes nextScene)
@@ -219,7 +219,7 @@ public class BON_GameManager : MonoBehaviour
         EnableCompPlayer(0); //enable PR
 
         //init la scene au Menu
-        _currentScene = Scenes.Menu;
+        _currentScene = Scenes.MainMenu;
 
         //init player
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
