@@ -14,6 +14,17 @@ public class BON_MovePR : MonoBehaviour
     public Vector3 _MovThisFrame;
     private Vector3 _prevMoveDir;
 
+    public Vector3 _WorldSpaceMoveDir;
+
+
+    public Vector3 _Velocity;
+    public Rigidbody Rb
+    { get { return _rb; } }
+    public Vector3 GroundNormalVect
+    { get { return _groundNormalVect; } }
+    public Vector3 MoveDir
+    { get { return _curMoveDir; } }
+
 
 
 
@@ -38,7 +49,7 @@ public class BON_MovePR : MonoBehaviour
     [Header("Speed")]
     [SerializeField] float _maxSpeed;
     [SerializeField, Range(0f, 1f)] float _rotationLerpSpeed = 0.025f;
-    private float _curSpeed;
+    public float _curSpeed;
     public float CurSpeed
     {
         get { return _curSpeed; }
@@ -57,7 +68,7 @@ public class BON_MovePR : MonoBehaviour
     {
         get { return _moveXAxisDir; }
     }
-    private Vector3 _curMoveDir;
+    public Vector3 _curMoveDir = new Vector3(1, 2, 3);
     private Vector3 _groundNormalVect;
     private CapsuleCollider _PRCollider;       // Used to scale relatively the ground check raycast
 
@@ -169,16 +180,20 @@ public class BON_MovePR : MonoBehaviour
         // Case of a flat ground : uses the forward direction instead of doing math
         if (Mathf.Approximately(_groundNormalVect.y, 1.0f))
         {
+            _WorldSpaceMoveDir = Vector3.right * _moveXAxisDir;
             _curMoveDir = Vector3.forward;
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
         {
             Vector3 crossBTerm = _moveXAxisDir == 1 ? Vector3.forward : Vector3.back;
-            Vector3 worldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
+            _WorldSpaceMoveDir = Vector3.Cross(_groundNormalVect, crossBTerm);
+            //Debug.Log(_groundNormalVect + " ^ " + crossBTerm + " = " + _WorldSpaceMoveDir);
             _curMoveDir.x = 0;
-            _curMoveDir.y = worldSpaceMoveDir.y;
-            _curMoveDir.z = worldSpaceMoveDir.x * _moveXAxisDir;
+            _curMoveDir.y = _WorldSpaceMoveDir.y;
+            _curMoveDir.z = _WorldSpaceMoveDir.x * _moveXAxisDir;
+
+            //Debug.Log("worldSpaceMoveDir : " + _WorldSpaceMoveDir + " | curMoveDir : " + _curMoveDir);
         }
 
         //Debug.Log("moveDirThisFrame : " + _curMoveDir);
@@ -341,25 +356,24 @@ public class BON_MovePR : MonoBehaviour
             _isBouncing = true;
             _bounceCount = 0;
         }
-        
-        UpdateState();
 
-        //print(_curSpeed);
+        UpdateState();
 
         /* Applies the movement, except if the cable is in use */
         if (!_player.AvatarState.HasCableOut)
         {
-            //Debug.Log("MovDir : " + _curMoveDir + ", Speed : " + _curSpeed);
-            Vector3 movementThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
-            _MovThisFrame = movementThisFrame;
-            movementThisFrame.x = 0.0f;     // Hard-coded constraint that prevent movement to the local left or right (Z-axis)
-            if (_player.transform.position.z != 0)
-            {
-                movementThisFrame.y = -_player.transform.position.z;
-            }
-            transform.Translate(movementThisFrame);
+            Vector3 worldMoveThisFrame = _WorldSpaceMoveDir * _curSpeed * Time.deltaTime;
+            Vector3 localMoveThisFrame = _curMoveDir * _curSpeed * Time.deltaTime;
+
+            _MovThisFrame = worldMoveThisFrame * 1000;
+
+            //transform.Translate(localMoveThisFrame, Space.Self);
+            transform.Translate(worldMoveThisFrame, Space.World);
+            //_rb.velocity = worldMoveThisFrame * 1000;
+
+            _Velocity = _rb.velocity;
         }
-        //Debug.Log("Movement this frame : " + movementThisFrame);
+        //Debug.Log("Movement this frame : " + localMoveThisFrame);
 
         //if (_prevMoveDir != _curMoveDir) Debug.Log("New moveDir : " + _curMoveDir);
         _prevMoveDir = _curMoveDir;
