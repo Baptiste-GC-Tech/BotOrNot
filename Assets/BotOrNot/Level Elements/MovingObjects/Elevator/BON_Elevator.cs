@@ -40,10 +40,8 @@ public class BON_Elevator : BON_Actionnable
     public override void On()
     {
         //disable the controls
-        foreach (var button in _buttonsInHUD)
-        {
-            button.interactable = false;
-        }
+        _levelHUD.GetComponentInChildren<BON_COMPJoystick>().ComponentToggle();
+        _levelHUD.GetComponentInChildren<BON_COMPPlayerButtons>().ComponentToggle();
         //if the elevator is not on the same floor as the actionable changes it's position
         if (_elevator.transform.position.y - 1 > gameObject.transform.position.y || _elevator.transform.position.y + 1 < gameObject.transform.position.y)
         {
@@ -59,10 +57,8 @@ public class BON_Elevator : BON_Actionnable
     public override void Off()
     {
         //enable the controls
-        foreach (var button in _buttonsInHUD)
-        {
-            button.interactable = true;
-        }
+        _levelHUD.GetComponentInChildren<BON_COMPJoystick>().ComponentToggle();
+        _levelHUD.GetComponentInChildren<BON_COMPPlayerButtons>().ComponentToggle();
     }
 
 
@@ -71,7 +67,6 @@ public class BON_Elevator : BON_Actionnable
      */
     void Start()
     {
-        _buttonsInHUD = _levelHUD.GetComponentsInChildren<Button>();
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>().gameObject;
         _isPlayerMoving = false;
         _isElevatorMoving = false;

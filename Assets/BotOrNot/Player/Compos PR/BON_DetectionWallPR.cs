@@ -13,7 +13,7 @@ public class BON_DetectionWallPR : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             _otherPos = other.ClosestPoint(transform.position); //contact point

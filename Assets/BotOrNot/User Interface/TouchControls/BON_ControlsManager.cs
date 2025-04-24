@@ -100,6 +100,16 @@ public class BON_ControlsManager : MonoBehaviour
         }
     }
 
+    public void Action1()
+    {
+        Debug.Log("Action1");
+    }
+
+    public void Action2()
+    {
+        Debug.Log("Action2");
+    }
+
 
     /*
      *  UNITY METHODS
