@@ -42,6 +42,7 @@ public class BON_DebugTool : MonoBehaviour
 
     public Vector2 InputValues;
     public Vector2 MoveMachineValue;
+    public Vector2 MoveValue;
     public float CurSpeed;
     public bool UseGravity;
     public Vector3 GroundNormalVect;
@@ -110,8 +111,9 @@ public class BON_DebugTool : MonoBehaviour
 
         // main Mouvements
         
+        InputValues = BON_GameManager.Instance().DirectionalInputValue;
         MoveMachineValue = Player.GetComponent<BON_MachineControllerPR>().MoveMachineValue;
-        InputValues = _CompMov.MoveInputValue;
+        MoveValue = _CompMov.MoveInputValue;
         CurSpeed = _CompMov.CurSpeed;
 
         UseGravity = Player.GetComponent<Rigidbody>().useGravity;
