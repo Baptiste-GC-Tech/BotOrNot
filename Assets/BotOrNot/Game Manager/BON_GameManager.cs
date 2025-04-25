@@ -11,7 +11,8 @@ public class BON_GameManager : MonoBehaviour
     *  FIELDS
     */
     // Input related
-    private InputAction _DirectionalInputAction;
+    public InputAction _PRMoveInputAction;
+    public InputAction _MachineInputAction;
     public Vector2 _directionalInputValue;
 
     // his instance
@@ -215,7 +216,8 @@ public class BON_GameManager : MonoBehaviour
     void Start()
     {
         // Input setup
-        _DirectionalInputAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _PRMoveInputAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _MachineInputAction = InputSystem.actions.FindAction("MachineControl/Move");
 
         //init player values
         _currentCharacterPlayed = 0; //PR play
@@ -242,7 +244,8 @@ public class BON_GameManager : MonoBehaviour
     void Update()
     {
         // Input PC
-        _directionalInputValue = _DirectionalInputAction.ReadValue<Vector2>();
+        _directionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
+        _directionalInputValue = _MachineInputAction.ReadValue<Vector2>();
 
         // Input Mobile 
         //_moveInputValue = _joystick.InputValues;
