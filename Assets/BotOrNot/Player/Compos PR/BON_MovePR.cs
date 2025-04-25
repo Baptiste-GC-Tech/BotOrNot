@@ -192,11 +192,8 @@ public class BON_MovePR : MonoBehaviour
             _curMoveDir.x = 0;
             _curMoveDir.y = _WorldSpaceMoveDir.y;
             _curMoveDir.z = _WorldSpaceMoveDir.x * _moveXAxisDir;
-
-            //Debug.Log("worldSpaceMoveDir : " + _WorldSpaceMoveDir + " | curMoveDir : " + _curMoveDir);
         }
 
-        //Debug.Log("moveDirThisFrame : " + _curMoveDir);
     }
 
     // Updates the ground's normal that PR is standing on
@@ -209,8 +206,6 @@ public class BON_MovePR : MonoBehaviour
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
         Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength);
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
-
-        //Debug.Log("_groundNormalVect : " + _groundNormalVect);
     }
 
     private void StopMove()

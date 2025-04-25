@@ -20,6 +20,8 @@ public class BON_Interactive_Actionnables : BON_Interactive
      */
     public override void Activate()
     {
+        //Debug.Log("Tryng to activate from GO " + gameObject.name);
+        
         foreach (var action in _actionnablesList)
         {
             action.Toggle();

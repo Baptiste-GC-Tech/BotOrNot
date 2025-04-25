@@ -50,15 +50,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfca2ae9c1af5e47931c939e3f1ab28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  otherTarget: {fileID: 0}
-  followTarget: {fileID: 0}
-  offsetX: -6
-  offsetY: 0
-  offsetZ: 9
-  followLerpSpeed: 5
-  offsetLerpSpeed: 5
-  currentMode: 3
+  _currentMode: 3
+  _player: {fileID: 0}
+  _otherTarget: {fileID: 0}
+  _followTarget: {fileID: 0}
+  _offsetX: 6
+  _offsetY: 0
+  _offsetZ: 7
+  _followLerpSpeed: 1.5
+  _offsetLerpSpeed: 1.5
 --- !u!114 &7657352051030867424
 MonoBehaviour:
   m_ObjectHideFlags: 0
