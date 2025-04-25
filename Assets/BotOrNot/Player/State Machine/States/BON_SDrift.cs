@@ -5,7 +5,7 @@ public class BON_SDrift : BON_State
     public override void Enter()
     {
         //Debug.LogWarning("Enterring the Drift");
-        _player.AvatarState.IsDrifting = false;
+        _player.AvatarState.IsDrifting = true;
     }
 
     public override void Exit()

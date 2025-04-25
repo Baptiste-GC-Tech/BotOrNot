@@ -54,6 +54,16 @@ public class BON_AvatarState : ScriptableObject
         set { _isAgainstWallRight = value; }
     }
 
+
+    // New boolean to avoid some unwanted transitions
+    bool _isIdling = true;
+    public bool IsIdling
+    {
+        get { return _isIdling; }
+        set { _isIdling = value; }
+    }
+
+
     bool _isMovingByPlayer = false; //1 if move, 0 if idle
     public bool IsMovingByPlayer //for state
     {

@@ -251,6 +251,7 @@ public class BON_MovePR : MonoBehaviour
 
     void Update()
     {
+
         // We do this first since it's always good data to have
         UpdateGroundNormal();
 
