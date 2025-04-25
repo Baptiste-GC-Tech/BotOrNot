@@ -80,6 +80,8 @@ public class BON_CameraFollowMode : MonoBehaviour
     private Vector3 PRIVGetOffsetFromDirection()
     {
         float x = _currentDirection == Direction.Left ? -_offsetX : _offsetX;
+        if (_currentDirection == 0f)
+            return new Vector3(0, _offsetY, _offsetZ);
         return new Vector3(x, _offsetY, _offsetZ);
     }
 
@@ -192,5 +194,7 @@ public class BON_CameraFollowMode : MonoBehaviour
             _currentDirection = Direction.Left;
         else if (moveValue.x == -1)
             _currentDirection = Direction.Right;
+        else if (moveValue.x == 0)
+            _currentDirection = Direction.None;
     }
 }
