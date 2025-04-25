@@ -60,6 +60,8 @@ public class BON_GameManager : MonoBehaviour
         set { _isSwitching = value; }
     }
 
+    private BON_COMPJoystick _joystick;
+
     public enum Scenes
     {
         //modify for future with trues scenes names
@@ -235,6 +237,8 @@ public class BON_GameManager : MonoBehaviour
 
         //init player
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
+        _joystick = GameObject.FindFirstObjectByType<BON_COMPJoystick>();
+
 
         //Lancer la scene du level1
         //ChangeScene(Scenes.Level1);
@@ -255,6 +259,6 @@ public class BON_GameManager : MonoBehaviour
         }
 
         // Input Mobile 
-        //_moveInputValue = _joystick.InputValues;
+        DirectionalInputValue = _joystick.InputValues;
     }
 }

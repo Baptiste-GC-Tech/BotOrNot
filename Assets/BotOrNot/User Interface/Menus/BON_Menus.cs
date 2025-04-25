@@ -110,6 +110,7 @@ public class BON_Menus : MonoBehaviour
 
     public void PMQuitGame()
     {
+        BON_GameManager.Instance().UnpauseGame();
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
@@ -127,6 +128,12 @@ public class BON_Menus : MonoBehaviour
         BON_GameManager.Instance().UnpauseGame();
     }
 
+    public void PMResetScene()
+    {
+        BON_GameManager.Instance().UnpauseGame();
+        SceneManager.LoadScene("Level1");
+    }
+
     private void PRIVSMUpdateSliders()
     {
         foreach (Transform child in transform)
@@ -135,11 +142,8 @@ public class BON_Menus : MonoBehaviour
 
             for (int i = 0; i < children.Length; i++)
             {
-                Debug.Log("Je change " + children[i].name);
                 AudioMixer.GetFloat(children[i].name, out float value);
-                Debug.Log(value);
                 children[i].value = Mathf.Pow(value, 10);
-                Debug.Log(children[i].value);
             }
         }   
     }
