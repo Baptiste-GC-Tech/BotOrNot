@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3090791801858967122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HalfPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7668849769677393466}
   - component: {fileID: 7865616235797475971}
   - component: {fileID: 2149423586722514704}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: L1_deco_cube_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
