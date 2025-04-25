@@ -36,7 +36,6 @@ public class BON_MovePR : MonoBehaviour
     private Rigidbody _rb;
 
     /* Input related */
-    private InputAction _MoveAction;
     [SerializeField] Canvas _canvas;    // Used only in Start() --> This should go away
     private BON_COMPJoystick _joystick;
     private Vector2 _moveInputValue;
@@ -232,7 +231,6 @@ public class BON_MovePR : MonoBehaviour
      */
     void Start()
     {
-        _MoveAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
         _joystick = _canvas.GetComponentInChildren<BON_COMPJoystick>();
         _rb = GetComponent<Rigidbody>();
         _PRCollider = GetComponent<CapsuleCollider>();
@@ -258,8 +256,7 @@ public class BON_MovePR : MonoBehaviour
         /* Handles the input */
         if (_player.AvatarState.IsGrounded)
         {
-            //_moveInputValue = _MoveAction.ReadValue<Vector2>(); //input pc
-            _moveInputValue = _joystick.InputValues; //input mobile 
+            _moveInputValue = BON_GameManager.Instance()._directionalInputValue;
 
             if (_justChangedGrounded == true)
             {

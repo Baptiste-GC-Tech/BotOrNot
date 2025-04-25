@@ -111,7 +111,7 @@ public class BON_DebugTool : MonoBehaviour
         // main Mouvements
         
         MoveMachineValue = Player.GetComponent<BON_MachineControllerPR>().MoveMachineValue;
-        InputValues = _CompMov.MoveInputValue;
+        InputValues = BON_GameManager.Instance()._directionalInputValue;
         CurSpeed = _CompMov.CurSpeed;
 
         UseGravity = Player.GetComponent<Rigidbody>().useGravity;

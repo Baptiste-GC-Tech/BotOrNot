@@ -10,8 +10,11 @@ public class BON_GameManager : MonoBehaviour
     /*
     *  FIELDS
     */
-  
-    //his instance
+    // Input related
+    private InputAction _DirectionalInputAction;
+    public Vector2 _directionalInputValue;
+
+    // his instance
     private static BON_GameManager _gameManager;
 
     // inventory script reference
@@ -160,6 +163,7 @@ public class BON_GameManager : MonoBehaviour
             {
                 if (_componentsAvatar[CharacterStopPlaying][i].enabled)
                 {
+                    Debug.Log("Disabling " + _componentsAvatar[CharacterStopPlaying][i].GetType().ToString());
                     _componentsAvatar[CharacterStopPlaying][i].enabled = false;
                 }
             }
@@ -201,13 +205,19 @@ public class BON_GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
+
     /*
      *  UNITY METHODS
      */
 
+
     // Start is called before the first frame update
     void Start()
-    {    //init player values
+    {
+        // Input setup
+        _DirectionalInputAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+
+        //init player values
         _currentCharacterPlayed = 0; //PR play
         _lastCharacterPlayed = _currentCharacterPlayed;
         _componentsAvatar = new();
@@ -228,9 +238,13 @@ public class BON_GameManager : MonoBehaviour
         //ChangeScene(Scenes.Level1);
     }
 
-    // Update is called once per frame
+    // Used for input pulling
     void Update()
     {
-        //print("state = "+_currentState);
+        // Input PC
+        _directionalInputValue = _DirectionalInputAction.ReadValue<Vector2>();
+
+        // Input Mobile 
+        //_moveInputValue = _joystick.InputValues;
     }
 }

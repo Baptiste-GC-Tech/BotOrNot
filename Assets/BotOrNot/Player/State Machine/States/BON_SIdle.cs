@@ -3,14 +3,12 @@ using System.Diagnostics;
 public class BON_SIdle : BON_State
 {
     public override void Enter()
-    {
-        UnityEngine.Debug.Log("Entering Idle state...");    
+    {  
        _player.AvatarState.IsIdling = true;
     }
 
     public override void Exit()
     {
-        UnityEngine.Debug.Log("Exiting Idle state...");
         _player.AvatarState.IsIdling = false;
     }
 
