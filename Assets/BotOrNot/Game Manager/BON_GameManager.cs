@@ -10,8 +10,12 @@ public class BON_GameManager : MonoBehaviour
     /*
     *  FIELDS
     */
-  
-    //his instance
+    // Input related
+    private InputAction _PRMoveInputAction;
+    private InputAction _MachineInputAction;
+    public Vector2 DirectionalInputValue;
+
+    // his instance
     private static BON_GameManager _gameManager;
 
     // inventory script reference
@@ -99,7 +103,7 @@ public class BON_GameManager : MonoBehaviour
         };
 
         //init la scene actuelle
-        _currentScene = Scenes.MainMenu;
+        //_currentScene = Scenes.MainMenu;
     }
 
     public void ChangeScene(Scenes nextScene)
@@ -160,6 +164,7 @@ public class BON_GameManager : MonoBehaviour
             {
                 if (_componentsAvatar[CharacterStopPlaying][i].enabled)
                 {
+                    Debug.Log("Disabling " + _componentsAvatar[CharacterStopPlaying][i].GetType().ToString());
                     _componentsAvatar[CharacterStopPlaying][i].enabled = false;
                 }
             }
@@ -201,13 +206,20 @@ public class BON_GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
+
     /*
      *  UNITY METHODS
      */
 
+
     // Start is called before the first frame update
     void Start()
-    {    //init player values
+    {
+        // Input setup
+        _PRMoveInputAction = InputSystem.actions.FindAction("ActionsMapPR/Move");
+        _MachineInputAction = InputSystem.actions.FindAction("MachineControl/Move");
+
+        //init player values
         _currentCharacterPlayed = 0; //PR play
         _lastCharacterPlayed = _currentCharacterPlayed;
         _componentsAvatar = new();
@@ -228,9 +240,21 @@ public class BON_GameManager : MonoBehaviour
         //ChangeScene(Scenes.Level1);
     }
 
-    // Update is called once per frame
+    // Used for input pulling
     void Update()
     {
-        //print("state = "+_currentState);
+        // Input PC
+
+        if (_player.AvatarState.CurrentState == BON_AvatarState.State.ControllingMachine) //read input values for machine
+        {
+            DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+        }
+        else //read input values for Move
+        {
+            DirectionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
+        }
+
+        // Input Mobile 
+        //_moveInputValue = _joystick.InputValues;
     }
 }

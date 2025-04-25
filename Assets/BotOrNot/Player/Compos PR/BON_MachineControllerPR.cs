@@ -42,7 +42,8 @@ public class BON_MachineControllerPR : MonoBehaviour
     {
         // Reads input values
         //_moveMachineValue = _ControlMachineAction.ReadValue<Vector2>(); //input pc
-        _moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
+        //_moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
+        _moveMachineValue = BON_GameManager.Instance().DirectionalInputValue;
 
         _machine.ProcessInput(_moveMachineValue);
     }
@@ -115,7 +116,6 @@ public class BON_MachineControllerPR : MonoBehaviour
     void Update()
     {
         // Control management (gaining control of the machine or taking back control of PR)
-
         if (_TakeControlOfMachineAction.WasPressedThisFrame() || _QuitControlOfMachineAction.WasReleasedThisFrame()) // pc only because inputAction
         {
             ActivateMachine();
