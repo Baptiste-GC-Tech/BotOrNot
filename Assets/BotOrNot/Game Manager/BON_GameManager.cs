@@ -258,6 +258,6 @@ public class BON_GameManager : MonoBehaviour
         }
 
         // Input Mobile 
-        DirectionalInputValue = _joystick.InputValues;
+        //DirectionalInputValue = _joystick.InputValues;
     }
 }
