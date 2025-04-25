@@ -6,6 +6,9 @@ public class BON_CCPlayer : MonoBehaviour
      *  FIELDS
      */
 
+    // Used in a dirty hack
+    private Rigidbody _rb;
+
     // state machine reference
     [SerializeField] BON_AvatarState _avatarState;
     public BON_AvatarState AvatarState
@@ -32,6 +35,8 @@ public class BON_CCPlayer : MonoBehaviour
      */
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
+
         _instance = BON_GameManager.Instance();
         DontDestroyOnLoad(_instance);
 
@@ -41,6 +46,14 @@ public class BON_CCPlayer : MonoBehaviour
 
     void Update()
     {
+        // Dirty hack to stop sliding caused by the rb sometimes
+        if (_avatarState.IsGrounded)
+        {
+            Vector3 newVeloc = _rb.velocity;
+            newVeloc.x = 0.0f;
+            _rb.velocity = newVeloc;
+        }
+
         //print(_avatarState.CurrentState);
         _avatarState.UpdateState();
     }
