@@ -62,6 +62,8 @@ public class BON_CablePR : MonoBehaviour
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
+
+        _player.AvatarState.HasCableOut = false;
     }
 
     private void Update()
@@ -84,30 +86,21 @@ public class BON_CablePR : MonoBehaviour
         {
             if (_hookActif != null)
             {
-                // Verrouille XZ, garde Y stable pour éviter les sauts verticaux
                 Vector3 anchorPos = _hookActif.position;
-                anchorPos.y = _joint.connectedAnchor.y; // on ne change pas Y ici
                 _joint.connectedAnchor = anchorPos;
-
-                // Met à jour maxDistance selon la distance Y uniquement
-                // float verticalDistance = Mathf.Abs(transform.position.y - _joint.connectedAnchor.y);
-                //_joint.maxDistance = Mathf.Max(0.2f, verticalDistance); // évite les valeurs trop petites
             }
-
 
             float lengthChange = 0f;
 
             if (_cablemoveUp?.ReadValue<float>() > 0.5f)
             {
-                if (_joint.maxDistance > 0.2f)
+                if (_joint.maxDistance > 0.5f)
                 {
                     lengthChange -= _cableLengthSpeed * Time.deltaTime;
                     Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                    _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
+                    _rb.AddForce(direction * (_springForce * 0.75f), ForceMode.Acceleration);
                 }
             }
-
-
             else if (_cablemoveDown?.ReadValue<float>() > 0.5f)
             {
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
@@ -115,7 +108,7 @@ public class BON_CablePR : MonoBehaviour
                 _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
             }
 
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.2f, _rayDistance);
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.5f, _rayDistance);
 
 
             float swingInput = 0f;
