@@ -88,12 +88,10 @@ public class BON_CablePR : MonoBehaviour
 
             if (input.y > 0.5f)
             {
-                if (_joint.maxDistance > 0.5f)
-                {
-                    lengthChange -= _cableLengthSpeed * Time.deltaTime;
-                    Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                    _rb.AddForce(direction * (_springForce * 0.75f), ForceMode.Acceleration);
-                }
+                lengthChange -= _cableLengthSpeed * Time.deltaTime;
+                Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
+                _rb.AddForce(direction * (_springForce * 0.75f), ForceMode.Acceleration);
+
             }
             else if (input.y < -0.5f)
             {

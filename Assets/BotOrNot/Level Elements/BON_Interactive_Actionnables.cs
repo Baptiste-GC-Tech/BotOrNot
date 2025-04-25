@@ -7,13 +7,9 @@ public class BON_Interactive_Actionnables : BON_Interactive
     /*
      *  FIELDS
      */
-    [SerializeField]
-    protected List<BON_Actionnable> _actionnablesList;
-
+    [SerializeField] protected List<BON_Actionnable> _actionnablesList;
     public List<BON_Actionnable> ActionnablesList
-    {
-        get { return _actionnablesList; }
-    }
+    { get { return _actionnablesList; } }
 
     /*
      *  CLASS METHODS

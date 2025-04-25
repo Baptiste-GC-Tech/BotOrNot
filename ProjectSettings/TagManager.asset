@@ -10,6 +10,7 @@ TagManager:
   - Gravely Floor
   - Dusty & Graely Floor
   - IgnoreWallColl
+  - TriggerElevator
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Hook
   - TriggerZone
   - TriggerMachine
-  - TriggerElevator
+  - 
   - 
   - 
   - 

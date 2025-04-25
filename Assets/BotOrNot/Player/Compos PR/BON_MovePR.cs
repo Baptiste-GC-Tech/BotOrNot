@@ -402,6 +402,10 @@ public class BON_MovePR : MonoBehaviour
                 }
             }
         }
+        if (collision.gameObject.tag == "TriggerElevator") //trigger with elevator 
+        {
+            _player.AvatarState.IsNearElevator = true;
+        }
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
         {
@@ -454,6 +458,10 @@ public class BON_MovePR : MonoBehaviour
         {
             _player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
+        }
+        if (collision.gameObject.tag == "TriggerElevator") //end trigger with elevator 
+        {
+            _player.AvatarState.IsNearElevator = false;
         }
         Tag = null;
         Layer = null;

@@ -14,11 +14,7 @@ public class BON_SMoving : BON_State
 
     public override void UpState()
     {
-        if (_player.AvatarState.IsInElevator)
-        {
-            _player.AvatarState.ChangeState(BON_AvatarState.State.Elevator);
-        }
-        else if (_player.AvatarState.IsDrifting)
+        if (_player.AvatarState.IsDrifting)
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Drift);
         }

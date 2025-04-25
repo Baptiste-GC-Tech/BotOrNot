@@ -34,6 +34,7 @@ public class BON_DebugTool : MonoBehaviour
     public bool IsConstrollingMachine;
     public bool IsNearIOMInteractible;
     public bool IsSwitching;
+    public bool IsNearElevator;
 
     [Space]
     [Header("MOUVEMENTS")]
@@ -52,6 +53,7 @@ public class BON_DebugTool : MonoBehaviour
 
     [Space(5)]
     [Header("Drift")]
+    public bool IsDrifting;
     public float TimeSinceLastMove;
     public float DriftDuration;
     public float DriftAcceleration;
@@ -108,9 +110,10 @@ public class BON_DebugTool : MonoBehaviour
         IsConstrollingMachine = AvatarState.IsConstrollingMachine;
         IsNearIOMInteractible = AvatarState.IsNearIOMInteractible;
         IsSwitching = BON_GameManager.Instance().IsSwitching;
+        IsNearElevator = AvatarState.IsNearElevator;
 
         // main Mouvements
-        
+
         InputValues = BON_GameManager.Instance().DirectionalInputValue;
         MoveMachineValue = Player.GetComponent<BON_MachineControllerPR>().MoveMachineValue;
         MoveValue = _CompMov.MoveInputValue;
@@ -118,7 +121,8 @@ public class BON_DebugTool : MonoBehaviour
 
         UseGravity = Player.GetComponent<Rigidbody>().useGravity;
 
-        ////////drift
+        //drift
+        IsDrifting = Player.AvatarState.IsDrifting;
         //////TimeSinceLastMove = _CompMov.TimeSinceLastMove;
         //////DriftDuration = _CompMov.DriftDuration;
         //////DriftAcceleration = _CompMov.DriftAcceleration;
