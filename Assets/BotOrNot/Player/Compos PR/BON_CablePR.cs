@@ -41,10 +41,6 @@ public class BON_CablePR : MonoBehaviour
     private Transform _hookActif;
 
     private InputAction _clickAction;
-    private InputAction _cablemoveDown;
-    private InputAction _cablemoveUp;
-    private InputAction _cablemoveLeft;
-    private InputAction _cablemoveRight;
 
     private SpringJoint _joint;
     private ParticleSystem _fxhooked;
@@ -53,19 +49,18 @@ public class BON_CablePR : MonoBehaviour
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
-        _cablemoveDown = InputSystem.actions.FindAction("ActionsMapPR/CablemoveDown");
-        _cablemoveUp = InputSystem.actions.FindAction("ActionsMapPR/CablemoveUp");
-        _cablemoveLeft = InputSystem.actions.FindAction("ActionsMapPR/CablemoveLeft");
-        _cablemoveRight = InputSystem.actions.FindAction("ActionsMapPR/CablemoveRight");
 
         _rb = GetComponent<Rigidbody>();
 
         if (_clickAction == null)
             Debug.LogError("L'action 'ActionsMapPR/Cable' est introuvable.");
+
+        _player.AvatarState.HasCableOut = false;
     }
 
     private void Update()
     {
+        Vector2 input = BON_GameManager.Instance().DirectionalInputValue;
 
         if (_clickAction != null && _clickAction.triggered)
         {
@@ -82,45 +77,32 @@ public class BON_CablePR : MonoBehaviour
 
         if (_joint != null)
         {
+            
+
             if (_hookActif != null)
             {
-                // Verrouille XZ, garde Y stable pour éviter les sauts verticaux
-                Vector3 anchorPos = _hookActif.position;
-                anchorPos.y = _joint.connectedAnchor.y; // on ne change pas Y ici
-                _joint.connectedAnchor = anchorPos;
-
-                // Met à jour maxDistance selon la distance Y uniquement
-                // float verticalDistance = Mathf.Abs(transform.position.y - _joint.connectedAnchor.y);
-                //_joint.maxDistance = Mathf.Max(0.2f, verticalDistance); // évite les valeurs trop petites
+                _joint.connectedAnchor = _hookActif.position;
             }
-
 
             float lengthChange = 0f;
 
-            if (_cablemoveUp?.ReadValue<float>() > 0.5f)
+            if (input.y > 0.5f)
             {
-                if (_joint.maxDistance > 0.2f)
-                {
-                    lengthChange -= _cableLengthSpeed * Time.deltaTime;
-                    Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                    _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
-                }
+                lengthChange -= _cableLengthSpeed * Time.deltaTime;
+                Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
+                _rb.AddForce(direction * (_springForce * 0.75f), ForceMode.Acceleration);
+
             }
-
-
-            else if (_cablemoveDown?.ReadValue<float>() > 0.5f)
+            else if (input.y < -0.5f)
             {
                 lengthChange += _cableLengthSpeed * Time.deltaTime;
                 Vector3 direction = (transform.position - _joint.connectedAnchor).normalized;
                 _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
             }
 
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.2f, _rayDistance);
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.5f, _rayDistance);
 
-
-            float swingInput = 0f;
-            if (_cablemoveLeft != null && _cablemoveLeft.IsPressed()) swingInput = -1f;
-            if (_cablemoveRight != null && _cablemoveRight.IsPressed()) swingInput = 1f;
+            float swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
 
             Vector3 toAnchor = _joint.connectedAnchor - transform.position;
             Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
@@ -138,12 +120,13 @@ public class BON_CablePR : MonoBehaviour
             }
 
             float currentDistance = Vector3.Distance(transform.position, _joint.connectedAnchor);
-            if (currentDistance > _joint.maxDistance + 0.1f) // seuil de tolérance
+            if (currentDistance > _joint.maxDistance + 0.1f)
             {
                 Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
                 _rb.AddForce(direction * (_springForce * 2f), ForceMode.Acceleration);
             }
         }
+
     }
 
 
@@ -181,30 +164,6 @@ public class BON_CablePR : MonoBehaviour
         }
         else
         {
-            // _fxhooked.Stop();
-            /*
-            StartCoroutine(PRIVRetirerLigne());
-
-            if (_hookActif != null)
-            {
-                // Désactive FX
-                Transform fx = _hookActif.Find("FX - Hooked Particle System");
-                if (fx != null) fx.gameObject.SetActive(false);
- 
-                _targetPoint = _hookActif.position;
-
-                _player.AvatarState.HasCableOut = false;
-                
-
-                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
-                if (interactive != null)
-                    interactive.Activate();
-
-                _hookActif = null;
-            }
-
-            _hookActif = null;
-            */
             _player.AvatarState.HasCableOut = false;
 
             StartCoroutine(PRIVRetirerLigne());
@@ -221,8 +180,6 @@ public class BON_CablePR : MonoBehaviour
                     }
                 }
             }
-            
-            // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
             _hookActif = null;
             
         }

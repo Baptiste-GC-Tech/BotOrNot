@@ -14,7 +14,7 @@ public class BON_SIdle : BON_State
 
     public override void UpState()
     {
-        if (_player.AvatarState.IsInElevator)
+        if (_player.AvatarState.IsNearElevator && !_player.AvatarState.IsMovingByPlayer) //sur l'elevator et pas bouger
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Elevator);
         }
