@@ -57,7 +57,7 @@ MonoBehaviour:
   _offsetX: 6
   _offsetY: 0
   _offsetZ: 7
-  _followLerpSpeed: 1.5
+  _followLerpSpeed: 3.5
   _offsetLerpSpeed: 1.5
 --- !u!114 &7657352051030867424
 MonoBehaviour:
