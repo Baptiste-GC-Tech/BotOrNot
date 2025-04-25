@@ -21,8 +21,6 @@ public class BON_GameManager : MonoBehaviour
     // inventory script reference
     [SerializeField] public BON_Inventory Inventory;
 
-    private BON_COMPJoystick _joystick;
-
     // player reference
     private BON_CCPlayer _player;
 
@@ -61,6 +59,8 @@ public class BON_GameManager : MonoBehaviour
         get { return _isSwitching; }
         set { _isSwitching = value; }
     }
+
+    private BON_COMPJoystick _joystick;
 
     public enum Scenes
     {
@@ -238,6 +238,7 @@ public class BON_GameManager : MonoBehaviour
         //init player
         _player = GameObject.FindFirstObjectByType<BON_CCPlayer>();
         _joystick = GameObject.FindFirstObjectByType<BON_COMPJoystick>();
+
 
         //Lancer la scene du level1
         //ChangeScene(Scenes.Level1);
