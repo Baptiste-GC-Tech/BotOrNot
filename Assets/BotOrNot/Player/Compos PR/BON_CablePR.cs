@@ -169,9 +169,14 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
 
-                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
+                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
                 if (interactive != null)
-                    interactive.Activate();
+                {
+                    if (interactive.ActionnablesList != null)
+                    {
+                        interactive.Activate();
+                    }
+                }
             }
         }
         else
@@ -207,9 +212,14 @@ public class BON_CablePR : MonoBehaviour
             if (_hookActif != null)
             {
                 _targetPoint = _hookActif.position;
-                BON_Interactive interactive = _hookActif.GetComponent<BON_Interactive>();
+                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
                 if (interactive != null)
-                    interactive.Activate();
+                {
+                    if (interactive.ActionnablesList != null)
+                    {
+                        interactive.Activate();
+                    }
+                }
             }
             
             // if (_moveScript != null ) _moveScript.enabled = true;//&& _player.AvatarState.IsGrounded
