@@ -1,13 +1,17 @@
+using System.Diagnostics;
+
 public class BON_SIdle : BON_State
 {
     public override void Enter()
     {
-       //set center cam
+        UnityEngine.Debug.Log("Entering Idle state...");    
+       _player.AvatarState.IsIdling = true;
     }
 
     public override void Exit()
     {
-        //reset normal cam
+        UnityEngine.Debug.Log("Exiting Idle state...");
+        _player.AvatarState.IsIdling = false;
     }
 
     public override void UpState()
@@ -16,7 +20,7 @@ public class BON_SIdle : BON_State
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.Elevator);
         }
-        else if (_player.AvatarState.HasCableOut && BON_GameManager.Instance().IsPlayingNut) //si on joue le petit robot qui lance le cable-> etat 
+        else if (_player.AvatarState.HasCableOut && BON_GameManager.Instance().IsPlayingNut) //si on joue le petit robot qui lance le cable -> etat
         {
             _player.AvatarState.ChangeState(BON_AvatarState.State.ThrowingCable);
         }

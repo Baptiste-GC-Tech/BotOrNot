@@ -49,7 +49,7 @@ public class BON_MachineControllerPR : MonoBehaviour
 
     public void ActivateMachine() //button
     {
-        if (!_player.AvatarState.IsConstrollingMachine) //si machine pas controlé -> on la controle
+        if (!_player.AvatarState.IsConstrollingMachine) //si machine pas encore controlé -> on la controle
         {
             TakeControlOfMachine();
         }
@@ -62,9 +62,14 @@ public class BON_MachineControllerPR : MonoBehaviour
     public void TakeControlOfMachine()
     {
         //si machine pas loin et pas deja en cours d'activation ou changement de perso
-        if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching)
+        if (_player.AvatarState.IsNearIOMInteractible && !BON_GameManager.Instance().IsSwitching && _player.AvatarState.IsIdling)
         {
+            Debug.Log("Taking control of a machine");
+
             _machineToActivate = _player.MachineToActivate;
+
+            if (_machineToActivate == null) return;
+
             _machineToActivate.Activate();
             _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
             _machinePossessedRb = _machinePossessed.GetComponent<Rigidbody>();
