@@ -18,7 +18,7 @@ public class BON_Elevator : BON_Actionnable
 
     [SerializeField] GameObject _elevator;                  //Gamrobject of the elevator
     [SerializeField] GameObject _elevatorPosition;          //The position that the player needs to reach to be on the elevator
-    [SerializeField] List<GameObject> _outTargetPosition;   //The positions that the player needs to reach to get out of the elevator 
+    [SerializeField] GameObject _outTargetPosition;   //The positions that the player needs to reach to get out of the elevator 
     [SerializeField] Canvas _levelHUD;                      //A reference to the canvas to be able to disable the controls of the player
     [SerializeField] float _playerSpeed;                    //Refecrence to the player speed (right now it's set in the editor but might need to get the speed from the player's script)         
     Button[] _buttonsInHUD;                                 //Reference to the players button that we get from _levelHUD
@@ -150,16 +150,10 @@ public class BON_Elevator : BON_Actionnable
         {
             float step = _playerSpeed * Time.deltaTime;
             //if the elevator cycling of the elevator is false (i.e. the elevator is up), player moves to the second location (count = 1)
-            int count = 1;
-            //if the elevator cycling of the elevator is true (i.e. the elevator is down), player moves to the first location (count = 0)
-            if (_elevator.GetComponent<BON_MovObj_ListBased>().IsCyclingPositive)
-            {
-                count = 0;
-            }
-            _player.transform.eulerAngles = (_player.transform.position.x > _outTargetPosition[count].transform.position.x) ? new Vector3(0, -90, 0) : new Vector3(0, 90, 0);
+            _player.transform.eulerAngles = (_player.transform.position.x > _outTargetPosition.transform.position.x) ? new Vector3(0, -90, 0) : new Vector3(0, 90, 0);
             //if the player is close to the final postion, stops their motion and changes the status of the Bon_Elevator)
-            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition[count].transform.position, step);
-            if (Vector3.Distance(_player.transform.position, _outTargetPosition[count].transform.position) < 0.5f)
+            _player.transform.position = Vector3.MoveTowards(_player.transform.position, _outTargetPosition.transform.position, step);
+            if (Vector3.Distance(_player.transform.position, _outTargetPosition.transform.position) < 0.5f)
             {
                 _IsMovingByPlayerOut = false;
                 _elevatorStatus = false;
