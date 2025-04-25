@@ -26,6 +26,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     private bool _isCollideRight;
 
     private Rigidbody _rigidbody;
+    private Collider _collider;
 
     /*
      *  CLASS METHODS
@@ -142,6 +143,7 @@ public class BON_FreeMovementCrane : BON_Controllable
         _isCollideLeft = false;
         _isCollideRight = false;
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
     }
 
     private void FixedUpdate()
@@ -160,8 +162,8 @@ public class BON_FreeMovementCrane : BON_Controllable
 
             foreach (Vector4 Box in _boundaries)
             {
-                if (Box[0] <= nextPos.x && nextPos.x <= Box[1] &&
-                    Box[2] <= nextPos.y && nextPos.y <= Box[3])
+                if (Box[0] <= nextPos.x - _collider.bounds.extents.x && nextPos.x + _collider.bounds.extents.x <= Box[1] &&
+                    Box[2] <= nextPos.y - _collider.bounds.extents.y && nextPos.y + _collider.bounds.extents.y <= Box[3])
                 {
                     isInsideBounds = true;
                     break;
@@ -205,14 +207,21 @@ public class BON_FreeMovementCrane : BON_Controllable
                 Vector3 normal = contact.normal;
 
                 if (normal.y > 0.5f)
+                {
                     _isCollideDown = true;
+                }
                 else if (normal.y < -0.5f)
+                {
                     _isCollideUp = true;
-
+                }
                 if (normal.x > 0.5f)
+                {
                     _isCollideLeft = true;
+                }
                 else if (normal.x < -0.5f)
+                {
                     _isCollideRight = true;
+                }
             }
         }
     }

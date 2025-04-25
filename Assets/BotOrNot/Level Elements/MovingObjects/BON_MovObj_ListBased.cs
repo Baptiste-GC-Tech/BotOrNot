@@ -22,6 +22,8 @@ public class BON_MovObj_ListBased : BON_Actionnable
     protected bool _looping = false;
     [SerializeField]
     protected bool _isCyclingPositive = true;
+    [SerializeField]
+    protected bool _onlyRotation = false;
 
     protected int _nextNodeIndex = 0;
     protected int _currentNodeIndex;
@@ -113,19 +115,38 @@ public class BON_MovObj_ListBased : BON_Actionnable
             return;
         }
 
-        float oneSpeed = _moveSpeed * Time.deltaTime;
-
-        if (oneSpeed >= (_transformsList[_nextNodeIndex].position - transform.position).magnitude)
+        if (_onlyRotation)
         {
-            transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
-            if (_isCyclingPositive) NextNodeIndex++;
-            else NextNodeIndex--;
+            float oneTurnSpeed = _moveSpeed * Time.deltaTime;
+
+            if ((_transformsList[_nextNodeIndex].rotation.eulerAngles - transform.rotation.eulerAngles).magnitude <=
+                (_transformsList[_nextNodeIndex].rotation.eulerAngles - (transform.rotation.eulerAngles + _currentRotation * oneTurnSpeed)).magnitude)
+            {
+                transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
+                if (_isCyclingPositive) NextNodeIndex++;
+                else NextNodeIndex--;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + _currentRotation * oneTurnSpeed);
+            }
+
         }
         else
         {
-            float movementFraction = oneSpeed / _currentTotalDistance;
-            transform.position += _currentDirection * oneSpeed;
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + _currentRotation * movementFraction);
+            float oneSpeed = _moveSpeed * Time.deltaTime;
+            if (oneSpeed >= (_transformsList[_nextNodeIndex].position - transform.position).magnitude)
+            {
+                transform.SetPositionAndRotation(_transformsList[_nextNodeIndex].position, _transformsList[_nextNodeIndex].rotation);
+                if (_isCyclingPositive) NextNodeIndex++;
+                else NextNodeIndex--;
+            }
+            else
+            {
+                float movementFraction = oneSpeed / _currentTotalDistance;
+                transform.position += _currentDirection * oneSpeed;
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + _currentRotation * movementFraction);
+            }
         }
     }
 
