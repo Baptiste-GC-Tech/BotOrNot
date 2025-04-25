@@ -41,8 +41,8 @@ public class BON_MachineControllerPR : MonoBehaviour
     public void MoveMachine(BON_Controllable _machine)
     {
         // Reads input values
-        _moveMachineValue = _ControlMachineAction.ReadValue<Vector2>(); //input pc
-        //_moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
+        //_moveMachineValue = _ControlMachineAction.ReadValue<Vector2>(); //input pc
+        _moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
 
         _machine.ProcessInput(_moveMachineValue);
     }
@@ -72,9 +72,12 @@ public class BON_MachineControllerPR : MonoBehaviour
             {
                 Debug.LogError("_machinePossessedRb introuvable");
             }
-            _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
-            _player.AvatarState.IsConstrollingMachine = true;
+            else
+            {
+                _machinePossessedRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                StartCoroutine(BON_GameManager.Instance().CooldownSwitchControl());
+                _player.AvatarState.IsConstrollingMachine = true;
+            }
         }
     }
 
