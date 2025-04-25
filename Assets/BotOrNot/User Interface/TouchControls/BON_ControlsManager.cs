@@ -17,7 +17,7 @@ public class BON_ControlsManager : MonoBehaviour
     private Dictionary<int, BON_TouchComps> _touchDictionary = new Dictionary<int, BON_TouchComps>();
 
     [Range(20f, 50f)]
-    private float _slideThreshold = 20f;
+    private float _slideThreshold = 50f;
     public float SlideThreshold
     {
         get { return _slideThreshold; }

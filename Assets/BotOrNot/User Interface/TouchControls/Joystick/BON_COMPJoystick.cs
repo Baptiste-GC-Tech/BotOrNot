@@ -14,7 +14,7 @@ public class BON_COMPJoystick : BON_TouchComps
     private Vector2 _previousTouchPos;
     private Vector2 _currentTouchPos;
 
-    private Vector2 _inputValues = Vector2.zero;
+    [SerializeField] Vector2 _inputValues = Vector2.zero;
     public Vector2 InputValues
     {
         get { return _inputValues; }
