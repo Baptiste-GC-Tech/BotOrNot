@@ -50,6 +50,10 @@ public class BON_Elevator : BON_Actionnable
         else
         {
             _isPlayerMoving = true;
+            _player.transform.eulerAngles = (_player.transform.position.x > _elevatorPosition.transform.position.x) ? new Vector3(0, -90, 0) : new Vector3(0, 90, 0);
+
+            _playerAnimator.SetBool("IsIdle", false);
+            _playerAnimator.SetBool("IsMoving", true);
         }
     }
 
