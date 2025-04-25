@@ -164,7 +164,7 @@ public class BON_Elevator : BON_Actionnable
                 _elevatorStatus = false;
                 _playerAnimator.SetBool("IsIdle", true);
                 _playerAnimator.SetBool("IsMoving", false);
-                Toggle();
+                base.Toggle();
             }
         }
     }
