@@ -131,7 +131,7 @@ public class BON_Menus : MonoBehaviour
     public void PMResetScene()
     {
         BON_GameManager.Instance().UnpauseGame();
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
     }
 
     private void PRIVSMUpdateSliders()
@@ -146,6 +146,11 @@ public class BON_Menus : MonoBehaviour
                 children[i].value = Mathf.Pow(value, 10);
             }
         }   
+    }
+
+    public void CRQuit()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
 
