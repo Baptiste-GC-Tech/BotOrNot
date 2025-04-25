@@ -17,7 +17,7 @@ public class BON_CCPlayer : MonoBehaviour
         set { _avatarState = value; }
     }
 
-    // for stock machine ref ?
+    // for stock machine ref
     private BON_Interactive_Actionnables _machineToActivate = null;
     public BON_Interactive_Actionnables MachineToActivate
     {
@@ -42,6 +42,7 @@ public class BON_CCPlayer : MonoBehaviour
 
         _avatarState.Init(); //init state machine (current state, player ref, dictionnary)
         _avatarState.IsGrounded = false;
+        _avatarState.IsNearElevator = false;
     }
 
     void Update()
@@ -68,10 +69,6 @@ public class BON_CCPlayer : MonoBehaviour
                 Debug.LogError("_machineToActivate est introuvable");
             }
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //trigger with elevator 
-        {
-            _avatarState.IsNearElevator = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -80,10 +77,6 @@ public class BON_CCPlayer : MonoBehaviour
         {
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;
-        }
-        if (other.gameObject.layer == LayerMask.NameToLayer("TriggerElevator")) //end trigger with elevator 
-        {
-            _avatarState.IsNearElevator = false;
         }
     }
 }

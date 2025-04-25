@@ -4,15 +4,12 @@ public class BON_SElevator : BON_State
 {
     public override void Enter()
     {
-        //(anim ?)
-        //cancel move ?
-        //BON_GameManager.Instance().DisableCompPlayer(BON_GameManager.Instance().CurrentCharacterPlayed);
+        _player.AvatarState.IsInElevator = true;
     }
 
     public override void Exit()
     {
-        //(regive move ?)
-        //BON_GameManager.Instance().EnableCompPlayer(BON_GameManager.Instance().CurrentCharacterPlayed);
+        _player.AvatarState.IsInElevator = false;
     }
 
     public override void UpState()
