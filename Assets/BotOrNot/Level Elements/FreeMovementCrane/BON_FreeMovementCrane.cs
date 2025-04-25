@@ -205,14 +205,21 @@ public class BON_FreeMovementCrane : BON_Controllable
                 Vector3 normal = contact.normal;
 
                 if (normal.y > 0.5f)
+                {
                     _isCollideDown = true;
+                }
                 else if (normal.y < -0.5f)
+                {
                     _isCollideUp = true;
-
+                }
                 if (normal.x > 0.5f)
+                {
                     _isCollideLeft = true;
+                }
                 else if (normal.x < -0.5f)
+                {
                     _isCollideRight = true;
+                }
             }
         }
     }
