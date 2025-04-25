@@ -46,7 +46,7 @@ public class BON_CreditsManager : MonoBehaviour
 
             foreach (GameObject obj in _scrollingObjects) {
                 obj.transform.position += moveVec;
-                if (obj.transform.position.y >= 3514)
+                if (obj.transform.position.y >= 900)
                 {
                     _shouldScroll = false;
                 }
