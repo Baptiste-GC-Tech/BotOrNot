@@ -17,15 +17,15 @@ public class BON_DetectionGroundPR : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             print("tgrain");
+            _CCPlayer.AvatarState.IsGrounded = true;       
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        {
             _CCPlayer.AvatarState.IsGrounded = true;
-            /*_otherPos = other.ClosestPoint(transform.position); //contact point
-            _normal = transform.position - _otherPos;*/
-            
-            //if (Mathf.Abs(_normal.y) > Mathf.Abs(_normal.x)) //collide on Y => ground
-            //{
-            //    print("groundaid");
-            //    _CCPlayer.AvatarState.IsGrounded = true;
-            //}            
         }
     }
 

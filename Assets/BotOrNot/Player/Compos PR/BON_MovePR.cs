@@ -389,7 +389,7 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             if (collision.contactCount > 0)
             {
@@ -401,7 +401,7 @@ public class BON_MovePR : MonoBehaviour
                     _player.AvatarState.IsGrounded = true;
                 }
             }
-        }
+        }*/
         if (collision.gameObject.tag == "TriggerElevator") //trigger with elevator 
         {
             _player.AvatarState.IsNearElevator = true;
@@ -425,7 +425,7 @@ public class BON_MovePR : MonoBehaviour
         Tag = collision.gameObject.tag;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
             if (collision.contactCount > 0)
             {
@@ -440,7 +440,7 @@ public class BON_MovePR : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
         {
@@ -459,7 +459,7 @@ public class BON_MovePR : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            _player.AvatarState.IsGrounded = false;
+            //_player.AvatarState.IsGrounded = false;
             _fallHeight = gameObject.transform.position;
         }
         if (collision.gameObject.tag == "TriggerElevator") //end trigger with elevator 

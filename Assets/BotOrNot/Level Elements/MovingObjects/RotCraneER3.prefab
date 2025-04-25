@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7172142027896005938}
   - component: {fileID: 3591125279977771434}
   m_Layer: 0
-  m_Name: RotCrane
+  m_Name: RotCraneER3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
