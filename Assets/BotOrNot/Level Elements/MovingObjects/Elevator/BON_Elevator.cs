@@ -21,8 +21,7 @@ public class BON_Elevator : BON_Actionnable
     [SerializeField] GameObject _outTargetPosition;   //The positions that the player needs to reach to get out of the elevator 
     [SerializeField] Canvas _levelHUD;                      //A reference to the canvas to be able to disable the controls of the player
     [SerializeField] float _playerSpeed;                    //Refecrence to the player speed (right now it's set in the editor but might need to get the speed from the player's script)         
-    Button[] _buttonsInHUD;                                 //Reference to the players button that we get from _levelHUD
-    [SerializeField] GameObject _player;                     
+    GameObject _player;                     
     bool _isPlayerMoving;                                   //is the player moving to the elevator
     bool _isElevatorMoving;                                 //is the elevator movnig to it's final destination
     bool _IsMovingByPlayerOut;                                      //is the player moving out of the elevator
