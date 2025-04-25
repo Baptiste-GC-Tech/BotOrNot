@@ -43,7 +43,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Reads input values
         //_moveMachineValue = _ControlMachineAction.ReadValue<Vector2>(); //input pc
         //_moveMachineValue = _player.GetComponent<BON_MovePR>().MoveInputValue; //input joystick mobile
-        _moveMachineValue = BON_GameManager.Instance()._directionalInputValue;
+        _moveMachineValue = BON_GameManager.Instance().DirectionalInputValue;
 
         _machine.ProcessInput(_moveMachineValue);
     }
@@ -123,7 +123,6 @@ public class BON_MachineControllerPR : MonoBehaviour
 
         if (_player.AvatarState.IsConstrollingMachine && _machinePossessed != null)
         {
-            Debug.Log("Sending input over, probably");
             MoveMachine(_machinePossessed);
         }
 

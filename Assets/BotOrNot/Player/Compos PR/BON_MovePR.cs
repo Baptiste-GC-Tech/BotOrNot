@@ -256,7 +256,7 @@ public class BON_MovePR : MonoBehaviour
         /* Handles the input */
         if (_player.AvatarState.IsGrounded)
         {
-            _moveInputValue = BON_GameManager.Instance()._directionalInputValue;
+            _moveInputValue = BON_GameManager.Instance().DirectionalInputValue;
 
             if (_justChangedGrounded == true)
             {

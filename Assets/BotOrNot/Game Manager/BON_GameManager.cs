@@ -11,9 +11,9 @@ public class BON_GameManager : MonoBehaviour
     *  FIELDS
     */
     // Input related
-    public InputAction _PRMoveInputAction;
-    public InputAction _MachineInputAction;
-    public Vector2 _directionalInputValue;
+    private InputAction _PRMoveInputAction;
+    private InputAction _MachineInputAction;
+    public Vector2 DirectionalInputValue;
 
     // his instance
     private static BON_GameManager _gameManager;
@@ -103,7 +103,7 @@ public class BON_GameManager : MonoBehaviour
         };
 
         //init la scene actuelle
-        _currentScene = Scenes.MainMenu;
+        //_currentScene = Scenes.MainMenu;
     }
 
     public void ChangeScene(Scenes nextScene)
@@ -244,8 +244,15 @@ public class BON_GameManager : MonoBehaviour
     void Update()
     {
         // Input PC
-        _directionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
-        _directionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+
+        if (_player.AvatarState.CurrentState == BON_AvatarState.State.ControllingMachine) //read input values for machine
+        {
+            DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+        }
+        else //read input values for Move
+        {
+            DirectionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
+        }
 
         // Input Mobile 
         //_moveInputValue = _joystick.InputValues;
