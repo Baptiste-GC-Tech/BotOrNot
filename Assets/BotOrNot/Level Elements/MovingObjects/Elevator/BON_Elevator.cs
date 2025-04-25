@@ -41,6 +41,7 @@ public class BON_Elevator : BON_Actionnable
         //disable the controls
         _levelHUD.GetComponentInChildren<BON_COMPJoystick>().ComponentToggle();
         _levelHUD.GetComponentInChildren<BON_COMPPlayerButtons>().ComponentToggle();
+        _levelHUD.GetComponent<BON_ControlsManager>().IsTouchEnabled = false;
         //if the elevator is not on the same floor as the actionable changes it's position
         if (_elevator.transform.position.y - 1 > gameObject.transform.position.y || _elevator.transform.position.y + 1 < gameObject.transform.position.y)
         {
@@ -62,6 +63,7 @@ public class BON_Elevator : BON_Actionnable
         //enable the controls
         _levelHUD.GetComponentInChildren<BON_COMPJoystick>().ComponentToggle();
         _levelHUD.GetComponentInChildren<BON_COMPPlayerButtons>().ComponentToggle();
+        _levelHUD.GetComponent<BON_ControlsManager>().IsTouchEnabled = true;
     }
 
 
