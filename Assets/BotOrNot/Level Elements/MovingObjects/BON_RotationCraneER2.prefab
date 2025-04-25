@@ -271,7 +271,7 @@ PrefabInstance:
     - target: {fileID: 8230143133029547462, guid: d7ec8aaf29033ba42bafe8e7973cfade,
         type: 3}
       propertyPath: m_Name
-      value: BON_RotationCrane Variant
+      value: BON_RotationCraneER2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -436,6 +436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031243395254937908, guid: 2e99c0d09e7e23b40930ac57167932bf,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 4447914299389288467, guid: 2e99c0d09e7e23b40930ac57167932bf,
         type: 3}
