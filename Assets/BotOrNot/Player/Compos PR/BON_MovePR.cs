@@ -434,7 +434,10 @@ public class BON_MovePR : MonoBehaviour
 
                 if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
                 {
-                    _player.AvatarState.IsGrounded = true;
+                    if (_collisionPos.y <= GetComponent<CapsuleCollider>().transform.position.y)
+                    {
+                        _player.AvatarState.IsGrounded = true;
+                    }
                 }
             }
         }
