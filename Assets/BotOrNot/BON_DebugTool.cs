@@ -87,7 +87,6 @@ public class BON_DebugTool : MonoBehaviour
 
     private void Update()
     {
-
         // Player 
         if (BON_GameManager.Instance().CurrentCharacterPlayed == 0)
         {
