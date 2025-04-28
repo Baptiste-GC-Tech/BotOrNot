@@ -136,6 +136,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _status: 0
+--- !u!1 &6359009623626724046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777572053155287885}
+  m_Layer: 11
+  m_Name: ProxyFlag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1777572053155287885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359009623626724046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 504648743117789202}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7334844386109123561
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,9 +178,10 @@ GameObject:
   - component: {fileID: 504648743117789202}
   - component: {fileID: 2038254829787473844}
   - component: {fileID: 8272836049765445709}
-  - component: {fileID: 1864686771854245746}
   - component: {fileID: 5178129391104064337}
+  - component: {fileID: 1864686771854245746}
   - component: {fileID: 1273767791241559590}
+  - component: {fileID: 4765128962189756225}
   m_Layer: 11
   m_Name: ProximityTrigger
   m_TagString: Untagged
@@ -171,6 +203,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4807210720485067408}
+  - {fileID: 1777572053155287885}
   m_Father: {fileID: 8295458955884254665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2038254829787473844
@@ -211,6 +244,22 @@ MonoBehaviour:
   - {fileID: 5178129391104064337}
   _conditions: []
   _targetTag: Player
+--- !u!114 &5178129391104064337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334844386109123561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1634e4e413f9b084085da6dd0b434395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetBehavior: 0
+  _actionnables:
+  - {fileID: 8023110723302799261}
+  - {fileID: 0}
 --- !u!114 &1864686771854245746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,22 +277,6 @@ MonoBehaviour:
   - {fileID: 1273767791241559590}
   _conditions: []
   _targetTag: Player
---- !u!114 &5178129391104064337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7334844386109123561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1634e4e413f9b084085da6dd0b434395, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetBehavior: 0
-  _actionnables:
-  - {fileID: 8023110723302799261}
-  - {fileID: 0}
 --- !u!114 &1273767791241559590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +293,20 @@ MonoBehaviour:
   _actionnables:
   - {fileID: 8023110723302799261}
   - {fileID: 0}
+--- !u!114 &4765128962189756225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334844386109123561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c3a8406d38377e4bbcef3c6b462510d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objects:
+  - {fileID: 6359009623626724046}
 --- !u!1 &8699147992402138980
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +319,7 @@ GameObject:
   - component: {fileID: 3889331628694002178}
   - component: {fileID: 6949062822910990658}
   - component: {fileID: 8104905350918014865}
+  - component: {fileID: 3783397763756288870}
   - component: {fileID: 5293208297405077909}
   - component: {fileID: 1970812349593779802}
   m_Layer: 3
@@ -350,7 +398,24 @@ MonoBehaviour:
   _minimumConditionsToFulfill: 0
   _events:
   - {fileID: 5293208297405077909}
-  _conditions: []
+  _conditions:
+  - {fileID: 3783397763756288870}
+--- !u!114 &3783397763756288870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8699147992402138980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2979d03415951e44901eaa5dcde63f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minimumActiveAmount: 0
+  _shouldBeActive: 1
+  _gameObjects:
+  - {fileID: 6359009623626724046}
 --- !u!114 &5293208297405077909
 MonoBehaviour:
   m_ObjectHideFlags: 0
