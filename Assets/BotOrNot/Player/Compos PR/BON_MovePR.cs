@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
