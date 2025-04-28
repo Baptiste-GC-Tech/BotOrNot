@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
 
 // TODO: Implement the pause of accelaration and speed update when in the air
 public class BON_MovePR : MonoBehaviour
@@ -181,6 +179,7 @@ public class BON_MovePR : MonoBehaviour
         {
             _WorldSpaceMoveDir = Vector3.right * _moveXAxisDir;
             _curMoveDir = Vector3.forward;
+            //Debug.Log("Flat, Dir : " + _WorldSpaceMoveDir);
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
@@ -191,8 +190,9 @@ public class BON_MovePR : MonoBehaviour
             _curMoveDir.x = 0;
             _curMoveDir.y = _WorldSpaceMoveDir.y;
             _curMoveDir.z = _WorldSpaceMoveDir.x * _moveXAxisDir;
-        }
 
+            //Debug.Log("Slope, Dir : " + _WorldSpaceMoveDir);
+        }
     }
 
     // Updates the ground's normal that PR is standing on
@@ -203,14 +203,17 @@ public class BON_MovePR : MonoBehaviour
         RaycastHit groundRaycastHit;
         Debug.DrawRay(transform.position, Vector3.down * groundRayLength, Color.green, Time.deltaTime);
         //Physics.Raycast(transform.position, Vector3.up, out hit, 100.0f, LayerMask.GetMask("Avatar"), QueryTriggerInteraction.Ignore);
-        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength);
+        Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength, LayerMask.GetMask("Terrain"));
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
+
+        //Debug.Log("Ground Normal : " + _groundNormalVect);
     }
 
     private void StopMove()
     {
         _moveInputValue.x = 0; //stop input
         _curSpeed = 0f; //stop speed
+        _WorldSpaceMoveDir.x = 0;
         _rb.velocity = Vector3.zero;
     }
 
@@ -274,12 +277,12 @@ public class BON_MovePR : MonoBehaviour
             }
         }
 
-        // if input + wall on right/left, stop 
-        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
+        // if mouv to wall + wall on right/left, stop 
+        if ((_WorldSpaceMoveDir.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_WorldSpaceMoveDir.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
             StopMove();
         }
-        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
+        else if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
         {
             UpdateMoveDirFromInput();
             UpdateCurSpeed();
@@ -376,32 +379,19 @@ public class BON_MovePR : MonoBehaviour
         {
             animator.SetFloat("Speed", _curSpeed);
 
-            Vector2 currentDir = _moveInputValue.normalized;
-            float dot = Vector2.Dot(_previousDirection, currentDir);
+            _currentDir = _moveInputValue.normalized;
+            _dot = Vector2.Dot(_previousDirection, _currentDir);
 
-            bool didTurnBack = dot < -0.8f;
-            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            _didTurnBack = _dot < -0.8f;
+            _isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
 
             if (_moveInputValue.magnitude > 0.1f)
-                _previousDirection = currentDir;
+                _previousDirection = _currentDir;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            if (collision.contactCount > 0)
-            {
-                _collisionPos = collision.GetContact(0).point; //contact point
-                _collisionNormal = transform.position - _collisionPos;
-
-                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
-                {
-                    _player.AvatarState.IsGrounded = true;
-                }
-            }
-        }*/
         if (collision.gameObject.tag == "TriggerElevator") //trigger with elevator 
         {
             _player.AvatarState.IsNearElevator = true;
@@ -424,23 +414,6 @@ public class BON_MovePR : MonoBehaviour
     {
         Tag = collision.gameObject.tag;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
-
-        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            if (collision.contactCount > 0)
-            {
-                _collisionPos = collision.GetContact(0).point; //contact point
-                _collisionNormal = _collisionPos - transform.position;
-
-                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
-                {
-                    if (_collisionPos.y <= GetComponent<CapsuleCollider>().transform.position.y)
-                    {
-                        _player.AvatarState.IsGrounded = true;
-                    }
-                }
-            }
-        }*/
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
         {

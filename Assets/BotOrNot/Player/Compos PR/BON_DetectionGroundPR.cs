@@ -2,8 +2,6 @@ using UnityEngine;
 public class BON_DetectionGroundPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
-    private Vector3 _otherPos;
-    private Vector3 _normal;
 
     private void Start()
     {
@@ -12,10 +10,8 @@ public class BON_DetectionGroundPR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //print("tger");
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            //print("tgrain");
             _CCPlayer.AvatarState.IsGrounded = true;       
         }
     }
@@ -30,10 +26,8 @@ public class BON_DetectionGroundPR : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //print("non tg");
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            //print("non tgrain");
             _CCPlayer.AvatarState.IsGrounded = false;
         }
     }

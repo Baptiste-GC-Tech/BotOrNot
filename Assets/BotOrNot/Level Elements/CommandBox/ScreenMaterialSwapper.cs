@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenMaterialSwapper : MonoBehaviour
+public class BON_ScreenMaterialSwapper : MonoBehaviour
 {
     /*
      *  FIELDS

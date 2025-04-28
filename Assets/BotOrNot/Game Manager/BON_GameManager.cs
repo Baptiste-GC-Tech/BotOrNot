@@ -185,6 +185,7 @@ public class BON_GameManager : MonoBehaviour
             {
                 if (!_componentsAvatar[CharacterWillPlay][i].enabled)
                 {
+                    Debug.Log("Enabling " + _componentsAvatar[CharacterWillPlay][i].GetType().ToString());
                     _componentsAvatar[CharacterWillPlay][i].enabled = true;
                 }
             }

@@ -25,7 +25,9 @@ public class BON_Menus : MonoBehaviour
     private GameObject _activePanel;
     private GameObject _activeButton;
 
-    private bool _isCBActive = false;
+    [SerializeField] GameObject InitialCBButton;
+
+    private GameObject _activeCBButton;
 
     /*
     * METHODS 
@@ -82,15 +84,14 @@ public class BON_Menus : MonoBehaviour
 
     public void SMSwitchCBMode(GameObject check)
     {
-        switch (_isCBActive)
-        {
-            case true:
-                _isCBActive = false; break;
-            case false:
-                _isCBActive = true; break;
-        }
+        if (_activeCBButton == null)
+            _activeCBButton = InitialCBButton;
 
-        check.SetActive(_isCBActive);
+        check.SetActive(true);
+        if (check != _activeCBButton)
+            _activeCBButton.SetActive(false);
+
+        _activeCBButton = check;
     }
 
     public void PMPauseStart(GameObject panel)

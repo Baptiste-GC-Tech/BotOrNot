@@ -45,6 +45,19 @@ public class BON_CablePR : MonoBehaviour
     private ParticleSystem _fxhooked;
     private Rigidbody _rb;
 
+    private Vector2 input;
+    private float _swingInput;
+    float _lengthChange = 0f;
+    private Vector3 _currentTarget;
+    private Transform _closest;
+
+    /* animation related */
+    Vector3 _start;
+    Vector3 _end;
+    Vector3 _direction;
+    Vector3 _normal;
+    Vector3 _point;
+
     private void Start()
     {
         _clickAction = InputSystem.actions.FindAction("ActionsMapPR/Cable");
@@ -59,7 +72,7 @@ public class BON_CablePR : MonoBehaviour
 
     private void Update()
     {
-        Vector2 input = BON_GameManager.Instance().DirectionalInputValue;
+        input = BON_GameManager.Instance().DirectionalInputValue;
 
         if (_clickAction != null && _clickAction.triggered)
         {
@@ -68,48 +81,42 @@ public class BON_CablePR : MonoBehaviour
 
         if (_lineVisible && _joint != null && !_animating)
         {
-            Vector3 currentTarget = _hookActif != null ? _hookActif.position : _joint.connectedAnchor;
-            PRIVAfficherLigne(_gunOrigin.position, currentTarget);
+            _currentTarget = _hookActif != null ? _hookActif.position : _joint.connectedAnchor;
+            PRIVAfficherLigne(_gunOrigin.position, _currentTarget);
 
             _swingTimer += Time.deltaTime;
         }
 
         if (_joint != null)
         {
-            
 
             if (_hookActif != null)
             {
                 _joint.connectedAnchor = _hookActif.position;
             }
 
-            float lengthChange = 0f;
+            _lengthChange = 0f;
 
             if (input.y > 0.5f)
             {
-                lengthChange -= _cableLengthSpeed * Time.deltaTime;
-                Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                _rb.AddForce(direction * (_springForce * 0.75f), ForceMode.Acceleration);
-
+                _lengthChange -= _cableLengthSpeed * Time.deltaTime;
             }
             else if (input.y < -0.5f)
             {
-                lengthChange += _cableLengthSpeed * Time.deltaTime;
-                Vector3 direction = (transform.position - _joint.connectedAnchor).normalized;
-                _rb.AddForce(direction * (_springForce * 0.5f), ForceMode.Acceleration);
+                _lengthChange += _cableLengthSpeed * Time.deltaTime;
             }
 
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + lengthChange, 0.5f, _rayDistance);
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + _lengthChange, 0.5f, _rayDistance);
 
-            float swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
+            _swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
 
             Vector3 toAnchor = _joint.connectedAnchor - transform.position;
             Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
             Vector3 swingDir = Vector3.Cross(Vector3.up, horizontalToAnchor).normalized;
 
-            if (swingInput != 0f)
+            if (_swingInput != 0f)
             {
-                Vector3 force = swingDir * swingInput * _swingForce;
+                Vector3 force = swingDir * _swingInput * _swingForce;
                 _rb.AddForce(force, ForceMode.VelocityChange);
             }
             else
@@ -125,9 +132,7 @@ public class BON_CablePR : MonoBehaviour
                 _rb.AddForce(direction * (_springForce * 2f), ForceMode.Acceleration);
             }
         }
-
     }
-
 
     public void GererClic()
     {
@@ -147,18 +152,9 @@ public class BON_CablePR : MonoBehaviour
                 // Transform fx = _hookActif.Find("FX - Hooked Particle System");
                 // if (fx != null) fx.gameObject.SetActive(true);
 
-                StartCoroutine(PRIVAnimerLigneAvecVague());
-
                 _player.AvatarState.HasCableOut = true;
 
-                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
-                if (interactive != null)
-                {
-                    if (interactive.ActionnablesList != null)
-                    {
-                        interactive.Activate();
-                    }
-                }
+                StartCoroutine(PRIVAnimerLigneAvecVague());
             }
         }
         else
@@ -186,7 +182,7 @@ public class BON_CablePR : MonoBehaviour
 
     private Transform PRIVTrouverPlusProcheHook(GameObject[] hooks)
     {
-        Transform closest = null;
+        _closest = null;
         float shortest = Mathf.Infinity;
 
         Vector3 direction = _directionReference != null ? _directionReference.forward : transform.forward;
@@ -218,12 +214,12 @@ public class BON_CablePR : MonoBehaviour
                 if (dist <= _rayDistance && dist < shortest)
                 {
                     shortest = dist;
-                    closest = hook.transform;
-                    Debug.DrawLine(_gunOrigin.position, closest.position, Color.green, 2f);
+                    _closest = hook.transform;
+                    Debug.DrawLine(_gunOrigin.position, _closest.position, Color.green, 2f);
                 }
             }
         }
-        return closest;
+        return _closest;
     }
 
     private IEnumerator PRIVAnimerLigneAvecVague()
@@ -235,18 +231,18 @@ public class BON_CablePR : MonoBehaviour
         {
             timer += Time.deltaTime;
             float t = Mathf.Clamp01(timer / _deployTime);
-            Vector3 start = _gunOrigin.position;
+            _start = _gunOrigin.position;
 
-            Vector3 end = _hookActif != null ? _hookActif.position : _targetPoint;
-            Vector3 direction = (end - start).normalized;
-            Vector3 normal = Vector3.Cross(direction, Vector3.forward);
+            _end = _hookActif != null ? _hookActif.position : _targetPoint;
+            _direction = (_end - _start).normalized;
+            _normal = Vector3.Cross(_direction, Vector3.forward);
 
             for (int i = 0; i < _lineSegments; i++)
             {
                 float delta = (float)i / (_lineSegments - 1);
-                Vector3 point = Vector3.Lerp(start, end, delta * t);
-                point += normal * Mathf.Sin(delta * _waveFrequency * Mathf.PI) * _waveAmplitude * (1f - t);
-                _lineRenderer.SetPosition(i, point);
+                _point = Vector3.Lerp(_start, _end, delta * t);
+                _point += _normal * Mathf.Sin(delta * _waveFrequency * Mathf.PI) * _waveAmplitude * (1f - t);
+                _lineRenderer.SetPosition(i, _point);
             }
 
             yield return null;
@@ -264,8 +260,13 @@ public class BON_CablePR : MonoBehaviour
         Vector3 finalTarget = _hookActif.position;
         PRIVActiverRappel(finalTarget);
         _swingTimer = 0f;
-    }
 
+        BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
+        if (interactive != null && interactive.ActionnablesList != null)
+        {
+            interactive.Activate();
+        }
+    }
 
 
     private IEnumerator PRIVRetirerLigne()
@@ -302,8 +303,6 @@ public class BON_CablePR : MonoBehaviour
         _hookActif = null;
     }
 
-
-
     private void PRIVActiverRappel(Vector3 cible)
     {
         if (_joint != null) Destroy(_joint);
@@ -319,7 +318,6 @@ public class BON_CablePR : MonoBehaviour
         _joint.damper = _damping;
         _joint.massScale = 1f;
         Debug.Log($"Distance Cable : ({distance})");
-
     }
 
     private void PRIVSupprimerRappel()
