@@ -349,6 +349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 166384382427913385}
+  - component: {fileID: 8870327262616921087}
   - component: {fileID: 1781228252598143618}
   m_Layer: 0
   m_Name: L1_utile_piston_03
@@ -367,8 +368,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -111.99, y: -24.965, z: 0.00000006101}
-  m_LocalScale: {x: 18.556648, y: 18.556648, z: 18.556648}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 86, y: 86, z: 86}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8537300263833585036}
   - {fileID: 960362406805475501}
@@ -376,6 +377,28 @@ Transform:
   - {fileID: 7294821466496351023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8870327262616921087
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5827690972114105275}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 466ecec0e9c272542b5b1c708801ba4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1781228252598143618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,5 +414,5 @@ MonoBehaviour:
   _startTransform: {fileID: 0}
   _endTransform: {fileID: 0}
   _elevatorTransform: {fileID: 0}
-  _animator: {fileID: 0}
+  _animator: {fileID: 8870327262616921087}
   _blendParameterName: Blend
