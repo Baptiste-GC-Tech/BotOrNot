@@ -85,10 +85,13 @@ public class BON_Menus : MonoBehaviour
     public void SMSwitchCBMode(GameObject check)
     {
         if (_activeCBButton == null)
-            _activeCBButton = InitialButton;
+            _activeCBButton = InitialCBButton;
 
-        check.SetActive(!check.activeInHierarchy);
-        _activeCBButton.SetActive(!check.activeInHierarchy);
+        check.SetActive(true);
+        if (check != _activeCBButton)
+            _activeCBButton.SetActive(false);
+
+        _activeCBButton = check;
     }
 
     public void PMPauseStart(GameObject panel)
