@@ -34,7 +34,6 @@ public class BON_ScaleBehavior : MonoBehaviour
         }
        if (_isBouncing)
         {
-            Debug.Log(transform.eulerAngles);
             transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 340), 0.1f);
             if (transform.eulerAngles.z - 340 < 5 && transform.eulerAngles.z - 340 > -5)
             {
