@@ -181,7 +181,7 @@ public class BON_MovePR : MonoBehaviour
         {
             _WorldSpaceMoveDir = Vector3.right * _moveXAxisDir;
             _curMoveDir = Vector3.forward;
-            Debug.Log("Flat, Dir : " + _WorldSpaceMoveDir);
+            //Debug.Log("Flat, Dir : " + _WorldSpaceMoveDir);
         }
         // Case of a sloped ground : finds the tangent to the normal of the ground mathematically, to then find a logically equivalent moveDir
         else
@@ -208,7 +208,7 @@ public class BON_MovePR : MonoBehaviour
         Physics.Raycast(transform.position, Vector3.down, out groundRaycastHit, groundRayLength, LayerMask.GetMask("Terrain"));
         if (groundRaycastHit.collider != null) _groundNormalVect = groundRaycastHit.normal;
 
-        Debug.Log("Ground Normal : " + _groundNormalVect);
+        //Debug.Log("Ground Normal : " + _groundNormalVect);
     }
 
     private void StopMove()
