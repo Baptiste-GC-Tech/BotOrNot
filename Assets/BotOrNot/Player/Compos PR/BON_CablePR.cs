@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public class BON_CablePR : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Camera _mainCam;
+    [SerializeField] private Camera _mainCam; //non set & inutilisé 
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private Transform _gunOrigin;
     [SerializeField] private LayerMask _raycastLayers;

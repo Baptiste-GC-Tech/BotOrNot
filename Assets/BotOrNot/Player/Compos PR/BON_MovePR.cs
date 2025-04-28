@@ -277,8 +277,8 @@ public class BON_MovePR : MonoBehaviour
             }
         }
 
-        // if mouv to wall + wall on right/left, stop 
-        if ((_WorldSpaceMoveDir.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_WorldSpaceMoveDir.x > 0 && _player.AvatarState.IsAgainstWallRight))
+        // if input + wall on right/left, stop 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
             StopMove();
         }
