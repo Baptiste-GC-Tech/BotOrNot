@@ -277,8 +277,8 @@ public class BON_MovePR : MonoBehaviour
             }
         }
 
-        // if mouv to wall + wall on right/left, stop 
-        if ((_WorldSpaceMoveDir.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_WorldSpaceMoveDir.x > 0 && _player.AvatarState.IsAgainstWallRight))
+        // if input + wall on right/left, stop 
+        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
             StopMove();
         }
@@ -379,14 +379,14 @@ public class BON_MovePR : MonoBehaviour
         {
             animator.SetFloat("Speed", _curSpeed);
 
-            Vector2 currentDir = _moveInputValue.normalized;
-            float dot = Vector2.Dot(_previousDirection, currentDir);
+            _currentDir = _moveInputValue.normalized;
+            _dot = Vector2.Dot(_previousDirection, _currentDir);
 
-            bool didTurnBack = dot < -0.8f;
-            bool isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
+            _didTurnBack = _dot < -0.8f;
+            _isSpeedHighEnough = _curSpeed > (_maxSpeed * 0.5f);
 
             if (_moveInputValue.magnitude > 0.1f)
-                _previousDirection = currentDir;
+                _previousDirection = _currentDir;
         }
     }
 

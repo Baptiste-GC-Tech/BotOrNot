@@ -161,6 +161,7 @@ MonoBehaviour:
   _turnBackWhenListEnd: 1
   _looping: 0
   _isCyclingPositive: 1
+  _onlyRotation: 0
 --- !u!65 &8572655913913813591
 BoxCollider:
   m_ObjectHideFlags: 0

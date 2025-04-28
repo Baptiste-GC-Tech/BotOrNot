@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BON_ScaleBehavior : MonoBehaviour
@@ -11,6 +12,8 @@ public class BON_ScaleBehavior : MonoBehaviour
     [SerializeField] Transform _position2;
     [SerializeField] float _scaleAngularVelocity;
     bool _isBoxCorretlyPlaced;
+    bool _isBouncing = false;
+    bool _shouldWait = false;
 
     /*
      * UNITY METHODS
@@ -29,11 +32,20 @@ public class BON_ScaleBehavior : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             _isBoxCorretlyPlaced = false;
         }
+       if (_isBouncing)
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 340), 0.1f);
+            if (transform.eulerAngles.z - 340 < 5 && transform.eulerAngles.z - 340 > -5)
+            {
+                _isBouncing = false;
+            }
+        }
+
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.GetComponent("piece") != null)
+        if (collision.gameObject.GetComponent<BON_FreeMovementCrane>() != null)
         {
             if (collision.gameObject.transform.position.x < _position2.position.x && collision.gameObject.transform.position.x > _position1.position.x)
             {
@@ -43,6 +55,20 @@ public class BON_ScaleBehavior : MonoBehaviour
             {
                 _isBoxCorretlyPlaced = false;
             }
+
         }
+        if (collision.gameObject.GetComponent<BON_Bounce>() != null && !_shouldWait)
+        {
+            _isBouncing = true;
+            _shouldWait = true;
+            StartCoroutine(WaitToBounce());
+            
+        }
+    }
+    IEnumerator WaitToBounce()
+    {
+        yield return new WaitForSeconds(3);
+        _isBouncing = false;
+        _shouldWait = false;
     }
 }

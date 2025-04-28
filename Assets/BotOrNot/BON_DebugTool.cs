@@ -124,16 +124,18 @@ public class BON_DebugTool : MonoBehaviour
 
         UseGravity = Player.GetComponent<Rigidbody>().useGravity;
 
+        PRRBVelocity = Player.GetComponent<Rigidbody>().velocity;
+
         //drift
         IsDrifting = Player.AvatarState.IsDrifting;
-        //////TimeSinceLastMove = _CompMov.TimeSinceLastMove;
-        //////DriftDuration = _CompMov.DriftDuration;
-        //////DriftAcceleration = _CompMov.DriftAcceleration;
+        TimeSinceLastMove = _CompMov.TimeSinceLastMove;
+        DriftDuration = _CompMov.DriftDuration;
+        DriftAcceleration = _CompMov.DriftAcceleration;
 
-        ////////bounce
-        //////IsBouncing = _CompMov.IsBouncing;
-        //////BounceCount = _CompMov.BounceCount;
-        //////FallHeight = _CompMov.FallHeight;
+        //bounce
+        IsBouncing = _CompMov.IsBouncing;
+        BounceCount = _CompMov.BounceCount;
+        FallHeight = _CompMov.FallHeight;
 
 
         // Environment Info
