@@ -2138,7 +2138,7 @@ MonoBehaviour:
   _springForce: 5.76
   _damping: 0.96
   _cableLengthSpeed: 3.86
-  _swingForce: 1.41
+  _swingForce: 4.5
   _lineSegments: 20
   _deployTime: 0.3
   _waveAmplitude: 0.5
