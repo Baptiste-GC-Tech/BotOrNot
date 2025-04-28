@@ -9,7 +9,10 @@ public class BON_LevelEventTrigger : MonoBehaviour
 
     [SerializeField, Tooltip("0 means all must be active")] protected int _minimumConditionsToFulfill;
     [SerializeField] List<BON_LevelEvent> _events = new List<BON_LevelEvent>();
+    List<BON_LevelEvent> Events { get { return _events; } }
+
     [SerializeField] List<BON_LevelEventCondition> _conditions = new List<BON_LevelEventCondition>();
+    List<BON_LevelEventCondition> Conditions { get { return _conditions; } }
 
     /*
      * CLASS METHODS
