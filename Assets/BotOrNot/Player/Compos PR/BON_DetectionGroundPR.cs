@@ -2,8 +2,6 @@ using UnityEngine;
 public class BON_DetectionGroundPR : MonoBehaviour
 {
     private BON_CCPlayer _CCPlayer;
-    private Vector3 _otherPos;
-    private Vector3 _normal;
 
     private void Start()
     {
