@@ -277,10 +277,20 @@ public class BON_MovePR : MonoBehaviour
                 _prFoot.SaveAndDisableParticles();
             }
         }
+        print(_curMoveDir);
 
         // if input + wall on right/left, stop 
-        if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
+        //if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
+        //if ((_curMoveDir.x > 0 && _player.AvatarState.IsAgainstWallLeft) || (_curMoveDir.x < 0 && _player.AvatarState.IsAgainstWallRight))
+        //TODO : areter de veriff si "input dans le mur = stop", mais "je vais dans le mur = stop"
+        if (_curMoveDir.z > 0 && _player.AvatarState.IsAgainstWallLeft)
         {
+            print("left");
+            StopMove();
+        }
+        if (_curMoveDir.z < 0 && _player.AvatarState.IsAgainstWallRight)
+        {
+            print("right");
             StopMove();
         }
         if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
@@ -393,19 +403,6 @@ public class BON_MovePR : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            if (collision.contactCount > 0)
-            {
-                _collisionPos = collision.GetContact(0).point; //contact point
-                _collisionNormal = transform.position - _collisionPos;
-
-                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
-                {
-                    _player.AvatarState.IsGrounded = true;
-                }
-            }
-        }*/
         if (collision.gameObject.tag == "TriggerElevator") //trigger with elevator 
         {
             _player.AvatarState.IsNearElevator = true;
@@ -428,23 +425,6 @@ public class BON_MovePR : MonoBehaviour
     {
         Tag = collision.gameObject.tag;
         Layer = LayerMask.LayerToName(collision.gameObject.layer);
-
-        /*if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
-        {
-            if (collision.contactCount > 0)
-            {
-                _collisionPos = collision.GetContact(0).point; //contact point
-                _collisionNormal = _collisionPos - transform.position;
-
-                if (Mathf.Abs(_collisionNormal.y) > Mathf.Abs(_collisionNormal.x)) //collide on Y => floor
-                {
-                    if (_collisionPos.y <= GetComponent<CapsuleCollider>().transform.position.y)
-                    {
-                        _player.AvatarState.IsGrounded = true;
-                    }
-                }
-            }
-        }*/
 
         if (_isBouncing && !_player.AvatarState.IsGrounded)
         {
