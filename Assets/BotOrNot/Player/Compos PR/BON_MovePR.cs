@@ -277,7 +277,6 @@ public class BON_MovePR : MonoBehaviour
                 _prFoot.SaveAndDisableParticles();
             }
         }
-        print(_curMoveDir);
 
         // if input + wall on right/left, stop 
         //if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
