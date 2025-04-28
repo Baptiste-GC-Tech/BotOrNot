@@ -5,30 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/BotOrNot/Scenes/FullBlockout.unity
-    guid: b6a595ba7d0aa0040a161790b7b314be
-  - enabled: 0
-    path: Assets/BotOrNot/Scenes/UI.unity
-    guid: bb5bb53bca52e6442b8a7c3ecce4c7ab
-  - enabled: 1
-    path: Assets/BotOrNot/Scenes/Credits.unity
-    guid: 73458a66ca83dac4fa29319df271a1bb
   - enabled: 1
     path: Assets/BotOrNot/Scenes/MainMenu.unity
     guid: b6787b456e9f14e49a7ecaed17c3813d
-  - enabled: 0
-    path: Assets/BotOrNot/Scenes/Level1old.unity
-    guid: 9cc3c7b605742b646abb2a75ff5e3dbe
-  - enabled: 0
-    path: Assets/BotOrNot/Scenes/Archived/UI_Blockout.unity
-    guid: 9aa3821fc64d89d4c85453d9adb1dc26
   - enabled: 1
+    path: Assets/BotOrNot/Scenes/Credits.unity
+    guid: 73458a66ca83dac4fa29319df271a1bb
+  - enabled: 0
     path: Assets/BotOrNot/Scenes/Level1.unity
-    guid: 6fed76d67951cfa4a9d626da9b47e242
+    guid: 5334166f9eb26be4696d11dcdae87088
   - enabled: 1
     path: Assets/BotOrNot/Scenes/Cinematic.unity
     guid: c9db64b03f9cb67488f3c3d34ea9a9f4
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Level1Implem.unity
+    guid: 78d774f12f17a9349a7539d2e3e009b5
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: afea3284868cd7944a20e17107876b05,
       type: 2}

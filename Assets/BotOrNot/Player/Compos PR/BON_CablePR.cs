@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Unity.VisualScripting;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BON_CablePR : MonoBehaviour

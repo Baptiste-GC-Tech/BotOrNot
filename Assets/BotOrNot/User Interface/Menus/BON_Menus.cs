@@ -47,7 +47,7 @@ public class BON_Menus : MonoBehaviour
 
     public void MMContinue()
     {
-        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Level1Implem", LoadSceneMode.Single);
     }
 
     public void MMOpenCredits()

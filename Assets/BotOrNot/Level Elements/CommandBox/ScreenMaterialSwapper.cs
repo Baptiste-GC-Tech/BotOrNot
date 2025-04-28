@@ -12,7 +12,24 @@ public class ScreenMaterialSwapper : MonoBehaviour
     public bool IsInUse
     {
         get { return _isInUse; }
-        set { _isInUse = value; }
+        set {
+            _isInUse = value;
+            if (value) UseOnEffect();
+            else UseOffEffect();
+        }
+    }
+
+
+    /*
+     *  CLASS METHODS
+     */
+    private void UseOnEffect()
+    {
+        Debug.LogWarning("UseOnEffect is TODO");
+    }
+    private void UseOffEffect()
+    {
+        Debug.LogWarning("UseOffEffect is TODO");
     }
 
 
