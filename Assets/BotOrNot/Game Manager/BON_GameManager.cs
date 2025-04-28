@@ -243,8 +243,6 @@ public class BON_GameManager : MonoBehaviour
 
         //Lancer la scene du level1
         //ChangeScene(Scenes.Level1);
-
-        Debug.Log("defaut actionMap " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     // Used for input pulling
