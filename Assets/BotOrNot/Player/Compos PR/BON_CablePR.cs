@@ -145,15 +145,6 @@ public class BON_CablePR : MonoBehaviour
                 StartCoroutine(PRIVAnimerLigneAvecVague());
 
                 _player.AvatarState.HasCableOut = true;
-
-                BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
-                if (interactive != null)
-                {
-                    if (interactive.ActionnablesList != null)
-                    {
-                        interactive.Activate();
-                    }
-                }
             }
         }
         else
@@ -259,7 +250,14 @@ public class BON_CablePR : MonoBehaviour
         Vector3 finalTarget = _hookActif.position;
         PRIVActiverRappel(finalTarget);
         _swingTimer = 0f;
+
+        BON_Interactive_Actionnables interactive = _hookActif.GetComponent<BON_Interactive_Actionnables>();
+        if (interactive != null && interactive.ActionnablesList != null)
+        {
+            interactive.Activate();
+        }
     }
+
 
 
 
