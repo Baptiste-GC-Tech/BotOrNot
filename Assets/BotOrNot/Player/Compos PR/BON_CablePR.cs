@@ -134,7 +134,6 @@ public class BON_CablePR : MonoBehaviour
         }
     }
 
-
     public void GererClic()
     {
         if (!_lineVisible)
