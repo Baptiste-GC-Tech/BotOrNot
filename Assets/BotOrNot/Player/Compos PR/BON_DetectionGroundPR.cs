@@ -12,10 +12,10 @@ public class BON_DetectionGroundPR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("tger");
+        //print("tger");
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            print("tgrain");
+            //print("tgrain");
             _CCPlayer.AvatarState.IsGrounded = true;       
         }
     }
@@ -30,10 +30,10 @@ public class BON_DetectionGroundPR : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        print("non tg");
+        //print("non tg");
         if (other.gameObject.layer == LayerMask.NameToLayer("Terrain"))
         {
-            print("non tgrain");
+            //print("non tgrain");
             _CCPlayer.AvatarState.IsGrounded = false;
         }
     }
