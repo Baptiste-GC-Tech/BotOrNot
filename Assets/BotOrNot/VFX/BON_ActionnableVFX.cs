@@ -31,4 +31,16 @@ public class BON_ActionnableVFX : BON_Actionnable
     {
         _vfx = GetComponent<VisualEffect>();
     }
+
+    private void Start()
+    {
+        if (Status)
+        {
+            On();
+        }
+        else
+        {
+            Off();
+        }
+    }
 }
