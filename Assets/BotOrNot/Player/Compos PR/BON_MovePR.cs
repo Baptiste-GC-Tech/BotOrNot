@@ -215,6 +215,7 @@ public class BON_MovePR : MonoBehaviour
     {
         _moveInputValue.x = 0; //stop input
         _curSpeed = 0f; //stop speed
+        _WorldSpaceMoveDir.x = 0;
         _rb.velocity = Vector3.zero;
     }
 
@@ -277,23 +278,13 @@ public class BON_MovePR : MonoBehaviour
                 _prFoot.SaveAndDisableParticles();
             }
         }
-        print(_curMoveDir);
 
-        // if input + wall on right/left, stop 
-        //if ((_moveInputValue.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_moveInputValue.x > 0 && _player.AvatarState.IsAgainstWallRight))
-        //if ((_curMoveDir.x > 0 && _player.AvatarState.IsAgainstWallLeft) || (_curMoveDir.x < 0 && _player.AvatarState.IsAgainstWallRight))
-        //TODO : areter de veriff si "input dans le mur = stop", mais "je vais dans le mur = stop"
-        if (_curMoveDir.z > 0 && _player.AvatarState.IsAgainstWallLeft)
+        // if mouv to wall + wall on right/left, stop 
+        if ((_WorldSpaceMoveDir.x < 0 && _player.AvatarState.IsAgainstWallLeft) || (_WorldSpaceMoveDir.x > 0 && _player.AvatarState.IsAgainstWallRight))
         {
-            print("left");
             StopMove();
         }
-        if (_curMoveDir.z < 0 && _player.AvatarState.IsAgainstWallRight)
-        {
-            print("right");
-            StopMove();
-        }
-        if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
+        else if (!_player.AvatarState.HasCableOut || _player.AvatarState.IsGrounded) //at ground without cable
         {
             UpdateMoveDirFromInput();
             UpdateCurSpeed();
