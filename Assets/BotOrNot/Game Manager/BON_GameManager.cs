@@ -185,6 +185,7 @@ public class BON_GameManager : MonoBehaviour
             {
                 if (!_componentsAvatar[CharacterWillPlay][i].enabled)
                 {
+                    Debug.Log("Enabling " + _componentsAvatar[CharacterWillPlay][i].GetType().ToString());
                     _componentsAvatar[CharacterWillPlay][i].enabled = true;
                 }
             }
@@ -242,6 +243,8 @@ public class BON_GameManager : MonoBehaviour
 
         //Lancer la scene du level1
         //ChangeScene(Scenes.Level1);
+
+        Debug.Log("defaut actionMap " + _player.GetComponent<PlayerInput>().currentActionMap);
     }
 
     // Used for input pulling

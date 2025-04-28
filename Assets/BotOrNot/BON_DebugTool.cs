@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BON_DebugTool : MonoBehaviour
 {
@@ -27,6 +29,7 @@ public class BON_DebugTool : MonoBehaviour
 
     [Tooltip("Current State")]
     public BON_AvatarState.State CurrentState;
+    public string CurrentActionMap;
     public bool IsGrounded;
     public bool IsAgainstWallLeft;
     public bool IsAgainstWallRight;
@@ -101,6 +104,7 @@ public class BON_DebugTool : MonoBehaviour
 
         // States
         CurrentState = AvatarState.CurrentState;
+        CurrentActionMap = Player.GetComponent<PlayerInput>().currentActionMap.name;
         IsGrounded = AvatarState.IsGrounded;
         IsAgainstWallLeft = AvatarState.IsAgainstWallLeft;
         IsAgainstWallRight = AvatarState.IsAgainstWallRight;
