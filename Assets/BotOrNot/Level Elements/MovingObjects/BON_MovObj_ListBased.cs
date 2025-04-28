@@ -150,4 +150,10 @@ public class BON_MovObj_ListBased : BON_Actionnable
         }
     }
 
+    protected virtual void Toggle()
+    {
+        base.Toggle();
+        Debug.Log("Toggled!");
+    }
+
 }

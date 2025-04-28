@@ -60,8 +60,11 @@ public class BON_CCPlayer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("");
+
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //trigger with machine
         {
+            Debug.Log("CC was triggered with a TriggerMachine !");
             _avatarState.IsNearIOMInteractible = true;
             _machineToActivate = other.GetComponentInParent<BON_Interactive_Actionnables>();
             if (_machineToActivate == null)
@@ -69,12 +72,14 @@ public class BON_CCPlayer : MonoBehaviour
                 Debug.LogError("_machineToActivate est introuvable");
             }
         }
+        else Debug.Log("CC was triggered, but not with a TriggerMachine layered GO.");
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("TriggerMachine")) //end trigger with machine 
         {
+            Debug.Log("Ended a trigger with MachineTrigger");
             _avatarState.IsNearIOMInteractible = false;
             _machineToActivate = null;
         }
