@@ -15,7 +15,6 @@ public class BON_MachineControllerPR : MonoBehaviour
     public Vector2 MoveMachineValue
     { get { return _moveMachineValue; } }
 
-
     // Player & State related
     private BON_CCPlayer _player;
 
@@ -33,6 +32,8 @@ public class BON_MachineControllerPR : MonoBehaviour
         set { _machinePossessed = value; }
     }
 
+    // SFX Related
+    [SerializeField] BON_SoundPlayer _zapSoundPlayer;
 
     /*
      *  CLASS METHODSs
@@ -52,6 +53,7 @@ public class BON_MachineControllerPR : MonoBehaviour
     {
         if (!_player.AvatarState.IsConstrollingMachine) //si machine pas encore controlé -> on la controle
         {
+            _zapSoundPlayer.PlayRandom();
             TakeControlOfMachine();
         }
         else //sinon on la quitte
