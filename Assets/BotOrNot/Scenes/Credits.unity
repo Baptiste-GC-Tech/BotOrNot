@@ -595,7 +595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 8750}
   m_SizeDelta: {x: 1920, y: 10000}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &247265802
@@ -2245,6 +2245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creditText: {fileID: 247265798}
   _music: {fileID: 8300000, guid: c686db8f28e3e324798ab05c796e819a, type: 3}
+  _stopCinematique: 1125
 --- !u!82 &709099737
 AudioSource:
   m_ObjectHideFlags: 0
