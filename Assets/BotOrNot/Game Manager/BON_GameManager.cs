@@ -249,19 +249,10 @@ public class BON_GameManager : MonoBehaviour
     void Update()
     {
         // Input PC
+        DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
 
-        /*
-        if (_player.AvatarState.CurrentState == BON_AvatarState.State.ControllingMachine) //read input values for machine
-        {
-            DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
-        }
-        else //read input values for Move
-        {
-            DirectionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
-        }
-        */
 
-        // Input Mobile 
-        DirectionalInputValue = _joystick.InputValues;
+        //// Input Mobile 
+        //DirectionalInputValue = _joystick.InputValues;
     }
 }

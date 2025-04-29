@@ -136,7 +136,7 @@ public class BON_FreeMovementCrane : BON_Controllable
     {
         _direction = Vector2.zero;
         _speed = 0;
-        _acceleration = _speedMax / 5;
+        _acceleration = _speedMax / 2;
         _isBlocked = false;
         _isCollideUp = false;
         _isCollideDown = false;
