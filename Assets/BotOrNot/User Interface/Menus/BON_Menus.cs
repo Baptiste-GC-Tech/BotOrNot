@@ -44,7 +44,7 @@ public class BON_Menus : MonoBehaviour
 
     public void MMNewGame()
     {
-        SceneManager.LoadScene("Cinematic", LoadSceneMode.Single);
+        SceneManager.LoadScene("Cinematic_1", LoadSceneMode.Single);
     }
 
     public void MMContinue()
