@@ -2246,6 +2246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creditText: {fileID: 247265798}
   _music: {fileID: 8300000, guid: c686db8f28e3e324798ab05c796e819a, type: 3}
+  _speed: 0.5
   _stopCinematique: 1125
 --- !u!82 &709099737
 AudioSource:
@@ -3200,7 +3201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aea7b576724a3264baecbd46fc6fef8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0af2e6d46d806c44faf3e5ead3abef2c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

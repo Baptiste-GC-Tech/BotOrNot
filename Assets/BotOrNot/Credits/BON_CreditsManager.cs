@@ -14,6 +14,8 @@ public class BON_CreditsManager : MonoBehaviour
     [SerializeField]
     AudioClip _music;
 
+    [SerializeField, Range(0.0f, 3.0f)] float _speed = 1.0f;
+
     [SerializeField] float _stopCinematique = 1125;
 
     float _scrollSpeed;
@@ -44,7 +46,7 @@ public class BON_CreditsManager : MonoBehaviour
     {
         if (_shouldScroll)
         {
-            Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime);
+            Vector3 moveVec = new Vector2( 0, _scrollSpeed * Time.deltaTime * _speed);
 
             foreach (GameObject obj in _scrollingObjects) {
                 obj.transform.position += moveVec;
