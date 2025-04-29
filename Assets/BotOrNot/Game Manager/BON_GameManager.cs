@@ -249,10 +249,9 @@ public class BON_GameManager : MonoBehaviour
     void Update()
     {
         // Input PC
-        DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+        //DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
 
-
-        //// Input Mobile 
-        //DirectionalInputValue = _joystick.InputValues;
+        // Input Mobile 
+        DirectionalInputValue = _joystick.InputValues;
     }
 }

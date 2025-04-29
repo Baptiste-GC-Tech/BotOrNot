@@ -32,6 +32,8 @@ public class BON_CablePR : MonoBehaviour
     [Header("Swing Settings")]
     [SerializeField] private float _lateralDamping = 1f;
 
+    [Header("Sound Settings")]
+    [SerializeField] private BON_SoundPlayer _throwSoundPlayer;
 
     private bool _lineVisible = false;
     private bool _animating = false;
@@ -154,6 +156,7 @@ public class BON_CablePR : MonoBehaviour
 
                 _player.AvatarState.HasCableOut = true;
 
+                _throwSoundPlayer.PlayRandom();
                 StartCoroutine(PRIVAnimerLigneAvecVague());
             }
         }

@@ -15,11 +15,17 @@ EditorBuildSettings:
     path: Assets/BotOrNot/Scenes/Level1.unity
     guid: 5334166f9eb26be4696d11dcdae87088
   - enabled: 1
-    path: Assets/BotOrNot/Scenes/Cinematic.unity
-    guid: c9db64b03f9cb67488f3c3d34ea9a9f4
-  - enabled: 1
     path: Assets/BotOrNot/Scenes/Level1Implem.unity
     guid: 78d774f12f17a9349a7539d2e3e009b5
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Cinematic_Intro.unity
+    guid: eb4e851c97f8c2a448fc83cb154d511b
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Cinematic_1.unity
+    guid: bd69f66c2bca57a4d8b8047a6ff896ae
+  - enabled: 1
+    path: Assets/BotOrNot/Scenes/Cinematic_2.unity
+    guid: ae920f6d4ec724a47aa33eb07c5135a8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: afea3284868cd7944a20e17107876b05,
       type: 2}

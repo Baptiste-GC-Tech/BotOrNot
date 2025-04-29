@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 
 public class BON_CollectableObject : MonoBehaviour
@@ -14,6 +15,7 @@ public class BON_CollectableObject : MonoBehaviour
 
     public int ObjectId { get { return _ObjectId; } }
 
+    [SerializeField] GameObject _pickupVFXPrefab;
     /*
      * CLASS METHODS
      */
@@ -26,6 +28,10 @@ public class BON_CollectableObject : MonoBehaviour
             //give its id to player inventory
             _playerInventory.AddItem(_ObjectId);
         }
+
+        GameObject VFXObj = Instantiate(_pickupVFXPrefab, transform);
+        VFXObj.transform.parent = null;
+        VFXObj.transform.SetLocalPositionAndRotation(transform.position, Quaternion.identity);
 
         //die
         Destroy(gameObject);
