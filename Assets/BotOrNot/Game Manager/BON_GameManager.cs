@@ -248,7 +248,7 @@ public class BON_GameManager : MonoBehaviour
     // Used for input pulling
     void Update()
     {
-        // Input PC
+        //// Input PC
         //DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
 
         // Input Mobile 
