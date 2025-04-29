@@ -45,16 +45,19 @@ public class BON_Menus : MonoBehaviour
     public void MMNewGame()
     {
         SceneManager.LoadScene("Cinematic_1", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MainMenu");
     }
 
     public void MMContinue()
     {
         SceneManager.LoadScene("Level1Implem", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MainMenu");
     }
 
     public void MMOpenCredits()
     {
         SceneManager.LoadScene("Credits", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("MainMenu");
     }
 
     public void SMSwitchPanel(GameObject panel)
@@ -132,7 +135,7 @@ public class BON_Menus : MonoBehaviour
     public void PMResetScene()
     {
         BON_GameManager.Instance().UnpauseGame();
-        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+        SceneManager.LoadScene("Level1Implem", LoadSceneMode.Single);
     }
 
     private void PRIVSMUpdateSliders()
@@ -152,6 +155,7 @@ public class BON_Menus : MonoBehaviour
     public void CRQuit()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        SceneManager.UnloadSceneAsync("Level1Implem");
     }
 
 
