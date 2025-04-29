@@ -2245,8 +2245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creditText: {fileID: 247265798}
-  _music: {fileID: 8300000, guid: c686db8f28e3e324798ab05c796e819a, type: 3}
-  _speed: 0.5
+  _music: {fileID: 8300000, guid: 3595b4e488605a049b1832e495bddc2b, type: 3}
+  _speed: 0.1
   _stopCinematique: 1125
 --- !u!82 &709099737
 AudioSource:
@@ -2259,12 +2259,12 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3362318384656724335, guid: 532bcecf7e9b73a47a41da229ec2b066,
     type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0
+  m_audioClip: {fileID: 8300000, guid: 3595b4e488605a049b1832e495bddc2b, type: 3}
+  m_Resource: {fileID: 8300000, guid: 3595b4e488605a049b1832e495bddc2b, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

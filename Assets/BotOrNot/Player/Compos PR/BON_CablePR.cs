@@ -85,56 +85,10 @@ public class BON_CablePR : MonoBehaviour
         {
             _currentTarget = _hookActif != null ? _hookActif.position : _joint.connectedAnchor;
             PRIVAfficherLigne(_gunOrigin.position, _currentTarget);
-
             _swingTimer += Time.deltaTime;
         }
-
-        if (_joint != null)
-        {
-
-            if (_hookActif != null)
-            {
-                _joint.connectedAnchor = _hookActif.position;
-            }
-
-            _lengthChange = 0f;
-
-            if (input.y > 0.5f)
-            {
-                _lengthChange -= _cableLengthSpeed * Time.deltaTime;
-            }
-            else if (input.y < -0.5f)
-            {
-                _lengthChange += _cableLengthSpeed * Time.deltaTime;
-            }
-
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + _lengthChange, 0.5f, _rayDistance);
-
-            _swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
-
-            Vector3 toAnchor = _joint.connectedAnchor - transform.position;
-            Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
-            Vector3 swingDir = Vector3.Cross(Vector3.up, horizontalToAnchor).normalized;
-
-            if (_swingInput != 0f)
-            {
-                Vector3 force = swingDir * _swingInput * _swingForce;
-                _rb.AddForce(force, ForceMode.VelocityChange);
-            }
-            else
-            {
-                Vector3 lateralVel = Vector3.Project(_rb.velocity, swingDir);
-                _rb.velocity -= lateralVel * _lateralDamping * Time.deltaTime;
-            }
-
-            float currentDistance = Vector3.Distance(transform.position, _joint.connectedAnchor);
-            if (currentDistance > _joint.maxDistance + 0.1f)
-            {
-                Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
-                _rb.AddForce(direction * (_springForce * 2f), ForceMode.Acceleration);
-            }
-        }
     }
+
 
     public void GererClic()
     {
@@ -182,6 +136,52 @@ public class BON_CablePR : MonoBehaviour
             
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (_joint != null)
+        {
+            UpdateCablePhysics();
+        }
+    }
+
+    private void UpdateCablePhysics()
+    {
+        if (_hookActif != null)
+        {
+            _joint.connectedAnchor = _hookActif.position;
+        }
+
+        _lengthChange = 0f;
+
+        _lengthChange = -input.y * _cableLengthSpeed * Time.fixedDeltaTime;
+        _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + _lengthChange, 0.5f, _rayDistance);
+
+        _swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
+
+        Vector3 toAnchor = _joint.connectedAnchor - transform.position;
+        Vector3 horizontalToAnchor = new Vector3(toAnchor.x, 0f, toAnchor.z).normalized;
+        Vector3 swingDir = Vector3.Cross(Vector3.up, horizontalToAnchor).normalized;
+
+        if (_swingInput != 0f)
+        {
+            Vector3 force = swingDir * _swingInput * _swingForce;
+            _rb.AddForce(force, ForceMode.VelocityChange);
+        }
+        else
+        {
+            Vector3 lateralVel = Vector3.Project(_rb.velocity, swingDir);
+            _rb.velocity -= lateralVel * _lateralDamping * Time.fixedDeltaTime;
+        }
+
+        float currentDistance = Vector3.Distance(transform.position, _joint.connectedAnchor);
+        if (currentDistance > _joint.maxDistance + 0.1f)
+        {
+            Vector3 direction = (_joint.connectedAnchor - transform.position).normalized;
+            _rb.AddForce(direction * (_springForce * 2f), ForceMode.Acceleration);
+        }
+    }
+
 
     private Transform PRIVTrouverPlusProcheHook(GameObject[] hooks)
     {

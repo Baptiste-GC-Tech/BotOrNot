@@ -67,7 +67,7 @@ public class BON_GameManager : MonoBehaviour
         //modify for future with trues scenes names
         MainMenu,
         Level1,
-        Level2
+        Credits
     };
 
     /*
@@ -248,8 +248,18 @@ public class BON_GameManager : MonoBehaviour
     // Used for input pulling
     void Update()
     {
-        //// Input PC
-        //DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+        // Input PC
+
+        /*
+        if (_player.AvatarState.CurrentState == BON_AvatarState.State.ControllingMachine) //read input values for machine
+        {
+            DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
+        }
+        else //read input values for Move
+        {
+            DirectionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
+        }
+        */
 
         // Input Mobile 
         DirectionalInputValue = _joystick.InputValues;
