@@ -106,7 +106,7 @@ public class BON_CablePR : MonoBehaviour
                 _lengthChange += _cableLengthSpeed * Time.deltaTime;
             }
 
-            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + _lengthChange, 0.5f, _rayDistance);
+            _joint.maxDistance = Mathf.Clamp(_joint.maxDistance + _lengthChange, 0.2f, _rayDistance);
 
             _swingInput = Mathf.Abs(input.x) > 0.5f ? Mathf.Sign(input.x) : 0f;
 
