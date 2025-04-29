@@ -14,6 +14,8 @@ public class BON_CreditsManager : MonoBehaviour
     [SerializeField]
     AudioClip _music;
 
+    [SerializeField] float _stopCinematique = 1125;
+
     float _scrollSpeed;
 
     List<GameObject> _scrollingObjects = new List<GameObject>();
@@ -46,7 +48,7 @@ public class BON_CreditsManager : MonoBehaviour
 
             foreach (GameObject obj in _scrollingObjects) {
                 obj.transform.position += moveVec;
-                if (obj.transform.position.y >= 900)
+                if (obj.transform.position.y >= _stopCinematique)
                 {
                     _shouldScroll = false;
                 }
