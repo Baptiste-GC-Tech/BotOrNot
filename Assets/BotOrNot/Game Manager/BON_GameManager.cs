@@ -250,7 +250,7 @@ public class BON_GameManager : MonoBehaviour
     {
         // Input PC
 
-        /**/
+        /*
         if (_player.AvatarState.CurrentState == BON_AvatarState.State.ControllingMachine) //read input values for machine
         {
             DirectionalInputValue = _MachineInputAction.ReadValue<Vector2>();
@@ -259,9 +259,9 @@ public class BON_GameManager : MonoBehaviour
         {
             DirectionalInputValue = _PRMoveInputAction.ReadValue<Vector2>();
         }
-        /**/
+        */
 
         // Input Mobile 
-        //DirectionalInputValue = _joystick.InputValues;
+        DirectionalInputValue = _joystick.InputValues;
     }
 }

@@ -293,7 +293,7 @@ public class BON_MovePR : MonoBehaviour
         }
 
         //if grounded => disable gravity
-        if (_player.AvatarState.IsGrounded && _rb.useGravity)
+        if (_player.AvatarState.IsGrounded && _rb.useGravity && _player.AvatarState.HasCableOut)
         {
             _rb.useGravity = false;
         }
