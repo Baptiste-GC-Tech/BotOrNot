@@ -14,7 +14,7 @@ public class BON_CreditsManager : MonoBehaviour
     [SerializeField]
     AudioClip _music;
 
-    [SerializeField] float _stopCinematique = 900;
+    [SerializeField] float _stopCinematique = 1125;
 
     float _scrollSpeed;
 
