@@ -81,10 +81,6 @@ public class BON_ControlsManager : MonoBehaviour
             if ((_compPlayerButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compPlayerButtons.IsEnabled == false) 
                 && (_compHUDButtons.TryIsButtonThere(_currentTouchPos[i]) == false || _compHUDButtons.IsEnabled == false))
             {
-                var feedback = Instantiate(_touchFeedback);
-                feedback.transform.SetParent(transform);
-                feedback.transform.SetLocalPositionAndRotation(new Vector3(_currentTouchPos[i].x - Screen.width/2, _currentTouchPos[i].y - Screen.height/2), new Quaternion());
-                feedback.transform.localScale = Vector3.one;
 
                 Ray ray = Camera.main.ScreenPointToRay(_currentTouchPos[i]);
                 RaycastHit hit;

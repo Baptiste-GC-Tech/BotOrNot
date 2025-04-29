@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7943705753466281283}
   - component: {fileID: 7237786302427151519}
   - component: {fileID: 8023110723302799261}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CirclingEyeCatcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777572053155287885}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: ProxyFlag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 1864686771854245746}
   - component: {fileID: 1273767791241559590}
   - component: {fileID: 4765128962189756225}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: ProximityTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +242,7 @@ MonoBehaviour:
   _minimumConditionsToFulfill: 0
   _events:
   - {fileID: 5178129391104064337}
+  - {fileID: 4765128962189756225}
   _conditions: []
   _targetTag: Player
 --- !u!114 &5178129391104064337
@@ -259,7 +260,6 @@ MonoBehaviour:
   _targetBehavior: 0
   _actionnables:
   - {fileID: 8023110723302799261}
-  - {fileID: 0}
 --- !u!114 &1864686771854245746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +275,7 @@ MonoBehaviour:
   _minimumConditionsToFulfill: 0
   _events:
   - {fileID: 1273767791241559590}
+  - {fileID: 4765128962189756225}
   _conditions: []
   _targetTag: Player
 --- !u!114 &1273767791241559590
@@ -292,7 +293,6 @@ MonoBehaviour:
   _targetBehavior: 1
   _actionnables:
   - {fileID: 8023110723302799261}
-  - {fileID: 0}
 --- !u!114 &4765128962189756225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +505,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2058474804819324655, guid: 6f24ad63ae1eb1f4b8d77969f645293b,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2fc3cf1e531059548b555c97bc4044f4, type: 2}
     - target: {fileID: -911419769069716041, guid: 6f24ad63ae1eb1f4b8d77969f645293b,
         type: 3}
       propertyPath: m_IsActive
