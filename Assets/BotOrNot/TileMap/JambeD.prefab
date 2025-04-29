@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ObjectId: 3
+  _pickupVFXPrefab: {fileID: 4979279275432940184, guid: 114e87031fcde4147b7e2d58e5c29d74,
+    type: 3}
 --- !u!4 &592269886961115286 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96e8f16298349b045b5c5bb402ee12e4,

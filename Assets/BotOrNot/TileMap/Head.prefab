@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ObjectId: 0
+  _pickupVFXPrefab: {fileID: 4979279275432940184, guid: 114e87031fcde4147b7e2d58e5c29d74,
+    type: 3}
 --- !u!1001 &7562346504985890155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,12 +223,12 @@ PrefabInstance:
     - target: {fileID: 5955881974114164285, guid: 0fefd804678d5794f95d70726bfaf07e,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.x
-      value: -42.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5955881974114164285, guid: 0fefd804678d5794f95d70726bfaf07e,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5955881974114164285, guid: 0fefd804678d5794f95d70726bfaf07e,
         type: 3}
