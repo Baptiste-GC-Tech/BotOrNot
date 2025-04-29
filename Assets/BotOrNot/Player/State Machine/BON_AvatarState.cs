@@ -180,12 +180,14 @@ public class BON_AvatarState : ScriptableObject
         _animator.SetBool("IsThrowingCable", state == State.ThrowingCable);
         _animator.SetBool("StoppedAbruptly", state == State.Drift);
         _animator.SetBool("DirectionChangedQuickly", state == State.Drift);
-        //_animator.SetBool("IsGrounded", state == State.Grounded);
 
-        // Optionnel : remettre certains flags � false
-        // if (state != State.Jump) _animator.SetBool("IsJumping", false);
-        // if (state != State.Moving) _animator.SetBool("IsMoving", false);
+        _animator.SetBool("IsGrounded", _isGrounded);
+        _animator.SetBool("IsAgainstWallLeft", _isAgainstWallLeft);
+        _animator.SetBool("IsAgainstWallRight", _isAgainstWallRight);
+        _animator.SetBool("IsNearIOMInteractible", _isNearIOMInteractible);
+        _animator.SetBool("IsInElevatorZone", _isInElevator);
     }
+
 
 
     protected bool CheckStatePossible(State newState) // <-- (eg robot cannot Jump, Dame robot cannot use cable)

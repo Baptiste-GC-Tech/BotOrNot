@@ -314,7 +314,7 @@ public class BON_CablePR : MonoBehaviour
         float distance = Vector3.Distance(transform.position, cible);
         _joint.minDistance = 0.2f;
         _joint.maxDistance = distance * 0.75f;
-        _joint.spring = _springForce;
+        _joint.spring = -_springForce;
         _joint.damper = _damping;
         _joint.massScale = 1f;
         Debug.Log($"Distance Cable : ({distance})");
