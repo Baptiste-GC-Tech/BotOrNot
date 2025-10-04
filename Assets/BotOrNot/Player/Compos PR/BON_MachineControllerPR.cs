@@ -74,8 +74,11 @@ public class BON_MachineControllerPR : MonoBehaviour
             if (_machineToActivate == null) return;
 
             _machineToActivate.Activate();
+
             _machinePossessed = (BON_Controllable)_machineToActivate.ActionnablesList[0];
-            _machinePossessedRb = _machinePossessed.GetComponent<Rigidbody>();
+            Debug.Log($"Machine Possesed : {_machinePossessed}");
+
+            _machinePossessedRb = _machinePossessed?.GetComponent<Rigidbody>();
             if (_machinePossessedRb == null)
             {
                 Debug.LogError("_machinePossessedRb introuvable");
@@ -120,6 +123,7 @@ public class BON_MachineControllerPR : MonoBehaviour
         // Control management (gaining control of the machine or taking back control of PR)
         if (_TakeControlOfMachineAction.WasPressedThisFrame() || _QuitControlOfMachineAction.WasReleasedThisFrame()) // pc only because inputAction
         {
+            Debug.Log("calling activate machine.");
             ActivateMachine();
         }
 

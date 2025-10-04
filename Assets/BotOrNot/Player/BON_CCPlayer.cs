@@ -18,7 +18,7 @@ public class BON_CCPlayer : MonoBehaviour
     }
 
     // for stock machine ref
-    private BON_Interactive_Actionnables _machineToActivate = null;
+    public BON_Interactive_Actionnables _machineToActivate = null;
     public BON_Interactive_Actionnables MachineToActivate
     {
         get { return _machineToActivate; }
